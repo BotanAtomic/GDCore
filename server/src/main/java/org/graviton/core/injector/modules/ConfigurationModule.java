@@ -45,6 +45,7 @@ public class ConfigurationModule extends AbstractModule {
                 }
             })));
 
+            System.getProperties().putAll(properties);
             log.debug("Configuration file successfully loaded");
         } catch (IOException e) {
             super.addError(e);

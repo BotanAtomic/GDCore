@@ -22,13 +22,12 @@ repositories {
 
 dependencies {
     compile 'org.jooq:jooq:+'
-    'mysql:mysql-connector-java:+'
 }
 
 jooq {
     login(sourceSets.main) {
         jdbc {
-            driver = 'com.mysql.jdbc.Driver'
+            driver = 'com.mysql.cj.jdbc.Driver'
             url = 'jdbc:mysql://localhost/login?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC'
             user = 'root'
             password = ''

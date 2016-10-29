@@ -3,21 +3,22 @@ package org.graviton.core;
 
 import com.google.inject.Guice;
 import org.graviton.core.injector.modules.ConfigurationModule;
+import org.graviton.core.injector.modules.DatabaseModule;
 
 /**
  * Created by Botan on 29/10/2016 : 03:09
  */
 public class Main {
 
-    private static String ASCII = "                 _____                     _  _                \n                / ____|                   (_)| |               \n               | |  __  _ __  __ _ __   __ _ | |_  ___   _ __  \n               | | |_ || '__|/ _` |\\ \\ / /| || __|/ _ \\ | '_ \\ \n               | |__| || |  | (_| | \\ V / | || |_| (_) || | | |\n                \\_____||_|   \\__,_|  \\_/  |_| \\__|\\___/ |_| |_|\n";
+    private static String ASCII_HEADER = "                 _____                     _  _                \n                / ____|                   (_)| |               \n               | |  __  _ __  __ _ __   __ _ | |_  ___   _ __  \n               | | |_ || '__|/ _` |\\ \\ / /| || __|/ _ \\ | '_ \\ \n               | |__| || |  | (_| | \\ V / | || |_| (_) || | | |\n                \\_____||_|   \\__,_|  \\_/  |_| \\__|\\___/ |_| |_|\n";
 
     public static void main(String[] args) {
         buildHeader();
-        Guice.createInjector(new ConfigurationModule());
+        Guice.createInjector(new ConfigurationModule(), new DatabaseModule());
     }
 
     private static void buildHeader() {
-        System.out.println(ASCII);
+        System.out.println(ASCII_HEADER);
         System.out.println();
 
         /** OS informations **/
