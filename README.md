@@ -1,8 +1,9 @@
 <p align="center"><IMG SRC="https://i.gyazo.com/760ac25569c32430a3d1817a77e0fd6e.png"></p>
 
-![Build Status](https://img.shields.io/badge/Jooq-3.8.5-black.svg?style=flat)
+![Build Status](https://img.shields.io/badge/Jooq-3.8.5-yellow.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/Guice-4.1.0-blue.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/MySql-6.0.5-green.svg?style=flat)
+![Build Status](https://img.shields.io/badge/Slf4j-1.7.21-black.svg?style=flat)
 
 #What is it ?
 
@@ -20,9 +21,9 @@ Graviton (GDCore)  contains a lot of util dependencies
 
 - <b>MySQL-Connector</b> by Apache: for JDBC mysql
 
-Slf4j & Logback for loggers
+- <b>Slf4j</b> & Logback : for loggers
 
-Lombok : for meta-data
+- <b>Lombok</b> : for meta-data
 
 JOOQ : for typesafe SQL query construction and execution.
 
