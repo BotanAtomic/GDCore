@@ -45,7 +45,10 @@ public class ConfigurationModule extends AbstractModule {
                 }
             })));
 
-            System.getProperties().putAll(properties);
+            bind(Properties.class).toInstance(new Properties() {{
+                properties.keySet().stream().filter(key -> key.toString().contains("dataSource")).forEach(selectedKey -> put(selectedKey, properties.get(selectedKey)));
+            }});
+
             log.debug("Configuration file successfully loaded");
         } catch (IOException e) {
             super.addError(e);
