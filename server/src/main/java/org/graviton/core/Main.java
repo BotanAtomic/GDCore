@@ -18,7 +18,7 @@ public class Main {
         final Server server = injector.getInstance(Server.class);
 
         server.start(startTime);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> server.stop()));
+        Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
     }
 
     private static void buildHeader() {
