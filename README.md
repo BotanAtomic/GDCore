@@ -1,8 +1,8 @@
 <p align="center"><IMG SRC="https://i.gyazo.com/760ac25569c32430a3d1817a77e0fd6e.png"></p>
 
-![Build Status](https://img.shields.io/badge/Login-100%20%-green.svg?style=flat)
-![Build Status](https://img.shields.io/badge/Game-30%20%-red.svg?style=flat)
-![Build Status](https://img.shields.io/badge/Total-65%20%-orange.svg?style=flat)
+![Build Status](https://img.shields.io/badge/Jooq-3.8.5-black.svg?style=flat)
+![Build Status](https://img.shields.io/badge/Guice-4.1.0-blue.svg?style=flat)
+![Build Status](https://img.shields.io/badge/MySql-6.0.5-green.svg?style=flat)
 
 #What is it ?
 
@@ -16,9 +16,9 @@ Game   : it's the game server, manages the in-game
 
 Graviton (GDCore)  contains a lot of util dependencies
 
-Guice by google: for dependency injections
+- <b>Guice</b> by Google: for dependency injections
 
-MySQL-Connector by Apache: for JDBC mysql
+- <b>MySQL-Connector</b> by Apache: for JDBC mysql
 
 Slf4j & Logback for loggers
 
