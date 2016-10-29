@@ -5,6 +5,7 @@
 ![Build Status](https://img.shields.io/badge/MySql-6.0.5-green.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/Slf4j-1.7.21-black.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/Hikari-CP-2.5.1-red.svg?style=flat)
+![Build Status](https://img.shields.io/badge/Mina-Apache-2.0.15-white.svg?style=flat)
 
 #What is it ?
 
@@ -28,3 +29,4 @@ Graviton (GDCore)  contains a lot of util dependencies
 
 - <b>JOOQ</b> : for typesafe SQL query construction and execution.
 
+- <b>Mina Apache</b> : for network.
