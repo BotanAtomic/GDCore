@@ -1,6 +1,9 @@
 <configuration>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover with gz compression for old log-files -->
             <fileNamePattern>logs/login/%d/log.%i.zip</fileNamePattern>
@@ -31,9 +34,6 @@
 
     <!-- Console output -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
         <encoder>
             <pattern>%d{HH:mm:ss} [%thread] %logger{36} - %msg%n</pattern>
         </encoder>
@@ -42,7 +42,7 @@
 
     <!-- Enable FILE and STDOUT appenders for all log messages.
   By default, only log at level INFO and above. -->
-    <logger name="graviton" level="ALL">
+    <logger name="org.graviton" level="ALL">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
         <appender-ref ref="ERROR_FILE"/>

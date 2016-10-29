@@ -1,6 +1,9 @@
 package org.graviton.core;
 
 
+import com.google.inject.Guice;
+import org.graviton.core.injector.modules.ConfigurationModule;
+
 /**
  * Created by Botan on 29/10/2016 : 03:09
  */
@@ -10,6 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         buildHeader();
+        Guice.createInjector(new ConfigurationModule());
     }
 
     private static void buildHeader() {
@@ -44,7 +48,7 @@ public class Main {
         System.out.println("Maximum memory : " + (maxMemory == Long.MAX_VALUE ? "unlimited" : maxMemory / 1000 + " MB"));
 
         /* Total memory currently available to the JVM */
-        System.out.println("Total memory available to JVM : " + Runtime.getRuntime().totalMemory() / 1000 + " MB");
+        System.out.println("Total memory available to JVM : " + Runtime.getRuntime().totalMemory() / 1000 + " MB\n");
     }
 
 }
