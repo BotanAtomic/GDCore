@@ -1,6 +1,7 @@
 package org.graviton.network.login;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
@@ -23,8 +24,11 @@ import java.nio.charset.Charset;
  */
 @Slf4j
 public class LoginServer implements IoHandler, Manageable {
+    @InjectSetting("client.version")
+    public static String DOFUS_VERSION;
     private final NioSocketAcceptor socketAcceptor;
-
+    @Inject
+    private Injector injector;
     @InjectSetting("server.port")
     private int port;
 
@@ -45,6 +49,7 @@ public class LoginServer implements IoHandler, Manageable {
 
     @Override
     public void sessionOpened(IoSession session) {
+        session.setAttribute("client", new LoginClient(session, injector));
         log.debug("[Session {}] opened", session.getId());
     }
 
@@ -66,12 +71,13 @@ public class LoginServer implements IoHandler, Manageable {
 
     @Override
     public void messageReceived(IoSession session, Object message) {
-        log.info("[Session {}] R < {}", session.getId(), message);
+        log.info("[Session {}] receives < {}", session.getId(), message);
+        ((LoginClient) session.getAttribute("client")).handle(message.toString());
     }
 
     @Override
     public void messageSent(IoSession session, Object message) {
-        log.info("[Session {}] S  > {}", session.getId(), message);
+        log.info("[Session {}] send > {}", session.getId(), message);
 
     }
 
