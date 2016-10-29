@@ -20,6 +20,7 @@ allprojects  {
         compile 'org.jooq:jooq:+'
         compile 'org.jooq:jooq-meta:+'
         compile 'org.jooq:jooq-codegen:+'
+        compileOnly "org.projectlombok:lombok:+"
         compile group: 'mysql', name: 'mysql-connector-java', version: '+'
     }
 
