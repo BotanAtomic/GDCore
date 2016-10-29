@@ -25,5 +25,5 @@ Graviton (GDCore)  contains a lot of util dependencies
 
 - <b>Lombok</b> : for meta-data
 
-JOOQ : for typesafe SQL query construction and execution.
+- <b>JOOQ</b> : for typesafe SQL query construction and execution.
 
