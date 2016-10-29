@@ -1,0 +1,30 @@
+allprojects  {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+
+    configurations {
+        provided
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'com.google.inject:guice:+'
+        compile 'com.google.inject.extensions:guice-multibindings:+'
+        compile 'org.slf4j:slf4j-api:+'
+        compile 'org.jooq:jooq:+'
+        compile 'org.jooq:jooq-meta:+'
+        compile 'org.jooq:jooq-codegen:+'
+        compile group: 'mysql', name: 'mysql-connector-java', version: '+'
+    }
+
+    sourceSets {
+        main { compileClasspath += configurations.provided }
+    }
+    idea { module { scopes.PROVIDED.plus += [configurations.provided] } }
+}

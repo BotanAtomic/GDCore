@@ -1,0 +1,48 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "org.graviton.core.Main"
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'nu.studer:gradle-jooq-plugin:+'
+        classpath 'mysql:mysql-connector-java:+'
+    }
+}
+
+apply plugin: 'nu.studer.jooq'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.jooq:jooq:+'
+    'mysql:mysql-connector-java:+'
+}
+
+jooq {
+    login(sourceSets.main) {
+        jdbc {
+            driver = 'com.mysql.jdbc.Driver'
+            url = 'jdbc:mysql://localhost/login?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC'
+            user = 'root'
+            password = ''
+            schema = 'login'
+        }
+        generator {
+            database {
+                name = 'org.jooq.util.mysql.MySQLDatabase'
+                inputSchema = 'login'
+            }
+            target {
+                packageName = 'org.graviton.database.jooq'
+                directory = 'src/main/java'
+            }
+        }
+    }
+}
