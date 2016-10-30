@@ -6,7 +6,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
-import org.graviton.core.Server;
+import org.graviton.core.Program;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 
@@ -25,13 +25,21 @@ public class LoginDatabase implements Manageable {
     private DSLContext dslContext;
 
     @Inject
-    public LoginDatabase(Server server, Properties properties) {
-        server.add(this);
+    public LoginDatabase(Program program, Properties properties) {
+        program.add(this);
         this.dataSource = new HikariDataSource(new HikariConfig(properties));
     }
 
     public Record getRecord(Table<?> table, Condition condition) {
         return dslContext.select().from(table).where(condition).fetchOne();
+    }
+
+    public Result<Record> getResult(Table<?> table) {
+        return dslContext.select().from(table).fetch();
+    }
+
+    public Result<Record> getResult(Table<?> table, Condition condition) {
+        return dslContext.select().from(table).where(condition).fetch();
     }
 
     @Override

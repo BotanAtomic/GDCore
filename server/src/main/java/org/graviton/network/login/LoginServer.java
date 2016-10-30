@@ -12,8 +12,7 @@ import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
-import org.graviton.core.Server;
-import org.graviton.network.security.GravitonFilter;
+import org.graviton.core.Program;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -26,6 +25,9 @@ import java.nio.charset.Charset;
 public class LoginServer implements IoHandler, Manageable {
     @InjectSetting("client.version")
     public static String DOFUS_VERSION;
+    @InjectSetting("word.forbidden")
+    public static String FORBIDDEN_WORD;
+
     private final NioSocketAcceptor socketAcceptor;
     @Inject
     private Injector injector;
@@ -33,11 +35,11 @@ public class LoginServer implements IoHandler, Manageable {
     private int port;
 
     @Inject
-    public LoginServer(Server server) throws IOException {
-        server.add(this);
+    public LoginServer(Program program) throws IOException {
+        program.add(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
-        this.socketAcceptor.getFilterChain().addFirst("blacklist", new GravitonFilter((byte) 3, (short) 1));
+        // this.socketAcceptor.getFilterChain().addFirst("blacklist", new GravitonFilter((byte) 3, (short) 1));
         this.socketAcceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF8"), LineDelimiter.NUL, new LineDelimiter("\n\0"))));
         this.socketAcceptor.setHandler(this);
     }

@@ -13,13 +13,12 @@ public class AuthenticationHandler extends AbstractHandler {
 
     @Override
     public void handle(String data, LoginClient client) {
-        data = data.replace("\n", ";");
+        Account account = client.getAccountRepository().load(data.split("\n")[0]);
 
-        Account account = client.getAccountRepository().load(data.split(";")[0]);
-
-        if (account != null && StringUtils.encryptPassword(account.getPassword(), client.getKey()).equals(data.split(";")[1])) {
+        if (account != null && StringUtils.encryptPassword(account.getPassword(), client.getKey()).equals(data.split("\n")[1])) {
+            client.setAccount(account);
             client.getAccountRepository().register(account);
-            client.setHandler(account.getNickname().isEmpty() ? new NicknameInputHandler(client) : new PlayerSelectionHandler());
+            client.setHandler(account.getNickname().isEmpty() ? new NicknameInputHandler(client) : new ServerChoiceHandler(client));
         } else
             client.send(LoginProtocol.accessDenied());
 

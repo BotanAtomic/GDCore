@@ -6,6 +6,7 @@ package org.graviton.database.jooq;
 
 import org.graviton.database.jooq.tables.Accounts;
 import org.graviton.database.jooq.tables.Players;
+import org.graviton.database.jooq.tables.Servers;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
@@ -32,7 +33,7 @@ public class Login extends SchemaImpl {
 	 * The reference instance of <code>login</code>
 	 */
 	public static final Login LOGIN = new Login();
-	private static final long serialVersionUID = -1916004087;
+	private static final long serialVersionUID = -1093238809;
 
 	/**
 	 * No further instances allowed
@@ -51,6 +52,7 @@ public class Login extends SchemaImpl {
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
 			Accounts.ACCOUNTS,
-			Players.PLAYERS);
+				Players.PLAYERS,
+				Servers.SERVERS);
 	}
 }

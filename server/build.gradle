@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'nu.studer.jooq'
 
 //noinspection GroovyUnusedAssignment
 mainClassName = "org.graviton.core.Main"
@@ -15,8 +16,6 @@ buildscript {
     }
 }
 
-apply plugin: 'nu.studer.jooq'
-
 repositories {
     mavenCentral()
 }
@@ -25,7 +24,9 @@ dependencies {
     compile 'org.jooq:jooq:+'
 }
 
+
 jooq {
+    version = '3.8.5'
     login(sourceSets.main) {
         jdbc {
             driver = 'com.mysql.cj.jdbc.Driver'
@@ -35,6 +36,11 @@ jooq {
             schema = 'login'
         }
         generator {
+            name = 'org.jooq.util.JavaGenerator'
+            strategy {
+                name = 'org.jooq.util.DefaultGeneratorStrategy'
+                // ...
+            }
             database {
                 name = 'org.jooq.util.mysql.MySQLDatabase'
                 inputSchema = 'login'
@@ -46,3 +52,4 @@ jooq {
         }
     }
 }
+

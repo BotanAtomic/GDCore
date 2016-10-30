@@ -32,7 +32,7 @@ public class Accounts extends TableImpl<AccountsRecord> {
 	 * The reference instance of <code>login.accounts</code>
 	 */
 	public static final Accounts ACCOUNTS = new Accounts();
-	private static final long serialVersionUID = -378610345;
+	private static final long serialVersionUID = -883161062;
 	/**
 	 * The column <code>login.accounts.id</code>.
 	 */
@@ -141,7 +141,7 @@ public class Accounts extends TableImpl<AccountsRecord> {
 	 */
 	@Override
 	public List<UniqueKey<AccountsRecord>> getKeys() {
-		return Arrays.<UniqueKey<AccountsRecord>>asList(Keys.KEY_ACCOUNTS_PRIMARY, Keys.KEY_ACCOUNTS_ACCOUNTS_NAME_INDEX, Keys.KEY_ACCOUNTS_ACCOUNTS_NICKNAME_INDEX);
+		return Arrays.<UniqueKey<AccountsRecord>>asList(Keys.KEY_ACCOUNTS_PRIMARY);
 	}
 
 	/**

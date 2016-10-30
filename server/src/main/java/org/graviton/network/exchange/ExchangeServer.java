@@ -1,6 +1,7 @@
 package org.graviton.network.exchange;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
@@ -8,7 +9,9 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
-import org.graviton.core.Server;
+import org.graviton.core.Program;
+import org.graviton.database.repository.GameServerRepository;
+import org.graviton.utils.StringUtils;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -20,13 +23,16 @@ import java.net.InetSocketAddress;
 @Slf4j
 public class ExchangeServer implements IoHandler, Manageable {
     private final NioSocketAcceptor socketAcceptor;
-
+    @Inject
+    private Injector injector;
+    @Inject
+    private GameServerRepository gameServerRepository;
     @InjectSetting("exchange.port")
     private int port;
 
     @Inject
-    public ExchangeServer(Server server) throws IOException {
-        server.add(this);
+    public ExchangeServer(Program program) throws IOException {
+        program.add(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
         this.socketAcceptor.setHandler(this);
@@ -34,6 +40,7 @@ public class ExchangeServer implements IoHandler, Manageable {
 
     @Override
     public void sessionCreated(IoSession session) throws Exception {
+        session.setAttribute("client", new ExchangeClient(session, injector));
         log.debug("[Session {}] created", session.getId());
     }
 
@@ -61,6 +68,7 @@ public class ExchangeServer implements IoHandler, Manageable {
     @Override
     public void messageReceived(IoSession session, Object message) {
         log.info("[Session {}] R < {}", session.getId(), message);
+        ((ExchangeClient) session.getAttribute("client")).handle(StringUtils.bufferToString(message));
     }
 
     @Override
@@ -76,6 +84,7 @@ public class ExchangeServer implements IoHandler, Manageable {
 
     @Override
     public void start() {
+        gameServerRepository.loadGameServers();
         try {
             this.socketAcceptor.bind(new InetSocketAddress(port));
             log.debug("Exchange server was successfully bind on port {}", port);
@@ -87,7 +96,7 @@ public class ExchangeServer implements IoHandler, Manageable {
     @Override
     public void stop() {
         this.socketAcceptor.unbind();
-        log.debug("Login server was successfully unbind on port {} ", port);
+        log.debug("Exchange server was successfully unbind on port {} ", port);
     }
 }
 

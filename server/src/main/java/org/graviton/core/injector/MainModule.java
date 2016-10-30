@@ -1,7 +1,7 @@
 package org.graviton.core.injector;
 
 import com.google.inject.AbstractModule;
-import org.graviton.core.Server;
+import org.graviton.core.Program;
 import org.graviton.core.injector.modules.ConfigurationModule;
 import org.graviton.core.injector.modules.DatabaseModule;
 import org.graviton.core.injector.modules.NetworkModule;
@@ -12,7 +12,7 @@ import org.graviton.core.injector.modules.NetworkModule;
 public class MainModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(Server.class).asEagerSingleton();
+        bind(Program.class).asEagerSingleton();
 
         install(new ConfigurationModule());
         install(new DatabaseModule());

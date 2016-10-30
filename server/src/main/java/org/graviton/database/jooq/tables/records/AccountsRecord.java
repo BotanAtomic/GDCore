@@ -6,8 +6,8 @@ package org.graviton.database.jooq.tables.records;
 
 import org.graviton.database.jooq.tables.Accounts;
 import org.jooq.Field;
-import org.jooq.Record1;
 import org.jooq.Record14;
+import org.jooq.Record3;
 import org.jooq.Row14;
 import org.jooq.impl.UpdatableRecordImpl;
 
@@ -27,7 +27,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AccountsRecord extends UpdatableRecordImpl<AccountsRecord> implements Record14<Integer, String, String, String, String, String, Byte, Byte, Byte, Integer, String, String, String, Byte> {
 
-	private static final long serialVersionUID = 967103181;
+	private static final long serialVersionUID = 184925595;
 
 	/**
 	 * Create a detached AccountsRecord
@@ -266,8 +266,8 @@ public class AccountsRecord extends UpdatableRecordImpl<AccountsRecord> implemen
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Record1<Integer> key() {
-		return (Record1) super.key();
+	public Record3<Integer, String, String> key() {
+		return (Record3) super.key();
 	}
 
 	/**

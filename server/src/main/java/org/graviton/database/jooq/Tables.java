@@ -6,6 +6,7 @@ package org.graviton.database.jooq;
 
 import org.graviton.database.jooq.tables.Accounts;
 import org.graviton.database.jooq.tables.Players;
+import org.graviton.database.jooq.tables.Servers;
 
 import javax.annotation.Generated;
 
@@ -32,4 +33,9 @@ public class Tables {
 	 * The table login.players
 	 */
 	public static final Players PLAYERS = org.graviton.database.jooq.tables.Players.PLAYERS;
+
+	/**
+	 * The table login.servers
+	 */
+	public static final Servers SERVERS = org.graviton.database.jooq.tables.Servers.SERVERS;
 }

@@ -32,27 +32,27 @@ public class Players extends TableImpl<PlayersRecord> {
 	 * The reference instance of <code>login.players</code>
 	 */
 	public static final Players PLAYERS = new Players();
-	private static final long serialVersionUID = -1417687415;
+	private static final long serialVersionUID = 1938990726;
 	/**
 	 * The column <code>login.players.id</code>.
 	 */
 	public final TableField<PlayersRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 	/**
-	 * The column <code>login.players.owner_id</code>.
+	 * The column <code>login.players.owner</code>.
 	 */
-	public final TableField<PlayersRecord, Integer> OWNER_ID = createField("owner_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<PlayersRecord, Integer> OWNER = createField("owner", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 	/**
 	 * The column <code>login.players.name</code>.
 	 */
 	public final TableField<PlayersRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 	/**
-	 * The column <code>login.players.breed_id</code>.
+	 * The column <code>login.players.breed</code>.
 	 */
-	public final TableField<PlayersRecord, Integer> BREED_ID = createField("breed_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<PlayersRecord, Integer> BREED = createField("breed", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 	/**
-	 * The column <code>login.players.gender</code>.
+	 * The column <code>login.players.sex</code>.
 	 */
-	public final TableField<PlayersRecord, Byte> GENDER = createField("gender", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
+	public final TableField<PlayersRecord, Byte> SEX = createField("sex", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 	/**
 	 * The column <code>login.players.skin</code>.
 	 */
@@ -78,9 +78,9 @@ public class Players extends TableImpl<PlayersRecord> {
 	 */
 	public final TableField<PlayersRecord, Long> KAMAS = createField("kamas", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 	/**
-	 * The column <code>login.players.map_id</code>.
+	 * The column <code>login.players.map</code>.
 	 */
-	public final TableField<PlayersRecord, Integer> MAP_ID = createField("map_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<PlayersRecord, Integer> MAP = createField("map", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 	/**
 	 * The column <code>login.players.cell</code>.
 	 */
@@ -133,6 +133,10 @@ public class Players extends TableImpl<PlayersRecord> {
 	 * The column <code>login.players.agility</code>.
 	 */
 	public final TableField<PlayersRecord, Short> AGILITY = createField("agility", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	/**
+	 * The column <code>login.players.server</code>.
+	 */
+	public final TableField<PlayersRecord, Byte> SERVER = createField("server", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * Create a <code>login.players</code> table reference

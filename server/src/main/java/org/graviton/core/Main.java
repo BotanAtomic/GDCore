@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         buildHeader();
         final Injector injector = Guice.createInjector(new MainModule());
-        final Server server = injector.getInstance(Server.class);
+        final Program server = injector.getInstance(Program.class);
 
         server.start(startTime);
         Runtime.getRuntime().addShutdownHook(new Thread(server::stop));

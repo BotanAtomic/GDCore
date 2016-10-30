@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 
-	private static final long serialVersionUID = 1713912313;
+	private static final long serialVersionUID = 661175288;
 
 	/**
 	 * Create a detached PlayersRecord
@@ -36,21 +36,21 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 	/**
 	 * Create a detached, initialised PlayersRecord
 	 */
-	public PlayersRecord(Integer id, Integer ownerId, String name, Integer breedId, Byte gender, Short skin, Short size, Integer colors, Short level, Long experience, Long kamas, Integer mapId, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Integer energy, Integer life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility) {
+	public PlayersRecord(Integer id, Integer owner, String name, Integer breed, Byte sex, Short skin, Short size, Integer colors, Short level, Long experience, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Integer energy, Integer life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
 		super(Players.PLAYERS);
 
 		setValue(0, id);
-		setValue(1, ownerId);
+		setValue(1, owner);
 		setValue(2, name);
-		setValue(3, breedId);
-		setValue(4, gender);
+		setValue(3, breed);
+		setValue(4, sex);
 		setValue(5, skin);
 		setValue(6, size);
 		setValue(7, colors);
 		setValue(8, level);
 		setValue(9, experience);
 		setValue(10, kamas);
-		setValue(11, mapId);
+		setValue(11, map);
 		setValue(12, cell);
 		setValue(13, orientation);
 		setValue(14, waypoints);
@@ -64,6 +64,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 		setValue(22, intelligence);
 		setValue(23, chance);
 		setValue(24, agility);
+		setValue(25, server);
 	}
 
 	/**
@@ -81,16 +82,16 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 	}
 
 	/**
-	 * Getter for <code>login.players.owner_id</code>.
+	 * Getter for <code>login.players.owner</code>.
 	 */
-	public Integer getOwnerId() {
+	public Integer getOwner() {
 		return (Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>login.players.owner_id</code>.
+	 * Setter for <code>login.players.owner</code>.
 	 */
-	public void setOwnerId(Integer value) {
+	public void setOwner(Integer value) {
 		setValue(1, value);
 	}
 
@@ -109,30 +110,30 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 	}
 
 	/**
-	 * Getter for <code>login.players.breed_id</code>.
+	 * Getter for <code>login.players.breed</code>.
 	 */
-	public Integer getBreedId() {
+	public Integer getBreed() {
 		return (Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>login.players.breed_id</code>.
+	 * Setter for <code>login.players.breed</code>.
 	 */
-	public void setBreedId(Integer value) {
+	public void setBreed(Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>login.players.gender</code>.
+	 * Getter for <code>login.players.sex</code>.
 	 */
-	public Byte getGender() {
+	public Byte getSex() {
 		return (Byte) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>login.players.gender</code>.
+	 * Setter for <code>login.players.sex</code>.
 	 */
-	public void setGender(Byte value) {
+	public void setSex(Byte value) {
 		setValue(4, value);
 	}
 
@@ -221,16 +222,16 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 	}
 
 	/**
-	 * Getter for <code>login.players.map_id</code>.
+	 * Getter for <code>login.players.map</code>.
 	 */
-	public Integer getMapId() {
+	public Integer getMap() {
 		return (Integer) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>login.players.map_id</code>.
+	 * Setter for <code>login.players.map</code>.
 	 */
-	public void setMapId(Integer value) {
+	public void setMap(Integer value) {
 		setValue(11, value);
 	}
 
@@ -402,10 +403,6 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 		setValue(23, value);
 	}
 
-	// -------------------------------------------------------------------------
-	// Primary key information
-	// -------------------------------------------------------------------------
-
 	/**
 	 * Getter for <code>login.players.agility</code>.
 	 */
@@ -413,15 +410,33 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 		return (Short) getValue(24);
 	}
 
-	// -------------------------------------------------------------------------
-	// Constructors
-	// -------------------------------------------------------------------------
-
 	/**
 	 * Setter for <code>login.players.agility</code>.
 	 */
 	public void setAgility(Short value) {
 		setValue(24, value);
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Getter for <code>login.players.server</code>.
+	 */
+	public Byte getServer() {
+		return (Byte) getValue(25);
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Setter for <code>login.players.server</code>.
+	 */
+	public void setServer(Byte value) {
+		setValue(25, value);
 	}
 
 	/**

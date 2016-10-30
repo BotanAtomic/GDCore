@@ -41,8 +41,6 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	public static final UniqueKey<AccountsRecord> KEY_ACCOUNTS_PRIMARY = UniqueKeys0.KEY_ACCOUNTS_PRIMARY;
-	public static final UniqueKey<AccountsRecord> KEY_ACCOUNTS_ACCOUNTS_NAME_INDEX = UniqueKeys0.KEY_ACCOUNTS_ACCOUNTS_NAME_INDEX;
-	public static final UniqueKey<AccountsRecord> KEY_ACCOUNTS_ACCOUNTS_NICKNAME_INDEX = UniqueKeys0.KEY_ACCOUNTS_ACCOUNTS_NICKNAME_INDEX;
 	public static final UniqueKey<PlayersRecord> KEY_PLAYERS_PRIMARY = UniqueKeys0.KEY_PLAYERS_PRIMARY;
 	public static final UniqueKey<PlayersRecord> KEY_PLAYERS_PLAYERS_NAME_INDEX = UniqueKeys0.KEY_PLAYERS_PLAYERS_NAME_INDEX;
 
@@ -61,14 +59,12 @@ public class Keys {
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
-		public static final UniqueKey<AccountsRecord> KEY_ACCOUNTS_PRIMARY = createUniqueKey(Accounts.ACCOUNTS, Accounts.ACCOUNTS.ID);
-		public static final UniqueKey<AccountsRecord> KEY_ACCOUNTS_ACCOUNTS_NAME_INDEX = createUniqueKey(Accounts.ACCOUNTS, Accounts.ACCOUNTS.NAME);
-		public static final UniqueKey<AccountsRecord> KEY_ACCOUNTS_ACCOUNTS_NICKNAME_INDEX = createUniqueKey(Accounts.ACCOUNTS, Accounts.ACCOUNTS.NICKNAME);
+		public static final UniqueKey<AccountsRecord> KEY_ACCOUNTS_PRIMARY = createUniqueKey(Accounts.ACCOUNTS, Accounts.ACCOUNTS.ID, Accounts.ACCOUNTS.NAME, Accounts.ACCOUNTS.NICKNAME);
 		public static final UniqueKey<PlayersRecord> KEY_PLAYERS_PRIMARY = createUniqueKey(Players.PLAYERS, Players.PLAYERS.ID);
 		public static final UniqueKey<PlayersRecord> KEY_PLAYERS_PLAYERS_NAME_INDEX = createUniqueKey(Players.PLAYERS, Players.PLAYERS.NAME);
 	}
 
 	private static class ForeignKeys0 extends AbstractKeys {
-		public static final ForeignKey<PlayersRecord, AccountsRecord> PLAYERS_IBFK_1 = createForeignKey(org.graviton.database.jooq.Keys.KEY_ACCOUNTS_PRIMARY, Players.PLAYERS, Players.PLAYERS.OWNER_ID);
+		public static final ForeignKey<PlayersRecord, AccountsRecord> PLAYERS_IBFK_1 = createForeignKey(org.graviton.database.jooq.Keys.KEY_ACCOUNTS_PRIMARY, Players.PLAYERS, Players.PLAYERS.OWNER);
 	}
 }
