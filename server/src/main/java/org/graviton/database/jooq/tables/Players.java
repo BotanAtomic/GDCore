@@ -4,20 +4,15 @@
 package org.graviton.database.jooq.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Generated;
-
 import org.graviton.database.jooq.Keys;
 import org.graviton.database.jooq.Login;
 import org.graviton.database.jooq.tables.records.PlayersRecord;
-import org.jooq.Field;
-import org.jooq.ForeignKey;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
+import org.jooq.*;
 import org.jooq.impl.TableImpl;
+
+import javax.annotation.Generated;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -33,141 +28,107 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Players extends TableImpl<PlayersRecord> {
 
-	private static final long serialVersionUID = -1417687415;
-
 	/**
 	 * The reference instance of <code>login.players</code>
 	 */
 	public static final Players PLAYERS = new Players();
-
-	/**
-	 * The class holding records for this type
-	 */
-	@Override
-	public Class<PlayersRecord> getRecordType() {
-		return PlayersRecord.class;
-	}
-
+	private static final long serialVersionUID = -1417687415;
 	/**
 	 * The column <code>login.players.id</code>.
 	 */
 	public final TableField<PlayersRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.owner_id</code>.
 	 */
 	public final TableField<PlayersRecord, Integer> OWNER_ID = createField("owner_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.name</code>.
 	 */
 	public final TableField<PlayersRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.breed_id</code>.
 	 */
 	public final TableField<PlayersRecord, Integer> BREED_ID = createField("breed_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.gender</code>.
 	 */
 	public final TableField<PlayersRecord, Byte> GENDER = createField("gender", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.skin</code>.
 	 */
 	public final TableField<PlayersRecord, Short> SKIN = createField("skin", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.size</code>.
 	 */
 	public final TableField<PlayersRecord, Short> SIZE = createField("size", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.colors</code>.
 	 */
 	public final TableField<PlayersRecord, Integer> COLORS = createField("colors", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.level</code>.
 	 */
 	public final TableField<PlayersRecord, Short> LEVEL = createField("level", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.experience</code>.
 	 */
 	public final TableField<PlayersRecord, Long> EXPERIENCE = createField("experience", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.kamas</code>.
 	 */
 	public final TableField<PlayersRecord, Long> KAMAS = createField("kamas", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.map_id</code>.
 	 */
 	public final TableField<PlayersRecord, Integer> MAP_ID = createField("map_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.cell</code>.
 	 */
 	public final TableField<PlayersRecord, Short> CELL = createField("cell", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.orientation</code>.
 	 */
 	public final TableField<PlayersRecord, Byte> ORIENTATION = createField("orientation", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.waypoints</code>.
 	 */
 	public final TableField<PlayersRecord, String> WAYPOINTS = createField("waypoints", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.stat_points</code>.
 	 */
 	public final TableField<PlayersRecord, Short> STAT_POINTS = createField("stat_points", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.spell_points</code>.
 	 */
 	public final TableField<PlayersRecord, Short> SPELL_POINTS = createField("spell_points", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.energy</code>.
 	 */
 	public final TableField<PlayersRecord, Integer> ENERGY = createField("energy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.life</code>.
 	 */
 	public final TableField<PlayersRecord, Integer> LIFE = createField("life", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.vitality</code>.
 	 */
 	public final TableField<PlayersRecord, Short> VITALITY = createField("vitality", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.wisdom</code>.
 	 */
 	public final TableField<PlayersRecord, Short> WISDOM = createField("wisdom", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.strength</code>.
 	 */
 	public final TableField<PlayersRecord, Short> STRENGTH = createField("strength", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.intelligence</code>.
 	 */
 	public final TableField<PlayersRecord, Short> INTELLIGENCE = createField("intelligence", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.chance</code>.
 	 */
 	public final TableField<PlayersRecord, Short> CHANCE = createField("chance", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.players.agility</code>.
 	 */
@@ -193,6 +154,14 @@ public class Players extends TableImpl<PlayersRecord> {
 
 	private Players(String alias, Table<PlayersRecord> aliased, Field<?>[] parameters) {
 		super(alias, Login.LOGIN, aliased, parameters, "");
+	}
+
+	/**
+	 * The class holding records for this type
+	 */
+	@Override
+	public Class<PlayersRecord> getRecordType() {
+		return PlayersRecord.class;
 	}
 
 	/**

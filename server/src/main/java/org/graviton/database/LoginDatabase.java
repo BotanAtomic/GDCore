@@ -3,11 +3,11 @@ package org.graviton.database;
 import com.google.inject.Inject;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
 import org.graviton.core.Server;
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
+import org.jooq.*;
 import org.jooq.impl.DSL;
 
 import java.sql.SQLException;
@@ -21,12 +21,17 @@ import java.util.Properties;
 public class LoginDatabase implements Manageable {
     private HikariDataSource dataSource;
 
+    @Getter
     private DSLContext dslContext;
 
     @Inject
     public LoginDatabase(Server server, Properties properties) {
         server.add(this);
         this.dataSource = new HikariDataSource(new HikariConfig(properties));
+    }
+
+    public Record getRecord(Table<?> table, Condition condition) {
+        return dslContext.select().from(table).where(condition).fetchOne();
     }
 
     @Override

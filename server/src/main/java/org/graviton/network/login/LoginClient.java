@@ -6,6 +6,7 @@ import lombok.Data;
 import org.apache.mina.core.session.IoSession;
 import org.graviton.api.AbstractHandler;
 import org.graviton.database.LoginDatabase;
+import org.graviton.database.repository.AccountRepository;
 import org.graviton.network.login.handler.VersionHandler;
 import org.graviton.network.login.protocol.LoginProtocol;
 import org.graviton.utils.StringUtils;
@@ -20,7 +21,9 @@ public class LoginClient {
     private final String key;
     @Inject
     private LoginDatabase database;
-    private AbstractHandler<LoginClient> handler;
+    @Inject
+    private AccountRepository accountRepository;
+    private AbstractHandler handler;
 
     public LoginClient(IoSession session, Injector injector) {
         injector.injectMembers(this);
@@ -34,6 +37,8 @@ public class LoginClient {
     }
 
     public void handle(String packet) {
+        if (packet.equals("Af")) return;
+
         this.handler.handle(packet, this);
     }
 

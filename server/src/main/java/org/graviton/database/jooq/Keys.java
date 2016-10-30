@@ -4,8 +4,6 @@
 package org.graviton.database.jooq;
 
 
-import javax.annotation.Generated;
-
 import org.graviton.database.jooq.tables.Accounts;
 import org.graviton.database.jooq.tables.Players;
 import org.graviton.database.jooq.tables.records.AccountsRecord;
@@ -14,6 +12,8 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
+
+import javax.annotation.Generated;
 
 
 /**

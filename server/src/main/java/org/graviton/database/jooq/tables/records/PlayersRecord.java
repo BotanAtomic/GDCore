@@ -4,11 +4,11 @@
 package org.graviton.database.jooq.tables.records;
 
 
-import javax.annotation.Generated;
-
 import org.graviton.database.jooq.tables.Players;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
 
 
 /**
@@ -25,372 +25,6 @@ import org.jooq.impl.UpdatableRecordImpl;
 public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 
 	private static final long serialVersionUID = 1713912313;
-
-	/**
-	 * Setter for <code>login.players.id</code>.
-	 */
-	public void setId(Integer value) {
-		setValue(0, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.id</code>.
-	 */
-	public Integer getId() {
-		return (Integer) getValue(0);
-	}
-
-	/**
-	 * Setter for <code>login.players.owner_id</code>.
-	 */
-	public void setOwnerId(Integer value) {
-		setValue(1, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.owner_id</code>.
-	 */
-	public Integer getOwnerId() {
-		return (Integer) getValue(1);
-	}
-
-	/**
-	 * Setter for <code>login.players.name</code>.
-	 */
-	public void setName(String value) {
-		setValue(2, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.name</code>.
-	 */
-	public String getName() {
-		return (String) getValue(2);
-	}
-
-	/**
-	 * Setter for <code>login.players.breed_id</code>.
-	 */
-	public void setBreedId(Integer value) {
-		setValue(3, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.breed_id</code>.
-	 */
-	public Integer getBreedId() {
-		return (Integer) getValue(3);
-	}
-
-	/**
-	 * Setter for <code>login.players.gender</code>.
-	 */
-	public void setGender(Byte value) {
-		setValue(4, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.gender</code>.
-	 */
-	public Byte getGender() {
-		return (Byte) getValue(4);
-	}
-
-	/**
-	 * Setter for <code>login.players.skin</code>.
-	 */
-	public void setSkin(Short value) {
-		setValue(5, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.skin</code>.
-	 */
-	public Short getSkin() {
-		return (Short) getValue(5);
-	}
-
-	/**
-	 * Setter for <code>login.players.size</code>.
-	 */
-	public void setSize(Short value) {
-		setValue(6, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.size</code>.
-	 */
-	public Short getSize() {
-		return (Short) getValue(6);
-	}
-
-	/**
-	 * Setter for <code>login.players.colors</code>.
-	 */
-	public void setColors(Integer value) {
-		setValue(7, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.colors</code>.
-	 */
-	public Integer getColors() {
-		return (Integer) getValue(7);
-	}
-
-	/**
-	 * Setter for <code>login.players.level</code>.
-	 */
-	public void setLevel(Short value) {
-		setValue(8, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.level</code>.
-	 */
-	public Short getLevel() {
-		return (Short) getValue(8);
-	}
-
-	/**
-	 * Setter for <code>login.players.experience</code>.
-	 */
-	public void setExperience(Long value) {
-		setValue(9, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.experience</code>.
-	 */
-	public Long getExperience() {
-		return (Long) getValue(9);
-	}
-
-	/**
-	 * Setter for <code>login.players.kamas</code>.
-	 */
-	public void setKamas(Long value) {
-		setValue(10, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.kamas</code>.
-	 */
-	public Long getKamas() {
-		return (Long) getValue(10);
-	}
-
-	/**
-	 * Setter for <code>login.players.map_id</code>.
-	 */
-	public void setMapId(Integer value) {
-		setValue(11, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.map_id</code>.
-	 */
-	public Integer getMapId() {
-		return (Integer) getValue(11);
-	}
-
-	/**
-	 * Setter for <code>login.players.cell</code>.
-	 */
-	public void setCell(Short value) {
-		setValue(12, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.cell</code>.
-	 */
-	public Short getCell() {
-		return (Short) getValue(12);
-	}
-
-	/**
-	 * Setter for <code>login.players.orientation</code>.
-	 */
-	public void setOrientation(Byte value) {
-		setValue(13, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.orientation</code>.
-	 */
-	public Byte getOrientation() {
-		return (Byte) getValue(13);
-	}
-
-	/**
-	 * Setter for <code>login.players.waypoints</code>.
-	 */
-	public void setWaypoints(String value) {
-		setValue(14, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.waypoints</code>.
-	 */
-	public String getWaypoints() {
-		return (String) getValue(14);
-	}
-
-	/**
-	 * Setter for <code>login.players.stat_points</code>.
-	 */
-	public void setStatPoints(Short value) {
-		setValue(15, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.stat_points</code>.
-	 */
-	public Short getStatPoints() {
-		return (Short) getValue(15);
-	}
-
-	/**
-	 * Setter for <code>login.players.spell_points</code>.
-	 */
-	public void setSpellPoints(Short value) {
-		setValue(16, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.spell_points</code>.
-	 */
-	public Short getSpellPoints() {
-		return (Short) getValue(16);
-	}
-
-	/**
-	 * Setter for <code>login.players.energy</code>.
-	 */
-	public void setEnergy(Integer value) {
-		setValue(17, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.energy</code>.
-	 */
-	public Integer getEnergy() {
-		return (Integer) getValue(17);
-	}
-
-	/**
-	 * Setter for <code>login.players.life</code>.
-	 */
-	public void setLife(Integer value) {
-		setValue(18, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.life</code>.
-	 */
-	public Integer getLife() {
-		return (Integer) getValue(18);
-	}
-
-	/**
-	 * Setter for <code>login.players.vitality</code>.
-	 */
-	public void setVitality(Short value) {
-		setValue(19, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.vitality</code>.
-	 */
-	public Short getVitality() {
-		return (Short) getValue(19);
-	}
-
-	/**
-	 * Setter for <code>login.players.wisdom</code>.
-	 */
-	public void setWisdom(Short value) {
-		setValue(20, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.wisdom</code>.
-	 */
-	public Short getWisdom() {
-		return (Short) getValue(20);
-	}
-
-	/**
-	 * Setter for <code>login.players.strength</code>.
-	 */
-	public void setStrength(Short value) {
-		setValue(21, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.strength</code>.
-	 */
-	public Short getStrength() {
-		return (Short) getValue(21);
-	}
-
-	/**
-	 * Setter for <code>login.players.intelligence</code>.
-	 */
-	public void setIntelligence(Short value) {
-		setValue(22, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.intelligence</code>.
-	 */
-	public Short getIntelligence() {
-		return (Short) getValue(22);
-	}
-
-	/**
-	 * Setter for <code>login.players.chance</code>.
-	 */
-	public void setChance(Short value) {
-		setValue(23, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.chance</code>.
-	 */
-	public Short getChance() {
-		return (Short) getValue(23);
-	}
-
-	/**
-	 * Setter for <code>login.players.agility</code>.
-	 */
-	public void setAgility(Short value) {
-		setValue(24, value);
-	}
-
-	/**
-	 * Getter for <code>login.players.agility</code>.
-	 */
-	public Short getAgility() {
-		return (Short) getValue(24);
-	}
-
-	// -------------------------------------------------------------------------
-	// Primary key information
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Record1<Integer> key() {
-		return (Record1) super.key();
-	}
-
-	// -------------------------------------------------------------------------
-	// Constructors
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached PlayersRecord
@@ -430,5 +64,371 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 		setValue(22, intelligence);
 		setValue(23, chance);
 		setValue(24, agility);
+	}
+
+	/**
+	 * Getter for <code>login.players.id</code>.
+	 */
+	public Integer getId() {
+		return (Integer) getValue(0);
+	}
+
+	/**
+	 * Setter for <code>login.players.id</code>.
+	 */
+	public void setId(Integer value) {
+		setValue(0, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.owner_id</code>.
+	 */
+	public Integer getOwnerId() {
+		return (Integer) getValue(1);
+	}
+
+	/**
+	 * Setter for <code>login.players.owner_id</code>.
+	 */
+	public void setOwnerId(Integer value) {
+		setValue(1, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.name</code>.
+	 */
+	public String getName() {
+		return (String) getValue(2);
+	}
+
+	/**
+	 * Setter for <code>login.players.name</code>.
+	 */
+	public void setName(String value) {
+		setValue(2, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.breed_id</code>.
+	 */
+	public Integer getBreedId() {
+		return (Integer) getValue(3);
+	}
+
+	/**
+	 * Setter for <code>login.players.breed_id</code>.
+	 */
+	public void setBreedId(Integer value) {
+		setValue(3, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.gender</code>.
+	 */
+	public Byte getGender() {
+		return (Byte) getValue(4);
+	}
+
+	/**
+	 * Setter for <code>login.players.gender</code>.
+	 */
+	public void setGender(Byte value) {
+		setValue(4, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.skin</code>.
+	 */
+	public Short getSkin() {
+		return (Short) getValue(5);
+	}
+
+	/**
+	 * Setter for <code>login.players.skin</code>.
+	 */
+	public void setSkin(Short value) {
+		setValue(5, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.size</code>.
+	 */
+	public Short getSize() {
+		return (Short) getValue(6);
+	}
+
+	/**
+	 * Setter for <code>login.players.size</code>.
+	 */
+	public void setSize(Short value) {
+		setValue(6, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.colors</code>.
+	 */
+	public Integer getColors() {
+		return (Integer) getValue(7);
+	}
+
+	/**
+	 * Setter for <code>login.players.colors</code>.
+	 */
+	public void setColors(Integer value) {
+		setValue(7, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.level</code>.
+	 */
+	public Short getLevel() {
+		return (Short) getValue(8);
+	}
+
+	/**
+	 * Setter for <code>login.players.level</code>.
+	 */
+	public void setLevel(Short value) {
+		setValue(8, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.experience</code>.
+	 */
+	public Long getExperience() {
+		return (Long) getValue(9);
+	}
+
+	/**
+	 * Setter for <code>login.players.experience</code>.
+	 */
+	public void setExperience(Long value) {
+		setValue(9, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.kamas</code>.
+	 */
+	public Long getKamas() {
+		return (Long) getValue(10);
+	}
+
+	/**
+	 * Setter for <code>login.players.kamas</code>.
+	 */
+	public void setKamas(Long value) {
+		setValue(10, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.map_id</code>.
+	 */
+	public Integer getMapId() {
+		return (Integer) getValue(11);
+	}
+
+	/**
+	 * Setter for <code>login.players.map_id</code>.
+	 */
+	public void setMapId(Integer value) {
+		setValue(11, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.cell</code>.
+	 */
+	public Short getCell() {
+		return (Short) getValue(12);
+	}
+
+	/**
+	 * Setter for <code>login.players.cell</code>.
+	 */
+	public void setCell(Short value) {
+		setValue(12, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.orientation</code>.
+	 */
+	public Byte getOrientation() {
+		return (Byte) getValue(13);
+	}
+
+	/**
+	 * Setter for <code>login.players.orientation</code>.
+	 */
+	public void setOrientation(Byte value) {
+		setValue(13, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.waypoints</code>.
+	 */
+	public String getWaypoints() {
+		return (String) getValue(14);
+	}
+
+	/**
+	 * Setter for <code>login.players.waypoints</code>.
+	 */
+	public void setWaypoints(String value) {
+		setValue(14, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.stat_points</code>.
+	 */
+	public Short getStatPoints() {
+		return (Short) getValue(15);
+	}
+
+	/**
+	 * Setter for <code>login.players.stat_points</code>.
+	 */
+	public void setStatPoints(Short value) {
+		setValue(15, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.spell_points</code>.
+	 */
+	public Short getSpellPoints() {
+		return (Short) getValue(16);
+	}
+
+	/**
+	 * Setter for <code>login.players.spell_points</code>.
+	 */
+	public void setSpellPoints(Short value) {
+		setValue(16, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.energy</code>.
+	 */
+	public Integer getEnergy() {
+		return (Integer) getValue(17);
+	}
+
+	/**
+	 * Setter for <code>login.players.energy</code>.
+	 */
+	public void setEnergy(Integer value) {
+		setValue(17, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.life</code>.
+	 */
+	public Integer getLife() {
+		return (Integer) getValue(18);
+	}
+
+	/**
+	 * Setter for <code>login.players.life</code>.
+	 */
+	public void setLife(Integer value) {
+		setValue(18, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.vitality</code>.
+	 */
+	public Short getVitality() {
+		return (Short) getValue(19);
+	}
+
+	/**
+	 * Setter for <code>login.players.vitality</code>.
+	 */
+	public void setVitality(Short value) {
+		setValue(19, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.wisdom</code>.
+	 */
+	public Short getWisdom() {
+		return (Short) getValue(20);
+	}
+
+	/**
+	 * Setter for <code>login.players.wisdom</code>.
+	 */
+	public void setWisdom(Short value) {
+		setValue(20, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.strength</code>.
+	 */
+	public Short getStrength() {
+		return (Short) getValue(21);
+	}
+
+	/**
+	 * Setter for <code>login.players.strength</code>.
+	 */
+	public void setStrength(Short value) {
+		setValue(21, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.intelligence</code>.
+	 */
+	public Short getIntelligence() {
+		return (Short) getValue(22);
+	}
+
+	/**
+	 * Setter for <code>login.players.intelligence</code>.
+	 */
+	public void setIntelligence(Short value) {
+		setValue(22, value);
+	}
+
+	/**
+	 * Getter for <code>login.players.chance</code>.
+	 */
+	public Short getChance() {
+		return (Short) getValue(23);
+	}
+
+	/**
+	 * Setter for <code>login.players.chance</code>.
+	 */
+	public void setChance(Short value) {
+		setValue(23, value);
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Getter for <code>login.players.agility</code>.
+	 */
+	public Short getAgility() {
+		return (Short) getValue(24);
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Setter for <code>login.players.agility</code>.
+	 */
+	public void setAgility(Short value) {
+		setValue(24, value);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 }

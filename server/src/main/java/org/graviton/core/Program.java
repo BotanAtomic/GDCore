@@ -10,10 +10,10 @@ import java.util.LinkedList;
  * Created by Botan on 29/10/2016 : 20:45
  */
 @Slf4j
-public class Server {
+public class Program {
     private Collection<Manageable> manageable;
 
-    public Server() {
+    public Program() {
         this.manageable = new LinkedList<>();
     }
 

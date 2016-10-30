@@ -4,10 +4,10 @@
 package org.graviton.database.jooq;
 
 
-import javax.annotation.Generated;
-
 import org.graviton.database.jooq.tables.Accounts;
 import org.graviton.database.jooq.tables.Players;
+
+import javax.annotation.Generated;
 
 
 /**

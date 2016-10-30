@@ -4,20 +4,15 @@
 package org.graviton.database.jooq.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Generated;
-
 import org.graviton.database.jooq.Keys;
 import org.graviton.database.jooq.Login;
 import org.graviton.database.jooq.tables.records.AccountsRecord;
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
+import org.jooq.*;
 import org.jooq.impl.TableImpl;
+
+import javax.annotation.Generated;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -33,96 +28,63 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Accounts extends TableImpl<AccountsRecord> {
 
-	private static final long serialVersionUID = -282456984;
-
 	/**
 	 * The reference instance of <code>login.accounts</code>
 	 */
 	public static final Accounts ACCOUNTS = new Accounts();
-
-	/**
-	 * The class holding records for this type
-	 */
-	@Override
-	public Class<AccountsRecord> getRecordType() {
-		return AccountsRecord.class;
-	}
-
+	private static final long serialVersionUID = -378610345;
 	/**
 	 * The column <code>login.accounts.id</code>.
 	 */
 	public final TableField<AccountsRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.name</code>.
 	 */
 	public final TableField<AccountsRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.password</code>.
 	 */
 	public final TableField<AccountsRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
-
-	/**
-	 * The column <code>login.accounts.salt</code>.
-	 */
-	public final TableField<AccountsRecord, String> SALT = createField("salt", org.jooq.impl.SQLDataType.VARCHAR.length(32).nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.nickname</code>.
 	 */
 	public final TableField<AccountsRecord, String> NICKNAME = createField("nickname", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.question</code>.
 	 */
 	public final TableField<AccountsRecord, String> QUESTION = createField("question", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.answer</code>.
 	 */
 	public final TableField<AccountsRecord, String> ANSWER = createField("answer", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.rights</code>.
 	 */
 	public final TableField<AccountsRecord, Byte> RIGHTS = createField("rights", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.banned</code>.
 	 */
-	public final TableField<AccountsRecord, Byte> BANNED = createField("banned", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
-
+	public final TableField<AccountsRecord, Byte> BANNED = createField("banned", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
 	/**
 	 * The column <code>login.accounts.muted</code>.
 	 */
-	public final TableField<AccountsRecord, Byte> MUTED = createField("muted", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
-
+	public final TableField<AccountsRecord, Byte> MUTED = createField("muted", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
 	/**
 	 * The column <code>login.accounts.points</code>.
 	 */
 	public final TableField<AccountsRecord, Integer> POINTS = createField("points", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.channels</code>.
 	 */
 	public final TableField<AccountsRecord, String> CHANNELS = createField("channels", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false).defaulted(true), this, "");
-
 	/**
 	 * The column <code>login.accounts.last_connection</code>.
 	 */
 	public final TableField<AccountsRecord, String> LAST_CONNECTION = createField("last_connection", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.last_address</code>.
 	 */
 	public final TableField<AccountsRecord, String> LAST_ADDRESS = createField("last_address", org.jooq.impl.SQLDataType.VARCHAR.length(15).nullable(false), this, "");
-
-	/**
-	 * The column <code>login.accounts.refreshed</code>.
-	 */
-	public final TableField<AccountsRecord, Byte> REFRESHED = createField("refreshed", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
-
 	/**
 	 * The column <code>login.accounts.friend_notification_listener</code>.
 	 */
@@ -148,6 +110,14 @@ public class Accounts extends TableImpl<AccountsRecord> {
 
 	private Accounts(String alias, Table<AccountsRecord> aliased, Field<?>[] parameters) {
 		super(alias, Login.LOGIN, aliased, parameters, "");
+	}
+
+	/**
+	 * The class holding records for this type
+	 */
+	@Override
+	public Class<AccountsRecord> getRecordType() {
+		return AccountsRecord.class;
 	}
 
 	/**

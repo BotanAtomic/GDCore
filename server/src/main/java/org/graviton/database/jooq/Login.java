@@ -4,16 +4,15 @@
 package org.graviton.database.jooq;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Generated;
-
 import org.graviton.database.jooq.tables.Accounts;
 import org.graviton.database.jooq.tables.Players;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
+
+import javax.annotation.Generated;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -29,12 +28,11 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Login extends SchemaImpl {
 
-	private static final long serialVersionUID = -1916004087;
-
 	/**
 	 * The reference instance of <code>login</code>
 	 */
 	public static final Login LOGIN = new Login();
+	private static final long serialVersionUID = -1916004087;
 
 	/**
 	 * No further instances allowed
