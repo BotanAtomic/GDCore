@@ -17,6 +17,8 @@ import org.graviton.core.Program;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Created by Botan on 29/10/2016 : 07:00
@@ -57,6 +59,7 @@ public class LoginServer implements IoHandler, Manageable {
 
     @Override
     public void sessionClosed(IoSession session) {
+        ((LoginClient) session.getAttribute("client")).disconnect();
         log.debug("[Session {}] closed", session.getId());
     }
 
@@ -103,5 +106,9 @@ public class LoginServer implements IoHandler, Manageable {
     public void stop() {
         this.socketAcceptor.unbind();
         log.debug("Login server was successfully unbind on port {} ", port);
+    }
+
+    public Collection<LoginClient> getClients() {
+        return this.socketAcceptor.getManagedSessions().values().stream().map(session -> ((LoginClient) session.getAttribute("client"))).collect(Collectors.toList());
     }
 }

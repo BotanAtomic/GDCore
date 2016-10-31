@@ -2,6 +2,7 @@ package org.graviton.network.login.protocol;
 
 import org.graviton.database.models.GameServer;
 import org.graviton.database.models.Player;
+import org.graviton.network.login.LoginClient;
 
 import java.util.Collection;
 
@@ -27,7 +28,7 @@ public class LoginProtocol {
     }
 
     public static String alreadyConnected() {
-        return "AlEc";
+        return "AlEa";
     }
 
     public static String emptyNickname() {
@@ -48,7 +49,7 @@ public class LoginProtocol {
 
     public static String serversInformationsMessage(Collection<GameServer> servers) {
         StringBuilder messageBuilder = new StringBuilder("AH");
-        servers.forEach((server) -> messageBuilder.append(server.getId()).append(";").append(server.getState()).append(";110;").append(server.getState()).append("|"));
+        servers.forEach((server) -> messageBuilder.append(server.getId()).append(";").append(server.getState().value()).append(";110;1|"));
         return messageBuilder.toString();
     }
 
@@ -63,6 +64,12 @@ public class LoginProtocol {
     public static String playersListMessage(Collection<Player> players, Collection<GameServer> servers) {
         StringBuilder messageBuilder = new StringBuilder("AxK0");
         servers.forEach(server -> messageBuilder.append("|").append(server.getId()).append(",").append(getNumberOfPlayer(players, server.getId())));
+        return messageBuilder.toString();
+    }
+
+    public static String searchPlayerMessage(Collection<Player> players, LoginClient client) {
+        StringBuilder messageBuilder = new StringBuilder("AF");
+        client.getGameServerRepository().getGameServers().values().stream().filter(server -> getNumberOfPlayer(players, server.getId()) != 0).forEach(playerSever -> messageBuilder.append(playerSever.getId()).append(",").append(getNumberOfPlayer(players, playerSever.getId())).append(";"));
         return messageBuilder.toString();
     }
 

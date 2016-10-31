@@ -38,6 +38,11 @@ public class LoginClient {
         this.handler = new VersionHandler();
     }
 
+    public void attachAccount(Account account) {
+        this.account = account;
+        account.setClient(this);
+    }
+
     public void send(String data) {
         this.session.write(data);
     }
@@ -47,6 +52,8 @@ public class LoginClient {
     }
 
     public void disconnect() {
+        if (account != null)
+            accountRepository.unregister(account.getId());
         this.session.closeNow();
     }
 

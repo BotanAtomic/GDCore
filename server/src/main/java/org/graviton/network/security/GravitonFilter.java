@@ -39,7 +39,7 @@ public class GravitonFilter extends IoFilterAdapter {
      * @param address,    address (IP)
      * @param session,    @IoSession
      * @param difference, difference of time with last connection
-     * @return
+     * @return if is attacker
      */
     private boolean isAttack(IpInstance ipInstance, String address, IoSession session, long difference) {
         if (ipInstance.isBanned()) {

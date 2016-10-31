@@ -16,7 +16,13 @@ public class AuthenticationHandler extends AbstractHandler {
         Account account = client.getAccountRepository().load(data.split("\n")[0]);
 
         if (account != null && StringUtils.encryptPassword(account.getPassword(), client.getKey()).equals(data.split("\n")[1])) {
-            client.setAccount(account);
+
+            if (account.isBanned()) {
+                client.send(LoginProtocol.banned());
+                return;
+            }
+
+            client.attachAccount(account);
             client.getAccountRepository().register(account);
             client.setHandler(account.getNickname().isEmpty() ? new NicknameInputHandler(client) : new ServerChoiceHandler(client));
         } else

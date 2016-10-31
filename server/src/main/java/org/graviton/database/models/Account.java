@@ -1,6 +1,7 @@
 package org.graviton.database.models;
 
 import lombok.Data;
+import org.graviton.network.login.LoginClient;
 import org.jooq.Record;
 
 import java.util.Collection;
@@ -17,8 +18,10 @@ public class Account {
     private final String name, password, secretQuestion;
     private final byte rights;
 
-    private long banned;
+    private boolean banned;
     private String nickname;
+
+    private LoginClient client;
 
     private Collection<Player> players;
 
@@ -28,7 +31,7 @@ public class Account {
         this.password = record.get(ACCOUNTS.PASSWORD);
         this.nickname = record.get(ACCOUNTS.NICKNAME);
         this.secretQuestion = record.get(ACCOUNTS.QUESTION);
-        this.banned = record.get(ACCOUNTS.BANNED);
+        this.banned = record.get(ACCOUNTS.BANNED) == 1;
         this.rights = record.get(ACCOUNTS.RIGHTS);
     }
 }

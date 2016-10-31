@@ -18,10 +18,11 @@ allprojects  {
     dependencies {
         compile group: 'org.apache.mina', name: 'mina-core', version: '2.0.15'
         compile group: 'com.zaxxer', name: 'HikariCP', version: '+'
-        compile 'com.google.inject:guice:+'
-        compile 'com.google.inject.extensions:guice-multibindings:+'
-        compile 'org.slf4j:slf4j-api:+'
-        compile 'org.jooq:jooq:+'
+        compile group: 'joda-time', name: 'joda-time', version: '+'
+        compile group: 'com.google.inject', name: 'guice', version: '+'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '+'
+        compile group: 'org.jooq', name: 'jooq', version: '+'
+
         compile 'org.jooq:jooq-meta:+'
         compile 'org.jooq:jooq-codegen:+'
         compile 'ch.qos.logback:logback-classic:+'

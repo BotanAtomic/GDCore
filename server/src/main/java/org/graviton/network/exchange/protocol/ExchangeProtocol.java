@@ -16,4 +16,8 @@ public class ExchangeProtocol {
     public static String refuseGameServer() {
         return "SF";
     }
+
+    public static String disconnectAccount(int account) {
+        return "-" + account;
+    }
 }

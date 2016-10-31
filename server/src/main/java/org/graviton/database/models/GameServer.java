@@ -2,6 +2,8 @@ package org.graviton.database.models;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.graviton.network.exchange.state.State;
+
 
 /**
  * Created by Botan on 30/10/2016 : 00:17
@@ -14,11 +16,12 @@ public class GameServer {
 
     private String address;
     private int port;
-    private byte state;
+    private State state;
 
     public GameServer(byte id, String key) {
         this.id = id;
         this.key = key;
+        this.state = State.OFFLINE;
         log.debug("Game server [{}] loaded successfully", key);
     }
 

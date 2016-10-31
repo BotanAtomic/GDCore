@@ -4,8 +4,10 @@ import com.google.inject.Inject;
 import org.graviton.database.LoginDatabase;
 import org.graviton.database.models.Account;
 import org.graviton.database.models.Player;
+import org.graviton.network.login.protocol.LoginProtocol;
 import org.jooq.Record;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,11 +32,22 @@ public class AccountRepository {
 
     public Account load(String name) {
         Record record = database.getRecord(ACCOUNTS, ACCOUNTS.NAME.equal(name));
-        return record != null ? new Account(record) : null;
+
+        if (record == null)
+            return null;
+
+        if (accounts.containsKey(record.get(ACCOUNTS.ID)))
+            accounts.get(record.get(ACCOUNTS.ID)).getClient().send(LoginProtocol.alreadyConnected());
+
+        return new Account(record);
     }
 
     public void register(Account account) {
         this.accounts.put(account.getId(), account);
+    }
+
+    public void unregister(int id) {
+        this.accounts.remove(id);
     }
 
     public void updateNickname(Account account) {
@@ -47,6 +60,11 @@ public class AccountRepository {
 
     public Collection<Player> load(int accountId) {
         return database.getResult(PLAYERS, PLAYERS.OWNER.equal(accountId)).stream().map(record -> new Player(record.getValue(PLAYERS.ID), record.getValue(PLAYERS.SERVER))).collect(Collectors.toList());
+    }
+
+    public Collection<Player> getPlayers(String nickname) {
+        Record result = database.getRecord(ACCOUNTS, ACCOUNTS.NICKNAME.equal(nickname));
+        return result != null ? database.getResult(PLAYERS, PLAYERS.OWNER.equal(result.getValue(ACCOUNTS.ID))).stream().map(record -> new Player(record.getValue(PLAYERS.ID), record.getValue(PLAYERS.SERVER))).collect(Collectors.toList()) : new ArrayList<>();
     }
 
 }
