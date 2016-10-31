@@ -47,6 +47,7 @@ public class GameServerRepository {
             gameServer.setAddress(informations[1]);
             gameServer.setPort(Integer.parseInt(informations[2]));
             client.setGameServer(gameServer);
+            gameServer.setExchangeClient(client);
         } else
             client.send(ExchangeProtocol.refuseGameServer());
     }

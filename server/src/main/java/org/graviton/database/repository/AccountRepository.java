@@ -1,14 +1,18 @@
 package org.graviton.database.repository;
 
 import com.google.inject.Inject;
+import lombok.Getter;
 import org.graviton.database.LoginDatabase;
 import org.graviton.database.models.Account;
 import org.graviton.database.models.Player;
+import org.graviton.network.exchange.protocol.ExchangeProtocol;
+import org.graviton.network.login.LoginClient;
 import org.graviton.network.login.protocol.LoginProtocol;
 import org.jooq.Record;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -22,22 +26,31 @@ import static org.graviton.database.jooq.tables.Players.PLAYERS;
  */
 
 public class AccountRepository {
+    @Getter
+    private final Map<Integer, Byte> connectedClients;
+
     private final Map<Integer, Account> accounts;
     @Inject
     private LoginDatabase database;
 
     public AccountRepository() {
         this.accounts = new ConcurrentHashMap<>();
+        this.connectedClients = new HashMap<>();
     }
 
-    public Account load(String name) {
+    public Account load(String name, LoginClient client) {
         Record record = database.getRecord(ACCOUNTS, ACCOUNTS.NAME.equal(name));
 
         if (record == null)
             return null;
 
-        if (accounts.containsKey(record.get(ACCOUNTS.ID)))
-            accounts.get(record.get(ACCOUNTS.ID)).getClient().send(LoginProtocol.alreadyConnected());
+        int account = record.get(ACCOUNTS.ID);
+        if (accounts.containsKey(account)) {
+            accounts.get(account).getClient().send(LoginProtocol.alreadyConnected());
+
+            if (connectedClients.containsKey(account))
+                client.getGameServerRepository().getGameServers().get(connectedClients.get(account)).getExchangeClient().send(ExchangeProtocol.disconnectAccount(account));
+        }
 
         return new Account(record);
     }

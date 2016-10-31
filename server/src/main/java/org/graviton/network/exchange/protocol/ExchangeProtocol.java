@@ -20,4 +20,8 @@ public class ExchangeProtocol {
     public static String disconnectAccount(int account) {
         return "-" + account;
     }
+
+    public static String connectAccount(int account) {
+        return "+" + account;
+    }
 }

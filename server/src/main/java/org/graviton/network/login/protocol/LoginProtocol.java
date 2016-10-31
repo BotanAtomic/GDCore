@@ -53,6 +53,17 @@ public class LoginProtocol {
         return messageBuilder.toString();
     }
 
+    public static String selectGameServerMessage(int accountId, GameServer gameServer) {
+        StringBuilder messageBuilder = new StringBuilder("AYK");
+        messageBuilder.append(gameServer.getAddress()).append(":").append(gameServer.getPort()).append(";").append(accountId);
+        return messageBuilder.toString();
+    }
+
+    public static String notAvailableGameServer() {
+        return "AXEd";
+
+    }
+
     public static String identificationSuccessMessage(boolean hasRights) {
         return "AlK" + (hasRights ? "1" : "0");
     }

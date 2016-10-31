@@ -13,7 +13,7 @@ public class AuthenticationHandler extends AbstractHandler {
 
     @Override
     public void handle(String data, LoginClient client) {
-        Account account = client.getAccountRepository().load(data.split("\n")[0]);
+        Account account = client.getAccountRepository().load(data.split("\n")[0], client);
 
         if (account != null && StringUtils.encryptPassword(account.getPassword(), client.getKey()).equals(data.split("\n")[1])) {
 

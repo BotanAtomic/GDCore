@@ -2,6 +2,7 @@ package org.graviton.database.models;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.graviton.network.exchange.ExchangeClient;
 import org.graviton.network.exchange.state.State;
 
 
@@ -17,6 +18,8 @@ public class GameServer {
     private String address;
     private int port;
     private State state;
+
+    private ExchangeClient exchangeClient;
 
     public GameServer(byte id, String key) {
         this.id = id;
