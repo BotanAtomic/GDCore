@@ -11,7 +11,7 @@ import java.util.LinkedList;
  */
 @Slf4j
 public class Program {
-    private Collection<Manageable> manageable;
+    private final Collection<Manageable> manageable;
 
     public Program() {
         this.manageable = new LinkedList<>();

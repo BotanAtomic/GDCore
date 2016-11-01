@@ -43,8 +43,8 @@ public class LoginProtocol {
         return "Ad" + nickname;
     }
 
-    public static String communityInformationMessage(int community) {
-        return "Ac" + community;
+    public static String communityInformationMessage() {
+        return "Ac0";
     }
 
     public static String serversInformationsMessage(Collection<GameServer> servers) {
@@ -54,9 +54,7 @@ public class LoginProtocol {
     }
 
     public static String selectGameServerMessage(int accountId, GameServer gameServer) {
-        StringBuilder messageBuilder = new StringBuilder("AYK");
-        messageBuilder.append(gameServer.getAddress()).append(":").append(gameServer.getPort()).append(";").append(accountId);
-        return messageBuilder.toString();
+        return "AYK".concat(gameServer.getAddress()).concat(":") + gameServer.getPort() + ";" + accountId;
     }
 
     public static String notAvailableGameServer() {

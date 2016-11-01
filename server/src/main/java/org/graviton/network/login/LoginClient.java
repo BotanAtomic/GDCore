@@ -52,8 +52,6 @@ public class LoginClient {
     }
 
     public void disconnect() {
-        if (account != null)
-            accountRepository.unregister(account.getId());
         this.session.closeNow();
     }
 

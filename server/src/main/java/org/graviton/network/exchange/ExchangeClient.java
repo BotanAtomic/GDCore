@@ -37,7 +37,7 @@ public class ExchangeClient {
     /**
      * Message form : #args#data
      *
-     * @param packet
+     * @param packet Data reception
      */
     public void handle(String packet) {
         switch (packet.substring(0, 1)) {
@@ -56,7 +56,7 @@ public class ExchangeClient {
         session.write(StringUtils.stringToBuffer(data));
     }
 
-    public void setState(byte id) {
+    private void setState(byte id) {
         gameServer.setState(State.values()[id - 1]);
         String serversData = LoginProtocol.serversInformationsMessage(gameServerRepository.getGameServers().values());
         loginServer.getClients().forEach(client -> client.send(serversData));

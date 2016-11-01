@@ -26,6 +26,6 @@ public final class IpInstance {
 
     public boolean addWarning() {
         warning++;
-        return (warning >= 3) ? (banned = true) : false;
+        return (warning >= 3) && (banned = true);
     }
 }

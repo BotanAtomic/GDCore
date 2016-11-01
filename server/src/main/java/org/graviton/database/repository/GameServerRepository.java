@@ -17,7 +17,7 @@ import static org.graviton.database.jooq.tables.Servers.SERVERS;
  */
 public class GameServerRepository {
     @Getter
-    private final Map<String, GameServer> gameServers;
+    private final Map<Byte, GameServer> gameServers;
     @Inject
     private LoginDatabase database;
 
@@ -26,7 +26,7 @@ public class GameServerRepository {
     }
 
     private void register(GameServer gameServer) {
-        this.gameServers.put(gameServer.getKey(), gameServer);
+        this.gameServers.put(gameServer.getId(), gameServer);
     }
 
     public void loadGameServers() {
@@ -41,7 +41,7 @@ public class GameServerRepository {
      */
     public void setGameServerInformations(String data, ExchangeClient client) {
         String[] informations = data.split(";");
-        GameServer gameServer = gameServers.get(informations[0]);
+        GameServer gameServer = getByKey(informations[0]);
 
         if (gameServer != null) {
             gameServer.setAddress(informations[1]);
@@ -50,6 +50,10 @@ public class GameServerRepository {
             gameServer.setExchangeClient(client);
         } else
             client.send(ExchangeProtocol.refuseGameServer());
+    }
+
+    private GameServer getByKey(String key) {
+        return this.gameServers.values().stream().filter(server -> server.getKey().equals(key)).findFirst().get();
     }
 
 }

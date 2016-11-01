@@ -19,7 +19,7 @@ import java.util.Properties;
 
 @Slf4j
 public class LoginDatabase implements Manageable {
-    private HikariDataSource dataSource;
+    private final HikariDataSource dataSource;
 
     @Getter
     private DSLContext dslContext;

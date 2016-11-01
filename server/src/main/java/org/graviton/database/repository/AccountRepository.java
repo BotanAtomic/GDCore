@@ -59,10 +59,6 @@ public class AccountRepository {
         this.accounts.put(account.getId(), account);
     }
 
-    public void unregister(int id) {
-        this.accounts.remove(id);
-    }
-
     public void updateNickname(Account account) {
         database.getDslContext().update(ACCOUNTS).set(ACCOUNTS.NICKNAME, account.getNickname()).where(ACCOUNTS.ID.equal(account.getId())).execute();
     }

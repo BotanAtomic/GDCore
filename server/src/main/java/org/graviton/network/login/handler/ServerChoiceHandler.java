@@ -15,7 +15,7 @@ public class ServerChoiceHandler extends AbstractHandler {
 
     public ServerChoiceHandler(LoginClient client) {
         client.send(LoginProtocol.nicknameInformationMessage(client.getAccount().getNickname()));
-        client.send(LoginProtocol.communityInformationMessage(0));
+        client.send(LoginProtocol.communityInformationMessage());
         client.send(LoginProtocol.serversInformationsMessage(client.getGameServerRepository().getGameServers().values()));
         client.send(LoginProtocol.identificationSuccessMessage(client.getAccount().getRights() > 0));
         client.send(LoginProtocol.accountQuestionInformationMessage(client.getAccount().getSecretQuestion()));

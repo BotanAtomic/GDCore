@@ -1,6 +1,12 @@
+import groovy.xml.MarkupBuilder
+import org.jooq.util.GenerationTool
+
+import javax.xml.bind.JAXB
+
 apply plugin: 'java'
 apply plugin: 'application'
 
+//noinspection GroovyUnusedAssignment
 mainClassName = "org.graviton.core.Main"
 
 buildscript {
@@ -30,7 +36,8 @@ task generate << {
     // Use your favourite XML builder to construct the code generation configuration file
     // ----------------------------------------------------------------------------------
     def writer = new StringWriter()
-    def xml = new groovy.xml.MarkupBuilder(writer)
+    //noinspection GroovyUnusedAssignment
+    def xml = new MarkupBuilder(writer)
             .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.8.0.xsd') {
         jdbc() {
             driver('com.mysql.cj.jdbc.Driver')
@@ -58,8 +65,8 @@ task generate << {
 
     // Run the code generator
     // ----------------------
-    org.jooq.util.GenerationTool.main(
-            javax.xml.bind.JAXB.unmarshal(
+    GenerationTool.main(
+            JAXB.unmarshal(
                     new StringReader(writer.toString()),
                     org.jooq.util.jaxb.Configuration.class
             )
