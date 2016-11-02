@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.graviton.database.LoginDatabase;
 import org.graviton.database.models.GameServer;
 import org.graviton.network.exchange.ExchangeClient;
-import org.graviton.network.exchange.protocol.ExchangeProtocol;
+import org.graviton.protocol.ExchangeProtocol;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,10 +34,10 @@ public class GameServerRepository {
     }
 
     /**
-     * Receive data form : SI#key;#adress;#port
      *
-     * @param data
-     * @param client
+     *
+     * @param data  Receive data form : SI#key;#adress;#port
+     * @param client Exchange client of GameServer
      */
     public void setGameServerInformations(String data, ExchangeClient client) {
         String[] informations = data.split(";");

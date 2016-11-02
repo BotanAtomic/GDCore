@@ -5,9 +5,9 @@ import lombok.Getter;
 import org.graviton.database.LoginDatabase;
 import org.graviton.database.models.Account;
 import org.graviton.database.models.Player;
-import org.graviton.network.exchange.protocol.ExchangeProtocol;
 import org.graviton.network.login.LoginClient;
 import org.graviton.network.login.protocol.LoginProtocol;
+import org.graviton.protocol.ExchangeProtocol;
 import org.jooq.Record;
 
 import java.util.ArrayList;

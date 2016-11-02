@@ -1,4 +1,4 @@
-package org.graviton.network.exchange.protocol;
+package org.graviton.protocol;
 
 /**
  * Created by Botan on 30/10/2016 : 13:43

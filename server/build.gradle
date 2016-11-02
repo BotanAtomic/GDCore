@@ -29,6 +29,8 @@ repositories {
 dependencies {
     compile 'mysql:mysql-connector-java:+'
     compile 'org.jooq:jooq:+'
+
+    compile project(':common')
 }
 
 task generate << {
@@ -65,7 +67,7 @@ task generate << {
 
     // Run the code generator
     // ----------------------
-    GenerationTool.main(
+    GenerationTool.generate(
             JAXB.unmarshal(
                     new StringReader(writer.toString()),
                     org.jooq.util.jaxb.Configuration.class
