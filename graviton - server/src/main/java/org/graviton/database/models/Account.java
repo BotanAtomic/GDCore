@@ -6,7 +6,7 @@ import org.jooq.Record;
 
 import java.util.Collection;
 
-import static org.graviton.database.jooq.tables.Accounts.ACCOUNTS;
+import static org.graviton.database.jooq.login.tables.Accounts.ACCOUNTS;
 
 /**
  * Created by Botan on 30/10/2016 : 00:17

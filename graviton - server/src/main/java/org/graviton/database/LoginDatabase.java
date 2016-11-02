@@ -12,7 +12,7 @@ import java.util.Properties;
  */
 
 @Slf4j
-public class LoginDatabase extends Database implements Manageable {
+public class LoginDatabase extends AbstractDatabase implements Manageable {
     @Inject
     public LoginDatabase(Program program, Properties properties) {
         super(properties);

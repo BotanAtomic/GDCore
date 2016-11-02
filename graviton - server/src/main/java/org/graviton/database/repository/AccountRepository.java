@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static org.graviton.database.jooq.tables.Accounts.ACCOUNTS;
-import static org.graviton.database.jooq.tables.Players.PLAYERS;
+import static org.graviton.database.jooq.login.tables.Accounts.ACCOUNTS;
+import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
 
 
 /**

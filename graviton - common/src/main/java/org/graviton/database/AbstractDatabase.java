@@ -15,17 +15,17 @@ import java.util.Properties;
  * Created by Botan on 02/11/2016 : 13:18
  */
 @Slf4j
-public abstract class Database implements Manageable {
+public abstract class AbstractDatabase implements Manageable {
     private final HikariDataSource dataSource;
 
     @Getter
     public DSLContext dslContext;
 
-    public Database(Properties properties) {
+    public AbstractDatabase(Properties properties) {
         this.dataSource = new HikariDataSource(new HikariConfig(properties));
     }
 
-    public Database(HikariConfig hikariConfig) {
+    public AbstractDatabase(HikariConfig hikariConfig) {
         this.dataSource = new HikariDataSource(hikariConfig);
     }
 

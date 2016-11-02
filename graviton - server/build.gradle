@@ -59,8 +59,8 @@ task generate << {
             generate() {
             }
             target() {
-                packageName('org.graviton.database.jooq')
-                directory('src/main/java')
+                packageName('org.graviton.database.jooq.login')
+                directory('../graviton - common/src/main/java')
             }
         }
     }

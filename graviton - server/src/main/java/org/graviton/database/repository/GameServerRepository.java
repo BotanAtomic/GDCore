@@ -10,7 +10,7 @@ import org.graviton.protocol.ExchangeProtocol;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.graviton.database.jooq.tables.Servers.SERVERS;
+import static org.graviton.database.jooq.login.tables.Servers.SERVERS;
 
 /**
  * Created by Botan on 30/10/2016 : 13:37
