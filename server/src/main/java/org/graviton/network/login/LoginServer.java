@@ -13,7 +13,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
-import org.graviton.network.security.GravitonFilter;
+import org.graviton.network.security.SecurityFilter;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -42,7 +42,7 @@ public class LoginServer implements IoHandler, Manageable {
         program.add(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
-        this.socketAcceptor.getFilterChain().addFirst("blacklist", new GravitonFilter((byte) 3, (short) 1));
+        this.socketAcceptor.getFilterChain().addFirst("security", new SecurityFilter((byte) 3));
         this.socketAcceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF8"), LineDelimiter.NUL, new LineDelimiter("\n\0"))));
         this.socketAcceptor.setHandler(this);
     }
