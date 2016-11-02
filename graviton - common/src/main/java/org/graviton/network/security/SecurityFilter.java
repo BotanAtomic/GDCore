@@ -112,12 +112,10 @@ public class SecurityFilter extends IoFilterAdapter {
     private static class Instance {
         private final String address;
         private final AtomicInteger connections = new AtomicInteger(0);
-
+        private final List<Long> blockedSessions = new CopyOnWriteArrayList<>();
         private long lastConnection = 0;
         private boolean banned = false;
         private short warning;
-
-        private List<Long> blockedSessions = new CopyOnWriteArrayList<>();
 
         public Instance(String address) {
             this.address = address;
