@@ -9,7 +9,7 @@
 
 #What is it ?
 
-Graviton (GDCore) is a 1.29 dofus emulator, developed in Java. He's supported by gradle and is separated in 2 projects
+Graviton (GDCore) is a 1.29 dofus emulator, developed in Java. He's supported by gradle and is separated in 3 projects
 
 - <i>graviton - login</i> : it's the login server, manages connections
 
