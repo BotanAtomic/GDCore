@@ -28,7 +28,7 @@ public class SecurityFilter extends IoFilterAdapter {
     private final Map<String, Instance> instances;
 
     /**
-     * @param maxConnectionSet max connection per second
+     * @param maxConnection Set max connection per second
      */
     public SecurityFilter(byte maxConnection) {
         this.maxConnection = maxConnection;

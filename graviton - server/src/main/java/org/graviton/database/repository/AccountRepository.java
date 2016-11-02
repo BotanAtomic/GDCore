@@ -60,7 +60,7 @@ public class AccountRepository {
     }
 
     public void updateNickname(Account account) {
-        database.getDslContext().update(ACCOUNTS).set(ACCOUNTS.NICKNAME, account.getNickname()).where(ACCOUNTS.ID.equal(account.getId())).execute();
+        database.update(ACCOUNTS).set(ACCOUNTS.NICKNAME, account.getNickname()).where(ACCOUNTS.ID.equal(account.getId())).execute();
     }
 
     public boolean isAvailableNickname(String nickname) {
