@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.session.IoSession;
 import org.graviton.database.models.GameServer;
 import org.graviton.database.repository.GameServerRepository;
+import org.graviton.network.exchange.protocol.ExchangeProtocol;
 import org.graviton.network.exchange.state.State;
 import org.graviton.network.login.LoginServer;
 import org.graviton.network.login.protocol.LoginProtocol;
-import org.graviton.protocol.ExchangeProtocol;
 import org.graviton.utils.StringUtils;
 
 /**

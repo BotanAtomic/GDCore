@@ -2,10 +2,10 @@ package org.graviton.network.login.handler;
 
 import org.graviton.api.AbstractHandler;
 import org.graviton.database.models.GameServer;
+import org.graviton.network.exchange.protocol.ExchangeProtocol;
 import org.graviton.network.exchange.state.State;
 import org.graviton.network.login.LoginClient;
 import org.graviton.network.login.protocol.LoginProtocol;
-import org.graviton.protocol.ExchangeProtocol;
 
 
 /**

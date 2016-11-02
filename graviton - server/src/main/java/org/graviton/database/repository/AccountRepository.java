@@ -5,9 +5,9 @@ import lombok.Getter;
 import org.graviton.database.LoginDatabase;
 import org.graviton.database.models.Account;
 import org.graviton.database.models.Player;
+import org.graviton.network.exchange.protocol.ExchangeProtocol;
 import org.graviton.network.login.LoginClient;
 import org.graviton.network.login.protocol.LoginProtocol;
-import org.graviton.protocol.ExchangeProtocol;
 import org.jooq.Record;
 
 import java.util.ArrayList;
@@ -45,6 +45,7 @@ public class AccountRepository {
             return null;
 
         int account = record.get(ACCOUNTS.ID);
+
         if (accounts.containsKey(account)) {
             accounts.get(account).getClient().send(LoginProtocol.alreadyConnected());
 

@@ -5,8 +5,8 @@ package org.graviton.network.exchange.state;
  */
 public enum State {
     OFFLINE((byte) 0),
-    ONLINE((byte) 2),
-    SAVING((byte) 3);
+    ONLINE((byte) 1),
+    SAVING((byte) 2);
 
     private final byte state;
 

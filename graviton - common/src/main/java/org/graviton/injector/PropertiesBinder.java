@@ -1,4 +1,4 @@
-package org.graviton.utils;
+package org.graviton.injector;
 
 import com.google.inject.Binder;
 import com.google.inject.MembersInjector;

@@ -2,7 +2,7 @@ package org.graviton.core.injector.modules;
 
 import com.google.inject.AbstractModule;
 import lombok.extern.slf4j.Slf4j;
-import org.graviton.utils.PropertiesBinder;
+import org.graviton.injector.PropertiesBinder;
 
 import java.io.IOException;
 import java.util.Properties;
