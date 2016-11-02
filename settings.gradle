@@ -1,4 +1,5 @@
-rootProject.name = '2'
-include 'server'
-include 'common'
+rootProject.name = 'GDCore'
+include 'graviton - server'
+include 'graviton - common'
+include 'graviton - game'
 

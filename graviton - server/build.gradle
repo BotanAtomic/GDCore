@@ -30,7 +30,7 @@ dependencies {
     compile 'mysql:mysql-connector-java:+'
     compile 'org.jooq:jooq:+'
 
-    compile project(':common')
+    compile project(':graviton - common')
 }
 
 task generate << {
