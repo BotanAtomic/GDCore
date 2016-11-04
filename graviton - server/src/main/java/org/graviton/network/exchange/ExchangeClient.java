@@ -55,6 +55,9 @@ public class ExchangeClient {
     }
 
     public void setState(State state) {
+        if (gameServer == null)
+            return;
+
         gameServer.setState(state);
         String serversData = LoginProtocol.serversInformationsMessage(gameServerRepository.getGameServers().values());
         loginServer.getClients().forEach(client -> client.send(serversData));

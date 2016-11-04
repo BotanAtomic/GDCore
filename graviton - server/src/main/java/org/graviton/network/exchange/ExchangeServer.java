@@ -11,6 +11,7 @@ import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
 import org.graviton.database.repository.GameServerRepository;
+import org.graviton.network.exchange.state.State;
 import org.graviton.utils.StringUtils;
 
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class ExchangeServer implements IoHandler, Manageable {
 
     @Override
     public void sessionClosed(IoSession session) {
+        ((ExchangeClient) session.getAttribute("client")).setState(State.OFFLINE);
         log.debug("[Session {}] closed", session.getId());
     }
 
