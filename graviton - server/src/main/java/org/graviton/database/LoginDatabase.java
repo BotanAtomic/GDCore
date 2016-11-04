@@ -15,8 +15,7 @@ import java.util.Properties;
 public class LoginDatabase extends AbstractDatabase implements Manageable {
     @Inject
     public LoginDatabase(Program program, Properties properties) {
-        super(properties);
-        program.add(this);
+        super(properties, program);
     }
 
 }

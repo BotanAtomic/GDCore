@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
+import org.graviton.core.Program;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 
@@ -21,12 +22,9 @@ public abstract class AbstractDatabase implements Manageable {
     @Getter
     public DSLContext dslContext;
 
-    public AbstractDatabase(Properties properties) {
+    public AbstractDatabase(Properties properties, Program program) {
+        program.add(this);
         this.dataSource = new HikariDataSource(new HikariConfig(properties));
-    }
-
-    public AbstractDatabase(HikariConfig hikariConfig) {
-        this.dataSource = new HikariDataSource(hikariConfig);
     }
 
     @Override
