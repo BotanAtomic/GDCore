@@ -47,8 +47,8 @@ public class LoginClient {
         this.session.write(data);
     }
 
-    public void handle(String packet) {
-        this.handler.handle(packet, this);
+    public void handle(String data) {
+        this.handler.handle(data, this);
     }
 
     public void disconnect() {
