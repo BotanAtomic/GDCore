@@ -1,6 +1,7 @@
 package org.graviton.network.game;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
@@ -24,7 +25,8 @@ import java.nio.charset.Charset;
 @Slf4j
 public class GameServer implements IoHandler, Manageable {
     private final NioSocketAcceptor socketAcceptor;
-
+    @Inject
+    private Injector injector;
     @InjectSetting("server.port")
     private int port;
 
@@ -38,44 +40,49 @@ public class GameServer implements IoHandler, Manageable {
         this.socketAcceptor.setHandler(this);
     }
 
-    @Override
     public void sessionCreated(IoSession session) throws Exception {
-
+        log.debug("[Session {}] created", session.getId());
     }
 
     @Override
-    public void sessionOpened(IoSession session) throws Exception {
-
+    public void sessionOpened(IoSession session) {
+        session.setAttribute("client", new GameClient(session, injector));
+        log.debug("[Session {}] opened", session.getId());
     }
 
     @Override
-    public void sessionClosed(IoSession session) throws Exception {
-
+    public void sessionClosed(IoSession session) {
+        ((GameClient) session.getAttribute("client")).disconnect();
+        log.debug("[Session {}] closed", session.getId());
     }
 
     @Override
-    public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
-
+    public void sessionIdle(IoSession session, IdleStatus status) {
+        log.debug("[Session {}] idle", session.getId());
     }
 
     @Override
     public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
+        log.error("[Session {}] exception > \n", session.getId(), cause);
 
     }
 
     @Override
-    public void messageReceived(IoSession session, Object message) throws Exception {
-
+    public void messageReceived(IoSession session, Object message) {
+        log.info("[Session {}] receives < {}", session.getId(), message);
+        ((GameClient) session.getAttribute("client")).handle(message.toString());
     }
 
     @Override
-    public void messageSent(IoSession session, Object message) throws Exception {
+    public void messageSent(IoSession session, Object message) {
+        log.info("[Session {}] send > {}", session.getId(), message);
 
     }
 
     @Override
     public void inputClosed(IoSession session) throws Exception {
-
+        session.closeNow();
+        log.debug("[Session {}] input closed", session.getId());
     }
 
     @Override
