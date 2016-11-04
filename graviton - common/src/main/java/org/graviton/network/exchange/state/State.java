@@ -14,7 +14,15 @@ public enum State {
         this.state = state;
     }
 
+    public static State get(byte id) {
+        for (State state : State.values())
+            if (state.value() == id)
+                return state;
+        return null;
+    }
+
     public byte value() {
         return state;
     }
+
 }

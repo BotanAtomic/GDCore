@@ -42,22 +42,22 @@ public class ExchangeClient {
     public void handle(String packet) {
         switch (packet.substring(0, 1)) {
             case "I":
-                gameServerRepository.setGameServerInformations(packet.substring(2), this);
-                setState((byte) 1);
-                log.debug("Game server [{}] is successfully connected");
+                gameServerRepository.setGameServerInformations(packet.substring(1), this);
                 break;
             case "S":
-                setState(Byte.parseByte(packet.substring(2)));
+                setState(State.get(Byte.parseByte(packet.substring(1))));
                 break;
         }
+        log.info("[Session {}] receive < {}", session.getId(), packet);
     }
 
     public void send(String data) {
         session.write(StringUtils.stringToBuffer(data));
+        log.info("[Session {}] send > {}", session.getId(), data);
     }
 
-    private void setState(byte id) {
-        gameServer.setState(State.values()[id - 1]);
+    public void setState(State state) {
+        gameServer.setState(state);
         String serversData = LoginProtocol.serversInformationsMessage(gameServerRepository.getGameServers().values());
         loginServer.getClients().forEach(client -> client.send(serversData));
     }

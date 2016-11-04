@@ -67,13 +67,11 @@ public class ExchangeServer implements IoHandler, Manageable {
 
     @Override
     public void messageReceived(IoSession session, Object message) {
-        log.info("[Session {}] R < {}", session.getId(), message);
         ((ExchangeClient) session.getAttribute("client")).handle(StringUtils.bufferToString(message));
     }
 
     @Override
     public void messageSent(IoSession session, Object message) {
-        log.info("[Session {}] S  > {}", session.getId(), message);
 
     }
 

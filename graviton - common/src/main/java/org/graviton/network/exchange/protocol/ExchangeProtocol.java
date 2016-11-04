@@ -5,6 +5,9 @@ package org.graviton.network.exchange.protocol;
  */
 public class ExchangeProtocol {
 
+    /**
+     * region #ASK
+     **/
     public static String needInformations() {
         return "?";
     }
@@ -23,5 +26,13 @@ public class ExchangeProtocol {
 
     public static String connectAccount(int account) {
         return "+" + account;
+    }
+
+    /**
+     * region #RESPONSE
+     **/
+
+    public static String informationMessage(String key, String address, int port) {
+        return "I".concat(key).concat(";" + address + ";") + port;
     }
 }

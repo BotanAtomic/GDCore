@@ -1,14 +1,45 @@
 package org.graviton.network.exchange;
 
+import com.google.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.transport.socket.nio.NioSocketConnector;
+import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
+import org.graviton.core.Program;
+import org.graviton.network.exchange.protocol.ExchangeProtocol;
+import org.graviton.utils.StringUtils;
+
+import java.net.InetSocketAddress;
 
 /**
  * Created by Botan on 04/11/2016 : 22:50
  */
+@Slf4j
 public class ExchangeConnector implements IoHandler, Manageable {
+    private final NioSocketConnector socketConnector;
+    private IoSession session;
+    @InjectSetting("exchange.ip")
+    private String exchangeAddress;
+    @InjectSetting("exchange.port")
+    private int exchangePort;
+    @InjectSetting("server.ip")
+    private String address;
+    @InjectSetting("server.port")
+    private int port;
+    @InjectSetting("server.key")
+    private String serverKey;
+
+    @Inject
+    public ExchangeConnector(Program program) {
+        program.add(this);
+        this.socketConnector = new NioSocketConnector();
+        this.socketConnector.setHandler(this);
+    }
+
     @Override
     public void sessionCreated(IoSession session) throws Exception {
 
@@ -21,7 +52,7 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     @Override
     public void sessionClosed(IoSession session) throws Exception {
-
+        log.debug("[WARNING] Exchange server was disconnected");
     }
 
     @Override
@@ -36,26 +67,58 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
-
+        handle(StringUtils.bufferToString(message));
     }
 
     @Override
     public void messageSent(IoSession session, Object message) throws Exception {
-
     }
 
     @Override
     public void inputClosed(IoSession session) throws Exception {
+        session.closeNow();
+    }
 
+    private void send(String data) {
+        session.write(StringUtils.stringToBuffer(data));
+        log.debug("[Exchange connector] send > {}", data);
+    }
+
+    private void handle(String data) {
+        switch (data.charAt(0)) {
+            case '?':
+                send(ExchangeProtocol.informationMessage(this.serverKey, this.address, this.port));
+                break;
+            case 'S':
+                if (data.charAt(1) == 'A') {
+                    log.debug("Exchange server successfully accepted the connection");
+                    System.exit(0);
+                } else {
+                    log.debug("Exchange server refused the connection");
+                    System.exit(0);
+                }
+                break;
+            case '-':
+
+                break;
+            case '+':
+
+                break;
+        }
+        log.debug("[Exchange connector] receive < {}", data);
     }
 
     @Override
     public void start() {
-
+        ConnectFuture future = socketConnector.connect(new InetSocketAddress(exchangeAddress, exchangePort));
+        future.awaitUninterruptibly();
+        this.session = future.getSession();
+        log.info("Successfully connected to the exchange server {{}/{}}", exchangeAddress, exchangePort);
     }
 
     @Override
     public void stop() {
-
+        session.getCloseFuture().awaitUninterruptibly();
+        socketConnector.dispose();
     }
 }

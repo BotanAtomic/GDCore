@@ -2,10 +2,12 @@ package org.graviton.database.repository;
 
 import com.google.inject.Inject;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.graviton.database.LoginDatabase;
 import org.graviton.database.models.GameServer;
 import org.graviton.network.exchange.ExchangeClient;
 import org.graviton.network.exchange.protocol.ExchangeProtocol;
+import org.graviton.network.exchange.state.State;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,6 +17,8 @@ import static org.graviton.database.jooq.login.tables.Servers.SERVERS;
 /**
  * Created by Botan on 30/10/2016 : 13:37
  */
+
+@Slf4j
 public class GameServerRepository {
     @Getter
     private final Map<Byte, GameServer> gameServers;
@@ -34,7 +38,7 @@ public class GameServerRepository {
     }
 
     /**
-     * @param data  Receive data form : SI#key;#adress;#port
+     * @param data  Receive data form : I#key;#address;#port
      * @param client Exchange client of GameServer
      */
     public void setGameServerInformations(String data, ExchangeClient client) {
@@ -47,8 +51,12 @@ public class GameServerRepository {
             client.setGameServer(gameServer);
             gameServer.setExchangeClient(client);
             client.send(ExchangeProtocol.allowGameServer());
-        } else
+            client.setState(State.ONLINE);
+            log.debug("Game server [{}] is successfully connected");
+        } else {
             client.send(ExchangeProtocol.refuseGameServer());
+            log.debug("Game server [{}] is refused");
+        }
     }
 
     private GameServer getByKey(String key) {
