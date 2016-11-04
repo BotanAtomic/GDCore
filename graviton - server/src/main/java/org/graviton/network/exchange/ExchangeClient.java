@@ -35,9 +35,7 @@ public class ExchangeClient {
 
 
     /**
-     * Message form : #args#data
-     *
-     * @param packet Data reception
+     * @param packet form :#args#data
      */
     public void handle(String packet) {
         switch (packet.substring(0, 1)) {
