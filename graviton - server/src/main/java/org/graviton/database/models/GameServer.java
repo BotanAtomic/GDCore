@@ -24,7 +24,7 @@ public class GameServer {
     public GameServer(byte id, String key) {
         this.id = id;
         this.key = key;
-        this.state = State.ONLINE;
+        this.state = State.OFFLINE;
         log.debug("Game server [{}] loaded successfully", key);
     }
 

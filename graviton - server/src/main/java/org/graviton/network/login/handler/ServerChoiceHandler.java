@@ -40,7 +40,7 @@ public class ServerChoiceHandler extends AbstractHandler {
     private void selectServer(LoginClient client, byte gameServerId) {
         GameServer gameServer = client.getGameServerRepository().getGameServers().get(gameServerId);
 
-        if (gameServer.getState() != State.ONLINE) {
+        if (gameServer.getState() != State.ONLINE || gameServer.getExchangeClient() == null) {
             client.send(LoginProtocol.notAvailableGameServer());
             return;
         }
