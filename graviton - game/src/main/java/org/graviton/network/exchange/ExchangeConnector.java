@@ -22,6 +22,7 @@ import java.net.InetSocketAddress;
 public class ExchangeConnector implements IoHandler, Manageable {
     private final NioSocketConnector socketConnector;
     private IoSession session;
+
     @InjectSetting("exchange.ip")
     private String exchangeAddress;
     @InjectSetting("exchange.port")
@@ -85,6 +86,7 @@ public class ExchangeConnector implements IoHandler, Manageable {
     }
 
     private void handle(String data) {
+        log.debug("[Exchange connector] receive < {}", data);
         switch (data.charAt(0)) {
             case '?':
                 send(ExchangeProtocol.informationMessage(this.serverKey, this.address, this.port));
@@ -92,7 +94,6 @@ public class ExchangeConnector implements IoHandler, Manageable {
             case 'S':
                 if (data.charAt(1) == 'A') {
                     log.debug("Exchange server successfully accepted the connection");
-                    System.exit(0);
                 } else {
                     log.debug("Exchange server refused the connection");
                     System.exit(0);
@@ -105,7 +106,6 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
                 break;
         }
-        log.debug("[Exchange connector] receive < {}", data);
     }
 
     @Override
@@ -120,5 +120,6 @@ public class ExchangeConnector implements IoHandler, Manageable {
     public void stop() {
         session.getCloseFuture().awaitUninterruptibly();
         socketConnector.dispose();
+        log.debug("Exchange connector was successfully disconnected ");
     }
 }
