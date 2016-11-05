@@ -5,6 +5,7 @@ import com.google.inject.name.Names;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
 import org.graviton.database.LoginDatabase;
+import org.graviton.database.repository.AccountRepository;
 
 /**
  * Created by Botan on 04/11/2016 : 22:12
@@ -15,5 +16,7 @@ public class DatabaseModule extends AbstractModule {
     protected void configure() {
         bind(AbstractDatabase.class).annotatedWith(Names.named("database.game")).to(GameDatabase.class).asEagerSingleton();
         bind(AbstractDatabase.class).annotatedWith(Names.named("database.login")).to(LoginDatabase.class).asEagerSingleton();
+
+        bind(AccountRepository.class).asEagerSingleton();
     }
 }
