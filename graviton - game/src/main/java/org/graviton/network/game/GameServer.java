@@ -9,6 +9,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.LineDelimiter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
@@ -18,6 +19,7 @@ import org.graviton.network.security.SecurityFilter;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Botan on 04/11/2016 : 22:50
@@ -36,6 +38,7 @@ public class GameServer implements IoHandler, Manageable {
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
         this.socketAcceptor.getFilterChain().addFirst("security", new SecurityFilter((byte) 3));
+        this.socketAcceptor.getFilterChain().addFirst("executor", new ExecutorFilter(Executors.newCachedThreadPool()));
         this.socketAcceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF8"), LineDelimiter.NUL, new LineDelimiter("\n\0"))));
         this.socketAcceptor.setHandler(this);
     }
