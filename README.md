@@ -29,6 +29,8 @@ Graviton (GDCore)  contains a lot of util dependencies
 
 - <b>Lombok</b> : for meta-data
 
-- <b>JOOQ</b> : for typesafe SQL query construction and execution.
+- <b>JOOQ</b> : for typesafe SQL query construction and execution
 
-- <b>Mina Apache</b> : for network.
+- <b>Mina Apache</b> : for network
+
+- <b>Hikari CP</b> : for database pool connection
