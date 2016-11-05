@@ -22,6 +22,7 @@ allprojects  {
         compile group: 'com.google.inject', name: 'guice', version: '+'
         compile group: 'org.slf4j', name: 'slf4j-api', version: '+'
         compile group: 'org.jooq', name: 'jooq', version: '+'
+        compile group: 'it.unimi.dsi', name: 'fastutil', version: '7.0.13'
 
         compile 'org.jooq:jooq-meta:+'
         compile 'org.jooq:jooq-codegen:+'
