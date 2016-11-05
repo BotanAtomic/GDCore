@@ -9,4 +9,8 @@ public class GameProtocol {
         return "HG";
     }
 
+    public static String accountTicketMessage(String key) {
+        return "ATK".concat(key);
+    }
+
 }

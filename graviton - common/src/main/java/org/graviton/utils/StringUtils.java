@@ -51,4 +51,8 @@ public class StringUtils {
         }
     }
 
+    public static short stringToShort(String header) {
+        return (short) ((header.charAt(0) - header.charAt(1)) * (header.charAt(1) + header.charAt(0)));
+    }
+
 }

@@ -2,12 +2,15 @@ package org.graviton.network.game;
 
 import com.google.inject.Injector;
 import org.apache.mina.core.session.IoSession;
+import org.graviton.network.game.handler.MessageHandler;
 import org.graviton.network.game.protocol.GameProtocol;
 
 /**
  * Created by Botan on 04/11/2016 : 22:50
  */
 public class GameClient {
+    private final MessageHandler messageHandler = new MessageHandler(this);
+
     private final long id;
     private final IoSession session;
 
@@ -23,7 +26,7 @@ public class GameClient {
     }
 
     public void handle(String data) {
-
+        messageHandler.handle(data);
     }
 
     public void disconnect() {
