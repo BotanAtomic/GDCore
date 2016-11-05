@@ -2,7 +2,6 @@ package org.graviton.network.login.handler;
 
 import org.graviton.api.AbstractHandler;
 import org.graviton.database.models.GameServer;
-import org.graviton.network.exchange.protocol.ExchangeProtocol;
 import org.graviton.network.exchange.state.State;
 import org.graviton.network.login.LoginClient;
 import org.graviton.network.login.protocol.LoginProtocol;
@@ -45,7 +44,6 @@ public class ServerChoiceHandler extends AbstractHandler {
             return;
         }
 
-        gameServer.getExchangeClient().send(ExchangeProtocol.connectAccount(client.getAccount().getId()));
         client.send(LoginProtocol.selectGameServerMessage(client.getAccount().getId(), gameServer));
         client.getAccountRepository().getConnectedClients().put(client.getAccount().getId(), gameServerId);
     }

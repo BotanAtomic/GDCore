@@ -50,8 +50,10 @@ public class SecurityFilter extends IoFilterAdapter {
                     instance.blockSession(session);
                     log.debug("[Session {}] Connection refused ({})", session, instance.getAddress());
                     return false;
-                } else
+                } else {
+                    instance.getConnections().set(0);
                     return true;
+                }
             }
 
             instance.getConnections().set(0);
