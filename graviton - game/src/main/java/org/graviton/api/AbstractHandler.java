@@ -7,6 +7,6 @@ import org.graviton.network.game.GameClient;
  */
 public interface AbstractHandler {
 
-    void apply(GameClient client, String data);
+    void apply(GameClient client, String data, String header);
 
 }
