@@ -32,7 +32,7 @@ public class Players extends TableImpl<PlayersRecord> {
      * The reference instance of <code>login.players</code>
      */
     public static final Players PLAYERS = new Players();
-    private static final long serialVersionUID = 961687453;
+    private static final long serialVersionUID = -507045512;
     /**
      * The column <code>login.players.id</code>.
      */
@@ -64,11 +64,11 @@ public class Players extends TableImpl<PlayersRecord> {
     /**
      * The column <code>login.players.colors</code>.
      */
-    public final TableField<PlayersRecord, Integer> COLORS = createField("colors", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PlayersRecord, String> COLORS = createField("colors", org.jooq.impl.SQLDataType.VARCHAR.length(11).nullable(false), this, "");
     /**
      * The column <code>login.players.level</code>.
      */
-    public final TableField<PlayersRecord, Short> LEVEL = createField("level", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<PlayersRecord, Byte> LEVEL = createField("level", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
     /**
      * The column <code>login.players.experience</code>.
      */
@@ -108,7 +108,7 @@ public class Players extends TableImpl<PlayersRecord> {
     /**
      * The column <code>login.players.life</code>.
      */
-    public final TableField<PlayersRecord, Integer> LIFE = createField("life", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PlayersRecord, Byte> LIFE = createField("life", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
     /**
      * The column <code>login.players.vitality</code>.
      */

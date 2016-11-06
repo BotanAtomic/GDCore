@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({"all", "unchecked", "rawtypes"})
 public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 
-    private static final long serialVersionUID = -1968960019;
+    private static final long serialVersionUID = 1566944293;
 
     /**
      * Create a detached PlayersRecord
@@ -36,7 +36,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Create a detached, initialised PlayersRecord
      */
-    public PlayersRecord(Integer id, Integer owner, String name, Integer breed, Byte sex, Short skin, Short size, Integer colors, Short level, Long experience, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Integer energy, Integer life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
+    public PlayersRecord(Integer id, Integer owner, String name, Integer breed, Byte sex, Short skin, Short size, String colors, Byte level, Long experience, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Integer energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
         super(Players.PLAYERS);
 
         set(0, id);
@@ -168,28 +168,28 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.colors</code>.
      */
-    public Integer getColors() {
-        return (Integer) get(7);
+    public String getColors() {
+        return (String) get(7);
     }
 
     /**
      * Setter for <code>login.players.colors</code>.
      */
-    public void setColors(Integer value) {
+    public void setColors(String value) {
         set(7, value);
     }
 
     /**
      * Getter for <code>login.players.level</code>.
      */
-    public Short getLevel() {
-        return (Short) get(8);
+    public Byte getLevel() {
+        return (Byte) get(8);
     }
 
     /**
      * Setter for <code>login.players.level</code>.
      */
-    public void setLevel(Short value) {
+    public void setLevel(Byte value) {
         set(8, value);
     }
 
@@ -322,14 +322,14 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.life</code>.
      */
-    public Integer getLife() {
-        return (Integer) get(18);
+    public Byte getLife() {
+        return (Byte) get(18);
     }
 
     /**
      * Setter for <code>login.players.life</code>.
      */
-    public void setLife(Integer value) {
+    public void setLife(Byte value) {
         set(18, value);
     }
 
