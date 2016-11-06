@@ -9,7 +9,9 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
+import org.graviton.client.account.Account;
 import org.graviton.core.Program;
+import org.graviton.database.repository.AccountRepository;
 import org.graviton.network.exchange.protocol.ExchangeProtocol;
 import org.graviton.utils.StringUtils;
 
@@ -21,6 +23,8 @@ import java.net.InetSocketAddress;
 @Slf4j
 public class ExchangeConnector implements IoHandler, Manageable {
     private final NioSocketConnector socketConnector;
+    @Inject
+    private AccountRepository accountRepository;
     private IoSession session;
 
     @InjectSetting("exchange.ip")
@@ -100,10 +104,13 @@ public class ExchangeConnector implements IoHandler, Manageable {
                 }
                 break;
             case '-':
+                Account account = this.accountRepository.get(Integer.parseInt(data.substring(1)));
+                if (account != null)
+                    account.getClient().send("AlEa");
 
                 break;
             case '+':
-
+                this.accountRepository.load(Integer.parseInt(data.substring(1)));
                 break;
         }
     }
