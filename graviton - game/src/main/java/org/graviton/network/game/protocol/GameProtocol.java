@@ -9,8 +9,24 @@ public class GameProtocol {
         return "HG";
     }
 
-    public static String accountTicketMessage(String key) {
+    public static String accountTicketSuccessMessage(String key) {
         return "ATK".concat(key);
+    }
+
+    public static String accountTicketErrorMessage() {
+        return "ATE";
+    }
+
+    public static String requestRegionalVersionMessage() {
+        return "AVO";
+    }
+
+    public static String getQueuePositionMessage() {
+        return "Af1|1|1|1|1";
+    }
+
+    public static String playerNameSuggestionSuccessMessage(String name) {
+        return "APK" + name;
     }
 
 }

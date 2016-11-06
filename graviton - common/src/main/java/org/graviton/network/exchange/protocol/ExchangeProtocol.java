@@ -24,10 +24,6 @@ public class ExchangeProtocol {
         return "-" + account;
     }
 
-    public static String connectAccount(int account) {
-        return "+" + account;
-    }
-
     /**
      * region #RESPONSE
      **/
