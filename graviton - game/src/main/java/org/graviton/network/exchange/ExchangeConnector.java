@@ -22,6 +22,9 @@ import java.net.InetSocketAddress;
  */
 @Slf4j
 public class ExchangeConnector implements IoHandler, Manageable {
+    @InjectSetting("server.id")
+    public static int serverId;
+
     private final NioSocketConnector socketConnector;
     @Inject
     private AccountRepository accountRepository;
@@ -93,7 +96,7 @@ public class ExchangeConnector implements IoHandler, Manageable {
         log.debug("[Exchange connector] receive < {}", data);
         switch (data.charAt(0)) {
             case '?':
-                send(ExchangeProtocol.informationMessage(this.serverKey, this.address, this.port));
+                send(ExchangeProtocol.informationMessage((byte) serverId, this.serverKey, this.address, this.port));
                 break;
             case 'S':
                 if (data.charAt(1) == 'A') {

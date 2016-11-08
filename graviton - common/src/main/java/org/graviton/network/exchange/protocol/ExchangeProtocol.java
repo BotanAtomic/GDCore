@@ -28,7 +28,7 @@ public class ExchangeProtocol {
      * region #RESPONSE
      **/
 
-    public static String informationMessage(String key, String address, int port) {
-        return "I".concat(key).concat(";" + address + ";") + port;
+    public static String informationMessage(byte serverId, String key, String address, int port) {
+        return "I" + serverId + ";" + key.concat(";" + address + ";") + port;
     }
 }

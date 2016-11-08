@@ -34,20 +34,20 @@ public class GameServerRepository {
     }
 
     public void loadGameServers() {
-        database.getResult(SERVERS).forEach(record -> register(new GameServer((byte) (gameServers.size() + 1), record.getValue(SERVERS.KEY))));
+        database.getResult(SERVERS).forEach(record -> register(new GameServer(record.getValue(SERVERS.ID), record.getValue(SERVERS.KEY))));
     }
 
     /**
-     * @param data  Receive data form : I#key;#address;#port
+     * @param data   Receive data form : I#key;#address;#port
      * @param client Exchange client of GameServer
      */
     public void setGameServerInformations(String data, ExchangeClient client) {
         String[] informations = data.split(";");
-        GameServer gameServer = getByKey(informations[0]);
+        GameServer gameServer = this.gameServers.get(Byte.parseByte(informations[0]));
 
-        if (gameServer != null) {
-            gameServer.setAddress(informations[1]);
-            gameServer.setPort(Integer.parseInt(informations[2]));
+        if (gameServer != null && gameServer.getKey().equals(informations[1])) {
+            gameServer.setAddress(informations[2]);
+            gameServer.setPort(Integer.parseInt(informations[3]));
             client.setGameServer(gameServer);
             gameServer.setExchangeClient(client);
             client.send(ExchangeProtocol.allowGameServer());
@@ -57,10 +57,6 @@ public class GameServerRepository {
             client.send(ExchangeProtocol.refuseGameServer());
             log.debug("Game server [{}] is refused");
         }
-    }
-
-    private GameServer getByKey(String key) {
-        return this.gameServers.values().stream().filter(server -> server.getKey().equals(key)).findFirst().get();
     }
 
 }

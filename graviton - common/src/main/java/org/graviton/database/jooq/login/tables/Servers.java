@@ -32,7 +32,11 @@ public class Servers extends TableImpl<ServersRecord> {
      * The reference instance of <code>login.servers</code>
      */
     public static final Servers SERVERS = new Servers();
-    private static final long serialVersionUID = 64868993;
+    private static final long serialVersionUID = -741802028;
+    /**
+     * The column <code>login.servers.id</code>.
+     */
+    public final TableField<ServersRecord, Byte> ID = createField("id", org.jooq.impl.SQLDataType.TINYINT, this, "");
     /**
      * The column <code>login.servers.key</code>.
      */

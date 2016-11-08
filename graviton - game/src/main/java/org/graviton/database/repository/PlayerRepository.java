@@ -6,6 +6,7 @@ import org.graviton.client.account.Account;
 import org.graviton.client.player.Player;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.LoginDatabase;
+import org.graviton.network.exchange.ExchangeConnector;
 import org.graviton.utils.StringUtils;
 
 import java.util.Collection;
@@ -31,7 +32,8 @@ public class PlayerRepository {
     public void create(Player player) {
         database.getDslContext().
                 insertInto(PLAYERS, PLAYERS.ID, PLAYERS.OWNER, PLAYERS.NAME, PLAYERS.BREED, PLAYERS.SEX, PLAYERS.SKIN, PLAYERS.COLORS, PLAYERS.SERVER).
-                values(player.getId(), player.getAccount().getId(), player.getName(), player.getBreed().id(), player.getSex(), player.getSkin(), StringUtils.parseColors(player.getColors()), (byte) 1).execute();
+                values(player.getId(), player.getAccount().getId(), player.getName(), player.getBreed().id(),
+                        player.getSex(), player.getSkin(), StringUtils.parseColors(player.getColors()), (byte) ExchangeConnector.serverId).execute();
     }
 
     public Collection<Player> getPlayers(Account account) {
