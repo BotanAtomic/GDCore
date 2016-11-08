@@ -121,14 +121,17 @@ public class ExchangeConnector implements IoHandler, Manageable {
     @Override
     public void start() {
         ConnectFuture future = socketConnector.connect(new InetSocketAddress(exchangeAddress, exchangePort));
-        future.awaitUninterruptibly();
-        this.session = future.getSession();
-        log.info("Successfully connected to the exchange server {{}/{}}", exchangeAddress, exchangePort);
+
+        if ((this.session = future.getSession()) != null)
+            log.info("Successfully connected to the exchange server {{}/{}}", exchangeAddress, exchangePort);
+        else
+            log.info("Unable to connect to the exchange server {{}/{}}", exchangeAddress, exchangePort);
+
     }
 
     @Override
     public void stop() {
-        session.getCloseFuture().awaitUninterruptibly();
+        session.closeNow();
         socketConnector.dispose();
         log.debug("Exchange connector was successfully disconnected ");
     }
