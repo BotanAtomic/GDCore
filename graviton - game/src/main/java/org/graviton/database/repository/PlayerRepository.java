@@ -6,6 +6,7 @@ import org.graviton.client.account.Account;
 import org.graviton.client.player.Player;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.LoginDatabase;
+import org.graviton.utils.StringUtils;
 
 import java.util.Collection;
 import java.util.Map;
@@ -27,6 +28,12 @@ public class PlayerRepository {
         this.database = (LoginDatabase) database;
     }
 
+    public void create(Player player) {
+        database.getDslContext().
+                insertInto(PLAYERS, PLAYERS.ID, PLAYERS.OWNER, PLAYERS.NAME, PLAYERS.BREED, PLAYERS.SEX, PLAYERS.SKIN, PLAYERS.COLORS, PLAYERS.SERVER).
+                values(player.getId(), player.getAccount().getId(), player.getName(), player.getBreed().id(), player.getSex(), player.getSkin(), StringUtils.parseColors(player.getColors()), (byte) 1).execute();
+    }
+
     public Collection<Player> getPlayers(Account account) {
         return database.getResult(PLAYERS, PLAYERS.OWNER.equal(account.getId())).stream().map(record -> {
             Player player = new Player(record, account);
@@ -37,5 +44,9 @@ public class PlayerRepository {
 
     public void unload(int player) {
         this.players.remove(player);
+    }
+
+    public int getNextId() {
+        return database.getNextId(PLAYERS, PLAYERS.ID);
     }
 }

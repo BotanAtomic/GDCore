@@ -45,6 +45,9 @@ public class MessageHandler {
 
         register("AP", ((client, data, header) -> client.send(GameProtocol.playerNameSuggestionSuccessMessage(StringUtils.randomPseudo()))));
 
+        register("AA", ((client, data, header) -> client.createPlayer(data)));
+
+        register("AD", ((client, data, header) -> client.deletePlayer(Integer.parseInt(data))));
 
         defaultHandlers = Collections.unmodifiableMap(defaultHandlers);
         log.debug("{} packets loaded", defaultHandlers.size());

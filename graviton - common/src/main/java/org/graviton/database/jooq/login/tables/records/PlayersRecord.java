@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({"all", "unchecked", "rawtypes"})
 public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 
-    private static final long serialVersionUID = 1566944293;
+    private static final long serialVersionUID = 1609792765;
 
     /**
      * Create a detached PlayersRecord
@@ -36,7 +36,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Create a detached, initialised PlayersRecord
      */
-    public PlayersRecord(Integer id, Integer owner, String name, Integer breed, Byte sex, Short skin, Short size, String colors, Byte level, Long experience, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Integer energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
+    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Byte level, Long experience, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Integer energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
         super(Players.PLAYERS);
 
         set(0, id);
@@ -112,14 +112,14 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.breed</code>.
      */
-    public Integer getBreed() {
-        return (Integer) get(3);
+    public Byte getBreed() {
+        return (Byte) get(3);
     }
 
     /**
      * Setter for <code>login.players.breed</code>.
      */
-    public void setBreed(Integer value) {
+    public void setBreed(Byte value) {
         set(3, value);
     }
 

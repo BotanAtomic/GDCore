@@ -12,6 +12,8 @@ import org.jooq.impl.DSL;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static org.jooq.impl.DSL.max;
+
 /**
  * Created by Botan on 02/11/2016 : 13:18
  */
@@ -63,6 +65,14 @@ public abstract class AbstractDatabase implements Manageable {
 
     public UpdateSetFirstStep<?> update(Table<?> table) {
         return dslContext.update(table);
+    }
+
+    public int getNextId(Table<?> table, Field<?> field) {
+        try {
+            return (int) dslContext.select(max(field).add(1)).from(table).fetchOne().getValue(0);
+        } catch (Exception e) {
+            return 1;
+        }
     }
 
 }

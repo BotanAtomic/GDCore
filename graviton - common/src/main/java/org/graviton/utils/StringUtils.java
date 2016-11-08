@@ -86,4 +86,8 @@ public class StringUtils {
         return new int[]{Integer.parseInt(colors[0]), Integer.parseInt(colors[1]), Integer.parseInt(colors[2])};
     }
 
+    public static String parseColors(int[] colors) {
+        return colors[0] + ";" + colors[1] + ";" + colors[2];
+    }
+
 }

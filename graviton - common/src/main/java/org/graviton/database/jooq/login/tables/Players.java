@@ -32,7 +32,7 @@ public class Players extends TableImpl<PlayersRecord> {
      * The reference instance of <code>login.players</code>
      */
     public static final Players PLAYERS = new Players();
-    private static final long serialVersionUID = -507045512;
+    private static final long serialVersionUID = -911987449;
     /**
      * The column <code>login.players.id</code>.
      */
@@ -48,7 +48,7 @@ public class Players extends TableImpl<PlayersRecord> {
     /**
      * The column <code>login.players.breed</code>.
      */
-    public final TableField<PlayersRecord, Integer> BREED = createField("breed", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PlayersRecord, Byte> BREED = createField("breed", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
     /**
      * The column <code>login.players.sex</code>.
      */

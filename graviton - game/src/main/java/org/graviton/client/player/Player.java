@@ -19,7 +19,7 @@ public class Player {
     private String name;
     private AbstractBreed breed;
     private byte sex;
-    private int skin;
+    private short skin;
     private int[] colors;
     private byte level;
     private long experience;
@@ -43,6 +43,24 @@ public class Player {
         this.statisticPoints = record.get(PLAYERS.STAT_POINTS);
         this.spellPoints = record.get(PLAYERS.SPELL_POINTS);
         this.energy = record.get(PLAYERS.ENERGY);
+    }
+
+    public Player(int id, String data, Account account) {
+        this.account = account;
+
+        String[] informations = data.split("\\|");
+
+        this.id = id;
+        this.name = informations[0];
+        this.breed = AbstractBreed.get(Byte.parseByte(informations[1]));
+        this.sex = Byte.parseByte(informations[2]);
+        this.skin = this.breed.getDefaultSkin(this.sex);
+        this.colors = StringUtils.parseColors(informations[3] + ";" + informations[4] + ";" + informations[5]);
+        this.level = 1;
+        this.experience = 0;
+        this.statisticPoints = 0;
+        this.spellPoints = 0;
+        this.energy = 10000;
     }
 
     public int getColor(byte color) {

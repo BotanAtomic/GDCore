@@ -10,7 +10,7 @@ import org.graviton.client.player.breeds.models.*;
 public abstract class AbstractBreed {
 
 
-    public static AbstractBreed get(int breed) {
+    public static AbstractBreed get(byte breed) {
         try {
             return (AbstractBreed) BreedEnum.values()[breed - 1].breedClass.newInstance();
         } catch (Exception e) {
@@ -18,6 +18,12 @@ public abstract class AbstractBreed {
         }
         return null;
     }
+
+    public short getDefaultSkin(byte sex) {
+        return (short) ((id() * 10) + sex);
+    }
+
+    public abstract byte id();
 
     public enum BreedEnum {
         FECA(Feca.class),

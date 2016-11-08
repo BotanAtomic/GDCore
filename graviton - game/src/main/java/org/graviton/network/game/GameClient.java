@@ -6,7 +6,9 @@ import lombok.Data;
 import org.apache.mina.core.session.IoSession;
 import org.graviton.api.Language;
 import org.graviton.client.account.Account;
+import org.graviton.client.player.Player;
 import org.graviton.database.repository.AccountRepository;
+import org.graviton.database.repository.PlayerRepository;
 import org.graviton.network.game.handler.MessageHandler;
 import org.graviton.network.game.protocol.GameProtocol;
 
@@ -18,10 +20,14 @@ public class GameClient {
     private final MessageHandler messageHandler = new MessageHandler(this);
     private final long id;
     private final IoSession session;
-    @Inject
-    private AccountRepository accountRepository;
+
     private Account account;
     private Language language;
+
+    @Inject
+    private AccountRepository accountRepository;
+    @Inject
+    private PlayerRepository playerRepository;
 
     public GameClient(IoSession session, Injector injector) {
         injector.injectMembers(this);
@@ -56,6 +62,17 @@ public class GameClient {
 
     public void setLanguage(String language) {
         this.language = Language.get(language);
+    }
+
+    public void createPlayer(String data) {
+        Player player = new Player(playerRepository.getNextId(), data, this.account);
+        this.account.getPlayers().add(player);
+        this.send(this.account.getPlayerPacket(false));
+        playerRepository.create(player);
+    }
+
+    public void deletePlayer(int player) {
+
     }
 
 }

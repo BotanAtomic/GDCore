@@ -6,4 +6,8 @@ import org.graviton.client.player.breeds.AbstractBreed;
  * Created by Botan on 05/11/2016 : 23:01
  */
 public class Feca extends AbstractBreed {
+    @Override
+    public byte id() {
+        return 1;
+    }
 }

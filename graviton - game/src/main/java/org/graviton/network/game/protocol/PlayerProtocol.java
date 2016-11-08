@@ -24,7 +24,7 @@ public class PlayerProtocol {
                 append((player.getColor((byte) 1) != -1 ? Integer.toHexString(player.getColor((byte) 1)) : "-1")).append(";").
                 append((player.getColor((byte) 2) != -1 ? Integer.toHexString(player.getColor((byte) 2)) : "-1")).append(";").
                 append((player.getColor((byte) 3) != -1 ? Integer.toHexString(player.getColor((byte) 3)) : "-1")).append(";").
-                append(getGMSMessage(player)).append(";0;1;;;;;").toString();
+                append(getGMSMessage(player)).append(";;;;;;").toString();
     }
 
     private static String getGMSMessage(Player player) {
