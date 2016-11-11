@@ -49,6 +49,11 @@ public class MessageHandler {
 
         register("AD", ((client, data, header) -> client.deletePlayer(Integer.parseInt(data.split("\\|")[0]), data.split("\\|")[1])));
 
+        register("AS", ((client, data, header) -> client.selectPlayer(Integer.parseInt(data))));
+
+        register("GC", ((client, data, header) -> client.createGame()));
+
+
         defaultHandlers = Collections.unmodifiableMap(defaultHandlers);
         log.debug("{} packets loaded", defaultHandlers.size());
     }

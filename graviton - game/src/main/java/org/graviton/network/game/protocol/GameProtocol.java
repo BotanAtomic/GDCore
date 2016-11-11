@@ -33,5 +33,9 @@ public class GameProtocol {
         return "ADE";
     }
 
+    public static String gameCreationSuccessMessage() {
+        return "GCK|1|";
+    }
+
 
 }

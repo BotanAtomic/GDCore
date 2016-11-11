@@ -11,6 +11,7 @@ import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.network.game.handler.MessageHandler;
 import org.graviton.network.game.protocol.GameProtocol;
+import org.graviton.network.game.protocol.PlayerProtocol;
 
 /**
  * Created by Botan on 04/11/2016 : 22:50
@@ -22,6 +23,7 @@ public class GameClient {
     private final IoSession session;
 
     private Account account;
+    private Player player;
     private Language language;
 
     @Inject
@@ -71,13 +73,24 @@ public class GameClient {
         playerRepository.create(player);
     }
 
+    public void selectPlayer(int playerId) {
+        Player player = account.getPlayer(playerId);
+        this.player = player;
+        send(PlayerProtocol.getASKMessage(player));
+    }
+
+    public void createGame() {
+        send(GameProtocol.gameCreationSuccessMessage());
+
+
+    }
+
     public void deletePlayer(int player, String secretAnswer) {
         if (secretAnswer.isEmpty() || secretAnswer.equals(account.getAnswer())) {
             playerRepository.remove(account.getPlayer(player));
             send(account.getPlayerPacket(false));
-        } else {
+        } else
             send(GameProtocol.playerDeleteFailedMessage());
-        }
     }
 
 }
