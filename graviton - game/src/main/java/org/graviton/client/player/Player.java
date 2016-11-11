@@ -56,7 +56,7 @@ public class Player {
         this.sex = Byte.parseByte(informations[2]);
         this.skin = this.breed.getDefaultSkin(this.sex);
         this.colors = StringUtils.parseColors(informations[3] + ";" + informations[4] + ";" + informations[5]);
-        this.level = 1;
+        this.level = 100;
         this.experience = 0;
         this.statisticPoints = 0;
         this.spellPoints = 0;

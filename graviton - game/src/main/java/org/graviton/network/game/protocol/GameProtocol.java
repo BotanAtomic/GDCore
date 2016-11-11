@@ -29,4 +29,9 @@ public class GameProtocol {
         return "APK" + name;
     }
 
+    public static String playerDeleteFailedMessage() {
+        return "ADE";
+    }
+
+
 }

@@ -36,6 +36,11 @@ public class PlayerRepository {
                         player.getSex(), player.getSkin(), StringUtils.parseColors(player.getColors()), (byte) ExchangeConnector.serverId).execute();
     }
 
+    public void remove(Player player) {
+        database.getDslContext().delete(PLAYERS).where(PLAYERS.ID.equal(player.getId())).execute();
+        player.getAccount().getPlayers().remove(player);
+    }
+
     public Collection<Player> getPlayers(Account account) {
         return database.getResult(PLAYERS, PLAYERS.OWNER.equal(account.getId())).stream().map(record -> {
             Player player = new Player(record, account);

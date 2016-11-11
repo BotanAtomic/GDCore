@@ -71,8 +71,13 @@ public class GameClient {
         playerRepository.create(player);
     }
 
-    public void deletePlayer(int player) {
-
+    public void deletePlayer(int player, String secretAnswer) {
+        if (secretAnswer.isEmpty() || secretAnswer.equals(account.getAnswer())) {
+            playerRepository.remove(account.getPlayer(player));
+            send(account.getPlayerPacket(false));
+        } else {
+            send(GameProtocol.playerDeleteFailedMessage());
+        }
     }
 
 }

@@ -70,7 +70,7 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     @Override
     public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
-
+        cause.printStackTrace();
     }
 
     @Override
@@ -121,8 +121,10 @@ public class ExchangeConnector implements IoHandler, Manageable {
     @Override
     public void start() {
         ConnectFuture future = socketConnector.connect(new InetSocketAddress(exchangeAddress, exchangePort));
+        future.awaitUninterruptibly();
+        this.session = future.getSession();
 
-        if ((this.session = future.getSession()) != null)
+        if (this.session != null)
             log.info("Successfully connected to the exchange server {{}/{}}", exchangeAddress, exchangePort);
         else
             log.info("Unable to connect to the exchange server {{}/{}}", exchangeAddress, exchangePort);

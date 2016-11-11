@@ -49,5 +49,8 @@ public class Account {
         return PlayerProtocol.getPlayersPacketMessage(this.players);
     }
 
+    public Player getPlayer(int playerId) {
+        return this.players.stream().filter(player -> player.getId() == playerId).findFirst().get();
+    }
 
 }

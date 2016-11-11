@@ -47,7 +47,7 @@ public class MessageHandler {
 
         register("AA", ((client, data, header) -> client.createPlayer(data)));
 
-        register("AD", ((client, data, header) -> client.deletePlayer(Integer.parseInt(data))));
+        register("AD", ((client, data, header) -> client.deletePlayer(Integer.parseInt(data.split("\\|")[0]), data.split("\\|")[1])));
 
         defaultHandlers = Collections.unmodifiableMap(defaultHandlers);
         log.debug("{} packets loaded", defaultHandlers.size());
