@@ -3,6 +3,8 @@ package org.graviton.client.player;
 import lombok.Data;
 import org.graviton.client.account.Account;
 import org.graviton.client.player.breeds.AbstractBreed;
+import org.graviton.game.look.PlayerLook;
+import org.graviton.game.statistics.PlayerStatistics;
 import org.graviton.utils.StringUtils;
 import org.jooq.Record;
 
@@ -16,6 +18,7 @@ public class Player {
     private final int id;
     private final Account account;
 
+    private PlayerLook look;
     private String name;
     private AbstractBreed breed;
     private byte sex;
@@ -25,19 +28,17 @@ public class Player {
     private long experience;
     private short statisticPoints;
     private short spellPoints;
-    private int energy;
+    private short energy;
 
     private byte orientation;
 
+    private PlayerStatistics playerStatistics;
+
     public Player(Record record, Account account) {
         this.account = account;
-
         this.id = record.get(PLAYERS.ID);
-        this.name = record.get(PLAYERS.NAME);
-        this.breed = AbstractBreed.get(record.get(PLAYERS.BREED));
-        this.sex = record.get(PLAYERS.SEX);
-        this.skin = record.get(PLAYERS.SKIN);
-        this.colors = StringUtils.parseColors(record.get(PLAYERS.COLORS));
+        this.look = new PlayerLook(record);
+
         this.level = record.get(PLAYERS.LEVEL);
         this.experience = record.get(PLAYERS.EXPERIENCE);
         this.statisticPoints = record.get(PLAYERS.STAT_POINTS);

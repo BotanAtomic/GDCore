@@ -90,4 +90,8 @@ public class StringUtils {
         return colors[0] + ";" + colors[1] + ";" + colors[2];
     }
 
+    public static String toHex(int value) {
+        return (value != -1 ? Integer.toHexString(value) : "-1");
+    }
+
 }
