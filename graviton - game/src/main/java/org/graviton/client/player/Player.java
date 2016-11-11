@@ -55,6 +55,10 @@ public class Player {
         return this.look.getColors()[color - 1];
     }
 
+    public int[] getColors() {
+        return this.look.getColors();
+    }
+
     public AbstractBreed getBreed() {
         return this.look.getBreed();
     }

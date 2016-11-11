@@ -25,7 +25,7 @@ public abstract class AbstractDatabase implements Manageable {
     public DSLContext dslContext;
 
     public AbstractDatabase(Properties properties, Program program) {
-        program.add(this);
+        program.register(this);
         this.dataSource = new HikariDataSource(new HikariConfig(properties));
     }
 

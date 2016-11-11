@@ -39,7 +39,7 @@ public class LoginServer implements IoHandler, Manageable {
 
     @Inject
     public LoginServer(Program program) throws IOException {
-        program.add(this);
+        program.register(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
         this.socketAcceptor.getFilterChain().addFirst("security", new SecurityFilter((byte) 3));

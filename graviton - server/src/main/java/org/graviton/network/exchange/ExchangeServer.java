@@ -33,7 +33,7 @@ public class ExchangeServer implements IoHandler, Manageable {
 
     @Inject
     public ExchangeServer(Program program) throws IOException {
-        program.add(this);
+        program.register(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
         this.socketAcceptor.setHandler(this);

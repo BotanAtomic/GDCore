@@ -51,4 +51,11 @@ public class PlayerProtocol {
         return "";
     }
 
+    public static String getAsMessage(Player player) {
+        StringBuilder builder = new StringBuilder("As");
+
+
+        return builder.toString();
+    }
+
 }

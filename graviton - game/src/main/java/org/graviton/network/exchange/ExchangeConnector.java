@@ -43,7 +43,7 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     @Inject
     public ExchangeConnector(Program program) {
-        program.add(this);
+        program.register(this);
         this.socketConnector = new NioSocketConnector();
         this.socketConnector.setHandler(this);
     }

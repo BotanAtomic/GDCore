@@ -27,7 +27,7 @@ public class Program {
         log.debug("Program successfully closed");
     }
 
-    public void add(Manageable manageable) {
+    public void register(Manageable manageable) {
         this.manageable.add(manageable);
     }
 }

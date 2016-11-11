@@ -5,6 +5,7 @@ import com.google.inject.name.Names;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
 import org.graviton.database.LoginDatabase;
+import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.statistics.common.CharacteristicType;
@@ -21,6 +22,8 @@ public class DatabaseModule extends AbstractModule {
 
         bind(PlayerRepository.class).asEagerSingleton();
         bind(AccountRepository.class).asEagerSingleton();
+
+        bind(EntityFactory.class).asEagerSingleton();
 
         CharacteristicType.load();
     }

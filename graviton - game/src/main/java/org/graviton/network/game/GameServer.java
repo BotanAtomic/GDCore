@@ -34,7 +34,7 @@ public class GameServer implements IoHandler, Manageable {
 
     @Inject
     public GameServer(Program program) {
-        program.add(this);
+        program.register(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
         this.socketAcceptor.getFilterChain().addFirst("security", new SecurityFilter((byte) 3));
