@@ -6,6 +6,7 @@ import org.graviton.client.account.Account;
 import org.graviton.client.player.Player;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.LoginDatabase;
+import org.graviton.database.entity.EntityFactory;
 import org.graviton.network.exchange.ExchangeConnector;
 import org.graviton.utils.StringUtils;
 
@@ -21,6 +22,8 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
  */
 public class PlayerRepository {
     private final Map<Integer, Player> players;
+    @Inject
+    private EntityFactory entityFactory;
     private LoginDatabase database;
 
     @Inject
@@ -43,7 +46,7 @@ public class PlayerRepository {
 
     public Collection<Player> getPlayers(Account account) {
         return database.getResult(PLAYERS, PLAYERS.OWNER.equal(account.getId())).stream().map(record -> {
-            Player player = new Player(record, account);
+            Player player = new Player(record, account, entityFactory);
             this.players.put(player.getId(), player);
             return player;
         }).collect(Collectors.toList());

@@ -8,7 +8,6 @@ import org.graviton.database.LoginDatabase;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
-import org.graviton.game.statistics.common.CharacteristicType;
 
 /**
  * Created by Botan on 04/11/2016 : 22:12
@@ -24,7 +23,5 @@ public class DatabaseModule extends AbstractModule {
         bind(AccountRepository.class).asEagerSingleton();
 
         bind(EntityFactory.class).asEagerSingleton();
-
-        CharacteristicType.load();
     }
 }

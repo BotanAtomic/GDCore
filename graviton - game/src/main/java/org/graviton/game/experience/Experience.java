@@ -13,7 +13,7 @@ public class Experience {
     private int mount, job;
     private long player, guild;
 
-    private Experience next, previous;
+    private Experience next;
 
     public Experience(Element element) {
         this.player = Long.parseLong(element.getAttribute("player"));

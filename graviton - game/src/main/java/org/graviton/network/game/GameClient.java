@@ -7,6 +7,7 @@ import org.apache.mina.core.session.IoSession;
 import org.graviton.api.Language;
 import org.graviton.client.account.Account;
 import org.graviton.client.player.Player;
+import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.network.game.handler.MessageHandler;
@@ -30,6 +31,8 @@ public class GameClient {
     private AccountRepository accountRepository;
     @Inject
     private PlayerRepository playerRepository;
+    @Inject
+    private EntityFactory entityFactory;
 
     public GameClient(IoSession session, Injector injector) {
         injector.injectMembers(this);
@@ -67,7 +70,7 @@ public class GameClient {
     }
 
     public void createPlayer(String data) {
-        Player player = new Player(playerRepository.getNextId(), data, this.account);
+        Player player = new Player(playerRepository.getNextId(), data, this.account, entityFactory);
         this.account.getPlayers().add(player);
         this.send(this.account.getPlayerPacket(false));
         playerRepository.create(player);
@@ -81,8 +84,7 @@ public class GameClient {
 
     public void createGame() {
         send(GameProtocol.gameCreationSuccessMessage());
-
-
+        send(PlayerProtocol.getAsMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignement(), player.getStatistics()));
     }
 
     public void deletePlayer(int player, String secretAnswer) {

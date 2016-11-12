@@ -1,8 +1,7 @@
 package org.graviton.game.statistics.common;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Botan on 11/11/2016 : 21:15
@@ -61,12 +60,24 @@ public enum CharacteristicType {
     ResistancePvpFire,
     ResistancePercentPvpFire;
 
-    private static Map<Integer, CharacteristicType> values = new HashMap<>();
-
-    public static void load() {
-        for (CharacteristicType value : values())
-            values.put(value.ordinal(), value);
-
-        values = Collections.unmodifiableMap(values);
-    }
+    public static List<CharacteristicType> asBuild = Arrays.asList(CharacteristicType.Strength, CharacteristicType.Vitality,
+            CharacteristicType.Wisdom, CharacteristicType.Chance,
+            CharacteristicType.Agility, CharacteristicType.Intelligence,
+            CharacteristicType.RangePoints, CharacteristicType.Summons,
+            CharacteristicType.Damage, CharacteristicType.PhysicalDamage,
+            CharacteristicType.WeaponControl, CharacteristicType.DamagePer,
+            CharacteristicType.HealPoints, CharacteristicType.TrapDamage,
+            CharacteristicType.TrapDamagePer, CharacteristicType.DamageReturn,
+            CharacteristicType.CriticalHit, CharacteristicType.CriticalFailure,
+            CharacteristicType.DodgeActionPoints, CharacteristicType.DodgeMovementPoints,
+            CharacteristicType.ResistanceNeutral, CharacteristicType.ResistancePercentNeutral,
+            CharacteristicType.ResistancePvpNeutral, CharacteristicType.ResistancePercentPvpNeutral,
+            CharacteristicType.ResistanceEarth, CharacteristicType.ResistancePercentEarth,
+            CharacteristicType.ResistancePvpEarth, CharacteristicType.ResistancePercentPvpEarth,
+            CharacteristicType.ResistanceWater, CharacteristicType.ResistancePercentWater,
+            CharacteristicType.ResistancePvpWater, CharacteristicType.ResistancePercentPvpWater,
+            CharacteristicType.ResistanceWind, CharacteristicType.ResistancePercentWind,
+            CharacteristicType.ResistancePvpWind, CharacteristicType.ResistancePercentPvpWind,
+            CharacteristicType.ResistanceFire, CharacteristicType.ResistancePercentFire,
+            CharacteristicType.ResistancePvpFire, CharacteristicType.ResistancePercentPvpFire);
 }

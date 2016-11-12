@@ -1,6 +1,7 @@
 package org.graviton.database.entity;
 
 import com.google.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
 import org.graviton.game.experience.Experience;
@@ -17,6 +18,7 @@ import java.util.stream.IntStream;
 /**
  * Created by Botan on 11/11/2016 : 22:42
  */
+@Slf4j
 public class EntityFactory implements Manageable {
     private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
@@ -40,8 +42,9 @@ public class EntityFactory implements Manageable {
         this.experiences.keySet().forEach(i -> {
             Experience experience = this.experiences.get(i);
             experience.setNext(this.experiences.get((short) (i + 1)));
-            experience.setPrevious(this.experiences.get((short) (i - 1)));
         });
+
+        log.debug("Successfully load {} experiences data ", this.experiences.size());
     }
 
     @Override
@@ -61,5 +64,9 @@ public class EntityFactory implements Manageable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Experience getExperience(short level) {
+        return this.experiences.get(level);
     }
 }

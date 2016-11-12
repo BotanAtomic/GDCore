@@ -53,7 +53,6 @@ public class MessageHandler {
 
         register("GC", ((client, data, header) -> client.createGame()));
 
-
         defaultHandlers = Collections.unmodifiableMap(defaultHandlers);
         log.debug("{} packets loaded", defaultHandlers.size());
     }
