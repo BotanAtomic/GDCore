@@ -54,6 +54,7 @@ public class PlayerStatistics {
         this.energy = 10000;
         this.level = 1;
         this.experience = 0;
+        this.life = new PlayerLife((byte) 100, (short) 55); //TODO : life
 
         for (CharacteristicType type : CharacteristicType.values())
             this.characteristics.put(type, new Characteristic((short) 0));
