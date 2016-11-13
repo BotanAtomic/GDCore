@@ -37,5 +37,19 @@ public class GameProtocol {
         return "GCK|1|";
     }
 
+    public static String mapDataMessage(int id, String date, String key) {
+        return "GDM|" + id + "|" + date + "|" + key;
+    }
 
+    public static String creatureChangeMapMessage(int id) {
+        return "GA;2;" + id + ";";
+    }
+
+    public static String mapLoadedSuccessfullyMessage() {
+        return "GDK";
+    }
+
+    public static String addCreatureOnMapMessage(String gm) {
+        return "GM|+".concat(gm);
+    }
 }

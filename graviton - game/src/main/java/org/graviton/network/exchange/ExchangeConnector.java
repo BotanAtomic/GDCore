@@ -9,9 +9,9 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
-import org.graviton.client.account.Account;
 import org.graviton.core.Program;
 import org.graviton.database.repository.AccountRepository;
+import org.graviton.game.client.account.Account;
 import org.graviton.network.exchange.protocol.ExchangeProtocol;
 import org.graviton.utils.StringUtils;
 

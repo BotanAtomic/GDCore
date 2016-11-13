@@ -5,11 +5,11 @@ import com.google.inject.Injector;
 import lombok.Data;
 import org.apache.mina.core.session.IoSession;
 import org.graviton.api.Language;
-import org.graviton.client.account.Account;
-import org.graviton.client.player.Player;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
+import org.graviton.game.client.account.Account;
+import org.graviton.game.client.player.Player;
 import org.graviton.network.game.handler.MessageHandler;
 import org.graviton.network.game.protocol.GameProtocol;
 import org.graviton.network.game.protocol.PlayerProtocol;
@@ -77,14 +77,14 @@ public class GameClient {
     }
 
     public void selectPlayer(int playerId) {
-        Player player = account.getPlayer(playerId);
-        this.player = player;
+        Player player = (this.player = account.getPlayer(playerId));
         send(PlayerProtocol.getASKMessage(player));
     }
 
     public void createGame() {
         send(GameProtocol.gameCreationSuccessMessage());
         send(PlayerProtocol.getAsMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignement(), player.getStatistics()));
+        player.getGameMap().enter(player);
     }
 
     public void deletePlayer(int player, String secretAnswer) {

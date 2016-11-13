@@ -1,8 +1,8 @@
 package org.graviton.network.game.protocol;
 
-import org.graviton.client.player.Player;
 import org.graviton.constant.Dofus;
 import org.graviton.game.alignement.Alignement;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.statistics.PlayerStatistics;
 import org.graviton.game.statistics.common.Characteristic;
@@ -91,6 +91,12 @@ public class PlayerProtocol {
             Characteristic characteristic = statistics.get(value);
             builder.append(characteristic.base()).append(',').append(characteristic.equipment()).append(',').append(characteristic.gift()).append(',').append(characteristic.context()).append('|');
         });
+
+        return builder.toString();
+    }
+
+    public static String getGMMessage(Player player) {
+        StringBuilder builder = new StringBuilder();
 
         return builder.toString();
     }

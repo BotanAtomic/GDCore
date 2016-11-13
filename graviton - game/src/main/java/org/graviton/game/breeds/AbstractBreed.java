@@ -1,14 +1,13 @@
-package org.graviton.client.player.breeds;
+package org.graviton.game.breeds;
 
 import lombok.extern.slf4j.Slf4j;
-import org.graviton.client.player.breeds.models.*;
+import org.graviton.game.breeds.models.*;
 
 /**
  * Created by Botan on 05/11/2016 : 22:59
  */
 @Slf4j
 public abstract class AbstractBreed {
-
 
     public static AbstractBreed get(byte breed) {
         try {
@@ -24,6 +23,15 @@ public abstract class AbstractBreed {
     }
 
     public abstract byte id();
+
+    public abstract int astrubMap();
+
+    public abstract short astrubCell();
+
+    public abstract int incarnamMap();
+
+    public abstract short incarnamCell();
+
 
     public enum BreedEnum {
         FECA(Feca.class),

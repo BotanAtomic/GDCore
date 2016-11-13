@@ -1,6 +1,6 @@
 package org.graviton.game.look;
 
-import org.graviton.client.player.breeds.AbstractBreed;
+import org.graviton.game.breeds.AbstractBreed;
 import org.graviton.utils.StringUtils;
 import org.jooq.Record;
 

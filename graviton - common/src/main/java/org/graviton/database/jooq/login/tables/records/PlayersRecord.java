@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({"all", "unchecked", "rawtypes"})
 public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 
-    private static final long serialVersionUID = -1713938747;
+    private static final long serialVersionUID = 1782434795;
 
     /**
      * Create a detached PlayersRecord
@@ -36,7 +36,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Create a detached, initialised PlayersRecord
      */
-    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Byte level, Long experience, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Short energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
+    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Short level, Long experience, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Short energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
         super(Players.PLAYERS);
 
         set(0, id);
@@ -182,14 +182,14 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.level</code>.
      */
-    public Byte getLevel() {
-        return (Byte) get(8);
+    public Short getLevel() {
+        return (Short) get(8);
     }
 
     /**
      * Setter for <code>login.players.level</code>.
      */
-    public void setLevel(Byte value) {
+    public void setLevel(Short value) {
         set(8, value);
     }
 

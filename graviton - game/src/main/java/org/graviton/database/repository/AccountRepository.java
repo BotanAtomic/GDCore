@@ -2,9 +2,9 @@ package org.graviton.database.repository;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import org.graviton.client.account.Account;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.LoginDatabase;
+import org.graviton.game.client.account.Account;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

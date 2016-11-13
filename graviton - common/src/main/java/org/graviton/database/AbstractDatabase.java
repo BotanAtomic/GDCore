@@ -35,7 +35,7 @@ public abstract class AbstractDatabase implements Manageable {
             this.dslContext = DSL.using(dataSource.getConnection(), SQLDialect.MYSQL);
             log.info("Connected successfully to database server [{}]", dataSource.getDataSourceProperties().getProperty("url"));
         } catch (SQLException e) {
-            log.error("Unable to connect to database [cause:{}]", dataSource.getDataSourceProperties().getProperty("url"), e.getMessage());
+            log.error("Unable to connect to database {} [cause:{}]", dataSource.getDataSourceProperties().getProperty("url"), e.getMessage());
         }
     }
 
