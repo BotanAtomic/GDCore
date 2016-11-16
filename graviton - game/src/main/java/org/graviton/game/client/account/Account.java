@@ -40,13 +40,13 @@ public class Account {
         this.lastConnection = record.get(ACCOUNTS.LAST_CONNECTION);
         this.lastAddress = record.get(ACCOUNTS.LAST_ADDRESS);
         this.friendNotification = record.get(ACCOUNTS.FRIEND_NOTIFICATION_LISTENER) > 0;
-        this.cachedPlayerPacket = PlayerProtocol.getPlayersPacketMessage(this.players = playerRepository.getPlayers(this));
+        this.cachedPlayerPacket = PlayerProtocol.playersPacketMessage(this.players = playerRepository.getPlayers(this));
     }
 
     public String getPlayerPacket(boolean useCache) {
         if (useCache)
             return cachedPlayerPacket;
-        return PlayerProtocol.getPlayersPacketMessage(this.players);
+        return PlayerProtocol.playersPacketMessage(this.players);
     }
 
     public Player getPlayer(int playerId) {

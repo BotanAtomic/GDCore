@@ -47,14 +47,14 @@ public class GameMap {
     }
 
     public void enter(Creature creature) {
-        load(creature);
         this.creatures.put(creature.getId(), creature);
-        send(GameProtocol.addCreatureOnMapMessage(creature.getGm()));
+        send(GameProtocol.showCreatureMessage(creature.getGm()));
+        creature.getLocation().setGameMap(this);
     }
 
-    private void load(Creature creature) {
-        creature.send(GameProtocol.creatureChangeMapMessage(creature.getId()));
+    public void load(Creature creature) {
         creature.send(this.descriptionPacket);
+        creature.send(GameProtocol.creatureChangeMapMessage(creature.getId()));
         creature.send(GameProtocol.mapLoadedSuccessfullyMessage());
     }
 

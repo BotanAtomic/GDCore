@@ -12,7 +12,12 @@ import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
 import org.graviton.network.game.handler.MessageHandler;
 import org.graviton.network.game.protocol.GameProtocol;
+import org.graviton.network.game.protocol.MessageProtocol;
 import org.graviton.network.game.protocol.PlayerProtocol;
+
+import java.net.InetSocketAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Botan on 04/11/2016 : 22:50
@@ -78,12 +83,34 @@ public class GameClient {
 
     public void selectPlayer(int playerId) {
         Player player = (this.player = account.getPlayer(playerId));
-        send(PlayerProtocol.getASKMessage(player));
+        send(PlayerProtocol.askMessage(player));
+        send(PlayerProtocol.asMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignement(), player.getStatistics()));
+        send(PlayerProtocol.podsMessage());
+        player.getGameMap().load(player);
+
+        send(GameProtocol.regenTimerMessage((short) 2000));
+        send(GameProtocol.addChannelsMessage(account.getChannels()));
+
+        send(PlayerProtocol.alignementMessage(player.getAlignement().getId()));
+        send(PlayerProtocol.restrictionMessage());
     }
 
     public void createGame() {
+        String currentAddress = ((InetSocketAddress) this.session.getRemoteAddress()).getAddress().getHostAddress();
+
         send(GameProtocol.gameCreationSuccessMessage());
-        send(PlayerProtocol.getAsMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignement(), player.getStatistics()));
+
+        send(MessageProtocol.welcomeMessage());
+        send(MessageProtocol.lastInformationsMessage(account.getLastConnection(), account.getLastAddress()));
+        send(MessageProtocol.actualInformationsMessage(currentAddress));
+
+        account.setLastConnection(new SimpleDateFormat("yyyy~MM~dd~HH~mm").format(new Date()));
+        account.setLastAddress(currentAddress);
+
+        accountRepository.updateInformations(account);
+    }
+
+    public void sendGameInformations() {
         player.getGameMap().enter(player);
     }
 
