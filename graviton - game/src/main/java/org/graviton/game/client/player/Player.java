@@ -91,8 +91,16 @@ public class Player implements Creature {
         return this.look.getBreed();
     }
 
+    public byte getTitle() {
+        return this.look.getTitle();
+    }
+
     public short getSkin() {
         return this.look.getSkin();
+    }
+
+    public short getSize() {
+        return this.look.getSize();
     }
 
     public byte getSex() {
@@ -121,7 +129,7 @@ public class Player implements Creature {
 
     @Override
     public String getGm() {
-        return PlayerProtocol.getGMMessage(this);
+        return PlayerProtocol.gmMessage(this);
     }
 
     @Override

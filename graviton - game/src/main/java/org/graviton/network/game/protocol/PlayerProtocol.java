@@ -12,21 +12,23 @@ import org.graviton.utils.StringUtils;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static org.graviton.utils.StringUtils.toHex;
+
 /**
  * Created by Botan on 05/11/2016 : 22:56
  */
 public class PlayerProtocol {
 
-    public static String getPlayersPacketMessage(Collection<Player> players) {
+    public static String playersPacketMessage(Collection<Player> players) {
         if (players == null || players.isEmpty())
             return "ALK0|0";
 
         StringBuilder builder = new StringBuilder("ALK0|").append((players.size() == 1 ? 2 : players.size()));
-        players.forEach(player -> builder.append(getALKMessage(player)));
+        players.forEach(player -> builder.append(alkMessage(player)));
         return builder.toString();
     }
 
-    public static String getASKMessage(Player player) {
+    public static String askMessage(Player player) {
         StringBuilder builder = new StringBuilder("ASK|");
         builder.append(player.getId()).append('|');
         builder.append(player.getName()).append('|');
@@ -41,16 +43,16 @@ public class PlayerProtocol {
         return builder.toString();
     }
 
-    private static String getALKMessage(Player player) {
+    private static String alkMessage(Player player) {
         return new StringBuilder("|").append(player.getId()).append(';').append(player.getName()).append(';').append(player.getLevel()).append(';').
                 append(player.getSkin()).append(';').
-                append(StringUtils.toHex(player.getColor((byte) 1))).append(';').
-                append(StringUtils.toHex(player.getColor((byte) 2))).append(';').
-                append(StringUtils.toHex(player.getColor((byte) 3))).append(';').
-                append(getGMSMessage(player)).append(";;;;;;").toString();
+                append(toHex(player.getColor((byte) 1))).append(';').
+                append(toHex(player.getColor((byte) 2))).append(';').
+                append(toHex(player.getColor((byte) 3))).append(';').
+                append(gmsMessage(player)).append(";;;;;;").toString();
     }
 
-    private static String getGMSMessage(Player player) {
+    private static String gmsMessage(Player player) {
         return ",,,,";
     }
 
@@ -58,7 +60,7 @@ public class PlayerProtocol {
         return "";
     }
 
-    public static String getAsMessage(Player player, Experience experience, Alignement alignement, PlayerStatistics statistics) {
+    public static String asMessage(Player player, Experience experience, Alignement alignement, PlayerStatistics statistics) {
         StringBuilder builder = new StringBuilder("As");
 
         builder.append(player.getExperience()).append(',');
@@ -95,10 +97,41 @@ public class PlayerProtocol {
         return builder.toString();
     }
 
-    public static String getGMMessage(Player player) {
+    public static String gmMessage(Player player) {
         StringBuilder builder = new StringBuilder();
+        builder.append(player.getCell().getId());
+        builder.append(";").append(player.getOrientation());
+        builder.append(";0;").append(player.getId()).append(";");
+        builder.append(player.getName()).append(";").append(player.getBreed().id());
+        builder.append((player.getTitle() != 0 ? ("," + player.getTitle()) : ""));
+        builder.append(";").append(player.getSkin()).append("^").append(player.getSize()).append(";").append(player.getSex()).append(";");
+        builder.append(player.getAlignement().getId()).append(",0,");
+        builder.append((player.getAlignement().isEnabled() ? player.getAlignement().getGrade() : "0")).append(",");
+        builder.append(player.getLevel() + player.getId());
 
+        if (player.getAlignement().isEnabled() && player.getAlignement().getDishonor() > 0)
+            builder.append(",").append(1).append(';');
+        else
+            builder.append(";");
+
+        builder.append(toHex(player.getColor((byte) 1))).append(";");
+        builder.append(toHex(player.getColor((byte) 2))).append(";");
+        builder.append(toHex(player.getColor((byte) 3))).append(";");
+        builder.append(gmsMessage(player)).append(";");
+        builder.append(player.getLevel() > 99 ? (player.getLevel() > 199 ? (2) : (1)) : (0)).append(";;;");
+        builder.append(";;0;;;"); //TODO : guild
         return builder.toString();
     }
 
+    public static String alignementMessage(byte id) {
+        return "ZL" + id;
+    }
+
+    public static String restrictionMessage() {
+        return "AR6bk";
+    }
+
+    public static String podsMessage() {
+        return "AR6bk";
+    }
 }

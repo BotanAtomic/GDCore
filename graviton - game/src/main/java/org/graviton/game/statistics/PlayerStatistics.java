@@ -16,8 +16,9 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
  */
 @Data
 public class PlayerStatistics {
-    private PlayerLife life;
-    private PlayerPods pods;
+    //current -> max
+    private short[] life;
+    private short[] pods;
 
     private short statisticPoints, spellPoints, energy, level;
 
@@ -31,8 +32,8 @@ public class PlayerStatistics {
         this.energy = record.get(PLAYERS.ENERGY);
         this.level = record.get(PLAYERS.LEVEL);
         this.experience = record.get(PLAYERS.EXPERIENCE);
-        this.life = new PlayerLife(record.get(PLAYERS.LIFE), (short) 55); //TODO : life
-
+        this.life = new short[]{record.get(PLAYERS.LIFE), 55}; //TODO : life
+        this.pods = new short[]{0, 1000}; //TODO : pods (wait items)
 
         for (CharacteristicType type : CharacteristicType.values())
             this.characteristics.put(type, new Characteristic((short) 0));
@@ -54,7 +55,7 @@ public class PlayerStatistics {
         this.energy = 10000;
         this.level = 1;
         this.experience = 0;
-        this.life = new PlayerLife((byte) 100, (short) 55); //TODO : life
+        this.life = new short[]{55, 55};
 
         for (CharacteristicType type : CharacteristicType.values())
             this.characteristics.put(type, new Characteristic((short) 0));
@@ -69,11 +70,11 @@ public class PlayerStatistics {
     }
 
     public short getCurrentLife() {
-        return life.getCurrent();
+        return life[0];
     }
 
     public short getMaxLife() {
-        return life.getMax();
+        return life[1];
     }
 
     public short getInitiative() {
@@ -82,7 +83,7 @@ public class PlayerStatistics {
 
         total += get(CharacteristicType.Initiative).total();
 
-        total *= (life.getCurrent() / life.getMax());
+        total *= (life[0] / life[1]);
 
         return total;
     }

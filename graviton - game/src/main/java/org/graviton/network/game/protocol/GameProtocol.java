@@ -49,7 +49,15 @@ public class GameProtocol {
         return "GDK";
     }
 
-    public static String addCreatureOnMapMessage(String gm) {
+    public static String showCreatureMessage(String gm) {
         return "GM|+".concat(gm);
+    }
+
+    public static String regenTimerMessage(short time) {
+        return "ILS" + time;
+    }
+
+    public static String addChannelsMessage(String canals) {
+        return "cC+".concat(canals);
     }
 }

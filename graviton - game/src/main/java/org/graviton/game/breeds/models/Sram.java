@@ -13,21 +13,21 @@ public class Sram extends AbstractBreed {
 
     @Override
     public int astrubMap() {
-        return 7398;
+        return 7392;
     }
 
     @Override
     public short astrubCell() {
-        return 299;
+        return 313;
     }
 
     @Override
     public int incarnamMap() {
-        return 10300;
+        return 10285;
     }
 
     @Override
     public short incarnamCell() {
-        return 323;
+        return 263;
     }
 }
