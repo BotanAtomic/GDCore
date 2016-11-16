@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({"all", "unchecked", "rawtypes"})
 public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 
-    private static final long serialVersionUID = 1782434795;
+    private static final long serialVersionUID = 1641435242;
 
     /**
      * Create a detached PlayersRecord
@@ -36,7 +36,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Create a detached, initialised PlayersRecord
      */
-    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Short level, Long experience, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Short energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
+    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Short level, Long experience, Byte title, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Short energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server) {
         super(Players.PLAYERS);
 
         set(0, id);
@@ -49,22 +49,23 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
         set(7, colors);
         set(8, level);
         set(9, experience);
-        set(10, kamas);
-        set(11, map);
-        set(12, cell);
-        set(13, orientation);
-        set(14, waypoints);
-        set(15, statPoints);
-        set(16, spellPoints);
-        set(17, energy);
-        set(18, life);
-        set(19, vitality);
-        set(20, wisdom);
-        set(21, strength);
-        set(22, intelligence);
-        set(23, chance);
-        set(24, agility);
-        set(25, server);
+        set(10, title);
+        set(11, kamas);
+        set(12, map);
+        set(13, cell);
+        set(14, orientation);
+        set(15, waypoints);
+        set(16, statPoints);
+        set(17, spellPoints);
+        set(18, energy);
+        set(19, life);
+        set(20, vitality);
+        set(21, wisdom);
+        set(22, strength);
+        set(23, intelligence);
+        set(24, chance);
+        set(25, agility);
+        set(26, server);
     }
 
     /**
@@ -208,213 +209,227 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     }
 
     /**
+     * Getter for <code>login.players.title</code>.
+     */
+    public Byte getTitle() {
+        return (Byte) get(10);
+    }
+
+    /**
+     * Setter for <code>login.players.title</code>.
+     */
+    public void setTitle(Byte value) {
+        set(10, value);
+    }
+
+    /**
      * Getter for <code>login.players.kamas</code>.
      */
     public Long getKamas() {
-        return (Long) get(10);
+        return (Long) get(11);
     }
 
     /**
      * Setter for <code>login.players.kamas</code>.
      */
     public void setKamas(Long value) {
-        set(10, value);
+        set(11, value);
     }
 
     /**
      * Getter for <code>login.players.map</code>.
      */
     public Integer getMap() {
-        return (Integer) get(11);
+        return (Integer) get(12);
     }
 
     /**
      * Setter for <code>login.players.map</code>.
      */
     public void setMap(Integer value) {
-        set(11, value);
+        set(12, value);
     }
 
     /**
      * Getter for <code>login.players.cell</code>.
      */
     public Short getCell() {
-        return (Short) get(12);
+        return (Short) get(13);
     }
 
     /**
      * Setter for <code>login.players.cell</code>.
      */
     public void setCell(Short value) {
-        set(12, value);
+        set(13, value);
     }
 
     /**
      * Getter for <code>login.players.orientation</code>.
      */
     public Byte getOrientation() {
-        return (Byte) get(13);
+        return (Byte) get(14);
     }
 
     /**
      * Setter for <code>login.players.orientation</code>.
      */
     public void setOrientation(Byte value) {
-        set(13, value);
+        set(14, value);
     }
 
     /**
      * Getter for <code>login.players.waypoints</code>.
      */
     public String getWaypoints() {
-        return (String) get(14);
+        return (String) get(15);
     }
 
     /**
      * Setter for <code>login.players.waypoints</code>.
      */
     public void setWaypoints(String value) {
-        set(14, value);
+        set(15, value);
     }
 
     /**
      * Getter for <code>login.players.stat_points</code>.
      */
     public Short getStatPoints() {
-        return (Short) get(15);
+        return (Short) get(16);
     }
 
     /**
      * Setter for <code>login.players.stat_points</code>.
      */
     public void setStatPoints(Short value) {
-        set(15, value);
+        set(16, value);
     }
 
     /**
      * Getter for <code>login.players.spell_points</code>.
      */
     public Short getSpellPoints() {
-        return (Short) get(16);
+        return (Short) get(17);
     }
 
     /**
      * Setter for <code>login.players.spell_points</code>.
      */
     public void setSpellPoints(Short value) {
-        set(16, value);
+        set(17, value);
     }
 
     /**
      * Getter for <code>login.players.energy</code>.
      */
     public Short getEnergy() {
-        return (Short) get(17);
+        return (Short) get(18);
     }
 
     /**
      * Setter for <code>login.players.energy</code>.
      */
     public void setEnergy(Short value) {
-        set(17, value);
+        set(18, value);
     }
 
     /**
      * Getter for <code>login.players.life</code>.
      */
     public Byte getLife() {
-        return (Byte) get(18);
+        return (Byte) get(19);
     }
 
     /**
      * Setter for <code>login.players.life</code>.
      */
     public void setLife(Byte value) {
-        set(18, value);
+        set(19, value);
     }
 
     /**
      * Getter for <code>login.players.vitality</code>.
      */
     public Short getVitality() {
-        return (Short) get(19);
+        return (Short) get(20);
     }
 
     /**
      * Setter for <code>login.players.vitality</code>.
      */
     public void setVitality(Short value) {
-        set(19, value);
+        set(20, value);
     }
 
     /**
      * Getter for <code>login.players.wisdom</code>.
      */
     public Short getWisdom() {
-        return (Short) get(20);
+        return (Short) get(21);
     }
 
     /**
      * Setter for <code>login.players.wisdom</code>.
      */
     public void setWisdom(Short value) {
-        set(20, value);
+        set(21, value);
     }
 
     /**
      * Getter for <code>login.players.strength</code>.
      */
     public Short getStrength() {
-        return (Short) get(21);
+        return (Short) get(22);
     }
 
     /**
      * Setter for <code>login.players.strength</code>.
      */
     public void setStrength(Short value) {
-        set(21, value);
+        set(22, value);
     }
 
     /**
      * Getter for <code>login.players.intelligence</code>.
      */
     public Short getIntelligence() {
-        return (Short) get(22);
+        return (Short) get(23);
     }
 
     /**
      * Setter for <code>login.players.intelligence</code>.
      */
     public void setIntelligence(Short value) {
-        set(22, value);
+        set(23, value);
     }
 
     /**
      * Getter for <code>login.players.chance</code>.
      */
     public Short getChance() {
-        return (Short) get(23);
+        return (Short) get(24);
     }
 
     /**
      * Setter for <code>login.players.chance</code>.
      */
     public void setChance(Short value) {
-        set(23, value);
+        set(24, value);
     }
 
     /**
      * Getter for <code>login.players.agility</code>.
      */
     public Short getAgility() {
-        return (Short) get(24);
+        return (Short) get(25);
     }
 
     /**
      * Setter for <code>login.players.agility</code>.
      */
     public void setAgility(Short value) {
-        set(24, value);
+        set(25, value);
     }
 
     // -------------------------------------------------------------------------
@@ -425,7 +440,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
      * Getter for <code>login.players.server</code>.
      */
     public Byte getServer() {
-        return (Byte) get(25);
+        return (Byte) get(26);
     }
 
     // -------------------------------------------------------------------------
@@ -436,7 +451,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
      * Setter for <code>login.players.server</code>.
      */
     public void setServer(Byte value) {
-        set(25, value);
+        set(26, value);
     }
 
     /**
