@@ -1,6 +1,7 @@
 package org.graviton.game.look;
 
 import org.graviton.game.breeds.AbstractBreed;
+import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.utils.StringUtils;
 import org.jooq.Record;
 
@@ -45,8 +46,16 @@ public class PlayerLook extends AbstractLook {
         return this.size;
     }
 
+    public void setSize(short size) {
+        this.size = size;
+    }
+
     public byte getTitle() {
         return this.title;
+    }
+
+    public void setOrientation(OrientationEnum orientation) {
+        super.setOrientation(orientation);
     }
 
 }

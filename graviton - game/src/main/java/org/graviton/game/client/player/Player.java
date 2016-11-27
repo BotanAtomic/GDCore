@@ -8,6 +8,7 @@ import org.graviton.game.breeds.AbstractBreed;
 import org.graviton.game.breeds.models.Enutrof;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.look.PlayerLook;
+import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
@@ -65,13 +66,13 @@ public class Player implements Creature {
      */
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
-        String[] informations = data.split("\\|");
+        String[] information = data.split("\\|");
 
         this.account = account;
         this.id = id;
-        this.name = informations[0];
+        this.name = information[0];
 
-        this.look = new PlayerLook(StringUtils.parseColors(informations[3] + ";" + informations[4] + ";" + informations[5]), Byte.parseByte(informations[2]), AbstractBreed.get(Byte.parseByte(informations[1])));
+        this.look = new PlayerLook(StringUtils.parseColors(information[3] + ";" + information[4] + ";" + information[5]), Byte.parseByte(information[2]), AbstractBreed.get(Byte.parseByte(information[1])));
         this.statistics = new PlayerStatistics((byte) (getBreed() instanceof Enutrof ? 120 : 100));
         this.alignement = new Alignement((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell());
@@ -107,7 +108,7 @@ public class Player implements Creature {
         return this.look.getSex();
     }
 
-    public byte getOrientation() {
+    public OrientationEnum getOrientation() {
         return this.look.getOrientation();
     }
 
@@ -117,6 +118,10 @@ public class Player implements Creature {
 
     public short getLevel() {
         return this.statistics.getLevel();
+    }
+
+    public short[] getPods() {
+        return this.statistics.getPods();
     }
 
     public GameMap getGameMap() {
@@ -135,5 +140,15 @@ public class Player implements Creature {
     @Override
     public void send(String data) {
         this.account.getClient().send(data);
+    }
+
+    public void changeMap(int newGameMapId, short newCell) {
+        this.getGameMap().out(this);
+
+        GameMap newGameMap = entityFactory.getMap(newGameMapId);
+
+        this.location.setCell(newGameMap.getCells().get(newCell));
+        newGameMap.load(this);
+        newGameMap.enter(this);
     }
 }

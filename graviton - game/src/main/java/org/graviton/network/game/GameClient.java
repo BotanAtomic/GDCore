@@ -10,7 +10,8 @@ import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
-import org.graviton.network.game.handler.MessageHandler;
+import org.graviton.game.interaction.InteractionManager;
+import org.graviton.network.game.handler.base.MessageHandler;
 import org.graviton.network.game.protocol.GameProtocol;
 import org.graviton.network.game.protocol.MessageProtocol;
 import org.graviton.network.game.protocol.PlayerProtocol;
@@ -25,6 +26,8 @@ import java.util.Date;
 @Data
 public class GameClient {
     private final MessageHandler messageHandler = new MessageHandler(this);
+    private final InteractionManager interactionManager = new InteractionManager(this);
+
     private final long id;
     private final IoSession session;
 
@@ -38,6 +41,7 @@ public class GameClient {
     private PlayerRepository playerRepository;
     @Inject
     private EntityFactory entityFactory;
+
 
     public GameClient(IoSession session, Injector injector) {
         injector.injectMembers(this);
@@ -85,14 +89,15 @@ public class GameClient {
         Player player = (this.player = account.getPlayer(playerId));
         send(PlayerProtocol.askMessage(player));
         send(PlayerProtocol.asMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignement(), player.getStatistics()));
-        send(PlayerProtocol.podsMessage());
+
         player.getGameMap().load(player);
 
         send(GameProtocol.regenTimerMessage((short) 2000));
         send(GameProtocol.addChannelsMessage(account.getChannels()));
 
-        send(PlayerProtocol.alignementMessage(player.getAlignement().getId()));
+        send(PlayerProtocol.alignmentMessage(player.getAlignement().getId()));
         send(PlayerProtocol.restrictionMessage());
+        send(PlayerProtocol.podsMessage(player.getPods()));
     }
 
     public void createGame() {
@@ -102,7 +107,7 @@ public class GameClient {
 
         send(MessageProtocol.welcomeMessage());
         send(MessageProtocol.lastInformationsMessage(account.getLastConnection(), account.getLastAddress()));
-        send(MessageProtocol.actualInformationsMessage(currentAddress));
+        send(MessageProtocol.actualInformationMessage(currentAddress));
 
         account.setLastConnection(new SimpleDateFormat("yyyy~MM~dd~HH~mm").format(new Date()));
         account.setLastAddress(currentAddress);
@@ -110,7 +115,7 @@ public class GameClient {
         accountRepository.updateInformations(account);
     }
 
-    public void sendGameInformations() {
+    public void sendGameInformation() {
         player.getGameMap().enter(player);
     }
 
@@ -120,6 +125,15 @@ public class GameClient {
             send(account.getPlayerPacket(false));
         } else
             send(GameProtocol.playerDeleteFailedMessage());
+    }
+
+    public void createAction(short id, String arguments) {
+        this.interactionManager.create(id, arguments);
+    }
+
+    public void finishAction(String data) {
+        String[] information = data.substring(1).split("\\|");
+        interactionManager.end(interactionManager.pollLast(), data.charAt(0) == 'K', information.length > 1 ? information[1] : "");
     }
 
 }

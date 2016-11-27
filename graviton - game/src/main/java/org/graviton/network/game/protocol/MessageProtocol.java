@@ -9,11 +9,15 @@ public class MessageProtocol {
         return "Im0152;".concat(lastConnection).concat("~").concat(lastAddress);
     }
 
-    public static String actualInformationsMessage(String address) {
+    public static String actualInformationMessage(String address) {
         return "Im0153;".concat(address);
     }
 
     public static String welcomeMessage() {
         return "Im189";
+    }
+
+    public static String maxPodsReached() {
+        return "Im112";
     }
 }

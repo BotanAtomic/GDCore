@@ -33,9 +33,8 @@ public class AccountRepository {
     }
 
     public void unload(int accountId) {
-        Account account = this.accounts.get(accountId);
+        Account account = this.accounts.remove(accountId);
         account.getPlayers().forEach(player -> playerRepository.unload(player.getId()));
-        this.accounts.remove(account);
     }
 
     public Account get(int account) {

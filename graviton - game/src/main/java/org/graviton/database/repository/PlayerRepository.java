@@ -11,6 +11,7 @@ import org.graviton.network.exchange.ExchangeConnector;
 import org.graviton.utils.StringUtils;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -62,11 +63,11 @@ public class PlayerRepository {
     }
 
     public Collection<Player> getPlayers(Account account) {
-        return database.getResult(PLAYERS, PLAYERS.OWNER.equal(account.getId())).stream().map(record -> {
+        return Collections.synchronizedList(database.getResult(PLAYERS, PLAYERS.OWNER.equal(account.getId())).stream().map(record -> {
             Player player = new Player(record, account, entityFactory);
             this.players.put(player.getId(), player);
             return player;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList()));
     }
 
     public void unload(int player) {

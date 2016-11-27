@@ -100,7 +100,7 @@ public class PlayerProtocol {
     public static String gmMessage(Player player) {
         StringBuilder builder = new StringBuilder();
         builder.append(player.getCell().getId());
-        builder.append(";").append(player.getOrientation());
+        builder.append(";").append(player.getOrientation().ordinal());
         builder.append(";0;").append(player.getId()).append(";");
         builder.append(player.getName()).append(";").append(player.getBreed().id());
         builder.append((player.getTitle() != 0 ? ("," + player.getTitle()) : ""));
@@ -123,7 +123,7 @@ public class PlayerProtocol {
         return builder.toString();
     }
 
-    public static String alignementMessage(byte id) {
+    public static String alignmentMessage(byte id) {
         return "ZL" + id;
     }
 
@@ -131,7 +131,7 @@ public class PlayerProtocol {
         return "AR6bk";
     }
 
-    public static String podsMessage() {
-        return "AR6bk";
+    public static String podsMessage(short[] pods) {
+        return "Ow" + pods[0] + "|" + pods[1];
     }
 }

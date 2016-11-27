@@ -62,4 +62,9 @@ public class GameMap {
         this.creatures.values().forEach(creature -> creature.send(data));
     }
 
+    public void out(Creature creature) {
+        this.creatures.remove(creature.getId());
+        send(GameProtocol.hideCreatureMessage(creature.getId()));
+    }
+
 }

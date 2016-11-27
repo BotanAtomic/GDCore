@@ -53,11 +53,23 @@ public class GameProtocol {
         return "GM|+".concat(gm);
     }
 
+    public static String hideCreatureMessage(int id) {
+        return "GM|-" + id;
+    }
+
     public static String regenTimerMessage(short time) {
         return "ILS" + time;
     }
 
     public static String addChannelsMessage(String canals) {
         return "cC+".concat(canals);
+    }
+
+    public static String creatureMovementMessage(short actionId, int actorId, String path) {
+        return "GA" + actionId + ";1;" + actorId + ";" + path;
+    }
+
+    public static String noActionMessage() {
+        return "GA;0";
     }
 }
