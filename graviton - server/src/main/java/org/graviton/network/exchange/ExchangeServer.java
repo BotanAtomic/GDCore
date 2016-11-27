@@ -79,6 +79,7 @@ public class ExchangeServer implements IoHandler, Manageable {
 
     @Override
     public void inputClosed(IoSession session) throws Exception {
+        session.closeNow();
         log.debug("[Session {}] input closed", session.getId());
     }
 

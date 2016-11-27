@@ -13,11 +13,11 @@ import java.util.stream.IntStream;
  */
 public class StringUtils {
     public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-    public static final String EXTENDED_ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    public static final String EXTENDED_ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
     public static final String VOWELS = "aeiouy";
     public static final String CONSONANTS = "bcdfghjkmnpqrstvwxz";
+    public static final char[] HASH = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'};
     private static final AtomicReference<Random> RANDOM = new AtomicReference<>(new Random(System.nanoTime()));
-    private static final char[] HASH = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'};
 
     public static String randomPseudo() {
         boolean vowels = RANDOM.get().nextBoolean();
@@ -52,6 +52,14 @@ public class StringUtils {
         IntStream.range(0, 32).forEach(value -> builder.append(random()));
         return builder.toString();
     }
+
+    public static byte parseBase64Char(char c) {
+        for (byte a = 0; a < HASH.length; a++)
+            if (HASH[a] == c)
+                return a;
+        return -1;
+    }
+
 
     public static String encryptPassword(String password, String key) {
         byte i = (byte) HASH.length;

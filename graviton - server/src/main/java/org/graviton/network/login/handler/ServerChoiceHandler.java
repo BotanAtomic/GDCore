@@ -23,14 +23,14 @@ public class ServerChoiceHandler extends AbstractHandler {
 
     @Override
     public void handle(String data, LoginClient client) {
-        switch (data.substring(1, 2)) {
-            case "F":
+        switch (data.charAt(1)) {
+            case 'F':
                 client.send(LoginProtocol.searchPlayerMessage(client.getAccountRepository().getPlayers(data.substring(2)), client));
                 break;
-            case "X":
+            case 'X':
                 selectServer(client, Byte.parseByte(data.substring(2)));
                 break;
-            case "x":
+            case 'x':
                 client.send(LoginProtocol.playersListMessage(client.getAccount().getPlayers(), client.getGameServerRepository().getGameServers().values()));
                 break;
         }
