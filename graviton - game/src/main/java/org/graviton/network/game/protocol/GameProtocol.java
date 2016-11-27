@@ -72,4 +72,8 @@ public class GameProtocol {
     public static String noActionMessage() {
         return "GA;0";
     }
+
+    public static String startAnimationMessage() {
+        return "TB";
+    }
 }

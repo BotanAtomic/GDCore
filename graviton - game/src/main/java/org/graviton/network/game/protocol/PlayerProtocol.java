@@ -1,7 +1,7 @@
 package org.graviton.network.game.protocol;
 
 import org.graviton.constant.Dofus;
-import org.graviton.game.alignement.Alignement;
+import org.graviton.game.alignment.Alignment;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.statistics.PlayerStatistics;
@@ -60,7 +60,7 @@ public class PlayerProtocol {
         return "";
     }
 
-    public static String asMessage(Player player, Experience experience, Alignement alignement, PlayerStatistics statistics) {
+    public static String asMessage(Player player, Experience experience, Alignment alignment, PlayerStatistics statistics) {
         StringBuilder builder = new StringBuilder("As");
 
         builder.append(player.getExperience()).append(',');
@@ -71,12 +71,12 @@ public class PlayerProtocol {
         builder.append(player.getStatistics().getStatisticPoints()).append('|');
         builder.append(player.getStatistics().getSpellPoints()).append('|');
 
-        builder.append(alignement.getId()).append('~').append(alignement.getId()).append(',');
-        builder.append(alignement.getAlignementLevel()).append(',');
-        builder.append(alignement.getGrade()).append(',');
-        builder.append(alignement.getHonor()).append(',');
-        builder.append(alignement.getDishonor()).append(',');
-        builder.append(alignement.isEnabled() ? "1|" : "0|");
+        builder.append(alignment.getId()).append('~').append(alignment.getId()).append(',');
+        builder.append(alignment.getAlignmentLevel()).append(',');
+        builder.append(alignment.getGrade()).append(',');
+        builder.append(alignment.getHonor()).append(',');
+        builder.append(alignment.getDishonor()).append(',');
+        builder.append(alignment.isEnabled() ? "1|" : "0|");
 
         builder.append(statistics.getCurrentLife()).append(',');
         builder.append(statistics.getMaxLife()).append('|');
@@ -105,11 +105,11 @@ public class PlayerProtocol {
         builder.append(player.getName()).append(";").append(player.getBreed().id());
         builder.append((player.getTitle() != 0 ? ("," + player.getTitle()) : ""));
         builder.append(";").append(player.getSkin()).append("^").append(player.getSize()).append(";").append(player.getSex()).append(";");
-        builder.append(player.getAlignement().getId()).append(",0,");
-        builder.append((player.getAlignement().isEnabled() ? player.getAlignement().getGrade() : "0")).append(",");
+        builder.append(player.getAlignment().getId()).append(",0,");
+        builder.append((player.getAlignment().isEnabled() ? player.getAlignment().getGrade() : "0")).append(",");
         builder.append(player.getLevel() + player.getId());
 
-        if (player.getAlignement().isEnabled() && player.getAlignement().getDishonor() > 0)
+        if (player.getAlignment().isEnabled() && player.getAlignment().getDishonor() > 0)
             builder.append(",").append(1).append(';');
         else
             builder.append(";");

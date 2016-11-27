@@ -3,7 +3,7 @@ package org.graviton.game.client.player;
 import lombok.Data;
 import org.graviton.api.Creature;
 import org.graviton.database.entity.EntityFactory;
-import org.graviton.game.alignement.Alignement;
+import org.graviton.game.alignment.Alignment;
 import org.graviton.game.breeds.AbstractBreed;
 import org.graviton.game.breeds.models.Enutrof;
 import org.graviton.game.client.account.Account;
@@ -13,6 +13,7 @@ import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
 import org.graviton.game.statistics.PlayerStatistics;
+import org.graviton.network.game.protocol.GameProtocol;
 import org.graviton.network.game.protocol.PlayerProtocol;
 import org.graviton.utils.StringUtils;
 import org.jooq.Record;
@@ -31,7 +32,7 @@ public class Player implements Creature {
 
     private final PlayerLook look;
     private final PlayerStatistics statistics;
-    private final Alignement alignement;
+    private final Alignment alignment;
     private final String name;
     private Location location;
     private long kamas;
@@ -49,7 +50,7 @@ public class Player implements Creature {
 
         this.look = new PlayerLook(record);
         this.statistics = new PlayerStatistics(record, (byte) (getBreed() instanceof Enutrof ? 120 : 100));
-        this.alignement = new Alignement((byte) 0, 0, 0, false); //TODO : pvp
+        this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(record.get(PLAYERS.MAP)), record.get(PLAYERS.CELL));
 
         this.kamas = record.get(PLAYERS.KAMAS);
@@ -65,6 +66,8 @@ public class Player implements Creature {
      * @param entityFactory simple manager class
      */
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
+        account.getClient().send(GameProtocol.startAnimationMessage());
+
         this.entityFactory = entityFactory;
         String[] information = data.split("\\|");
 
@@ -74,9 +77,8 @@ public class Player implements Creature {
 
         this.look = new PlayerLook(StringUtils.parseColors(information[3] + ";" + information[4] + ";" + information[5]), Byte.parseByte(information[2]), AbstractBreed.get(Byte.parseByte(information[1])));
         this.statistics = new PlayerStatistics((byte) (getBreed() instanceof Enutrof ? 120 : 100));
-        this.alignement = new Alignement((byte) 0, 0, 0, false); //TODO : pvp
+        this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell());
-
         this.kamas = 0;
     }
 
@@ -149,6 +151,5 @@ public class Player implements Creature {
 
         this.location.setCell(newGameMap.getCells().get(newCell));
         newGameMap.load(this);
-        newGameMap.enter(this);
     }
 }

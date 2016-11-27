@@ -88,14 +88,14 @@ public class GameClient {
     public void selectPlayer(int playerId) {
         Player player = (this.player = account.getPlayer(playerId));
         send(PlayerProtocol.askMessage(player));
-        send(PlayerProtocol.asMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignement(), player.getStatistics()));
+        send(PlayerProtocol.asMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
 
         player.getGameMap().load(player);
 
         send(GameProtocol.regenTimerMessage((short) 2000));
         send(GameProtocol.addChannelsMessage(account.getChannels()));
 
-        send(PlayerProtocol.alignmentMessage(player.getAlignement().getId()));
+        send(PlayerProtocol.alignmentMessage(player.getAlignment().getId()));
         send(PlayerProtocol.restrictionMessage());
         send(PlayerProtocol.podsMessage(player.getPods()));
     }

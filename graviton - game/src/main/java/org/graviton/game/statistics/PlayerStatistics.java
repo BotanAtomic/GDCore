@@ -56,6 +56,7 @@ public class PlayerStatistics {
         this.level = 1;
         this.experience = 0;
         this.life = new short[]{55, 55};
+        this.pods = new short[]{0, 1000}; //TODO : pods (wait items)
 
         for (CharacteristicType type : CharacteristicType.values())
             this.characteristics.put(type, new Characteristic((short) 0));

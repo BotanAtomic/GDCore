@@ -47,15 +47,17 @@ public class GameMap {
     }
 
     public void enter(Creature creature) {
-        this.creatures.put(creature.getId(), creature);
         send(GameProtocol.showCreatureMessage(creature.getGm()));
-        creature.getLocation().setGameMap(this);
+
+        this.creatures.put(creature.getId(), creature);
+        creature.send(buildData());
     }
 
     public void load(Creature creature) {
         creature.send(this.descriptionPacket);
         creature.send(GameProtocol.creatureChangeMapMessage(creature.getId()));
         creature.send(GameProtocol.mapLoadedSuccessfullyMessage());
+        creature.getLocation().setGameMap(this);
     }
 
     public void send(String data) {
@@ -65,6 +67,12 @@ public class GameMap {
     public void out(Creature creature) {
         this.creatures.remove(creature.getId());
         send(GameProtocol.hideCreatureMessage(creature.getId()));
+    }
+
+    private String buildData() {
+        StringBuilder packet = new StringBuilder();
+        creatures.values().forEach(creature -> packet.append(GameProtocol.showCreatureMessage(creature.getGm())).append("\n"));
+        return packet.toString();
     }
 
 }

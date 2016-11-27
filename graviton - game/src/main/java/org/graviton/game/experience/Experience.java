@@ -9,7 +9,7 @@ import org.w3c.dom.Element;
 
 @Data
 public class Experience {
-    private short alignement;
+    private short alignment;
     private int mount, job;
     private long player, guild;
 
@@ -20,7 +20,7 @@ public class Experience {
         this.guild = Long.parseLong(element.getAttribute("guild"));
         this.mount = Integer.parseInt(element.getAttribute("mount"));
         this.job = Integer.parseInt(element.getAttribute("job"));
-        this.alignement = Short.parseShort(element.getAttribute("alignement"));
+        this.alignment = Short.parseShort(element.getAttribute("alignment"));
     }
 
 }

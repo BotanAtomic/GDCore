@@ -1,24 +1,24 @@
-package org.graviton.game.alignement;
+package org.graviton.game.alignment;
 
 import lombok.Data;
-import org.graviton.game.alignement.type.AlignementType;
+import org.graviton.game.alignment.type.AlignmentType;
 
 /**
  * Created by Botan on 12/11/2016 : 14:20
  */
 @Data
-public class Alignement {
-    private AlignementType type;
+public class Alignment {
+    private AlignmentType type;
     private int honor, dishonor;
-    private byte grade, alignementLevel;
+    private byte grade, alignmentLevel;
     private boolean enabled;
 
-    public Alignement(byte id, int honor, int dishonor, boolean enabled) {
-        this.type = AlignementType.get(id);
+    public Alignment(byte id, int honor, int dishonor, boolean enabled) {
+        this.type = AlignmentType.get(id);
         this.honor = honor;
         this.dishonor = dishonor;
         this.grade = 1; //TODO : calcul grade
-        this.alignementLevel = 1; //TODO : pvp
+        this.alignmentLevel = 1; //TODO : pvp
         this.enabled = enabled;
     }
 

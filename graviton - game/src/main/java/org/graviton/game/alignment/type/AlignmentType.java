@@ -1,15 +1,15 @@
-package org.graviton.game.alignement.type;
+package org.graviton.game.alignment.type;
 
 /**
  * Created by Botan on 12/11/2016 : 14:27
  */
-public enum AlignementType {
+public enum AlignmentType {
     NEUTRE,
     BONTARIEN,
     BRAKMARIEN,
     MERCENAIRE;
 
-    public static AlignementType get(byte id) {
+    public static AlignmentType get(byte id) {
         return values()[id];
     }
 }

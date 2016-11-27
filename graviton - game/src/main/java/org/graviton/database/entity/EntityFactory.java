@@ -45,6 +45,7 @@ public class EntityFactory implements Manageable {
 
         IntStream.range(0, nodeList.getLength()).forEach(i -> {
             Element element = (Element) nodeList.item(i);
+
             this.experiences.put(Short.parseShort(element.getAttribute("level")), new Experience(element));
         });
 
