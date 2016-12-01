@@ -7,7 +7,6 @@ import org.graviton.game.experience.Experience;
 import org.graviton.game.statistics.PlayerStatistics;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
-import org.graviton.utils.StringUtils;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,9 +35,9 @@ public class PlayerProtocol {
         builder.append(player.getBreed().id()).append('|');
         builder.append(player.getSex()).append('|');
         builder.append(player.getSkin()).append('|');
-        builder.append(StringUtils.toHex(player.getColor((byte) 1))).append('|');
-        builder.append(StringUtils.toHex(player.getColor((byte) 2))).append('|');
-        builder.append(StringUtils.toHex(player.getColor((byte) 3))).append('|');
+        builder.append(toHex(player.getColor((byte) 1))).append('|');
+        builder.append(toHex(player.getColor((byte) 2))).append('|');
+        builder.append(toHex(player.getColor((byte) 3))).append('|');
         builder.append(formatItems());
         return builder.toString();
     }

@@ -1,7 +1,6 @@
 package org.graviton.game.look;
 
 import org.graviton.game.breeds.AbstractBreed;
-import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.utils.StringUtils;
 import org.jooq.Record;
 
@@ -19,7 +18,7 @@ public class PlayerLook extends AbstractLook {
     private byte title;
 
     public PlayerLook(Record record) {
-        super(StringUtils.parseColors(record.get(PLAYERS.COLORS)), record.get(PLAYERS.SKIN), record.get(PLAYERS.ORIENTATION));
+        super(StringUtils.parseColors(record.get(PLAYERS.COLORS), ";"), record.get(PLAYERS.SKIN));
         this.breed = AbstractBreed.get(record.get(PLAYERS.BREED));
         this.sex = record.get(PLAYERS.SEX);
         this.size = record.get(PLAYERS.SIZE);
@@ -27,7 +26,7 @@ public class PlayerLook extends AbstractLook {
     }
 
     public PlayerLook(int[] colors, byte sex, AbstractBreed abstractBreed) {
-        super(colors, abstractBreed.getDefaultSkin(sex), (byte) 1);
+        super(colors, abstractBreed.getDefaultSkin(sex));
         this.breed = abstractBreed;
         this.sex = sex;
         this.size = 100;
@@ -52,10 +51,6 @@ public class PlayerLook extends AbstractLook {
 
     public byte getTitle() {
         return this.title;
-    }
-
-    public void setOrientation(OrientationEnum orientation) {
-        super.setOrientation(orientation);
     }
 
 }

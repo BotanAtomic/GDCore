@@ -20,7 +20,7 @@ public enum OrientationEnum {
             NORTH_EAST
     };
 
-    public static OrientationEnum valueOf(int ordinal) {
+    public static OrientationEnum valueOf(byte ordinal) {
         return values()[ordinal];
     }
 }

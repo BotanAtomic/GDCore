@@ -1,12 +1,15 @@
 package org.graviton.database.entity;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
+import org.graviton.database.AbstractDatabase;
+import org.graviton.database.GameDatabase;
 import org.graviton.database.repository.GameMapRepository;
-import org.graviton.database.repository.NpcRepository;
 import org.graviton.database.repository.PlayerRepository;
+import org.graviton.game.creature.npc.NpcTemplate;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.maps.GameMap;
 import org.w3c.dom.Document;
@@ -25,9 +28,14 @@ import java.util.stream.IntStream;
  */
 @Slf4j
 public class EntityFactory implements Manageable {
+    private final static String experiencePath = "experiences/experiences.xml";
+    private final static String npcTemplatePath = "npc/templates.xml";
+
+
     private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
     private final Map<Short, Experience> experiences = new ConcurrentHashMap<>();
+    private final Map<Integer, NpcTemplate> npcTemplate = new ConcurrentHashMap<>();
 
     @Inject
     private GameMapRepository gameMapRepository;
@@ -35,19 +43,19 @@ public class EntityFactory implements Manageable {
     @Inject
     private PlayerRepository playerRepository;
 
-    @Inject
-    private NpcRepository npcRepository;
+    private GameDatabase database;
 
     @Inject
-    public EntityFactory(Program program) {
+    public EntityFactory(Program program, @Named("database.game") AbstractDatabase database) {
         program.register(this);
+        this.database = (GameDatabase) database;
     }
 
     private void loadExperiences() {
-        Document document = get("experiences/experiences.xml");
+        Document document = get(experiencePath);
 
         if (document == null)
-            throw new NullPointerException("File " + "experiences.xml" + " was not found");
+            throw new NullPointerException("File " + experiencePath + " was not found");
 
         NodeList nodeList = document.getElementsByTagName("experience");
 
@@ -65,9 +73,26 @@ public class EntityFactory implements Manageable {
         log.debug("Successfully load {} experiences data", this.experiences.size());
     }
 
+    private void loadNpcTemplates() {
+        Document document = get(npcTemplatePath);
+
+        if (document == null)
+            throw new NullPointerException("File " + npcTemplatePath + " was not found");
+
+        NodeList nodeList = document.getElementsByTagName("NpcTemplate");
+
+        IntStream.range(0, nodeList.getLength()).forEach(i -> {
+            Element element = (Element) nodeList.item(i);
+            this.npcTemplate.put(Integer.parseInt(element.getAttribute("id")), new NpcTemplate(element));
+        });
+
+        log.debug("Successfully load {} npc templates", this.npcTemplate.size());
+    }
+
     @Override
     public void start() {
         loadExperiences();
+        loadNpcTemplates();
     }
 
     @Override
@@ -86,6 +111,10 @@ public class EntityFactory implements Manageable {
 
     public Experience getExperience(short level) {
         return this.experiences.get(level);
+    }
+
+    public NpcTemplate getNpcTemplate(int id) {
+        return this.npcTemplate.get(id);
     }
 
     public GameMap getMap(int id) {

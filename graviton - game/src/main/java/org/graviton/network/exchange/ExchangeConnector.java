@@ -26,8 +26,10 @@ public class ExchangeConnector implements IoHandler, Manageable {
     public static int serverId;
 
     private final NioSocketConnector socketConnector;
+
     @Inject
     private AccountRepository accountRepository;
+
     private IoSession session;
 
     @InjectSetting("exchange.ip")

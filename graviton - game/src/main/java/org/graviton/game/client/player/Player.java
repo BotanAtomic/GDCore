@@ -37,11 +37,6 @@ public class Player implements Creature {
     private Location location;
     private long kamas;
 
-    /**
-     * @param record        the record contains all data
-     * @param account       owner account
-     * @param entityFactory simple manager class
-     */
     public Player(Record record, Account account, EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
         this.account = account;
@@ -51,20 +46,11 @@ public class Player implements Creature {
         this.look = new PlayerLook(record);
         this.statistics = new PlayerStatistics(record, (byte) (getBreed() instanceof Enutrof ? 120 : 100));
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
-        this.location = new Location(entityFactory.getMap(record.get(PLAYERS.MAP)), record.get(PLAYERS.CELL));
+        this.location = new Location(entityFactory.getMap(record.get(PLAYERS.MAP)), record.get(PLAYERS.CELL), record.get(PLAYERS.ORIENTATION));
 
         this.kamas = record.get(PLAYERS.KAMAS);
     }
 
-
-    /**
-     * Use for creation of player
-     *
-     * @param id            identification of player
-     * @param data          data of creation
-     * @param account       owner account
-     * @param entityFactory simple manager class
-     */
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
         account.getClient().send(GameProtocol.startAnimationMessage());
 
@@ -75,10 +61,10 @@ public class Player implements Creature {
         this.id = id;
         this.name = information[0];
 
-        this.look = new PlayerLook(StringUtils.parseColors(information[3] + ";" + information[4] + ";" + information[5]), Byte.parseByte(information[2]), AbstractBreed.get(Byte.parseByte(information[1])));
+        this.look = new PlayerLook(StringUtils.parseColors(information[3] + ";" + information[4] + ";" + information[5], ";"), Byte.parseByte(information[2]), AbstractBreed.get(Byte.parseByte(information[1])));
         this.statistics = new PlayerStatistics((byte) (getBreed() instanceof Enutrof ? 120 : 100));
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
-        this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell());
+        this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell(), (byte) 1);
         this.kamas = 0;
     }
 
@@ -111,7 +97,7 @@ public class Player implements Creature {
     }
 
     public OrientationEnum getOrientation() {
-        return this.look.getOrientation();
+        return this.location.getOrientation();
     }
 
     public long getExperience() {

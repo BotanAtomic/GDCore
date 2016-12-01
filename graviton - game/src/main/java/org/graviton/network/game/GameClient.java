@@ -11,7 +11,6 @@ import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.interaction.InteractionManager;
-import org.graviton.game.interaction.actions.AbstractGameAction;
 import org.graviton.network.game.handler.base.MessageHandler;
 import org.graviton.network.game.protocol.GameProtocol;
 import org.graviton.network.game.protocol.MessageProtocol;
@@ -136,8 +135,7 @@ public class GameClient {
     }
 
     public void finishAction(String data) {
-        AbstractGameAction a = interactionManager.pollLast();
-        interactionManager.end(a, data.charAt(0) == 'K', data.substring(1));
+        interactionManager.end(interactionManager.pollLast(), data.charAt(0) == 'K', data.substring(1));
     }
 
 }

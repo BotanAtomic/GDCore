@@ -46,12 +46,12 @@ public class PlayerMovement extends Path implements AbstractGameAction {
     @Override
     public void cancel(String data) {
         player.getLocation().setCell(gameMap.getCells().get(Short.parseShort(data.substring(2))));
-        player.getLook().setOrientation(getOrientation());
+        player.getLocation().setOrientation(getOrientation());
     }
 
     @Override
     public void finish(String data) {
-        player.getLook().setOrientation(getOrientation());
+        player.getLocation().setOrientation(getOrientation());
 
         Trigger trigger = gameMap.getTriggers().get(newCell.getId());
 

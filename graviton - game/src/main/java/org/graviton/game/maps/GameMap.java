@@ -2,13 +2,16 @@ package org.graviton.game.maps;
 
 import lombok.Data;
 import org.graviton.api.Creature;
+import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
 import org.graviton.game.maps.utils.CellLoader;
 import org.graviton.network.game.protocol.GameProtocol;
 import org.jooq.Record;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.google.common.collect.Maps.newConcurrentMap;
 import static org.graviton.database.jooq.game.tables.Maps.MAPS;
@@ -29,6 +32,8 @@ public class GameMap {
 
     private final String descriptionPacket;
 
+    private final AtomicInteger idGenerator = new AtomicInteger(-1000);
+
     public GameMap(Record record) {
         this.id = record.get(MAPS.ID);
 
@@ -44,6 +49,14 @@ public class GameMap {
         this.triggers.putAll(CellLoader.parseTrigger(record.get(MAPS.TRIGGERS)));
 
         this.descriptionPacket = GameProtocol.mapDataMessage(this.id, this.date, this.key);
+    }
+
+    public int getNextId() {
+        return idGenerator.incrementAndGet();
+    }
+
+    public void initializeNpc(Collection<Npc> npcCollection) {
+        npcCollection.forEach(npc -> this.creatures.put(npc.getId(), npc));
     }
 
     public void enter(Creature creature) {

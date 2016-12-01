@@ -89,8 +89,8 @@ public class StringUtils {
         return (short) ((header.charAt(0) - header.charAt(1)) * (header.charAt(1) + header.charAt(0)));
     }
 
-    public static int[] parseColors(String data) {
-        String[] colors = data.split(";");
+    public static int[] parseColors(String data, String regex) {
+        String[] colors = data.split(regex);
         return new int[]{Integer.parseInt(colors[0]), Integer.parseInt(colors[1]), Integer.parseInt(colors[2])};
     }
 
