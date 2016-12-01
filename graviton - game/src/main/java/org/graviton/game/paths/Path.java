@@ -34,8 +34,6 @@ public class Path extends ArrayList<Short> {
             while (lastCell != stepCell && map.getCells().get(lastCell).isWalkable() && size-- > 0)
                 add(lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth()));
 
-            if (!isValid())
-                break;
 
             lastCell = stepCell;
         }
@@ -60,7 +58,7 @@ public class Path extends ArrayList<Short> {
 
     @Override
     public String toString() {
-        return isValid() ? this.newPath = ('a' + Cells.encode(startCell) + initPath) : GameProtocol.noActionMessage();
+        return isValid() ? this.newPath = ('a' + Cells.encode(startCell).concat(initPath)) : GameProtocol.noActionMessage();
     }
 
 }

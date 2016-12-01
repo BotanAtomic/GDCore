@@ -41,7 +41,7 @@ public class AccountRepository {
         return this.accounts.get(account);
     }
 
-    public void updateInformations(Account account) {
+    public void updateInformation(Account account) {
         this.database.update(ACCOUNTS).set(ACCOUNTS.LAST_CONNECTION, account.getLastConnection()).
                 set(ACCOUNTS.LAST_ADDRESS, account.getLastAddress()).
                 where(ACCOUNTS.ID.equal(account.getId())).execute();

@@ -11,6 +11,7 @@ import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.interaction.InteractionManager;
+import org.graviton.game.interaction.actions.AbstractGameAction;
 import org.graviton.network.game.handler.base.MessageHandler;
 import org.graviton.network.game.protocol.GameProtocol;
 import org.graviton.network.game.protocol.MessageProtocol;
@@ -59,6 +60,9 @@ public class GameClient {
     }
 
     public void disconnect() {
+        this.player.getGameMap().out(player);
+
+        this.playerRepository.save(account);
         this.accountRepository.unload(account.getId());
         this.session.closeNow();
     }
@@ -112,7 +116,7 @@ public class GameClient {
         account.setLastConnection(new SimpleDateFormat("yyyy~MM~dd~HH~mm").format(new Date()));
         account.setLastAddress(currentAddress);
 
-        accountRepository.updateInformations(account);
+        accountRepository.updateInformation(account);
     }
 
     public void sendGameInformation() {
@@ -132,8 +136,8 @@ public class GameClient {
     }
 
     public void finishAction(String data) {
-        String[] information = data.substring(1).split("\\|");
-        interactionManager.end(interactionManager.pollLast(), data.charAt(0) == 'K', information.length > 1 ? information[1] : "");
+        AbstractGameAction a = interactionManager.pollLast();
+        interactionManager.end(a, data.charAt(0) == 'K', data.substring(1));
     }
 
 }

@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
 import org.graviton.database.repository.GameMapRepository;
+import org.graviton.database.repository.NpcRepository;
+import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.maps.GameMap;
 import org.w3c.dom.Document;
@@ -29,6 +31,12 @@ public class EntityFactory implements Manageable {
 
     @Inject
     private GameMapRepository gameMapRepository;
+
+    @Inject
+    private PlayerRepository playerRepository;
+
+    @Inject
+    private NpcRepository npcRepository;
 
     @Inject
     public EntityFactory(Program program) {
@@ -64,7 +72,7 @@ public class EntityFactory implements Manageable {
 
     @Override
     public void stop() {
-
+        playerRepository.save();
     }
 
     private Document get(String path) {

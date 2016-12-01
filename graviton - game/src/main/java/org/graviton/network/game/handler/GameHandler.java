@@ -8,6 +8,7 @@ import org.graviton.network.game.GameClient;
  */
 @Slf4j
 public class GameHandler {
+
     private final GameClient client;
 
     public GameHandler(GameClient client) {

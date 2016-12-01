@@ -15,9 +15,6 @@
     <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.6" level="project" />
     <orderEntry type="library" name="Gradle: com.google.inject:guice:4.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq:3.8.5" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.8.5" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq-codegen:3.8.5" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.1.7" level="project" />
     <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:6.0.5" level="project" />
     <orderEntry type="module" module-name="graviton_-_common_main" />

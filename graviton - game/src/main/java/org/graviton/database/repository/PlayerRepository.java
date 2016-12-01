@@ -7,8 +7,10 @@ import org.graviton.database.LoginDatabase;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.network.exchange.ExchangeConnector;
 import org.graviton.utils.StringUtils;
+import org.jooq.UpdateSetFirstStep;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -76,5 +78,33 @@ public class PlayerRepository {
 
     public int getNextId() {
         return database.getNextId(PLAYERS, PLAYERS.ID);
+    }
+
+    public void save() {
+        this.players.values().forEach(this::save);
+    }
+
+    private void save(Player player) {
+        UpdateSetFirstStep steps = database.update(PLAYERS);
+
+        steps.set(PLAYERS.MAP, player.getGameMap().getId());
+        steps.set(PLAYERS.CELL, player.getCell().getId());
+        steps.set(PLAYERS.ORIENTATION, player.getOrientation().ordinal());
+
+        steps.set(PLAYERS.VITALITY, player.getStatistics().get(CharacteristicType.Vitality).base());
+        steps.set(PLAYERS.WISDOM, player.getStatistics().get(CharacteristicType.Wisdom).base());
+        steps.set(PLAYERS.STRENGTH, player.getStatistics().get(CharacteristicType.Strength).base());
+        steps.set(PLAYERS.INTELLIGENCE, player.getStatistics().get(CharacteristicType.Intelligence).base());
+        steps.set(PLAYERS.CHANCE, player.getStatistics().get(CharacteristicType.Chance).base());
+        steps.set(PLAYERS.AGILITY, player.getStatistics().get(CharacteristicType.Agility).base());
+
+        steps.set(PLAYERS.SIZE, player.getSize());
+        steps.set(PLAYERS.TITLE, player.getTitle());
+        steps.set(PLAYERS.SPELL_POINTS, player.getStatistics().getSpellPoints());
+        steps.set(PLAYERS.STAT_POINTS, player.getStatistics().getStatisticPoints()).execute();
+    }
+
+    public void save(Account account) {
+        account.getPlayers().forEach(this::save);
     }
 }

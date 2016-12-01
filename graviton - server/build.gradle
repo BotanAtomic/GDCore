@@ -20,57 +20,12 @@ buildscript {
     }
 }
 
-apply plugin: 'nu.studer.jooq'
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
     compile 'mysql:mysql-connector-java:+'
-    compile 'org.jooq:jooq:+'
 
     compile project(':graviton - common')
-}
-
-task generate << {
-
-    // Use your favourite XML builder to construct the code generation configuration file
-    // ----------------------------------------------------------------------------------
-    def writer = new StringWriter()
-    //noinspection GroovyUnusedAssignment
-    def xml = new MarkupBuilder(writer)
-            .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.8.0.xsd') {
-        jdbc() {
-            driver('com.mysql.cj.jdbc.Driver')
-            url('jdbc:mysql://localhost/login?serverTimezone=UTC')
-            user('root')
-            password('')
-            schema('login')
-        }
-
-        generator() {
-            name('org.jooq.util.JavaGenerator')
-
-            database() {
-                name('org.jooq.util.mysql.MySQLDatabase')
-                inputSchema('login')
-            }
-            generate() {
-            }
-            target() {
-                packageName('org.graviton.database.jooq.login')
-                directory('../graviton - common/src/main/java')
-            }
-        }
-    }
-
-    // Run the code generator
-    // ----------------------
-    GenerationTool.generate(
-            JAXB.unmarshal(
-                    new StringReader(writer.toString()),
-                    org.jooq.util.jaxb.Configuration.class
-            )
-    )
 }
