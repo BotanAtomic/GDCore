@@ -9,6 +9,7 @@ import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
 import org.graviton.database.repository.GameMapRepository;
 import org.graviton.database.repository.PlayerRepository;
+import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.npc.NpcTemplate;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.maps.GameMap;
@@ -22,20 +23,24 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
-
 /**
  * Created by Botan on 11/11/2016 : 22:42
  */
 @Slf4j
 public class EntityFactory implements Manageable {
-    private final static String experiencePath = "experiences/experiences.xml";
+    private final static String experiencePath = "experiences/values.xml";
+
     private final static String npcTemplatePath = "npc/templates.xml";
+
+    private final static String monsterTemplatePath = "monster/templates.xml";
 
 
     private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
     private final Map<Short, Experience> experiences = new ConcurrentHashMap<>();
-    private final Map<Integer, NpcTemplate> npcTemplate = new ConcurrentHashMap<>();
+    private final Map<Integer, NpcTemplate> npcTemplates = new ConcurrentHashMap<>();
+    private final Map<Integer, MonsterTemplate> monsterTemplates = new ConcurrentHashMap<>();
+
 
     @Inject
     private GameMapRepository gameMapRepository;
@@ -83,16 +88,33 @@ public class EntityFactory implements Manageable {
 
         IntStream.range(0, nodeList.getLength()).forEach(i -> {
             Element element = (Element) nodeList.item(i);
-            this.npcTemplate.put(Integer.parseInt(element.getAttribute("id")), new NpcTemplate(element));
+            this.npcTemplates.put(Integer.parseInt(element.getAttribute("id")), new NpcTemplate(element));
         });
 
-        log.debug("Successfully load {} npc templates", this.npcTemplate.size());
+        log.debug("Successfully load {} npc templates", this.npcTemplates.size());
+    }
+
+    private void loadMonsterTemplates() {
+        Document document = get(monsterTemplatePath);
+
+        if (document == null)
+            throw new NullPointerException("File " + monsterTemplatePath + " was not found");
+
+        NodeList nodeList = document.getElementsByTagName("MonsterTemplate");
+
+        IntStream.range(0, nodeList.getLength()).forEach(i -> {
+            Element element = (Element) nodeList.item(i);
+            this.monsterTemplates.put(Integer.parseInt(element.getAttribute("id")), new MonsterTemplate(element));
+        });
+
+        log.debug("Successfully load {} monster templates", this.monsterTemplates.size());
     }
 
     @Override
     public void start() {
         loadExperiences();
         loadNpcTemplates();
+        loadMonsterTemplates();
     }
 
     @Override
@@ -114,7 +136,11 @@ public class EntityFactory implements Manageable {
     }
 
     public NpcTemplate getNpcTemplate(int id) {
-        return this.npcTemplate.get(id);
+        return this.npcTemplates.get(id);
+    }
+
+    public MonsterTemplate getMonsterTemplate(int id) {
+        return this.monsterTemplates.get(id);
     }
 
     public GameMap getMap(int id) {

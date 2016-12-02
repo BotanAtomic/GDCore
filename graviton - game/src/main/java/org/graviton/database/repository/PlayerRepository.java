@@ -10,7 +10,6 @@ import org.graviton.game.client.player.Player;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.network.exchange.ExchangeConnector;
 import org.graviton.utils.StringUtils;
-import org.jooq.UpdateSetFirstStep;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,9 +24,9 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
  */
 public class PlayerRepository {
     private final Map<Integer, Player> players;
+    private final LoginDatabase database;
     @Inject
     private EntityFactory entityFactory;
-    private LoginDatabase database;
 
     @Inject
     public PlayerRepository(@Named("database.login") AbstractDatabase database) {
@@ -85,23 +84,23 @@ public class PlayerRepository {
     }
 
     private void save(Player player) {
-        UpdateSetFirstStep steps = database.update(PLAYERS);
+        database.update(PLAYERS).set(PLAYERS.MAP, player.getGameMap().getId())
 
-        steps.set(PLAYERS.MAP, player.getGameMap().getId());
-        steps.set(PLAYERS.CELL, player.getCell().getId());
-        steps.set(PLAYERS.ORIENTATION, player.getOrientation().ordinal());
+                .set(PLAYERS.MAP, player.getGameMap().getId())
+                .set(PLAYERS.CELL, player.getCell().getId())
+                .set(PLAYERS.ORIENTATION, (byte) player.getOrientation().ordinal())
 
-        steps.set(PLAYERS.VITALITY, player.getStatistics().get(CharacteristicType.Vitality).base());
-        steps.set(PLAYERS.WISDOM, player.getStatistics().get(CharacteristicType.Wisdom).base());
-        steps.set(PLAYERS.STRENGTH, player.getStatistics().get(CharacteristicType.Strength).base());
-        steps.set(PLAYERS.INTELLIGENCE, player.getStatistics().get(CharacteristicType.Intelligence).base());
-        steps.set(PLAYERS.CHANCE, player.getStatistics().get(CharacteristicType.Chance).base());
-        steps.set(PLAYERS.AGILITY, player.getStatistics().get(CharacteristicType.Agility).base());
+                .set(PLAYERS.VITALITY, player.getStatistics().get(CharacteristicType.Vitality).base())
+                .set(PLAYERS.WISDOM, player.getStatistics().get(CharacteristicType.Wisdom).base())
+                .set(PLAYERS.STRENGTH, player.getStatistics().get(CharacteristicType.Strength).base())
+                .set(PLAYERS.INTELLIGENCE, player.getStatistics().get(CharacteristicType.Intelligence).base())
+                .set(PLAYERS.CHANCE, player.getStatistics().get(CharacteristicType.Chance).base())
+                .set(PLAYERS.AGILITY, player.getStatistics().get(CharacteristicType.Agility).base())
 
-        steps.set(PLAYERS.SIZE, player.getSize());
-        steps.set(PLAYERS.TITLE, player.getTitle());
-        steps.set(PLAYERS.SPELL_POINTS, player.getStatistics().getSpellPoints());
-        steps.set(PLAYERS.STAT_POINTS, player.getStatistics().getStatisticPoints()).execute();
+                .set(PLAYERS.SIZE, player.getSize())
+                .set(PLAYERS.TITLE, player.getTitle())
+                .set(PLAYERS.SPELL_POINTS, player.getStatistics().getSpellPoints())
+                .set(PLAYERS.STAT_POINTS, player.getStatistics().getStatisticPoints()).execute();
     }
 
     public void save(Account account) {

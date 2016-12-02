@@ -1,16 +1,13 @@
 package org.graviton.game.look;
 
-import lombok.Data;
 import org.graviton.game.creature.npc.NpcTemplate;
 import org.graviton.utils.StringUtils;
 
 /**
  * Created by Botan on 02/12/2016.
  */
-@Data
 public class NpcLook extends AbstractLook {
     private final String accessories;
-
     private final byte extraClip;
     private final short customArtWork;
 
@@ -21,4 +18,25 @@ public class NpcLook extends AbstractLook {
         this.extraClip = Byte.parseByte(template.getTag("extraClip"));
     }
 
+    public short getSkin() {
+        return super.getSkin();
+    }
+
+    public int[] getColors() {
+        return super.getColors();
+    }
+
+    public String getAccessories() {
+        return this.accessories;
+    }
+
+    public byte getExtraClip() {
+        return this.extraClip;
+    }
+
+    public short getCustomArtWork() {
+        return this.customArtWork;
+    }
 }
+
+

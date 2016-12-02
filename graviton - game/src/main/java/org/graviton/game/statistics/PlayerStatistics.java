@@ -16,15 +16,12 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
  */
 @Data
 public class PlayerStatistics {
+    private final Map<CharacteristicType, Characteristic> characteristics = Maps.newHashMap();
     //current -> max
     private short[] life;
     private short[] pods;
-
     private short statisticPoints, spellPoints, energy, level;
-
     private long experience;
-
-    private Map<CharacteristicType, Characteristic> characteristics = Maps.newHashMap();
 
     public PlayerStatistics(Record record, byte prospection) {
         this.statisticPoints = record.get(PLAYERS.STAT_POINTS);

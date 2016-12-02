@@ -10,7 +10,7 @@ import org.jooq.Record;
 import static org.graviton.database.jooq.game.tables.Npcs.NPCS;
 
 /**
- * Created by kurdistan on 27/11/16.
+ * Created by Botan on 27/11/16.
  */
 @Data
 public class Npc implements Creature {

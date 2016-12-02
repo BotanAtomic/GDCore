@@ -102,4 +102,7 @@ public class StringUtils {
         return (value != -1 ? Integer.toHexString(value) : "-1");
     }
 
+    public static int random(int minimum, int maximum) {
+        return minimum + RANDOM.get().nextInt() % (maximum - minimum + 1);
+    }
 }
