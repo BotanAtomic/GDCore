@@ -33,4 +33,23 @@ public class NpcTemplate {
         return this.element.getElementsByTagName(tag).item(0).getTextContent();
     }
 
+    public short getSkin() {
+        return this.look.getSkin();
+    }
+
+    public int[] getColors() {
+        return this.look.getColors();
+    }
+
+    public String getAccessories() {
+        return this.look.getAccessories();
+    }
+
+    public byte getExtraClip() {
+        return this.look.getExtraClip();
+    }
+
+    public short getCustomArtWork() {
+        return this.look.getCustomArtWork();
+    }
 }
