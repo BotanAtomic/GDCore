@@ -21,9 +21,13 @@ public class Monster {
 
     public Monster(MonsterTemplate template, byte grade, short level, int baseExperience, String resistance, String life, String statistics, Map<CharacteristicType, Characteristic> characteristics) {
         this.template = template;
-        this.size = (byte) (100 + (2 * grade));
+        this.size = (byte) (100 + (2 * (grade - 1)));
         this.grade = grade;
         this.baseExperience = baseExperience != 0 ? baseExperience : 10;
         this.statistics = new MonsterStatistics(level, life, resistance.split("@")[1].split(";"), statistics.split(","), characteristics);
+    }
+
+    public short getLevel() {
+        return this.statistics.getLevel();
     }
 }

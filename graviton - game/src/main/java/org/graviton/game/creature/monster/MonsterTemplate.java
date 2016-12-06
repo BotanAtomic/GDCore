@@ -73,10 +73,15 @@ public class MonsterTemplate {
     }
 
     private String getTag(String tag) {
-        return this.element.getElementsByTagName(tag).item(0).getTextContent();
+        return this.element.getElementsByTagName(tag).item(0).getTextContent().trim();
     }
 
     private String getTagElement(String tag, String attribute) {
         return ((Element) this.element.getElementsByTagName(tag).item(0)).getAttribute(attribute);
     }
+
+    public Monster getByLevel(short level) {
+        return this.monsters.stream().filter(monster -> monster.getLevel() == level).findFirst().get();
+    }
+
 }

@@ -23,4 +23,8 @@ public enum OrientationEnum {
     public static OrientationEnum valueOf(byte ordinal) {
         return values()[ordinal];
     }
+
+    public static OrientationEnum random() {
+        return values()[(int) (System.currentTimeMillis() % (OrientationEnum.values().length - 1))];
+    }
 }

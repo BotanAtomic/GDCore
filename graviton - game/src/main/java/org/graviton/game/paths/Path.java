@@ -21,7 +21,7 @@ public class Path extends ArrayList<Short> {
     private short finalCell;
     private OrientationEnum finalOrientation;
 
-    public Path(String path, GameMap map, short cell) {
+    protected Path(String path, GameMap map, short cell) {
         this.initPath = path;
         this.startCell = cell;
         short lastCell = cell;

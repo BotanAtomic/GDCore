@@ -8,6 +8,7 @@ import org.graviton.api.Language;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
+import org.graviton.game.channel.Channel;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.interaction.InteractionManager;
@@ -90,6 +91,7 @@ public class GameClient {
 
     public void selectPlayer(int playerId) {
         Player player = (this.player = account.getPlayer(playerId));
+        player.setOnline(true);
         send(PlayerProtocol.askMessage(player));
         send(PlayerProtocol.asMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
 
@@ -122,7 +124,9 @@ public class GameClient {
         player.getGameMap().enter(player);
     }
 
-    public void deletePlayer(int player, String secretAnswer) {
+    public void deletePlayer(String[] data) {
+        int player = Integer.parseInt(data[0]);
+        String secretAnswer = data.length > 1 ? data[1] : "";
         if (secretAnswer.isEmpty() || secretAnswer.equals(account.getAnswer())) {
             playerRepository.remove(account.getPlayer(player));
             send(account.getPlayerPacket(false));
@@ -136,6 +140,48 @@ public class GameClient {
 
     public void finishAction(String data) {
         interactionManager.end(interactionManager.pollLast(), data.charAt(0) == 'K', data.substring(1));
+    }
+
+    public void changePlayerMapByPosition(String position) {
+        player.changeMap(entityFactory.getMapByPosition(position));
+    }
+
+    public void objectMove(String data[]) {
+        //Todo
+    }
+
+    public void speak(String[] data) {
+        Channel channel = Channel.get(data[0].charAt(0));
+
+        if (channel == null) {
+            Player player = playerRepository.find(data[0]);
+            if (player != null) {
+                player.send(MessageProtocol.privateMessage(this.player.getId(), this.player.getName(), data[1], true));
+                send(MessageProtocol.privateMessage(player.getId(), player.getName(), data[1], false));
+            } else
+                send(MessageProtocol.notConnectedPlayerMessage(data[0]));
+        } else {
+            String packet = MessageProtocol.buildChannelMessage(channel.value(), player, data[1]);
+
+            switch (channel) {
+                case General:
+                    player.getGameMap().send(packet);
+                    break;
+
+                case Trade:
+                case Recruitment:
+                    playerRepository.send(packet);
+                    break;
+
+                case Admin:
+                case Information:
+                case Alignment:
+                case Team:
+                case Party:
+                case Guild:
+                    break;
+            }
+        }
     }
 
 }

@@ -38,7 +38,7 @@ public class PlayerProtocol {
         builder.append(toHex(player.getColor((byte) 1))).append('|');
         builder.append(toHex(player.getColor((byte) 2))).append('|');
         builder.append(toHex(player.getColor((byte) 3))).append('|');
-        builder.append(formatItems());
+        builder.append(ItemProtocol.formatItems(player.getInventory().getItems().values()));
         return builder.toString();
     }
 
@@ -55,9 +55,7 @@ public class PlayerProtocol {
         return ",,,,";
     }
 
-    private static String formatItems() {
-        return "";
-    }
+
 
     public static String asMessage(Player player, Experience experience, Alignment alignment, PlayerStatistics statistics) {
         StringBuilder builder = new StringBuilder("As");
@@ -66,7 +64,7 @@ public class PlayerProtocol {
         builder.append(experience.getPlayer()).append(',');
         builder.append(experience.getNext().getPlayer()).append('|');
 
-        builder.append(player.getKamas()).append('|');
+        builder.append(player.getInventory().getKamas()).append('|');
         builder.append(player.getStatistics().getStatisticPoints()).append('|');
         builder.append(player.getStatistics().getSpellPoints()).append('|');
 

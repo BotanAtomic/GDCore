@@ -34,7 +34,7 @@ public class GameHandler {
                 break;
 
             default:
-                log.error("not implemented game packet '{}'", subHeader);
+                log.error("not implemented game packet '{}'", (char) subHeader);
         }
 
     }

@@ -1,7 +1,11 @@
 package org.graviton.game.maps;
 
+import javafx.util.Pair;
 import lombok.Data;
 import org.graviton.api.Creature;
+import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.creature.monster.Monster;
+import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
@@ -9,12 +13,15 @@ import org.graviton.game.maps.utils.CellLoader;
 import org.graviton.network.game.protocol.GameProtocol;
 import org.jooq.Record;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.google.common.collect.Maps.newConcurrentMap;
+import static java.util.Collections.synchronizedList;
 import static org.graviton.database.jooq.game.tables.Maps.MAPS;
+import static org.graviton.utils.StringUtils.random;
 
 /**
  * Created by Botan on 12/11/2016 : 17:55
@@ -33,8 +40,11 @@ public class GameMap {
     private final String descriptionPacket;
 
     private final AtomicInteger idGenerator = new AtomicInteger(-1000);
+    private final List<Pair<Integer, Short>> possibleGroups;
+    private byte minimumGroupSize, maximumGroupSize, fixedGroupSize;
+    private byte numberOfGroup;
 
-    public GameMap(Record record) {
+    public GameMap(Record record, EntityFactory entityFactory) {
         this.id = record.get(MAPS.ID);
 
         this.date = record.get(MAPS.DATE);
@@ -48,15 +58,63 @@ public class GameMap {
         this.cells.putAll(CellLoader.parse(data));
         this.triggers.putAll(CellLoader.parseTrigger(record.get(MAPS.TRIGGERS)));
 
+        this.minimumGroupSize = record.get(MAPS.MINSIZE);
+        this.maximumGroupSize = record.get(MAPS.MAXSIZE);
+        this.fixedGroupSize = record.get(MAPS.FIXSIZE);
+
+        this.numberOfGroup = record.get(MAPS.NUMGROUP);
+
         this.descriptionPacket = GameProtocol.mapDataMessage(this.id, this.date, this.key);
+
+        if (!(this.possibleGroups = synchronizedList(initializeMonsters(record.get(MAPS.MONSTERS)))).isEmpty())
+            this.generateMonsters(entityFactory);
     }
+
+    private List<Pair<Integer, Short>> initializeMonsters(String monstersData) {
+        if (monstersData.isEmpty())
+            return new ArrayList<>();
+
+        List<Pair<Integer, Short>> values = new ArrayList<>();
+
+        for (String data : monstersData.split("\\|"))
+            values.add(new Pair<>(Integer.parseInt(data.split(",")[0]), Short.parseShort(data.split(",")[1])));
+
+        return values;
+    }
+
+    private void generateMonsters(EntityFactory entityFactory) {
+        Random random = new Random();
+        IntStream.range(0, numberOfGroup).forEach(i -> {
+            Collection<Monster> monsters = new ArrayList<>();
+            byte groupSize = fixedGroupSize > 0 ? fixedGroupSize : (byte) random(minimumGroupSize, maximumGroupSize);
+
+            IntStream.range(0, groupSize).forEach(inc -> {
+                Pair<Integer, Short> randomPair = this.possibleGroups.get(random.nextInt(this.possibleGroups.size()));
+                monsters.add(entityFactory.getMonsterTemplate(randomPair.getKey()).getByLevel(randomPair.getValue()));
+            });
+            register(new MonsterGroup(getNextId(), this, getRandomCell(), monsters));
+        });
+    }
+
+    private String buildData() {
+        StringBuilder packet = new StringBuilder();
+        creatures.values().forEach(creature -> packet.append(GameProtocol.showCreatureMessage(creature.getGm())).append("\n"));
+        return packet.toString();
+    }
+
+
+    private void register(Creature creature) {
+        this.creatures.put(creature.getId(), creature);
+        creature.getLocation().getCell().getCreatures().add(creature.getId());
+    }
+
 
     public int getNextId() {
         return idGenerator.incrementAndGet();
     }
 
     public void initializeNpc(Collection<Npc> npcCollection) {
-        npcCollection.forEach(npc -> this.creatures.put(npc.getId(), npc));
+        npcCollection.forEach(this::register);
     }
 
     public void enter(Creature creature) {
@@ -71,6 +129,7 @@ public class GameMap {
         creature.send(GameProtocol.creatureChangeMapMessage(creature.getId()));
         creature.send(GameProtocol.mapLoadedSuccessfullyMessage());
         creature.getLocation().setGameMap(this);
+        creature.getLocation().getCell().getCreatures().add(creature.getId());
     }
 
     public void send(String data) {
@@ -78,14 +137,15 @@ public class GameMap {
     }
 
     public void out(Creature creature) {
+        creature.getLocation().getCell().getCreatures().remove(creature.getId());
         this.creatures.remove(creature.getId());
         send(GameProtocol.hideCreatureMessage(creature.getId()));
     }
 
-    private String buildData() {
-        StringBuilder packet = new StringBuilder();
-        creatures.values().forEach(creature -> packet.append(GameProtocol.showCreatureMessage(creature.getGm())).append("\n"));
-        return packet.toString();
+    public short getRandomCell() {
+        List<Cell> freeCells = this.cells.values().stream().filter(cell -> cell.isWalkable() && cell.getCreatures().isEmpty()
+                && !this.triggers.containsKey(cell.getId())).collect(Collectors.toList());
+        return freeCells.get(random(0, freeCells.size() - 1)).getId();
     }
 
 }

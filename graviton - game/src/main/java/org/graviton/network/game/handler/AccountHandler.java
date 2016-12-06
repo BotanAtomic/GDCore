@@ -24,7 +24,7 @@ public class AccountHandler {
                 break;
 
             case 68: // 'D'
-                client.deletePlayer(Integer.parseInt(data.split("\\|")[0]), data.split("\\|")[1]);
+                client.deletePlayer(data.split("\\|"));
                 break;
 
             case 76: // 'L'
@@ -56,7 +56,7 @@ public class AccountHandler {
                 break;
 
             default:
-                log.error("not implemented account packet '{}'", subHeader);
+                log.error("not implemented account packet '{}'", (char) subHeader);
         }
 
     }

@@ -101,9 +101,9 @@ public class ExchangeConnector implements IoHandler, Manageable {
                 send(ExchangeProtocol.informationMessage((byte) serverId, this.serverKey, this.address, this.port));
                 break;
             case 'S':
-                if (data.charAt(1) == 'A') {
+                if (data.charAt(1) == 'A')
                     log.debug("Exchange server successfully accepted the connection");
-                } else {
+                else {
                     log.debug("Exchange server refused the connection");
                     System.exit(0);
                 }

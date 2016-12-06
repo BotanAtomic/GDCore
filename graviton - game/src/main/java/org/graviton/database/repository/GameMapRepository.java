@@ -40,8 +40,13 @@ public class GameMapRepository {
         return load(id);
     }
 
+    public GameMap getByPosition(String position) {
+        return get(database.getResult(MAPS, MAPS.MAPPOS.contains(position.substring(1))).get(0).get(MAPS.ID));
+    }
+
+
     private GameMap load(int id) {
-        GameMap maps = new GameMap(database.getRecord(MAPS, MAPS.ID.equal(id)));
+        GameMap maps = new GameMap(database.getRecord(MAPS, MAPS.ID.equal(id)), entityFactory);
         maps.initializeNpc(getNpc(maps));
         this.maps.put(maps.getId(), maps);
         return maps;
@@ -52,5 +57,4 @@ public class GameMapRepository {
                 map(record -> new Npc(entityFactory.getNpcTemplate(record.get(NPCS.ID)), gameMap, record)).
                 collect(Collectors.toList());
     }
-
 }

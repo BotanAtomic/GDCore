@@ -5,6 +5,7 @@ import org.apache.mina.core.buffer.IoBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
@@ -103,6 +104,6 @@ public class StringUtils {
     }
 
     public static int random(int minimum, int maximum) {
-        return minimum + RANDOM.get().nextInt() % (maximum - minimum + 1);
+        return ThreadLocalRandom.current().nextInt(minimum, maximum + 1);
     }
 }

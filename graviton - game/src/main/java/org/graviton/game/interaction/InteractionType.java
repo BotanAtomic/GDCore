@@ -11,7 +11,7 @@ public enum InteractionType {
     MAP_ACTION((short) 500),
     HOUSE_ACTION((short) 507);
 
-    public final short id;
+    private final short id;
 
     InteractionType(short id) {
         this.id = id;

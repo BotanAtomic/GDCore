@@ -6,5 +6,5 @@ package org.graviton.constant;
 public class Dofus {
     public static final byte MAX_STORE_PER_MAP = 5;
     public static short MAX_ENERGY = 10000;
-
+    public static short STARS_TIME = 120; //minute
 }
