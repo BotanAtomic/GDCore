@@ -16,11 +16,7 @@ import org.graviton.game.experience.Experience;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.maps.GameMap;
-import org.jooq.Record;
-import org.jooq.Result;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.graviton.xml.XMLFile;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
@@ -28,10 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 import static org.graviton.database.jooq.game.tables.Items.ITEMS;
-import static org.graviton.database.jooq.game.tables.Panoply.PANOPLY;
 
 /**
  * Created by Botan on 11/11/2016 : 22:42
@@ -46,6 +40,8 @@ public class EntityFactory implements Manageable {
     private final static String itemTemplatePath = "item/templates.xml";
 
     private final static String monsterTemplatePath = "monster/templates.xml";
+
+    private final static String panoplyTemplatePath = "panoply/templates.xml";
 
 
     private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -78,18 +74,7 @@ public class EntityFactory implements Manageable {
     }
 
     private void loadExperiences() {
-        Document document = get(experiencePath);
-
-        if (document == null)
-            throw new NullPointerException("File " + experiencePath + " was not found");
-
-        NodeList nodeList = document.getElementsByTagName("experience");
-
-        IntStream.range(0, nodeList.getLength()).forEach(i -> {
-            Element element = (Element) nodeList.item(i);
-
-            this.experiences.put(Short.parseShort(element.getAttribute("level")), new Experience(element));
-        });
+        get(experiencePath).getElementsByTagName("experience").forEach(element -> this.experiences.put(element.getAttribute("level").toShort(), new Experience(element)));
 
         this.experiences.keySet().forEach(i -> {
             Experience experience = this.experiences.get(i);
@@ -100,64 +85,35 @@ public class EntityFactory implements Manageable {
     }
 
     private void loadNpcTemplates() {
-        Document document = get(npcTemplatePath);
-
-        if (document == null)
-            throw new NullPointerException("File " + npcTemplatePath + " was not found");
-
-        NodeList nodeList = document.getElementsByTagName("NpcTemplate");
-
-        IntStream.range(0, nodeList.getLength()).forEach(i -> {
-            Element element = (Element) nodeList.item(i);
-            this.npcTemplates.put(Integer.parseInt(element.getAttribute("id")), new NpcTemplate(element));
-        });
+        get(npcTemplatePath).getElementsByTagName("NpcTemplate").forEach(element -> this.npcTemplates.put(element.getAttribute("id").toInt(), new NpcTemplate(element)));
 
         log.debug("Successfully load {} npc templates", this.npcTemplates.size());
     }
 
     private void loadMonsterTemplates() {
-        Document document = get(monsterTemplatePath);
-
-        if (document == null)
-            throw new NullPointerException("File " + monsterTemplatePath + " was not found");
-
-        NodeList nodeList = document.getElementsByTagName("MonsterTemplate");
-
-        IntStream.range(0, nodeList.getLength()).forEach(i -> {
-            Element element = (Element) nodeList.item(i);
-            this.monsterTemplates.put(Integer.parseInt(element.getAttribute("id")), new MonsterTemplate(element));
-        });
+        get(monsterTemplatePath).getElementsByTagName("MonsterTemplate").forEach(element ->
+                this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element))
+        );
 
         log.debug("Successfully load {} monster templates", this.monsterTemplates.size());
     }
 
     private void loadItemsTemplate() {
-
-        Document document = get(itemTemplatePath);
-
-        if (document == null)
-            throw new NullPointerException("File " + itemTemplatePath + " was not found");
-
-        NodeList nodeList = document.getElementsByTagName("item");
-
-        IntStream.range(0, nodeList.getLength()).forEach(i -> {
-            Element element = (Element) nodeList.item(i);
+        get(itemTemplatePath).getElementsByTagName("item").forEach(element -> {
             ItemTemplate template = new ItemTemplate(element);
             this.itemTemplates.put(template.getId(), template);
         });
 
-
         log.debug("Successfully load {} item templates", this.itemTemplates.size());
 
-        Result<Record> result = database.getResult(PANOPLY);
-        result.forEach(record -> {
+        get(panoplyTemplatePath).getElementsByTagName("Panoply").forEach(element -> {
             Map<Short, ItemTemplate> templates = new HashMap<>();
-
-            for (String item : record.get(PANOPLY.ITEMS).split(",")) {
+            for (String item : element.getElementByTagName("items").toString().split(",")) {
                 short template = Short.parseShort(item);
                 templates.put(template, this.itemTemplates.get(template));
             }
-            this.panoply.put(record.get(PANOPLY.ID), new Panoply(record, templates));
+
+            this.panoply.put(element.getAttribute("id").toShort(), new Panoply(element, templates));
         });
 
         log.debug("Successfully load {} panoply", this.panoply.size());
@@ -178,13 +134,12 @@ public class EntityFactory implements Manageable {
         playerRepository.save();
     }
 
-    private Document get(String path) {
+    private XMLFile get(String path) {
         try {
-            return documentBuilderFactory.newDocumentBuilder().parse(new File("data/" + path));
+            return new XMLFile(documentBuilderFactory.newDocumentBuilder().parse(new File("data/" + path)));
         } catch (Exception e) {
-            log.error("cannot get document {} : {}", path, e);
+            throw new NullPointerException("File " + path + " was not found");
         }
-        return null;
     }
 
     public Experience getExperience(short level) {

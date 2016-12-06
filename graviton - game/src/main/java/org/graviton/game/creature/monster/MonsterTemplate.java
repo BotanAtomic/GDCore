@@ -3,9 +3,10 @@ package org.graviton.game.creature.monster;
 import lombok.Data;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
-import org.w3c.dom.Element;
+import org.graviton.xml.XMLElement;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * Created by Botan on 02/12/2016. 21:32
@@ -24,32 +25,30 @@ public class MonsterTemplate {
 
     private final Collection<Monster> monsters;
 
-    private final Element element;
-
-    public MonsterTemplate(Element element) {
-        this.element = element;
-        this.id = Integer.parseInt(element.getAttribute("id"));
-        this.name = getTag("name");
-        this.skin = Short.parseShort(getTag("skin"));
-        this.alignment = Byte.parseByte(getTag("alignment"));
-        this.colors = getTag("colors");
-        this.winKamas = new short[]{Short.parseShort(getTagElement("kamas", "min")), Short.parseShort(getTagElement("kamas", "max"))};
-        this.artificialIntelligence = Byte.parseByte(getTag("IA"));
-        this.capture = Boolean.parseBoolean(getTag("capture"));
-        this.aggressionDistance = Byte.parseByte(getTag("aggression"));
-        this.monsters = this.loadMonsters();
+    public MonsterTemplate(XMLElement element) {
+        this.id = element.getAttribute("id").toInt();
+        this.name = element.getElementByTagName("name").toString();
+        this.skin = element.getElementByTagName("skin").toShort();
+        this.alignment = element.getElementByTagName("alignment").toByte();
+        this.colors = element.getElementByTagName("colors").toString();
+        this.winKamas = new short[]{element.getElementByTagName("kamas", "min").toShort(),
+                element.getElementByTagName("kamas", "max").toShort()};
+        this.artificialIntelligence = element.getElementByTagName("IA").toByte();
+        this.capture = element.getElementByTagName("capture").toBoolean();
+        this.aggressionDistance = element.getElementByTagName("aggression").toByte();
+        this.monsters = this.loadMonsters(element);
     }
 
-    private Collection<Monster> loadMonsters() {
+    private Collection<Monster> loadMonsters(XMLElement element) {
         Collection<Monster> monsters = Collections.synchronizedCollection(new ArrayList<>());
 
-        String[] grade = getTag("grades").split("\\|");
-        String[] initiative = getTag("initiative").split("\\|");
-        String[] experience = getTag("experience").split("\\|");
-        String[] points = getTag("points").split("\\|");
-        String[] life = getTag("life").split("\\|");
-        String[] optionalStatistics = getTag("statisticsInfo").split(";");
-        String[] statistics = getTag("statistics").split("\\|");
+        String[] grade = element.getElementByTagName("grades").toString().split("\\|");
+        String[] initiative = element.getElementByTagName("initiative").toString().split("\\|");
+        String[] experience = element.getElementByTagName("experience").toString().split("\\|");
+        String[] points = element.getElementByTagName("points").toString().split("\\|");
+        String[] life = element.getElementByTagName("life").toString().split("\\|");
+        String[] optionalStatistics = element.getElementByTagName("statisticsInfo").toString().split(";");
+        String[] statistics = element.getElementByTagName("statistics").toString().split("\\|");
 
         Map<CharacteristicType, Characteristic> baseCharacteristics = new HashMap<CharacteristicType, Characteristic>() {{
             put(CharacteristicType.Damage, new Characteristic(Short.parseShort(optionalStatistics[0])));
@@ -58,7 +57,7 @@ public class MonsterTemplate {
             put(CharacteristicType.Summons, new Characteristic(Short.parseShort(optionalStatistics[3])));
         }};
 
-        for (int i = 0; i < grade.length; i++) {
+        IntStream.range(0, grade.length - 1).forEach(i -> {
             Map<CharacteristicType, Characteristic> characteristics = new HashMap<>();
             characteristics.putAll(baseCharacteristics);
 
@@ -67,21 +66,14 @@ public class MonsterTemplate {
             baseCharacteristics.put(CharacteristicType.MovementPoints, new Characteristic(Short.parseShort(points[i].split(";")[1])));
 
             monsters.add(new Monster(this, ((byte) (i + 1)), Short.parseShort(grade[i].split("@")[0]), Integer.parseInt(experience[i]), grade[i], life[i], statistics[i], characteristics));
-        }
+        });
 
         return monsters;
     }
 
-    private String getTag(String tag) {
-        return this.element.getElementsByTagName(tag).item(0).getTextContent().trim();
-    }
-
-    private String getTagElement(String tag, String attribute) {
-        return ((Element) this.element.getElementsByTagName(tag).item(0)).getAttribute(attribute);
-    }
-
     public Monster getByLevel(short level) {
-        return this.monsters.stream().filter(monster -> monster.getLevel() == level).findFirst().get();
+        Optional<Monster> record;
+        return (record = this.monsters.stream().filter(monster -> monster.getLevel() == level).findFirst()).isPresent() ? record.get() : null;
     }
 
 }

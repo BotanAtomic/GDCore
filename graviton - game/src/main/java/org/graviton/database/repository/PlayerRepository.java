@@ -15,6 +15,7 @@ import org.graviton.utils.StringUtils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -136,7 +137,8 @@ public class PlayerRepository {
     }
 
     public Player find(String name) {
-        return this.players.values().stream().filter(player -> player.getName().equals(name)).findFirst().get();
+        Optional<Player> record;
+        return (record = this.players.values().stream().filter(player -> player.getName().equals(name)).findFirst()).isPresent() ? record.get() : null;
     }
 
     public void send(String data) {

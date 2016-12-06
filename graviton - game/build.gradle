@@ -1,0 +1,8 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "org.graviton.core.Main"
+
+dependencies {
+    compile project(':graviton - common')
+}

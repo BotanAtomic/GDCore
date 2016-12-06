@@ -17,10 +17,8 @@ public class MessageHandler {
     private final BasicHandler basicHandler;
     private final ItemHandler itemHandler;
 
-    private final GameClient client;
-
     public MessageHandler(GameClient gameClient) {
-        this.client = gameClient;
+        GameClient client = gameClient;
         this.accountHandler = new AccountHandler(client);
         this.gameHandler = new GameHandler(client);
         this.basicHandler = new BasicHandler(client);

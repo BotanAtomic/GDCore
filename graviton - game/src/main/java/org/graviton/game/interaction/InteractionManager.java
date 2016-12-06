@@ -20,7 +20,12 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
     }
 
     public void create(short id, String data) {
-        switch (InteractionType.get(id)) {
+        InteractionType interactionType = InteractionType.get(id);
+
+        if (interactionType == null)
+            interactionType = InteractionType.UNKNOWN;
+
+        switch (interactionType) {
             case MOVEMENT:
                 addAction(new PlayerMovement(client.getPlayer(), data));
                 break;

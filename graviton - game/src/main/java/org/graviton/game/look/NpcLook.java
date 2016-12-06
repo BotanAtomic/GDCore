@@ -1,7 +1,7 @@
 package org.graviton.game.look;
 
-import org.graviton.game.creature.npc.NpcTemplate;
 import org.graviton.utils.StringUtils;
+import org.graviton.xml.XMLElement;
 
 /**
  * Created by Botan on 02/12/2016.
@@ -11,11 +11,11 @@ public class NpcLook extends AbstractLook {
     private final byte extraClip;
     private final short customArtWork;
 
-    public NpcLook(NpcTemplate template) {
-        super(StringUtils.parseColors(template.getTag("colors"), ","), Short.parseShort(template.getTag("skin")));
-        this.accessories = template.getTag("accessories");
-        this.customArtWork = Short.parseShort(template.getTag("customArtWork"));
-        this.extraClip = Byte.parseByte(template.getTag("extraClip"));
+    public NpcLook(XMLElement element) {
+        super(StringUtils.parseColors(element.getElementByTagName("colors").toString(), ","), element.getElementByTagName("skin").toShort());
+        this.accessories = element.getElementByTagName("accessories").toString();
+        this.customArtWork = element.getElementByTagName("customArtWork").toShort();
+        this.extraClip = element.getElementByTagName("extraClip").toByte();
     }
 
     public short getSkin() {

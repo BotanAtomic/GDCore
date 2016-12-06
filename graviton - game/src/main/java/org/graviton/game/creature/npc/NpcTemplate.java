@@ -2,7 +2,7 @@ package org.graviton.game.creature.npc;
 
 import lombok.Data;
 import org.graviton.game.look.NpcLook;
-import org.w3c.dom.Element;
+import org.graviton.xml.XMLElement;
 
 
 /**
@@ -16,21 +16,15 @@ public class NpcTemplate {
     private final String sales, exchanges, initialQuestion;
     private final NpcLook look;
 
-    private final Element element;
 
-    public NpcTemplate(Element element) {
-        this.element = element;
-        this.id = Integer.parseInt(element.getAttribute("id"));
-        this.size = Short.parseShort(getTag("size"));
-        this.initialQuestion = getTag("initialQuestion");
-        this.sex = Byte.parseByte(getTag("sex"));
-        this.sales = getTag("sales");
-        this.exchanges = getTag("exchanges");
-        this.look = new NpcLook(this);
-    }
-
-    public String getTag(String tag) {
-        return this.element.getElementsByTagName(tag).item(0).getTextContent();
+    public NpcTemplate(XMLElement element) {
+        this.id = element.getAttribute("id").toInt();
+        this.size = element.getElementByTagName("size").toShort();
+        this.initialQuestion = element.getElementByTagName("initialQuestion").toString();
+        this.sex = element.getElementByTagName("sex").toByte();
+        this.sales = element.getElementByTagName("sales").toString();
+        this.exchanges = element.getElementByTagName("exchanges").toString();
+        this.look = new NpcLook(element);
     }
 
     public short getSkin() {

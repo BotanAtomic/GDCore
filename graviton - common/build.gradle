@@ -1,0 +1,115 @@
+import groovy.xml.MarkupBuilder
+import org.jooq.util.GenerationTool
+
+import javax.xml.bind.JAXB
+
+apply plugin: 'java'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'nu.studer:gradle-jooq-plugin:+'
+        classpath 'mysql:mysql-connector-java:+'
+    }
+}
+
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'mysql:mysql-connector-java:+'
+    compile 'org.jooq:jooq:+'
+}
+
+
+task generateLogin {
+    doLast {
+        // Use your favourite XML builder to construct the code generation configuration file
+        // ----------------------------------------------------------------------------------
+        def writer = new StringWriter()
+        //noinspection GroovyUnusedAssignment
+        def xml = new MarkupBuilder(writer)
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.8.0.xsd') {
+            jdbc() {
+                driver('com.mysql.cj.jdbc.Driver')
+                url('jdbc:mysql://localhost/login?serverTimezone=UTC')
+                user('root')
+                password('')
+                schema('login')
+            }
+
+            generator() {
+                name('org.jooq.util.JavaGenerator')
+
+                database() {
+                    name('org.jooq.util.mysql.MySQLDatabase')
+                    inputSchema('login')
+                }
+                generate() {
+                }
+                target() {
+                    packageName('org.graviton.database.jooq.login')
+                    directory('../graviton - common/src/main/java')
+                }
+            }
+        }
+
+        // Run the code generator
+        // ----------------------
+        GenerationTool.generate(
+                JAXB.unmarshal(
+                        new StringReader(writer.toString()),
+                        org.jooq.util.jaxb.Configuration.class
+                )
+        )
+    }
+}
+
+task generateGame {
+    doLast {
+        // Use your favourite XML builder to construct the code generation configuration file
+        // ----------------------------------------------------------------------------------
+        def writer = new StringWriter()
+        //noinspection GroovyUnusedAssignment
+        def xml = new MarkupBuilder(writer)
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.8.0.xsd') {
+            jdbc() {
+                driver('com.mysql.cj.jdbc.Driver')
+                url('jdbc:mysql://localhost/game?serverTimezone=UTC')
+                user('root')
+                password('')
+                schema('game')
+            }
+
+            generator() {
+                name('org.jooq.util.JavaGenerator')
+
+                database() {
+                    name('org.jooq.util.mysql.MySQLDatabase')
+                    inputSchema('game')
+                }
+                generate() {
+                }
+                target() {
+                    packageName('org.graviton.database.jooq.game')
+                    directory('../graviton - common/src/main/java')
+                }
+            }
+        }
+
+        // Run the code generator
+        // ----------------------
+        GenerationTool.generate(
+                JAXB.unmarshal(
+                        new StringReader(writer.toString()),
+                        org.jooq.util.jaxb.Configuration.class
+                )
+        )
+    }
+}

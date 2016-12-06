@@ -8,6 +8,7 @@ import org.graviton.network.game.protocol.PlayerProtocol;
 import org.jooq.Record;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import static org.graviton.database.jooq.login.tables.Accounts.ACCOUNTS;
 
@@ -50,7 +51,8 @@ public class Account {
     }
 
     public Player getPlayer(int playerId) {
-        return this.players.stream().filter(player -> player.getId() == playerId).findFirst().get();
+        Optional<Player> record;
+        return (record = this.players.stream().filter(player -> player.getId() == playerId).findFirst()).isPresent() ? record.get() : null;
     }
 
 }

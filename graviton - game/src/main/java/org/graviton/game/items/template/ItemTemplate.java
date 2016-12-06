@@ -6,8 +6,7 @@ import org.graviton.game.items.common.Bonus;
 import org.graviton.game.items.common.ItemEffect;
 import org.graviton.game.items.common.ItemPosition;
 import org.graviton.game.items.common.ItemType;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.graviton.xml.XMLElement;
 
 import java.util.TreeMap;
 import java.util.stream.IntStream;
@@ -33,27 +32,25 @@ public class ItemTemplate {
 
     private TreeMap<ItemEffect, Bonus> effects = new TreeMap<>();
 
-    public ItemTemplate(Element element) {
-        this.id = Short.parseShort(element.getAttribute("id"));
-        this.type = ItemType.get(Byte.parseByte(element.getAttribute("type")));
-        this.level = Short.parseShort(element.getAttribute("level"));
-        this.pods = Short.parseShort(element.getAttribute("weight"));
-        this.price = Short.parseShort(element.getAttribute("price"));
-        this.condition = element.getElementsByTagName("conditions").item(0).getTextContent();
+    public ItemTemplate(XMLElement element) {
+        this.id = element.getAttribute("id").toShort();
+        this.type = ItemType.get(element.getAttribute("type").toByte());
+        this.level = element.getAttribute("level").toShort();
+        this.pods = element.getAttribute("weight").toShort();
+        this.price = element.getAttribute("price").toInt();
+        this.condition = element.getElementByTagName("conditions").toString();
 
-        NodeList nodeList = element.getElementsByTagName("effect");
-        IntStream.range(0, nodeList.getLength()).forEach(i -> {
-            Element effect = (Element) nodeList.item(i);
-            this.effects.put(ItemEffect.get(Short.parseShort(effect.getAttribute("type"))), Bonus.parseBonus(effect.getAttribute("bonus")));
-        });
+        element.getElementsByTagName("effect").forEach(effect ->
+                this.effects.put(ItemEffect.get(effect.getAttribute("type").toShort()),
+                        Bonus.parseBonus(effect.getAttribute("bonus").toString())));
 
-        if (this.type.isWeapon()) {
-            this.actionPointCost = Byte.parseByte(element.getAttribute("cost"));
-            scopeRange = new byte[]{Byte.parseByte(element.getAttribute("minRange")), Byte.parseByte(element.getAttribute("maxRange"))};
-            criticalRate = Short.parseShort(element.getAttribute("criticalRate"));
-            failureRate = Short.parseShort(element.getAttribute("failureRate"));
-            criticalBonus = Short.parseShort(element.getAttribute("criticalBonus"));
-            twoHands = Boolean.parseBoolean(element.getAttribute("twoHands"));
+        if (this.type != null && this.type.isWeapon()) {
+            this.actionPointCost = element.getAttribute("cost").toByte();
+            scopeRange = new byte[]{element.getAttribute("minRange").toByte(), element.getAttribute("maxRange").toByte()};
+            criticalRate = element.getAttribute("criticalRate").toShort();
+            failureRate = element.getAttribute("failureRate").toShort();
+            criticalBonus = element.getAttribute("criticalBonus").toShort();
+            twoHands = element.getAttribute("twoHands").toBoolean();
         }
     }
 

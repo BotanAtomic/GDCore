@@ -3,9 +3,17 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GDCore.iml" filepath="$PROJECT_DIR$/.idea/modules/GDCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GDCore_main.iml" filepath="$PROJECT_DIR$/.idea/modules/GDCore_main.iml" group="GDCore" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GDCore_test.iml" filepath="$PROJECT_DIR$/.idea/modules/GDCore_test.iml" group="GDCore" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - common/graviton - common.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - common/graviton - common.iml" group="graviton - common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - game/graviton - game.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - game/graviton - game.iml" group="graviton - game" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - server/graviton - server.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - server/graviton - server.iml" group="graviton - server" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - common/graviton_-_common_main.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - common/graviton_-_common_main.iml" group="graviton - common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - common/graviton_-_common_test.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - common/graviton_-_common_test.iml" group="graviton - common" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - game/graviton_-_game_main.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - game/graviton_-_game_main.iml" group="graviton - game" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - game/graviton_-_game_test.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - game/graviton_-_game_test.iml" group="graviton - game" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - server/graviton_-_server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - server/graviton_-_server_main.iml" group="graviton - server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graviton - server/graviton_-_server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/graviton - server/graviton_-_server_test.iml" group="graviton - server" />
     </modules>
   </component>
 </project>

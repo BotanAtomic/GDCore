@@ -155,9 +155,8 @@ public enum ItemType {
             case Soulstone:
             case MagicWeapon:
                 return true;
-            default:
-                return false;
         }
+        return false;
     }
 
     public boolean isEquipment() {

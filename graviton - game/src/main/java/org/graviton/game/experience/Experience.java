@@ -1,7 +1,7 @@
 package org.graviton.game.experience;
 
 import lombok.Data;
-import org.w3c.dom.Element;
+import org.graviton.xml.XMLElement;
 
 /**
  * Created by Botan on 11/11/2016 : 22:09
@@ -15,12 +15,12 @@ public class Experience {
 
     private Experience next;
 
-    public Experience(Element element) {
-        this.player = Long.parseLong(element.getAttribute("player"));
-        this.guild = Long.parseLong(element.getAttribute("guild"));
-        this.mount = Integer.parseInt(element.getAttribute("mount"));
-        this.job = Integer.parseInt(element.getAttribute("job"));
-        this.alignment = Short.parseShort(element.getAttribute("alignment"));
+    public Experience(XMLElement element) {
+        this.player = element.getAttribute("player").toLong();
+        this.guild = element.getAttribute("guild").toLong();
+        this.mount = element.getAttribute("mount").toInt();
+        this.job = element.getAttribute("job").toInt();
+        this.alignment = element.getAttribute("alignment").toShort();
     }
 
 }

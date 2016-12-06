@@ -9,7 +9,8 @@ public enum InteractionType {
     SPELL_ATTACK((short) 300),
     WEAPON_ATTACK((short) 303),
     MAP_ACTION((short) 500),
-    HOUSE_ACTION((short) 507);
+    HOUSE_ACTION((short) 507),
+    UNKNOWN((short) 0);
 
     private final short id;
 
