@@ -1,10 +1,16 @@
 package org.graviton.network.game.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.graviton.database.entity.EntityFactory;
+import org.graviton.database.repository.AccountRepository;
+import org.graviton.database.repository.PlayerRepository;
+import org.graviton.game.client.account.Account;
+import org.graviton.game.client.player.Player;
 import org.graviton.network.game.GameClient;
-import org.graviton.network.game.protocol.GameProtocol;
+import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.network.game.protocol.PlayerPacketFormatter;
 
-import static org.graviton.utils.StringUtils.randomPseudo;
+import static org.graviton.utils.Utils.randomPseudo;
 
 /**
  * Created by Botan on 22/11/2016 : 21:39
@@ -12,19 +18,30 @@ import static org.graviton.utils.StringUtils.randomPseudo;
 @Slf4j
 public class AccountHandler {
     private final GameClient client;
+    private Account account;
+    private PlayerRepository playerRepository;
+    private AccountRepository accountRepository;
+    private EntityFactory entityFactory;
 
     public AccountHandler(GameClient client) {
         this.client = client;
+        this.playerRepository = client.getPlayerRepository();
+        this.accountRepository = client.getAccountRepository();
+        this.entityFactory = client.getEntityFactory();
+    }
+
+    public void initialize() {
+        this.account = client.getAccount();
     }
 
     public void handle(String data, byte subHeader) { // 'A'
         switch (subHeader) {
             case 65: // 'A'
-                client.createPlayer(data);
+                createPlayer(data);
                 break;
 
             case 68: // 'D'
-                client.deletePlayer(data.split("\\|"));
+                deletePlayer(data.split("\\|"));
                 break;
 
             case 76: // 'L'
@@ -32,23 +49,23 @@ public class AccountHandler {
                 break;
 
             case 80: // 'P'
-                client.send(GameProtocol.playerNameSuggestionSuccessMessage(randomPseudo()));
+                client.send(GamePacketFormatter.playerNameSuggestionSuccessMessage(randomPseudo()));
                 break;
 
             case 83: // 'S'
-                client.selectPlayer(Integer.parseInt(data));
+                selectPlayer(Integer.parseInt(data));
                 break;
 
             case 84: // 'T'
-                client.applyTicket(Integer.parseInt(data));
+                applyTicket(Integer.parseInt(data));
                 break;
 
             case 86: // 'V'
-                client.send(GameProtocol.requestRegionalVersionMessage());
+                client.send(GamePacketFormatter.requestRegionalVersionMessage());
                 break;
 
             case 102: // 'f'
-                client.send(GameProtocol.getQueuePositionMessage());
+                client.send(GamePacketFormatter.getQueuePositionMessage());
                 break;
 
             case 103: // 'g'
@@ -61,5 +78,51 @@ public class AccountHandler {
 
     }
 
+    private void createPlayer(String data) {
+        Player player = new Player(playerRepository.getNextId(), data, this.account, entityFactory);
+        this.account.getPlayers().add(player);
+        client.send(this.account.getPlayerPacket(false));
+        playerRepository.create(player);
+    }
 
+    private void selectPlayer(int playerId) {
+        Player player = account.getPlayer(playerId);
+        client.setPlayer(player);
+
+        player.setOnline(true);
+        client.send(PlayerPacketFormatter.askMessage(player));
+        client.send(PlayerPacketFormatter.asMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
+
+        player.getGameMap().load(player);
+
+        client.send(GamePacketFormatter.regenTimerMessage((short) 2000));
+        client.send(GamePacketFormatter.addChannelsMessage(account.getChannels()));
+
+        client.send(PlayerPacketFormatter.alignmentMessage(player.getAlignment().getId()));
+        client.send(PlayerPacketFormatter.restrictionMessage());
+        client.send(PlayerPacketFormatter.podsMessage(player.getPods()));
+    }
+
+    private void deletePlayer(String[] data) {
+        int player = Integer.parseInt(data[0]);
+        String secretAnswer = data.length > 1 ? data[1] : "";
+        if (secretAnswer.isEmpty() || secretAnswer.equals(account.getAnswer())) {
+            playerRepository.remove(account.getPlayer(player));
+            client.send(account.getPlayerPacket(false));
+        } else
+            client.send(GamePacketFormatter.playerDeleteFailedMessage());
+    }
+
+    private void applyTicket(int accountId) {
+        Account account = this.accountRepository.load(accountId);
+
+        if (account != null) {
+            client.setAccount(account);
+            account.setClient(client);
+            this.account = account;
+            client.send(GamePacketFormatter.accountTicketSuccessMessage("0"));
+        } else {
+            client.send(GamePacketFormatter.accountTicketErrorMessage());
+        }
+    }
 }

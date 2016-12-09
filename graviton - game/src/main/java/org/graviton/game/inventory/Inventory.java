@@ -3,7 +3,7 @@ package org.graviton.game.inventory;
 import lombok.Data;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.items.Item;
-import org.graviton.network.game.protocol.ItemProtocol;
+import org.graviton.network.game.protocol.ItemPacketFormatter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class Inventory {
         Item same;
         if ((same = same(item)) != null) {
             same.changeQuantity(item.getQuantity());
-            player.send(ItemProtocol.quantityMessage(same.getId(), same.getQuantity()));
+            player.send(ItemPacketFormatter.quantityMessage(same.getId(), same.getQuantity()));
         } else {
             this.items.put(item.getId(), item);
             if (create)

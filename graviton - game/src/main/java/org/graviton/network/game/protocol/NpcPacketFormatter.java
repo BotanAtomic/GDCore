@@ -3,12 +3,12 @@ package org.graviton.network.game.protocol;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.creature.npc.NpcTemplate;
 
-import static org.graviton.utils.StringUtils.toHex;
+import static org.graviton.utils.Utils.toHex;
 
 /**
- * Created by Botan on 01/12/2016.
+ * Created by Botan on 01/12/2016. 14:22
  */
-public class NpcProtocol {
+public class NpcPacketFormatter {
 
     public static String gmMessage(Npc npc) {
         NpcTemplate template = npc.getTemplate();
@@ -32,6 +32,18 @@ public class NpcProtocol {
         builder.append(template.getExtraClip()).append(';');
         builder.append(template.getCustomArtWork());
         return builder.toString();
+    }
+
+    public static String quitMessage() {
+        return "DV";
+    }
+
+    public static String createDialog(int id) {
+        return "DCK" + id;
+    }
+
+    public static String questionMessage(String data) {
+        return "DQ" + data;
     }
 
 }

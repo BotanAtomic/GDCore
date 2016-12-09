@@ -6,8 +6,8 @@ import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
 import org.graviton.game.paths.Path;
-import org.graviton.network.game.protocol.GameProtocol;
-import org.graviton.network.game.protocol.MessageProtocol;
+import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.network.game.protocol.MessageFormatter;
 
 
 /**
@@ -28,13 +28,15 @@ public class PlayerMovement extends Path implements AbstractGameAction {
     @Override
     public boolean begin() {
         if (player.getPods()[0] >= player.getPods()[1]) {
-            player.send(MessageProtocol.maxPodsReached());
+            player.send(MessageFormatter.maxPodsReached());
             return false;
         }
 
-        gameMap.send(GameProtocol.creatureMovementMessage((short) 1, player.getId(), super.toString()));
+        boolean valid = super.isValid();
 
-        if (!isValid())
+        gameMap.send(valid ? GamePacketFormatter.creatureMovementMessage((short) 1, player.getId(), super.toString()) : GamePacketFormatter.noActionMessage());
+
+        if (!valid)
             return false;
 
         initialize();

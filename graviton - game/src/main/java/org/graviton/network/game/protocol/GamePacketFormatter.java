@@ -3,7 +3,7 @@ package org.graviton.network.game.protocol;
 /**
  * Created by Botan on 05/11/2016 : 00:48
  */
-public class GameProtocol {
+public class GamePacketFormatter {
 
     public static String helloGameMessage() {
         return "HG";
@@ -73,7 +73,16 @@ public class GameProtocol {
         return "GA;0";
     }
 
-    public static String startAnimationMessage() {
+    public static String creationAnimationMessage() {
         return "TB";
     }
+
+    public static String astrubAnimationMessage(int playerId) {
+        return "GA;2" + ";" + playerId + ";7";
+    }
+
+    public static String changeOrientationMessage(int playerId, byte orientation) {
+        return "eD" + playerId + '|' + orientation;
+    }
+
 }

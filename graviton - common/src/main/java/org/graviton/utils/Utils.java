@@ -12,36 +12,15 @@ import java.util.stream.IntStream;
 /**
  * Created by Botan on 29/10/2016 : 23:10
  */
-public class StringUtils {
-    public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+public class Utils {
     public static final String EXTENDED_ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
-    public static final String VOWELS = "aeiouy";
-    public static final String CONSONANTS = "bcdfghjkmnpqrstvwxz";
     public static final char[] HASH = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'};
+
+    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
     private static final AtomicReference<Random> RANDOM = new AtomicReference<>(new Random(System.nanoTime()));
 
     public static String randomPseudo() {
-        boolean vowels = RANDOM.get().nextBoolean();
-        int length = RANDOM.get().nextInt(4) + 4;
-        StringBuilder builder = new StringBuilder(length);
-        for (int i = 0; i < length; ++i) {
-            if (vowels) builder.append(randomVowels());
-            else builder.append(randomConsonants());
-            vowels = RANDOM.get().nextBoolean();
-        }
-        return capitalize(builder);
-    }
-
-    public static String capitalize(StringBuilder builder) {
-        return Character.toUpperCase(builder.charAt(0)) + builder.substring(1);
-    }
-
-    public static char randomVowels() {
-        return VOWELS.charAt(RANDOM.get().nextInt(VOWELS.length()));
-    }
-
-    public static char randomConsonants() {
-        return CONSONANTS.charAt(RANDOM.get().nextInt(CONSONANTS.length()));
+        return NameGenerator.generateName();
     }
 
     private static char random() {
@@ -86,10 +65,6 @@ public class StringUtils {
         }
     }
 
-    public static short stringToShort(String header) {
-        return (short) ((header.charAt(0) - header.charAt(1)) * (header.charAt(1) + header.charAt(0)));
-    }
-
     public static int[] parseColors(String data, String regex) {
         String[] colors = data.split(regex);
         return new int[]{Integer.parseInt(colors[0]), Integer.parseInt(colors[1]), Integer.parseInt(colors[2])};
@@ -105,5 +80,22 @@ public class StringUtils {
 
     public static int random(int minimum, int maximum) {
         return ThreadLocalRandom.current().nextInt(minimum, maximum + 1);
+    }
+
+    static class NameGenerator {
+        private static String[] BEGINNING = {"Kr", "Ca", "Ra", "Mrok", "Cru",
+                "Ray", "Bre", "Zed", "Drak", "Mor", "Jag", "Mer", "Jar", "Mjol",
+                "Zork", "Mad", "Cry", "Zur", "Creo", "Azak", "Azur", "Rei", "Cro",
+                "Mar", "Luk"};
+        private static String[] MIDDLE = {"air", "ir", "mi", "sor", "mee", "clo",
+                "red", "cra", "ark", "arc", "miri", "lori", "cres", "mur", "zer",
+                "marac", "zoir", "slamar", "salmar", "urak"};
+        private static String[] END = {"d", "ed", "ark", "arc", "es", "er", "der",
+                "tron", "med", "ure", "zur", "cred", "mur"};
+
+
+        static String generateName() {
+            return BEGINNING[RANDOM.get().nextInt(BEGINNING.length)] + MIDDLE[RANDOM.get().nextInt(MIDDLE.length)] + END[RANDOM.get().nextInt(END.length)];
+        }
     }
 }

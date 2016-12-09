@@ -5,7 +5,7 @@ import org.graviton.game.creature.monster.MonsterGroup;
 /**
  * Created by Botan on 03/12/2016. 10:35
  */
-public class MonsterProtocol {
+public class MonsterPacketFormatter {
 
     public static String gmMessage(MonsterGroup monsterGroup) {
         StringBuilder identity = new StringBuilder();
@@ -18,6 +18,7 @@ public class MonsterProtocol {
         builder.append(monsterGroup.getOrientation().ordinal()).append(';');
         builder.append(monsterGroup.getStarsPercent()).append(';');
         builder.append(monsterGroup.getId()).append(';');
+
 
         monsterGroup.getMonsters().forEach(monster -> {
             identity.append(monster.getTemplate().getId()).append(",");

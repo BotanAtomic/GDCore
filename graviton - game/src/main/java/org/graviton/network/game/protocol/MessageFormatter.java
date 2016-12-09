@@ -5,9 +5,9 @@ import org.graviton.game.client.player.Player;
 /**
  * Created by Botan on 16/11/2016 : 18:31
  */
-public class MessageProtocol {
+public class MessageFormatter {
 
-    public static String lastInformationsMessage(String lastConnection, String lastAddress) {
+    public static String lastInformationMessage(String lastConnection, String lastAddress) {
         return "Im0152;".concat(lastConnection).concat("~").concat(lastAddress);
     }
 
@@ -33,5 +33,9 @@ public class MessageProtocol {
 
     public static String buildChannelMessage(char channel, Player player, String message) {
         return "cMK" + channel + "|" + player.getId() + "|" + player.getName() + '|' + message;
+    }
+
+    public static String savedPositionMessage() {
+        return "Im06";
     }
 }

@@ -2,9 +2,8 @@ package org.graviton.game.paths;
 
 import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.GameMap;
-import org.graviton.network.game.protocol.GameProtocol;
 import org.graviton.utils.Cells;
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -45,7 +44,7 @@ public class Path extends ArrayList<Short> {
 
     protected void initialize() {
         this.finalCell = Cells.decode(newPath.substring(newPath.length() - 2));
-        this.finalOrientation = OrientationEnum.valueOf(StringUtils.parseBase64Char(newPath.charAt(newPath.length() - 3)));
+        this.finalOrientation = OrientationEnum.valueOf(Utils.parseBase64Char(newPath.charAt(newPath.length() - 3)));
     }
 
     protected short getCell() {
@@ -58,7 +57,7 @@ public class Path extends ArrayList<Short> {
 
     @Override
     public String toString() {
-        return isValid() ? this.newPath = ('a' + Cells.encode(startCell).concat(initPath)) : GameProtocol.noActionMessage();
+        return this.newPath = ('a' + Cells.encode(startCell).concat(initPath));
     }
 
 }

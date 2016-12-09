@@ -15,6 +15,8 @@ import java.util.ArrayDeque;
 public class InteractionManager extends ArrayDeque<AbstractGameAction> {
     private final GameClient client;
 
+    private int interactionCreature;
+
     public InteractionManager(GameClient gameClient) {
         this.client = gameClient;
     }
@@ -36,15 +38,25 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
 
 
     public void end(AbstractGameAction gameAction, boolean success, String data) {
-        if (!success)
-            gameAction.cancel(data);
-        else
-            gameAction.finish(data);
+        if (gameAction != null) {
+            if (!success)
+                gameAction.cancel(data);
+            else
+                gameAction.finish(data);
+        }
     }
 
     private void addAction(AbstractGameAction gameAction) {
         super.add(gameAction);
         if (!gameAction.begin())
             super.remove(gameAction);
+    }
+
+    public void setInteractionWith(int creature) {
+        this.interactionCreature = creature;
+    }
+
+    public int getInteractionCreature() {
+        return this.interactionCreature;
     }
 }

@@ -12,7 +12,7 @@ import org.graviton.api.Manageable;
 import org.graviton.core.Program;
 import org.graviton.database.repository.GameServerRepository;
 import org.graviton.network.exchange.state.State;
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -69,7 +69,7 @@ public class ExchangeServer implements IoHandler, Manageable {
 
     @Override
     public void messageReceived(IoSession session, Object message) {
-        ((ExchangeClient) session.getAttribute("client")).handle(StringUtils.bufferToString(message));
+        ((ExchangeClient) session.getAttribute("client")).handle(Utils.bufferToString(message));
     }
 
     @Override

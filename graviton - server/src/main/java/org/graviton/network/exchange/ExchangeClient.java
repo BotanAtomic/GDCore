@@ -11,7 +11,7 @@ import org.graviton.network.exchange.protocol.ExchangeProtocol;
 import org.graviton.network.exchange.state.State;
 import org.graviton.network.login.LoginServer;
 import org.graviton.network.login.protocol.LoginProtocol;
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 
 /**
  * Created by Botan on 30/10/2016 : 13:46
@@ -50,7 +50,7 @@ public class ExchangeClient {
     }
 
     public void send(String data) {
-        session.write(StringUtils.stringToBuffer(data));
+        session.write(Utils.stringToBuffer(data));
         log.info("[Session {}] send > {}", session.getId(), data);
     }
 

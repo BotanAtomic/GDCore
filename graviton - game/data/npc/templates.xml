@@ -2603,20 +2603,6 @@
     </NpcTemplate>
 
 
-    <NpcTemplate id="94500">
-        <skin>50</skin>
-        <size>100</size>
-        <customArtWork>0</customArtWork>
-        <sex>0</sex>
-        <extraClip>-1</extraClip>
-        <colors>16773874,16719648,16510736</colors>
-        <accessories>0,228a,0,0,0</accessories>
-        <sales>-1</sales>
-        <exchanges></exchanges>
-        <initialQuestion>4205</initialQuestion>
-    </NpcTemplate>
-
-
     <NpcTemplate id="297">
         <skin>9005</skin>
         <size>100</size>

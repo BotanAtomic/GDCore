@@ -4,7 +4,7 @@ import lombok.Data;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.client.player.Player;
 import org.graviton.network.game.GameClient;
-import org.graviton.network.game.protocol.PlayerProtocol;
+import org.graviton.network.game.protocol.PlayerPacketFormatter;
 import org.jooq.Record;
 
 import java.util.Collection;
@@ -41,13 +41,13 @@ public class Account {
         this.lastConnection = record.get(ACCOUNTS.LAST_CONNECTION);
         this.lastAddress = record.get(ACCOUNTS.LAST_ADDRESS);
         this.friendNotification = record.get(ACCOUNTS.FRIEND_NOTIFICATION_LISTENER) > 0;
-        this.cachedPlayerPacket = PlayerProtocol.playersPacketMessage(this.players = playerRepository.getPlayers(this));
+        this.cachedPlayerPacket = PlayerPacketFormatter.playersPacketMessage(this.players = playerRepository.getPlayers(this));
     }
 
     public String getPlayerPacket(boolean useCache) {
         if (useCache)
             return cachedPlayerPacket;
-        return PlayerProtocol.playersPacketMessage(this.players);
+        return PlayerPacketFormatter.playersPacketMessage(this.players);
     }
 
     public Player getPlayer(int playerId) {

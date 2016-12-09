@@ -7,11 +7,11 @@ package org.graviton.utils;
 public final class Cells {
 
     public static String encode(short cell) {
-        return Character.toString(StringUtils.HASH[(cell / 64)]) + Character.toString(StringUtils.HASH[((cell % 64))]);
+        return Character.toString(Utils.HASH[(cell / 64)]) + Character.toString(Utils.HASH[((cell % 64))]);
     }
 
     public static short decode(String string) {
-        return (short) (StringUtils.EXTENDED_ALPHABET.indexOf(string.charAt(0)) * 64 + StringUtils.EXTENDED_ALPHABET.indexOf(string.charAt(1)));
+        return (short) (Utils.EXTENDED_ALPHABET.indexOf(string.charAt(0)) * 64 + Utils.EXTENDED_ALPHABET.indexOf(string.charAt(1)));
     }
 
     public static short getCellIdByOrientation(short cell, char orientation, byte width) {

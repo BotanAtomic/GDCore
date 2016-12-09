@@ -5,7 +5,9 @@ import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.xml.XMLElement;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -23,7 +25,7 @@ public class MonsterTemplate {
     private final boolean capture;
     private final byte aggressionDistance;
 
-    private final Collection<Monster> monsters;
+    private final Map<Short, Monster> monsters;
 
     public MonsterTemplate(XMLElement element) {
         this.id = element.getAttribute("id").toInt();
@@ -39,8 +41,8 @@ public class MonsterTemplate {
         this.monsters = this.loadMonsters(element);
     }
 
-    private Collection<Monster> loadMonsters(XMLElement element) {
-        Collection<Monster> monsters = Collections.synchronizedCollection(new ArrayList<>());
+    private Map<Short, Monster> loadMonsters(XMLElement element) {
+        Map<Short, Monster> monsters = Collections.synchronizedMap(new HashMap<>());
 
         String[] grade = element.getElementByTagName("grades").toString().split("\\|");
         String[] initiative = element.getElementByTagName("initiative").toString().split("\\|");
@@ -57,7 +59,7 @@ public class MonsterTemplate {
             put(CharacteristicType.Summons, new Characteristic(Short.parseShort(optionalStatistics[3])));
         }};
 
-        IntStream.range(0, grade.length - 1).forEach(i -> {
+        IntStream.range(0, grade.length).forEach(i -> {
             Map<CharacteristicType, Characteristic> characteristics = new HashMap<>();
             characteristics.putAll(baseCharacteristics);
 
@@ -65,15 +67,15 @@ public class MonsterTemplate {
             baseCharacteristics.put(CharacteristicType.ActionPoints, new Characteristic(Short.parseShort(points[i].split(";")[0])));
             baseCharacteristics.put(CharacteristicType.MovementPoints, new Characteristic(Short.parseShort(points[i].split(";")[1])));
 
-            monsters.add(new Monster(this, ((byte) (i + 1)), Short.parseShort(grade[i].split("@")[0]), Integer.parseInt(experience[i]), grade[i], life[i], statistics[i], characteristics));
+            short level = Short.parseShort(grade[i].split("@")[0]);
+            monsters.put(level, new Monster(this, ((byte) (i + 1)), level, Integer.parseInt(experience[i]), grade[i], life[i], statistics[i], characteristics));
         });
 
         return monsters;
     }
 
     public Monster getByLevel(short level) {
-        Optional<Monster> record;
-        return (record = this.monsters.stream().filter(monster -> monster.getLevel() == level).findFirst()).isPresent() ? record.get() : null;
+        return this.monsters.get(level);
     }
 
 }

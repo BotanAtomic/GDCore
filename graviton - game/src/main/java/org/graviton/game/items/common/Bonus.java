@@ -1,6 +1,6 @@
 package org.graviton.game.items.common;
 
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 
 import java.util.Random;
 
@@ -49,7 +49,7 @@ public class Bonus {
     public short random() {
         int min = min();
         int max = max();
-        return (short) StringUtils.random(min < max ? min : max, min > max ? min : max);
+        return (short) Utils.random(min < max ? min : max, min > max ? min : max);
     }
 
     public String toString(int radix) {

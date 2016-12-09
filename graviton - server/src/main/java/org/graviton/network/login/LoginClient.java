@@ -11,7 +11,7 @@ import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.GameServerRepository;
 import org.graviton.network.login.handler.VersionHandler;
 import org.graviton.network.login.protocol.LoginProtocol;
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 
 
 /**
@@ -34,7 +34,7 @@ public class LoginClient {
     public LoginClient(IoSession session, Injector injector) {
         injector.injectMembers(this);
         this.session = session;
-        this.session.write(LoginProtocol.helloConnect(this.key = StringUtils.generateKey()));
+        this.session.write(LoginProtocol.helloConnect(this.key = Utils.generateKey()));
         this.handler = new VersionHandler();
     }
 

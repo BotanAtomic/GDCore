@@ -2,7 +2,7 @@ package org.graviton.game.maps.utils;
 
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,13 +36,15 @@ public class CellLoader {
         int[] hashCodes = new int[10];
 
         for (int i = 0; i < 10; ++i)
-            hashCodes[i] = StringUtils.EXTENDED_ALPHABET.indexOf(data.charAt(i));
+            hashCodes[i] = Utils.EXTENDED_ALPHABET.indexOf(data.charAt(i));
 
         boolean los = (hashCodes[0] & 1) == 1;
         int groundLevel = hashCodes[1] & 15;
         int movementType = (hashCodes[2] & 56) >> 3;
         int groundSlope = (hashCodes[4] & 60) >> 2;
-
+        // System.err.println("CELL ID = " + cell.getId() + " ID = " + movementType + " name : ");
+        //System.err.print(Cell.MovementType.valueOf(movementType).name());
+        //System.err.println();
         cell.setLineOfSight(los);
         cell.setGroundLevel(groundLevel);
         cell.setMovementType(Cell.MovementType.valueOf(movementType));

@@ -1,31 +1,8 @@
-import groovy.xml.MarkupBuilder
-import org.jooq.util.GenerationTool
-
-import javax.xml.bind.JAXB
-
 apply plugin: 'java'
 apply plugin: 'application'
 
-//noinspection GroovyUnusedAssignment
 mainClassName = "org.graviton.core.Main"
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'nu.studer:gradle-jooq-plugin:+'
-        classpath 'mysql:mysql-connector-java:+'
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    compile 'mysql:mysql-connector-java:+'
-
     compile project(':graviton - common')
 }

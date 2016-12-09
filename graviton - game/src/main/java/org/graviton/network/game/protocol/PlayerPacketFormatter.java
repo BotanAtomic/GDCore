@@ -11,12 +11,12 @@ import org.graviton.game.statistics.common.CharacteristicType;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.graviton.utils.StringUtils.toHex;
+import static org.graviton.utils.Utils.toHex;
 
 /**
  * Created by Botan on 05/11/2016 : 22:56
  */
-public class PlayerProtocol {
+public class PlayerPacketFormatter {
 
     public static String playersPacketMessage(Collection<Player> players) {
         if (players == null || players.isEmpty())
@@ -38,7 +38,7 @@ public class PlayerProtocol {
         builder.append(toHex(player.getColor((byte) 1))).append('|');
         builder.append(toHex(player.getColor((byte) 2))).append('|');
         builder.append(toHex(player.getColor((byte) 3))).append('|');
-        builder.append(ItemProtocol.formatItems(player.getInventory().getItems().values()));
+        builder.append(ItemPacketFormatter.formatItems(player.getInventory().getItems().values()));
         return builder.toString();
     }
 

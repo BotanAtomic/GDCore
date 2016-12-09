@@ -6,7 +6,7 @@ import org.graviton.constant.Dofus;
 import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.position.Location;
-import org.graviton.network.game.protocol.MonsterProtocol;
+import org.graviton.network.game.protocol.MonsterPacketFormatter;
 import org.joda.time.Interval;
 
 import java.util.Collection;
@@ -26,6 +26,12 @@ public class MonsterGroup implements Creature {
         this.id = id;
         this.location = new Location(gameMap, cell, OrientationEnum.random());
         this.monsters = monsters;
+        monsters.forEach(monster -> {
+            if (monster == null)
+                System.err.println("M NULL...");
+            else if (monster.getTemplate() == null)
+                System.err.println("MT NULL...");
+        });
     }
 
     @Override
@@ -35,7 +41,7 @@ public class MonsterGroup implements Creature {
 
     @Override
     public String getGm() {
-        return MonsterProtocol.gmMessage(this);
+        return MonsterPacketFormatter.gmMessage(this);
     }
 
     @Override

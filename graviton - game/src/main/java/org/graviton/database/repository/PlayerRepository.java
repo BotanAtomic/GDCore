@@ -10,7 +10,7 @@ import org.graviton.game.client.player.Player;
 import org.graviton.game.items.Item;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.network.exchange.ExchangeConnector;
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class PlayerRepository {
                         player.getBreed().id(),
                         player.getSex(),
                         player.getSkin(),
-                        StringUtils.parseColors(player.getColors()),
+                        Utils.parseColors(player.getColors()),
                         player.getGameMap().getId(),
                         player.getCell().getId(),
                         (byte) ExchangeConnector.serverId).execute();

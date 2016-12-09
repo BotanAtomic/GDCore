@@ -10,7 +10,7 @@ import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
 import org.graviton.game.maps.utils.CellLoader;
-import org.graviton.network.game.protocol.GameProtocol;
+import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.jooq.Record;
 
 import java.util.*;
@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 import static com.google.common.collect.Maps.newConcurrentMap;
 import static java.util.Collections.synchronizedList;
 import static org.graviton.database.jooq.game.tables.Maps.MAPS;
-import static org.graviton.utils.StringUtils.random;
+import static org.graviton.utils.Utils.random;
 
 /**
  * Created by Botan on 12/11/2016 : 17:55
@@ -64,7 +64,7 @@ public class GameMap {
 
         this.numberOfGroup = record.get(MAPS.NUMGROUP);
 
-        this.descriptionPacket = GameProtocol.mapDataMessage(this.id, this.date, this.key);
+        this.descriptionPacket = GamePacketFormatter.mapDataMessage(this.id, this.date, this.key);
 
         if (!(this.possibleGroups = synchronizedList(initializeMonsters(record.get(MAPS.MONSTERS)))).isEmpty())
             this.generateMonsters(entityFactory);
@@ -98,7 +98,7 @@ public class GameMap {
 
     private String buildData() {
         StringBuilder packet = new StringBuilder();
-        creatures.values().forEach(creature -> packet.append(GameProtocol.showCreatureMessage(creature.getGm())).append("\n"));
+        creatures.values().forEach(creature -> packet.append(GamePacketFormatter.showCreatureMessage(creature.getGm())).append("\n"));
         return packet.toString();
     }
 
@@ -118,7 +118,7 @@ public class GameMap {
     }
 
     public void enter(Creature creature) {
-        send(GameProtocol.showCreatureMessage(creature.getGm()));
+        send(GamePacketFormatter.showCreatureMessage(creature.getGm()));
 
         this.creatures.put(creature.getId(), creature);
         creature.send(buildData());
@@ -126,8 +126,8 @@ public class GameMap {
 
     public void load(Creature creature) {
         creature.send(this.descriptionPacket);
-        creature.send(GameProtocol.creatureChangeMapMessage(creature.getId()));
-        creature.send(GameProtocol.mapLoadedSuccessfullyMessage());
+        creature.send(GamePacketFormatter.creatureChangeMapMessage(creature.getId()));
+        creature.send(GamePacketFormatter.mapLoadedSuccessfullyMessage());
         creature.getLocation().setGameMap(this);
         creature.getLocation().getCell().getCreatures().add(creature.getId());
     }
@@ -139,13 +139,22 @@ public class GameMap {
     public void out(Creature creature) {
         creature.getLocation().getCell().getCreatures().remove(creature.getId());
         this.creatures.remove(creature.getId());
-        send(GameProtocol.hideCreatureMessage(creature.getId()));
+        send(GamePacketFormatter.hideCreatureMessage(creature.getId()));
     }
 
     public short getRandomCell() {
-        List<Cell> freeCells = this.cells.values().stream().filter(cell -> cell.isWalkable() && cell.getCreatures().isEmpty()
-                && !this.triggers.containsKey(cell.getId())).collect(Collectors.toList());
+        List<Cell> freeCells = this.cells.values().stream().filter(cell -> cell.isWalkable() &&
+                cell.getCreatures().isEmpty()).collect(Collectors.toList());
         return freeCells.get(random(0, freeCells.size() - 1)).getId();
+    }
+
+    public Creature getCreature(int id) {
+        return this.creatures.get(id);
+    }
+
+    public void refreshCreature(Creature creature) {
+        send(GamePacketFormatter.hideCreatureMessage(creature.getId()));
+        send(GamePacketFormatter.showCreatureMessage(creature.getGm()));
     }
 
 }

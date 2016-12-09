@@ -13,7 +13,7 @@ import org.graviton.core.Program;
 import org.graviton.database.repository.AccountRepository;
 import org.graviton.game.client.account.Account;
 import org.graviton.network.exchange.protocol.ExchangeProtocol;
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 
 import java.net.InetSocketAddress;
 
@@ -77,7 +77,7 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
-        handle(StringUtils.bufferToString(message));
+        handle(Utils.bufferToString(message));
     }
 
     @Override
@@ -90,7 +90,7 @@ public class ExchangeConnector implements IoHandler, Manageable {
     }
 
     private void send(String data) {
-        session.write(StringUtils.stringToBuffer(data));
+        session.write(Utils.stringToBuffer(data));
         log.debug("[Exchange connector] send > {}", data);
     }
 

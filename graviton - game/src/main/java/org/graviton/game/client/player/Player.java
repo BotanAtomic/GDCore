@@ -15,9 +15,9 @@ import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
 import org.graviton.game.statistics.PlayerStatistics;
-import org.graviton.network.game.protocol.GameProtocol;
-import org.graviton.network.game.protocol.PlayerProtocol;
-import org.graviton.utils.StringUtils;
+import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.network.game.protocol.PlayerPacketFormatter;
+import org.graviton.utils.Utils;
 import org.jooq.Record;
 
 import java.util.Map;
@@ -54,7 +54,7 @@ public class Player implements Creature {
     }
 
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
-        account.getClient().send(GameProtocol.startAnimationMessage());
+        account.getClient().send(GamePacketFormatter.creationAnimationMessage());
 
         this.entityFactory = entityFactory;
         String[] information = data.split("\\|");
@@ -63,7 +63,7 @@ public class Player implements Creature {
         this.id = id;
         this.name = information[0];
 
-        this.look = new PlayerLook(StringUtils.parseColors(information[3] + ";" + information[4] + ";" + information[5], ";"), Byte.parseByte(information[2]), AbstractBreed.get(Byte.parseByte(information[1])));
+        this.look = new PlayerLook(Utils.parseColors(information[3] + ";" + information[4] + ";" + information[5], ";"), Byte.parseByte(information[2]), AbstractBreed.get(Byte.parseByte(information[1])));
         this.statistics = new PlayerStatistics((byte) (getBreed() instanceof Enutrof ? 120 : 100));
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell(), (byte) 1);
@@ -126,7 +126,7 @@ public class Player implements Creature {
 
     @Override
     public String getGm() {
-        return PlayerProtocol.gmMessage(this);
+        return PlayerPacketFormatter.gmMessage(this);
     }
 
     @Override
@@ -144,9 +144,14 @@ public class Player implements Creature {
     }
 
     public void changeMap(GameMap newGameMap) {
-        this.getGameMap().out(this);
-        this.location.setCell(newGameMap.getCells().get(newGameMap.getRandomCell()));
-        newGameMap.load(this);
+        if (getGameMap().getId() == newGameMap.getId()) {
+            this.location.setCell(newGameMap.getCells().get(newGameMap.getRandomCell()));
+            getGameMap().refreshCreature(this);
+        } else {
+            this.getGameMap().out(this);
+            this.location.setCell(newGameMap.getCells().get(newGameMap.getRandomCell()));
+            newGameMap.load(this);
+        }
     }
 
     public void removeItem(Item item) {

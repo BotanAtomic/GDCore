@@ -1,7 +1,7 @@
 package org.graviton.game.look;
 
 import org.graviton.game.breeds.AbstractBreed;
-import org.graviton.utils.StringUtils;
+import org.graviton.utils.Utils;
 import org.jooq.Record;
 
 import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
@@ -18,7 +18,7 @@ public class PlayerLook extends AbstractLook {
     private byte title;
 
     public PlayerLook(Record record) {
-        super(StringUtils.parseColors(record.get(PLAYERS.COLORS), ";"), record.get(PLAYERS.SKIN));
+        super(Utils.parseColors(record.get(PLAYERS.COLORS), ";"), record.get(PLAYERS.SKIN));
         this.breed = AbstractBreed.get(record.get(PLAYERS.BREED));
         this.sex = record.get(PLAYERS.SEX);
         this.size = record.get(PLAYERS.SIZE);

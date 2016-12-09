@@ -12,10 +12,10 @@ import org.graviton.game.channel.Channel;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.interaction.InteractionManager;
+import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.network.game.handler.base.MessageHandler;
-import org.graviton.network.game.protocol.GameProtocol;
-import org.graviton.network.game.protocol.MessageProtocol;
-import org.graviton.network.game.protocol.PlayerProtocol;
+import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.network.game.protocol.MessageFormatter;
 
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
@@ -26,7 +26,6 @@ import java.util.Date;
  */
 @Data
 public class GameClient {
-    private final MessageHandler messageHandler = new MessageHandler(this);
     private final InteractionManager interactionManager = new InteractionManager(this);
 
     private final long id;
@@ -48,18 +47,14 @@ public class GameClient {
         injector.injectMembers(this);
         this.id = session.getId();
         this.session = session;
-        send(GameProtocol.helloGameMessage());
+        send(GamePacketFormatter.helloGameMessage());
     }
 
     public void send(String data) {
         session.write(data);
     }
 
-    public void handle(String data) {
-        messageHandler.handle(data);
-    }
-
-    public void disconnect() {
+    void disconnect() {
         this.player.getGameMap().out(player);
 
         this.playerRepository.save(account);
@@ -67,52 +62,22 @@ public class GameClient {
         this.session.closeNow();
     }
 
-    public void applyTicket(int accountId) {
-        Account account = this.accountRepository.load(accountId);
-        if (account != null) {
-            account.setClient(this);
-            this.account = account;
-            send(GameProtocol.accountTicketSuccessMessage("0"));
-        } else {
-            send(GameProtocol.accountTicketErrorMessage());
-        }
-    }
+
 
     public void setLanguage(String language) {
         this.language = Language.get(language);
     }
 
-    public void createPlayer(String data) {
-        Player player = new Player(playerRepository.getNextId(), data, this.account, entityFactory);
-        this.account.getPlayers().add(player);
-        this.send(this.account.getPlayerPacket(false));
-        playerRepository.create(player);
-    }
 
-    public void selectPlayer(int playerId) {
-        Player player = (this.player = account.getPlayer(playerId));
-        player.setOnline(true);
-        send(PlayerProtocol.askMessage(player));
-        send(PlayerProtocol.asMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
-
-        player.getGameMap().load(player);
-
-        send(GameProtocol.regenTimerMessage((short) 2000));
-        send(GameProtocol.addChannelsMessage(account.getChannels()));
-
-        send(PlayerProtocol.alignmentMessage(player.getAlignment().getId()));
-        send(PlayerProtocol.restrictionMessage());
-        send(PlayerProtocol.podsMessage(player.getPods()));
-    }
 
     public void createGame() {
         String currentAddress = ((InetSocketAddress) this.session.getRemoteAddress()).getAddress().getHostAddress();
 
-        send(GameProtocol.gameCreationSuccessMessage());
+        send(GamePacketFormatter.gameCreationSuccessMessage());
 
-        send(MessageProtocol.welcomeMessage());
-        send(MessageProtocol.lastInformationsMessage(account.getLastConnection(), account.getLastAddress()));
-        send(MessageProtocol.actualInformationMessage(currentAddress));
+        send(MessageFormatter.welcomeMessage());
+        send(MessageFormatter.lastInformationMessage(account.getLastConnection(), account.getLastAddress()));
+        send(MessageFormatter.actualInformationMessage(currentAddress));
 
         account.setLastConnection(new SimpleDateFormat("yyyy~MM~dd~HH~mm").format(new Date()));
         account.setLastAddress(currentAddress);
@@ -122,16 +87,6 @@ public class GameClient {
 
     public void sendGameInformation() {
         player.getGameMap().enter(player);
-    }
-
-    public void deletePlayer(String[] data) {
-        int player = Integer.parseInt(data[0]);
-        String secretAnswer = data.length > 1 ? data[1] : "";
-        if (secretAnswer.isEmpty() || secretAnswer.equals(account.getAnswer())) {
-            playerRepository.remove(account.getPlayer(player));
-            send(account.getPlayerPacket(false));
-        } else
-            send(GameProtocol.playerDeleteFailedMessage());
     }
 
     public void createAction(short id, String arguments) {
@@ -156,32 +111,42 @@ public class GameClient {
         if (channel == null) {
             Player player = playerRepository.find(data[0]);
             if (player != null) {
-                player.send(MessageProtocol.privateMessage(this.player.getId(), this.player.getName(), data[1], true));
-                send(MessageProtocol.privateMessage(player.getId(), player.getName(), data[1], false));
+                player.send(MessageFormatter.privateMessage(this.player.getId(), this.player.getName(), data[1], true));
+                send(MessageFormatter.privateMessage(player.getId(), player.getName(), data[1], false));
             } else
-                send(MessageProtocol.notConnectedPlayerMessage(data[0]));
-        } else {
-            String packet = MessageProtocol.buildChannelMessage(channel.value(), player, data[1]);
+                send(MessageFormatter.notConnectedPlayerMessage(data[0]));
+        } else
+            speak(channel, MessageFormatter.buildChannelMessage(channel.value(), player, data[1]));
+    }
 
-            switch (channel) {
-                case General:
-                    player.getGameMap().send(packet);
-                    break;
+    private void speak(Channel channel, String generatedPacket) {
+        switch (channel) {
+            case General:
+                player.getGameMap().send(generatedPacket);
+                break;
 
-                case Trade:
-                case Recruitment:
-                    playerRepository.send(packet);
-                    break;
+            case Trade:
+            case Recruitment:
+                playerRepository.send(generatedPacket);
+                break;
 
-                case Admin:
-                case Information:
-                case Alignment:
-                case Team:
-                case Party:
-                case Guild:
-                    break;
-            }
+            case Admin:
+            case Information:
+            case Alignment:
+            case Team:
+            case Party:
+            case Guild:
+                break;
         }
+    }
+
+    public void changeOrientation(byte orientation) {
+        player.getGameMap().send(GamePacketFormatter.changeOrientationMessage(player.getId(), orientation));
+        player.getLocation().setOrientation(OrientationEnum.valueOf(orientation));
+    }
+
+    public final MessageHandler getBaseHandler() {
+        return ((MessageHandler) session.getAttribute((byte) 1));
     }
 
 }

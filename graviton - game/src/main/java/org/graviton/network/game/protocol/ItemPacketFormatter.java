@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
  * Created by Botan on 05/12/2016. 17:07
  */
-public class ItemProtocol {
+public class ItemPacketFormatter {
 
     public static String quantityMessage(int item, short quantity) {
         return "OQ" + item + '|' + quantity;

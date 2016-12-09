@@ -20,6 +20,7 @@ public class PlayerStatistics {
     //current -> max
     private short[] life;
     private short[] pods;
+
     private short statisticPoints, spellPoints, energy, level;
     private long experience;
 

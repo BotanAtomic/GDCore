@@ -4,7 +4,7 @@ import lombok.Data;
 import org.graviton.api.Creature;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.position.Location;
-import org.graviton.network.game.protocol.NpcProtocol;
+import org.graviton.network.game.protocol.NpcPacketFormatter;
 import org.jooq.Record;
 
 import static org.graviton.database.jooq.game.tables.Npcs.NPCS;
@@ -31,7 +31,7 @@ public class Npc implements Creature {
 
     @Override
     public String getGm() {
-        return NpcProtocol.gmMessage(this);
+        return NpcPacketFormatter.gmMessage(this);
     }
 
     @Override

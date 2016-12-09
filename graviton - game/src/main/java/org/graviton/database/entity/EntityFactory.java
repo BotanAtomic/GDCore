@@ -6,11 +6,14 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
+import org.graviton.core.loader.FastLoader;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
 import org.graviton.database.repository.GameMapRepository;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.creature.monster.MonsterTemplate;
+import org.graviton.game.creature.npc.NpcAnswer;
+import org.graviton.game.creature.npc.NpcQuestion;
 import org.graviton.game.creature.npc.NpcTemplate;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.items.Panoply;
@@ -36,12 +39,13 @@ public class EntityFactory implements Manageable {
     private final static String experiencePath = "experiences/values.xml";
 
     private final static String npcTemplatePath = "npc/templates.xml";
+    private final static String npcQuestionPath = "npc/questions.xml";
+    private final static String npcAnswerPath = "npc/answers.xml";
 
     private final static String itemTemplatePath = "item/templates.xml";
+    private final static String panoplyTemplatePath = "item/panoply/templates.xml";
 
     private final static String monsterTemplatePath = "monster/templates.xml";
-
-    private final static String panoplyTemplatePath = "panoply/templates.xml";
 
 
     private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -50,6 +54,8 @@ public class EntityFactory implements Manageable {
     private final Map<Short, Experience> experiences = new ConcurrentHashMap<>();
 
     private final Map<Integer, NpcTemplate> npcTemplates = new ConcurrentHashMap<>();
+    private final Map<Short, NpcQuestion> npcQuestions = new ConcurrentHashMap<>();
+    private final Map<Short, NpcAnswer> npcAnswers = new ConcurrentHashMap<>();
 
     private final Map<Integer, MonsterTemplate> monsterTemplates = new ConcurrentHashMap<>();
 
@@ -86,26 +92,32 @@ public class EntityFactory implements Manageable {
 
     private void loadNpcTemplates() {
         get(npcTemplatePath).getElementsByTagName("NpcTemplate").forEach(element -> this.npcTemplates.put(element.getAttribute("id").toInt(), new NpcTemplate(element)));
-
         log.debug("Successfully load {} npc templates", this.npcTemplates.size());
     }
 
-    private void loadMonsterTemplates() {
-        get(monsterTemplatePath).getElementsByTagName("MonsterTemplate").forEach(element ->
-                this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element))
-        );
+    private void loadNpcData() {
+        get(npcAnswerPath).getElementsByTagName("NpcAnswer").forEach(element -> this.npcAnswers.put(element.getAttribute("id").toShort(), new NpcAnswer(element)));
+        log.debug("Successfully load {} npc answers", this.npcAnswers.size());
 
+        get(npcQuestionPath).getElementsByTagName("NpcQuestion").forEach(element -> this.npcQuestions.put(element.getAttribute("id").toShort(), new NpcQuestion(element, this.npcAnswers)));
+        log.debug("Successfully load {} npc questions", this.npcQuestions.size());
+    }
+
+    private void loadMonsterTemplates() {
+        get(monsterTemplatePath).getElementsByTagName("MonsterTemplate").forEach(element -> this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element)));
         log.debug("Successfully load {} monster templates", this.monsterTemplates.size());
     }
 
-    private void loadItemsTemplate() {
+    private void loadItemTemplates() {
         get(itemTemplatePath).getElementsByTagName("item").forEach(element -> {
             ItemTemplate template = new ItemTemplate(element);
             this.itemTemplates.put(template.getId(), template);
         });
 
         log.debug("Successfully load {} item templates", this.itemTemplates.size());
+    }
 
+    private void loadPanoplyTemplates() {
         get(panoplyTemplatePath).getElementsByTagName("Panoply").forEach(element -> {
             Map<Short, ItemTemplate> templates = new HashMap<>();
             for (String item : element.getElementByTagName("items").toString().split(",")) {
@@ -122,12 +134,14 @@ public class EntityFactory implements Manageable {
     @Override
     public void start() {
         this.itemIdentityGenerator = new AtomicInteger(database.getNextId(ITEMS, ITEMS.ID));
-
-        loadExperiences();
-        loadNpcTemplates();
-        loadMonsterTemplates();
-        loadItemsTemplate();
+        new FastLoader(this::loadExperiences,
+                this::loadItemTemplates,
+                this::loadNpcData,
+                this::loadNpcTemplates,
+                this::loadMonsterTemplates,
+                this::loadPanoplyTemplates).launch();
     }
+
 
     @Override
     public void stop() {

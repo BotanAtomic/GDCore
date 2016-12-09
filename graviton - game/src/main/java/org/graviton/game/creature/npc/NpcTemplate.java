@@ -27,6 +27,16 @@ public class NpcTemplate {
         this.look = new NpcLook(element);
     }
 
+    public short getInitialQuestion(int gameMap) {
+        if (initialQuestion.contains(",")) {
+            for (String question : initialQuestion.split("\\|"))
+                if (question.split(",")[0].equals(Integer.toString(gameMap)))
+                    return Short.parseShort(question.split(",")[1]);
+        } else
+            return Short.parseShort(initialQuestion);
+        return (short) -1;
+    }
+
     public short getSkin() {
         return this.look.getSkin();
     }

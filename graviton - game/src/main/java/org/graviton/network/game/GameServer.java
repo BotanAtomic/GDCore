@@ -14,6 +14,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.graviton.api.InjectSetting;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
+import org.graviton.network.game.handler.base.MessageHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -43,18 +44,23 @@ public class GameServer implements IoHandler, Manageable {
     }
 
     public void sessionCreated(IoSession session) throws Exception {
+        final GameClient client = new GameClient(session, injector);
+
+        session.setAttribute((byte) 0, client);
+        session.setAttribute((byte) 1, new MessageHandler(client));
+        client.getBaseHandler().getAccountHandler().initialize();
+
         log.debug("[Session {}] created", session.getId());
     }
 
     @Override
     public void sessionOpened(IoSession session) {
-        session.setAttribute("client", new GameClient(session, injector));
         log.debug("[Session {}] opened", session.getId());
     }
 
     @Override
     public void sessionClosed(IoSession session) {
-        ((GameClient) session.getAttribute("client")).disconnect();
+        ((GameClient) session.getAttribute((byte) 0)).disconnect();
         log.debug("[Session {}] closed", session.getId());
     }
 
@@ -66,13 +72,12 @@ public class GameServer implements IoHandler, Manageable {
     @Override
     public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
         log.error("[Session {}] exception > \n", session.getId(), cause);
-
     }
 
     @Override
     public void messageReceived(IoSession session, Object message) {
         log.info("[Session {}] receives < {}", session.getId(), message);
-        ((GameClient) session.getAttribute("client")).handle(message.toString());
+        ((MessageHandler) session.getAttribute((byte) 1)).handle(message.toString());
     }
 
     @Override
