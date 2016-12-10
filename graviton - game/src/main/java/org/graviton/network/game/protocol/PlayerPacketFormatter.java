@@ -4,6 +4,8 @@ import org.graviton.constant.Dofus;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.experience.Experience;
+import org.graviton.game.items.Item;
+import org.graviton.game.items.common.ItemPosition;
 import org.graviton.game.statistics.PlayerStatistics;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
@@ -51,10 +53,17 @@ public class PlayerPacketFormatter {
                 append(gmsMessage(player)).append(";;;;;;").toString();
     }
 
-    private static String gmsMessage(Player player) {
-        return ",,,,";
+    public static String gmsMessage(Player player) {
+        StringBuilder builder = new StringBuilder();
+        ItemPosition[] positions = {ItemPosition.Weapon, ItemPosition.Hat, ItemPosition.Cloak, ItemPosition.Pet, ItemPosition.Shield};
+        for (ItemPosition position : positions) {
+            Item item;
+            if ((item = player.getInventory().getByPosition(position)) != null)
+                builder.append(Integer.toHexString(item.getTemplate().getId()));
+            builder.append(",");
+        }
+        return builder.toString().substring(0, builder.length() - 1);
     }
-
 
 
     public static String asMessage(Player player, Experience experience, Alignment alignment, PlayerStatistics statistics) {

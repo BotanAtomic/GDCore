@@ -11,39 +11,57 @@ public enum ItemPosition {
     Belt((byte) 3),
     RightRing((byte) 4),
     Boot((byte) 5),
-    Hat((byte) 6),
-    Cloak((byte) 7),
-    Pet((byte) 8),
+    Hat((byte) 6, true),
+    Cloak((byte) 7, true),
+    Pet((byte) 8, true),
     Dofus1((byte) 9),
     Dofus2((byte) 10),
     Dofus3((byte) 11),
     Dofus4((byte) 12),
     Dofus5((byte) 13),
     Dofus6((byte) 14),
-    Shield((byte) 15),
-    ItemBar1((byte) 23),
-    ItemBar2((byte) 24),
-    ItemBar3((byte) 25),
-    ItemBar4((byte) 26),
-    ItemBar5((byte) 27),
-    ItemBar6((byte) 28),
-    ItemBar7((byte) 29),
-    ItemBar8((byte) 30),
-    ItemBar9((byte) 31),
-    ItemBar10((byte) 32),
-    ItemBar11((byte) 33),
-    ItemBar12((byte) 34),
-    ItemBar13((byte) 35),
-    ItemBar14((byte) 36);
+    Shield((byte) 15, true),
+    ItemBar1((byte) 35),
+    ItemBar2((byte) 36),
+    ItemBar3((byte) 37),
+    ItemBar4((byte) 38),
+    ItemBar5((byte) 39),
+    ItemBar6((byte) 40),
+    ItemBar7((byte) 41),
+    ItemBar8((byte) 42),
+    ItemBar9((byte) 43),
+    ItemBar10((byte) 44),
+    ItemBar11((byte) 45),
+    ItemBar12((byte) 46),
+    ItemBar13((byte) 47),
+    ItemBar14((byte) 48),
+    ItemBar15((byte) 49),
+    ItemBar16((byte) 50),
+    ItemBar17((byte) 51),
+    ItemBar18((byte) 52),
+    ItemBar19((byte) 53),
+    ItemBar20((byte) 54),
+    ItemBar21((byte) 55),
+    ItemBar22((byte) 56),
+    ItemBar23((byte) 57);
 
     private byte value;
+    private boolean needUpdate = false;
 
     ItemPosition(byte value) {
         this.value = value;
     }
 
+    ItemPosition(byte value, boolean needUpdate) {
+        this.value = value;
+        this.needUpdate = needUpdate;
+    }
+
     public static ItemPosition get(byte value) {
-        return ItemPosition.values()[value + 1];
+        for (ItemPosition itemPosition : values())
+            if (itemPosition.value() == value)
+                return itemPosition;
+        return null;
     }
 
     public byte value() {
@@ -51,7 +69,15 @@ public enum ItemPosition {
     }
 
     public boolean equipped() {
-        return this != NotEquipped && !(value >= 23 && value <= 36);
+        return this != NotEquipped && !name().contains("Bar");
+    }
+
+    public boolean equippedWithoutBar() {
+        return this != NotEquipped;
+    }
+
+    public boolean needUpdate() {
+        return needUpdate;
     }
 
 }

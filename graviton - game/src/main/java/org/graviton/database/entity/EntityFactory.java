@@ -11,6 +11,8 @@ import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
 import org.graviton.database.repository.GameMapRepository;
 import org.graviton.database.repository.PlayerRepository;
+import org.graviton.game.area.Area;
+import org.graviton.game.area.SubArea;
 import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.npc.NpcAnswer;
 import org.graviton.game.creature.npc.NpcQuestion;
@@ -28,6 +30,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.graviton.constant.XMLPath.*;
 import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 
 /**
@@ -36,18 +39,6 @@ import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 @Slf4j
 @Data
 public class EntityFactory implements Manageable {
-    private final static String experiencePath = "experiences/values.xml";
-
-    private final static String npcTemplatePath = "npc/templates.xml";
-    private final static String npcQuestionPath = "npc/questions.xml";
-    private final static String npcAnswerPath = "npc/answers.xml";
-
-    private final static String itemTemplatePath = "item/templates.xml";
-    private final static String panoplyTemplatePath = "item/panoply/templates.xml";
-
-    private final static String monsterTemplatePath = "monster/templates.xml";
-
-
     private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
     //static data
@@ -62,6 +53,10 @@ public class EntityFactory implements Manageable {
     private final Map<Short, ItemTemplate> itemTemplates = new ConcurrentHashMap<>();
 
     private final Map<Short, Panoply> panoply = new ConcurrentHashMap<>();
+
+    private final Map<Byte, Area> area = new ConcurrentHashMap<>();
+    private final Map<Short, SubArea> subArea = new ConcurrentHashMap<>();
+
 
     private AtomicInteger itemIdentityGenerator;
 
@@ -79,8 +74,20 @@ public class EntityFactory implements Manageable {
         this.database = (GameDatabase) database;
     }
 
+    private void loadArea() {
+        get(AREA).getElementsByTagName("Area").forEach(element -> this.area.put(element.getAttribute("id").toByte(), new Area(element)));
+        log.debug("Successfully load {} area", this.area.size());
+
+        get(SUBAREA).getElementsByTagName("SubArea").forEach(element -> {
+            Area area = this.area.get(element.getElementByTagName("area").toByte());
+            this.subArea.put(element.getAttribute("id").toShort(), new SubArea(element, area));
+        });
+
+        log.debug("Successfully load {} sub area", this.subArea.size());
+    }
+
     private void loadExperiences() {
-        get(experiencePath).getElementsByTagName("experience").forEach(element -> this.experiences.put(element.getAttribute("level").toShort(), new Experience(element)));
+        get(EXPERIENCE).getElementsByTagName("experience").forEach(element -> this.experiences.put(element.getAttribute("level").toShort(), new Experience(element)));
 
         this.experiences.keySet().forEach(i -> {
             Experience experience = this.experiences.get(i);
@@ -91,25 +98,25 @@ public class EntityFactory implements Manageable {
     }
 
     private void loadNpcTemplates() {
-        get(npcTemplatePath).getElementsByTagName("NpcTemplate").forEach(element -> this.npcTemplates.put(element.getAttribute("id").toInt(), new NpcTemplate(element)));
+        get(NPC_TEMPLATE).getElementsByTagName("NpcTemplate").forEach(element -> this.npcTemplates.put(element.getAttribute("id").toInt(), new NpcTemplate(element)));
         log.debug("Successfully load {} npc templates", this.npcTemplates.size());
     }
 
     private void loadNpcData() {
-        get(npcAnswerPath).getElementsByTagName("NpcAnswer").forEach(element -> this.npcAnswers.put(element.getAttribute("id").toShort(), new NpcAnswer(element)));
+        get(NPC_ANSWER).getElementsByTagName("NpcAnswer").forEach(element -> this.npcAnswers.put(element.getAttribute("id").toShort(), new NpcAnswer(element)));
         log.debug("Successfully load {} npc answers", this.npcAnswers.size());
 
-        get(npcQuestionPath).getElementsByTagName("NpcQuestion").forEach(element -> this.npcQuestions.put(element.getAttribute("id").toShort(), new NpcQuestion(element, this.npcAnswers)));
+        get(NPC_QUESTION).getElementsByTagName("NpcQuestion").forEach(element -> this.npcQuestions.put(element.getAttribute("id").toShort(), new NpcQuestion(element, this.npcAnswers)));
         log.debug("Successfully load {} npc questions", this.npcQuestions.size());
     }
 
     private void loadMonsterTemplates() {
-        get(monsterTemplatePath).getElementsByTagName("MonsterTemplate").forEach(element -> this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element)));
+        get(MONSTER_TEMPLATE).getElementsByTagName("MonsterTemplate").forEach(element -> this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element)));
         log.debug("Successfully load {} monster templates", this.monsterTemplates.size());
     }
 
     private void loadItemTemplates() {
-        get(itemTemplatePath).getElementsByTagName("item").forEach(element -> {
+        get(ITEM_TEMPLATE).getElementsByTagName("item").forEach(element -> {
             ItemTemplate template = new ItemTemplate(element);
             this.itemTemplates.put(template.getId(), template);
         });
@@ -118,7 +125,7 @@ public class EntityFactory implements Manageable {
     }
 
     private void loadPanoplyTemplates() {
-        get(panoplyTemplatePath).getElementsByTagName("Panoply").forEach(element -> {
+        get(PANOPLY_TEMPLATE).getElementsByTagName("Panoply").forEach(element -> {
             Map<Short, ItemTemplate> templates = new HashMap<>();
             for (String item : element.getElementByTagName("items").toString().split(",")) {
                 short template = Short.parseShort(item);
@@ -135,6 +142,7 @@ public class EntityFactory implements Manageable {
     public void start() {
         this.itemIdentityGenerator = new AtomicInteger(database.getNextId(ITEMS, ITEMS.ID));
         new FastLoader(this::loadExperiences,
+                this::loadArea,
                 this::loadItemTemplates,
                 this::loadNpcData,
                 this::loadNpcTemplates,

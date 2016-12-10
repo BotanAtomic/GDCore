@@ -29,7 +29,7 @@ public class ItemPacketFormatter {
     }
 
     public static String itemMovementMessage(long itemId, ItemPosition position) {
-        return "OM" + itemId + "|" + (position.equipped() ? position.value() : "");
+        return "OM" + itemId + "|" + (position.equippedWithoutBar() ? position.value() : "");
     }
 
 }

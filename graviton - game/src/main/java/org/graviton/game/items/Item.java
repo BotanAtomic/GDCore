@@ -47,7 +47,7 @@ public class Item {
 
     public String parse() {
         StringBuilder builder = new StringBuilder();
-        String position = !this.position.equipped() ? "-1" : Integer.toHexString(this.position.value());
+        String position = !this.position.equippedWithoutBar() ? "-1" : Integer.toHexString(this.position.value());
         builder.append(Integer.toHexString(id)).append('~').append(Integer.toHexString(template.getId())).append('~').
                 append(Integer.toHexString(quantity)).append('~').append(position).append('~').
                 append(this.parseEffects()).append(';');

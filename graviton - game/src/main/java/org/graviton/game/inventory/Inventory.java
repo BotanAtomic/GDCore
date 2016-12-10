@@ -3,6 +3,7 @@ package org.graviton.game.inventory;
 import lombok.Data;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.items.Item;
+import org.graviton.game.items.common.ItemPosition;
 import org.graviton.network.game.protocol.ItemPacketFormatter;
 
 import java.util.HashMap;
@@ -47,9 +48,22 @@ public class Inventory {
         return this.items.get(item);
     }
 
-    public Item same(Item item) {
+    private Item same(Item item) {
         Optional<Item> same = this.items.values().stream().filter(item1 -> item1.getTemplate().getId() == item.getTemplate().getId()).
-                filter(item1 -> item1.getStatistics().equals(item.getStatistics())).findFirst();
+                filter(item1 -> item1.getStatistics().equals(item.getStatistics()) &&
+                        item.getPosition() == item1.getPosition()).findFirst();
+        return same.isPresent() ? same.get() : null;
+    }
+
+    public Item same(Item item, ItemPosition position) {
+        Optional<Item> same = this.items.values().stream().filter(item1 -> item1.getTemplate().getId() == item.getTemplate().getId()).
+                filter(item1 -> item1.getStatistics().equals(item.getStatistics()) &&
+                        item1.getPosition() == position).findFirst();
+        return same.isPresent() ? same.get() : null;
+    }
+
+    public Item getByPosition(ItemPosition position) {
+        Optional<Item> same = this.items.values().stream().filter(item -> item.getPosition() == position).findFirst();
         return same.isPresent() ? same.get() : null;
     }
 

@@ -42,7 +42,7 @@ public class GamePacketFormatter {
     }
 
     public static String creatureChangeMapMessage(int id) {
-        return "GA;2;" + id + ";";
+        return "GA;2;" + id + ';';
     }
 
     public static String mapLoadedSuccessfullyMessage() {
@@ -66,7 +66,7 @@ public class GamePacketFormatter {
     }
 
     public static String creatureMovementMessage(short actionId, int actorId, String path) {
-        return "GA" + actionId + ";1;" + actorId + ";" + path;
+        return "GA" + actionId + ";1;" + actorId + ';' + path;
     }
 
     public static String noActionMessage() {
@@ -78,11 +78,14 @@ public class GamePacketFormatter {
     }
 
     public static String astrubAnimationMessage(int playerId) {
-        return "GA;2" + ";" + playerId + ";7";
+        return "GA;2" + ';' + playerId + ";7";
     }
 
     public static String changeOrientationMessage(int playerId, byte orientation) {
         return "eD" + playerId + '|' + orientation;
     }
 
+    public static String updateAccessories(int player, String gms) {
+        return "Oa" + player + '|' + gms;
+    }
 }

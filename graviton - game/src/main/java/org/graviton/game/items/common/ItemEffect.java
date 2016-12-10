@@ -38,6 +38,7 @@ public enum ItemEffect {
     SubDamage((short) 164, CharacteristicType.Damage),
     SubCriticalHit((short) 171, CharacteristicType.CriticalHit),
     SubDamageMagic((short) 172),
+    TrapDamage((short) 225),
     SubDamagePhysic((short) 173, CharacteristicType.PhysicalDamage),
     SubDodgeAP((short) 162, CharacteristicType.ActionPoints),
     SubDodgeMP((short) 163, CharacteristicType.MovementPoints),
@@ -148,7 +149,7 @@ public enum ItemEffect {
     }
 
     public Pair<CharacteristicType, Boolean> convert() {
-        return new Pair<>(this.characteristic, this.name().contains("Sub"));
+        return new Pair<>(this.characteristic, !this.name().contains("Sub"));
     }
 
     public boolean isWeaponEffect() {

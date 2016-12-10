@@ -42858,9 +42858,9 @@
   </item>
   <item id="7249" type="9" level="57" weight="5" price="8600">
     <conditions />
+    <effect type="225" bonus="1d2+1" />
     <effect type="124" bonus="1d10+15" />
     <effect type="119" bonus="1d10+15" />
-    <effect type="0" bonus="1d2+1" />
     <effect type="176" bonus="1d5+5" />
   </item>
   <item id="7250" type="1" level="41" weight="2" price="5050">

@@ -1,0 +1,272 @@
+<Areas>
+    <Area id="0">
+        <name>Amakna</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="1">
+        <name>L'?le des Wabbits</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="2">
+        <name>L'?le de Moon</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="3">
+        <name>Prison</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="4">
+        <name>Tain?la</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="5">
+        <name>Sufokia</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="6">
+        <name>For?t des Abraknydes</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="7">
+        <name>Bonta</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="8">
+        <name>Plaine de Cania</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="11">
+        <name>Br?kmar</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="12">
+        <name>Lande de Sidimote</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="13">
+        <name>Territoire des Dopeuls</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="14">
+        <name>Village des Brigandins</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="15">
+        <name>Foire du Trool</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="16">
+        <name>Foire du Trool</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="17">
+        <name>Tain?la</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="18">
+        <name>Astrub</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="19">
+        <name>Pandala Neutre</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="20">
+        <name>Pandala Eau</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="21">
+        <name>Pandala Terre</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="22">
+        <name>Pandala Feu</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="23">
+        <name>Pandala Air</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="24">
+        <name>Pandala Donjon</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="25">
+        <name>Le Champ du Repos</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="26">
+        <name>Le labyrinthe du Dragon Cochon</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="27">
+        <name>Donjon Abraknyde</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="28">
+        <name>Montagne des Koalaks</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="29">
+        <name>Donjon des Tofus</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="30">
+        <name>L'?le du Minotoror</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="31">
+        <name>Le labyrinthe du Minotoror</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="32">
+        <name>La biblioth?que du Ma?tre Corbac</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="33">
+        <name>Donjon des Canid</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="34">
+        <name>Caverne du Koulosse</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="35">
+        <name>Repaire de Skeunk</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="36">
+        <name>Sanctuaire des Familiers</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="37">
+        <name>Donjon des Craqueleurs</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="39">
+        <name>Donjon des Bworks</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="40">
+        <name>Donjon des Scarafeuilles</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="41">
+        <name>Donjon des Champs</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="42">
+        <name>Zone arctique</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="43">
+        <name>Donjon du Dragon Cochon</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="44">
+        <name>Donjon des Dragoeufs</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="45">
+        <name>Incarnam</name>
+        <super>3</super>
+    </Area>
+
+
+    <Area id="46">
+        <name>Ile d'Otoma</name>
+        <super>0</super>
+    </Area>
+
+
+    <Area id="47">
+        <name>Village des Zoths</name>
+        <super>0</super>
+    </Area>
+
+
+</Areas>

@@ -46,11 +46,11 @@ public class Player implements Creature {
         this.id = record.get(PLAYERS.ID);
         this.name = record.get(PLAYERS.NAME);
 
+        this.inventory = new Inventory(this, record.get(PLAYERS.KAMAS), items);
         this.look = new PlayerLook(record);
-        this.statistics = new PlayerStatistics(record, (byte) (getBreed() instanceof Enutrof ? 120 : 100));
+        this.statistics = new PlayerStatistics(this, record, (byte) (getBreed() instanceof Enutrof ? 120 : 100));
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(record.get(PLAYERS.MAP)), record.get(PLAYERS.CELL), record.get(PLAYERS.ORIENTATION));
-        this.inventory = new Inventory(this, record.get(PLAYERS.KAMAS), items);
     }
 
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
@@ -64,12 +64,25 @@ public class Player implements Creature {
         this.name = information[0];
 
         this.look = new PlayerLook(Utils.parseColors(information[3] + ";" + information[4] + ";" + information[5], ";"), Byte.parseByte(information[2]), AbstractBreed.get(Byte.parseByte(information[1])));
-        this.statistics = new PlayerStatistics((byte) (getBreed() instanceof Enutrof ? 120 : 100));
+        this.statistics = new PlayerStatistics(this, (byte) (getBreed() instanceof Enutrof ? 120 : 100));
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell(), (byte) 1);
         this.inventory = new Inventory(this);
 
         this.registerItem(entityFactory.getItemTemplate((short) 9191).createMax(entityFactory.getNextItemId()), true);
+
+        registerItem(entityFactory.getItemTemplate((short) 7250).createMax(entityFactory.getNextItemId()), true);
+        registerItem(entityFactory.getItemTemplate((short) 7251).createMax(entityFactory.getNextItemId()), true);
+        registerItem(entityFactory.getItemTemplate((short) 7233).createMax(entityFactory.getNextItemId()), true);
+        registerItem(entityFactory.getItemTemplate((short) 7253).createMax(entityFactory.getNextItemId()), true);
+        registerItem(entityFactory.getItemTemplate((short) 7254).createMax(entityFactory.getNextItemId()), true);
+        registerItem(entityFactory.getItemTemplate((short) 7249).createMax(entityFactory.getNextItemId()), true);
+        registerItem(entityFactory.getItemTemplate((short) 7226).createMax(entityFactory.getNextItemId()), true);
+        registerItem(entityFactory.getItemTemplate((short) 7235).createMax(entityFactory.getNextItemId()), true);
+
+        Item item = entityFactory.getItemTemplate((short) 7391).createMax(entityFactory.getNextItemId());
+        item.setQuantity((short) 150);
+        registerItem(item, true);
     }
 
     public int getColor(byte color) {
