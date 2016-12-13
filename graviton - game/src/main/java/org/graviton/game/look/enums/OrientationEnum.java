@@ -13,13 +13,6 @@ public enum OrientationEnum {
     NORTH,
     NORTH_EAST;
 
-    public static final OrientationEnum[] ADJACENTS = new OrientationEnum[]{
-            SOUTH_EAST,
-            SOUTH_WEST,
-            NORTH_WEST,
-            NORTH_EAST
-    };
-
     public static OrientationEnum valueOf(byte ordinal) {
         return values()[ordinal];
     }

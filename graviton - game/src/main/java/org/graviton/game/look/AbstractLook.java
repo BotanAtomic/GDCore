@@ -6,11 +6,11 @@ import lombok.Data;
  * Created by Botan on 11/11/2016 : 21:35
  */
 @Data
-public abstract class AbstractLook {
+abstract class AbstractLook {
     private int[] colors;
     private short skin;
 
-    public AbstractLook(int[] colors, short skin) {
+    AbstractLook(int[] colors, short skin) {
         this.colors = colors;
         this.skin = skin;
     }

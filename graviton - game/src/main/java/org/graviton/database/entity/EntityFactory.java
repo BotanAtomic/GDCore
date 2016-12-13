@@ -3,6 +3,7 @@ package org.graviton.database.entity;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
@@ -11,9 +12,11 @@ import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
 import org.graviton.database.repository.GameMapRepository;
 import org.graviton.database.repository.PlayerRepository;
+import org.graviton.game.action.item.ItemAction;
 import org.graviton.game.area.Area;
 import org.graviton.game.area.SubArea;
 import org.graviton.game.creature.monster.MonsterTemplate;
+import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.creature.npc.NpcAnswer;
 import org.graviton.game.creature.npc.NpcQuestion;
 import org.graviton.game.creature.npc.NpcTemplate;
@@ -21,42 +24,36 @@ import org.graviton.game.experience.Experience;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.maps.GameMap;
+import org.graviton.utils.Utils;
+import org.graviton.xml.XMLElement;
 import org.graviton.xml.XMLFile;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 import static org.graviton.constant.XMLPath.*;
 import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 
+
 /**
  * Created by Botan on 11/11/2016 : 22:42
  */
+@EqualsAndHashCode(callSuper = true)
 @Slf4j
 @Data
-public class EntityFactory implements Manageable {
-    private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-
-    //static data
-    private final Map<Short, Experience> experiences = new ConcurrentHashMap<>();
-
-    private final Map<Integer, NpcTemplate> npcTemplates = new ConcurrentHashMap<>();
-    private final Map<Short, NpcQuestion> npcQuestions = new ConcurrentHashMap<>();
-    private final Map<Short, NpcAnswer> npcAnswers = new ConcurrentHashMap<>();
-
-    private final Map<Integer, MonsterTemplate> monsterTemplates = new ConcurrentHashMap<>();
-
-    private final Map<Short, ItemTemplate> itemTemplates = new ConcurrentHashMap<>();
-
-    private final Map<Short, Panoply> panoply = new ConcurrentHashMap<>();
-
-    private final Map<Byte, Area> area = new ConcurrentHashMap<>();
-    private final Map<Short, SubArea> subArea = new ConcurrentHashMap<>();
-
+public class EntityFactory extends EntityData implements Manageable {
+    private final ScheduledThreadPoolExecutor scheduler = new ScheduledThreadPoolExecutor(1);
+    private final ExecutorService worker = Executors.newCachedThreadPool();
 
     private AtomicInteger itemIdentityGenerator;
 
@@ -74,16 +71,44 @@ public class EntityFactory implements Manageable {
         this.database = (GameDatabase) database;
     }
 
-    private void loadArea() {
-        get(AREA).getElementsByTagName("Area").forEach(element -> this.area.put(element.getAttribute("id").toByte(), new Area(element)));
+    private void loadGameMaps() {
+        get(AREA).getElementsByTagName("Area").forEach(element -> this.area.put(element.getAttribute("id").toShort(), new Area(element)));
         log.debug("Successfully load {} area", this.area.size());
 
-        get(SUBAREA).getElementsByTagName("SubArea").forEach(element -> {
-            Area area = this.area.get(element.getElementByTagName("area").toByte());
-            this.subArea.put(element.getAttribute("id").toShort(), new SubArea(element, area));
+        get(SUBAREA).getElementsByTagName("SubArea").forEach(element -> this.subArea.put(element.getAttribute("id").toShort(), new SubArea(element, this.area.get(element.getElementByTagName("area").toShort()))));
+        log.debug("Successfully load {} sub area", this.subArea.size());
+
+        log.debug("Successfully load {} game map", gameMapRepository.load(getFast(MAPS)));
+        log.debug("Successfully register {} npc", gameMapRepository.loadNpc(get(NPCS)));
+        loadExtraMonsters();
+    }
+
+    private void loadExtraMonsters() {
+        get(EXTRA_MONSTERS).getElementsByTagName("ExtraMonster").forEach(element -> {
+            int id = element.getAttribute("id").toInt();
+            ExtraMonster extraMonster = new ExtraMonster(getMonsterTemplate(id), element.getElementByTagName("chance").toByte());
+
+            for (String subArea : element.getElementByTagName("subarea").toString().split(","))
+                extraMonster.registerSubArea(Short.parseShort(subArea));
+
+            this.extraMonsters.put(id, extraMonster);
         });
 
-        log.debug("Successfully load {} sub area", this.subArea.size());
+        log.debug("Successfully load {} extra monsters", this.extraMonsters.size());
+
+        placeExtraMonsters();
+    }
+
+    private void placeExtraMonsters() {
+        this.extraMonsters.values().forEach(extraMonster -> extraMonster.getSubArea().forEach(subAreaId -> {
+            byte random = (byte) Utils.random(0, 100);
+
+            if (random <= extraMonster.getChance()) {
+                SubArea subArea = this.subArea.get(subAreaId);
+                subArea.getGameMap().get(new Random().nextInt(subArea.getGameMap().size())).setExtraMonster(extraMonster);
+            }
+
+        }));
     }
 
     private void loadExperiences() {
@@ -98,15 +123,29 @@ public class EntityFactory implements Manageable {
     }
 
     private void loadNpcTemplates() {
+        loadNpcData();
         get(NPC_TEMPLATE).getElementsByTagName("NpcTemplate").forEach(element -> this.npcTemplates.put(element.getAttribute("id").toInt(), new NpcTemplate(element)));
         log.debug("Successfully load {} npc templates", this.npcTemplates.size());
     }
 
     private void loadNpcData() {
-        get(NPC_ANSWER).getElementsByTagName("NpcAnswer").forEach(element -> this.npcAnswers.put(element.getAttribute("id").toShort(), new NpcAnswer(element)));
+        NodeList list = getFast(NPC_ANSWER).getElementsByTagName("NpcAnswer");
+
+        IntStream.range(0, list.getLength()).forEach(i -> {
+            XMLElement element = new XMLElement((Element) list.item(i));
+            this.npcAnswers.put(element.getAttribute("id").toShort(), new NpcAnswer(element));
+        });
+
         log.debug("Successfully load {} npc answers", this.npcAnswers.size());
 
-        get(NPC_QUESTION).getElementsByTagName("NpcQuestion").forEach(element -> this.npcQuestions.put(element.getAttribute("id").toShort(), new NpcQuestion(element, this.npcAnswers)));
+
+        NodeList secondList = getFast(NPC_QUESTION).getElementsByTagName("NpcQuestion");
+
+        IntStream.range(0, list.getLength()).forEach(i -> {
+            XMLElement element = new XMLElement((Element) secondList.item(i));
+            this.npcQuestions.put(element.getAttribute("id").toShort(), new NpcQuestion(element, this.npcAnswers));
+        });
+
         log.debug("Successfully load {} npc questions", this.npcQuestions.size());
     }
 
@@ -116,9 +155,23 @@ public class EntityFactory implements Manageable {
     }
 
     private void loadItemTemplates() {
-        get(ITEM_TEMPLATE).getElementsByTagName("item").forEach(element -> {
+        NodeList list = getFast(ITEM_TEMPLATE).getElementsByTagName("item");
+
+        IntStream.range(0, list.getLength()).forEach(i -> {
+            XMLElement element = new XMLElement((Element) list.item(i));
             ItemTemplate template = new ItemTemplate(element);
             this.itemTemplates.put(template.getId(), template);
+        });
+
+        get(ITEM_ACTION).getElementsByTagName("action").forEach(element -> {
+            String[] types = element.getElementByTagName("type").toString().split(";");
+            String[] parameters = element.getElementByTagName("parameter").toString().split("\\|");
+
+            for (byte i = 0; i < types.length; i++) {
+                ItemAction action = ItemAction.get(Byte.parseByte(types[i]));
+                if (action != null)
+                    getItemTemplate(element.getAttribute("template").toShort()).addAction(action, parameters[i]);
+            }
         });
 
         log.debug("Successfully load {} item templates", this.itemTemplates.size());
@@ -131,23 +184,31 @@ public class EntityFactory implements Manageable {
                 short template = Short.parseShort(item);
                 templates.put(template, this.itemTemplates.get(template));
             }
-
             this.panoply.put(element.getAttribute("id").toShort(), new Panoply(element, templates));
         });
 
         log.debug("Successfully load {} panoply", this.panoply.size());
     }
 
+    private void startScheduledAction() {
+        this.scheduler.scheduleWithFixedDelay(() -> {
+            placeExtraMonsters();
+            this.gameMapRepository.getInitialized().forEach(gameMap -> worker.execute(gameMap::refreshMonsters));
+            log.debug("Successfully refresh monsters");
+        }, 1, 1, TimeUnit.DAYS);
+
+        log.debug("Successfully start scheduled action");
+    }
+
     @Override
     public void start() {
         this.itemIdentityGenerator = new AtomicInteger(database.getNextId(ITEMS, ITEMS.ID));
-        new FastLoader(this::loadExperiences,
-                this::loadArea,
-                this::loadItemTemplates,
-                this::loadNpcData,
-                this::loadNpcTemplates,
+        new FastLoader(this::loadItemTemplates, this::loadNpcTemplates,
                 this::loadMonsterTemplates,
-                this::loadPanoplyTemplates).launch();
+                this::loadExperiences,
+                this::loadPanoplyTemplates, this::loadGameMaps).launch();
+
+        startScheduledAction();
     }
 
 
@@ -157,23 +218,15 @@ public class EntityFactory implements Manageable {
     }
 
     private XMLFile get(String path) {
+        return new XMLFile(getFast(path));
+    }
+
+    private Document getFast(String path) {
         try {
-            return new XMLFile(documentBuilderFactory.newDocumentBuilder().parse(new File("data/" + path)));
+            return (documentBuilderFactory.newDocumentBuilder().parse(getClass().getClassLoader().getResourceAsStream("data/" + path)));
         } catch (Exception e) {
             throw new NullPointerException("File " + path + " was not found");
         }
-    }
-
-    public Experience getExperience(short level) {
-        return this.experiences.get(level);
-    }
-
-    public NpcTemplate getNpcTemplate(int id) {
-        return this.npcTemplates.get(id);
-    }
-
-    public MonsterTemplate getMonsterTemplate(int id) {
-        return this.monsterTemplates.get(id);
     }
 
     public GameMap getMap(int id) {
@@ -182,10 +235,6 @@ public class EntityFactory implements Manageable {
 
     public GameMap getMapByPosition(String position) {
         return this.gameMapRepository.getByPosition(position);
-    }
-
-    public ItemTemplate getItemTemplate(short id) {
-        return this.itemTemplates.get(id);
     }
 
     public int getNextItemId() {

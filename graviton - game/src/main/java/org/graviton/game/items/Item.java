@@ -63,7 +63,7 @@ public class Item {
                 builder.append(Integer.toHexString(bonus.min())).append('#');
                 builder.append(Integer.toHexString(bonus.max())).append('#');
                 builder.append("0#");
-                builder.append(bonus.toString(10)).append(',');
+                builder.append(bonus.toString()).append(',');
             } else {
                 final short value = this.statistics.get(i);
                 builder.append(Integer.toHexString(i.value())).append("#").append(Integer.toHexString((int) value)).append("#0#0#").append("0d0+").append(value).append(',');

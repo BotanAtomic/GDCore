@@ -9,12 +9,11 @@ import org.graviton.xml.XMLElement;
 
 @Data
 public class Area {
-    private byte id, superArea;
-    private String name;
+    private final short id;
+    private final byte superArea;
 
     public Area(XMLElement element) {
-        this.id = element.getAttribute("id").toByte();
+        this.id = element.getAttribute("id").toShort();
         this.superArea = element.getElementByTagName("super").toByte();
-        this.name = element.getElementByTagName("name").toString();
     }
 }

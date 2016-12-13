@@ -4,7 +4,7 @@ import org.graviton.utils.Utils;
 import org.graviton.xml.XMLElement;
 
 /**
- * Created by Botan on 02/12/2016.
+ * Created by Botan on 02/12/2016. 23:02
  */
 public class NpcLook extends AbstractLook {
     private final String accessories;

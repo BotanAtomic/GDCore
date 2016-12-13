@@ -1,20 +1,21 @@
 package org.graviton.database.repository;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
-import org.graviton.database.AbstractDatabase;
-import org.graviton.database.GameDatabase;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.maps.GameMap;
+import org.graviton.xml.XMLElement;
+import org.graviton.xml.XMLFile;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
-import static org.graviton.database.jooq.game.tables.Maps.MAPS;
-import static org.graviton.database.jooq.game.tables.Npcs.NPCS;
+import java.util.stream.IntStream;
 
 
 /**
@@ -23,38 +24,46 @@ import static org.graviton.database.jooq.game.tables.Npcs.NPCS;
 public class GameMapRepository {
     private final Map<Integer, GameMap> maps;
 
-    private GameDatabase database;
-
     @Inject
     private EntityFactory entityFactory;
 
     @Inject
-    public GameMapRepository(@Named("database.game") AbstractDatabase database) {
+    public GameMapRepository() {
         this.maps = new ConcurrentHashMap<>();
-        this.database = (GameDatabase) database;
     }
 
     public GameMap get(int id) {
-        if (maps.containsKey(id))
-            return maps.get(id);
-        return load(id);
+        return maps.get(id).initialize();
     }
 
     public GameMap getByPosition(String position) {
-        return get(database.getResult(MAPS, MAPS.MAPPOS.contains(position.substring(1))).get(0).get(MAPS.ID));
+        Optional<GameMap> record = this.maps.values().stream().filter(gameMap -> gameMap.getPosition().equals(position)).findFirst();
+        return record.isPresent() ? record.get().initialize() : null;
     }
 
-
-    private GameMap load(int id) {
-        GameMap maps = new GameMap(database.getRecord(MAPS, MAPS.ID.equal(id)), entityFactory);
-        maps.initializeNpc(getNpc(maps));
-        this.maps.put(maps.getId(), maps);
-        return maps;
+    public int loadNpc(XMLFile file) {
+        Collection<XMLElement> elements = file.getElementsByTagName("Npc");
+        elements.forEach(element -> {
+            GameMap gameMap = this.maps.get(element.getAttribute("map").toInt());
+            gameMap.register(new Npc(entityFactory.getNpcTemplate(element.getAttribute("id").toInt()), gameMap, element), false);
+        });
+        return elements.size();
     }
 
-    private Collection<Npc> getNpc(GameMap gameMap) {
-        return database.getResult(NPCS, NPCS.MAP.equal(gameMap.getId())).stream().
-                map(record -> new Npc(entityFactory.getNpcTemplate(record.get(NPCS.ID)), gameMap, record)).
-                collect(Collectors.toList());
+    public int load(Document file) {
+        NodeList list = file.getElementsByTagName("GameMap");
+        IntStream.range(0, list.getLength()).forEach(i -> {
+            XMLElement element = new XMLElement((Element) list.item(i));
+            int id = element.getAttribute("id").toInt();
+            short subArea = Short.parseShort(element.getElementByTagName("position").toString().split(",")[2]);
+            GameMap gameMap = new GameMap(id, element, entityFactory);
+            entityFactory.getSubArea(subArea).registerGameMap(gameMap);
+            this.maps.put(id, gameMap);
+        });
+        return maps.size();
+    }
+
+    public Collection<GameMap> getInitialized() {
+        return this.maps.values().stream().filter(GameMap::isInitialized).map(gameMap -> gameMap).collect(Collectors.toList());
     }
 }

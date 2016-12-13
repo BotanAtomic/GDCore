@@ -1,9 +1,12 @@
 package org.graviton.game.interaction;
 
 import lombok.extern.slf4j.Slf4j;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.interaction.actions.AbstractGameAction;
 import org.graviton.game.interaction.actions.PlayerMovement;
+import org.graviton.game.maps.GameMap;
 import org.graviton.network.game.GameClient;
+import org.graviton.network.game.protocol.GamePacketFormatter;
 
 import java.util.ArrayDeque;
 
@@ -31,6 +34,19 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
             case MOVEMENT:
                 addAction(new PlayerMovement(client.getPlayer(), data));
                 break;
+
+            case ASK_DEFY:
+                askDefy(data);
+                break;
+
+            case ACCEPT_DEFY:
+                acceptDefy(data, client.getPlayer().getGameMap());
+                break;
+
+            case CANCEL_DEFY:
+                cancelDefy(data);
+                break;
+
             default:
                 log.error("not implemented game action : {}", id);
         }
@@ -56,7 +72,50 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
         this.interactionCreature = creature;
     }
 
-    public int getInteractionCreature() {
+    private int getInteractionCreature() {
         return this.interactionCreature;
     }
+
+
+    private void askDefy(String data) {
+        int targetId = Integer.parseInt(data);
+        Player target = client.getPlayerRepository().get(targetId);
+
+        if (target == null) {
+            client.send(GamePacketFormatter.awayPlayerMessage(targetId));
+            return;
+        }
+
+        setInteractionWith(targetId);
+        target.getAccount().getClient().getInteractionManager().setInteractionWith(client.getPlayer().getId());
+        client.getPlayer().getGameMap().send(GamePacketFormatter.askDuelMessage(client.getPlayer().getId(), targetId));
+    }
+
+    private void cancelDefy(String data) {
+        Player target = client.getPlayerRepository().get(client.getInteractionManager().getInteractionCreature());
+
+        if (target == null) {
+            client.send(GamePacketFormatter.awayPlayerMessage(Integer.parseInt(data)));
+            return;
+        }
+
+        client.getPlayer().getGameMap().send(GamePacketFormatter.cancelDuelMessage(client.getPlayer().getId(), target.getId()));
+
+        setInteractionWith(0);
+        target.getAccount().getClient().getInteractionManager().setInteractionWith(0);
+    }
+
+    private void acceptDefy(String data, GameMap gameMap) {
+        Player target = client.getPlayerRepository().get(client.getInteractionManager().getInteractionCreature());
+
+        if (target == null) {
+            client.send(GamePacketFormatter.awayPlayerMessage(Integer.parseInt(data)));
+            return;
+        }
+
+        gameMap.send(GamePacketFormatter.acceptDuelMessage(client.getPlayer().getId(), target.getId()));
+
+        gameMap.getFightFactory().newDuel(target, client.getPlayer());
+    }
+
 }

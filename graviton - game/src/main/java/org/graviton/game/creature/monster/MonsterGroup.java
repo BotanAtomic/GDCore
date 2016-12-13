@@ -26,12 +26,6 @@ public class MonsterGroup implements Creature {
         this.id = id;
         this.location = new Location(gameMap, cell, OrientationEnum.random());
         this.monsters = monsters;
-        monsters.forEach(monster -> {
-            if (monster == null)
-                System.err.println("M NULL...");
-            else if (monster.getTemplate() == null)
-                System.err.println("MT NULL...");
-        });
     }
 
     @Override
@@ -52,6 +46,11 @@ public class MonsterGroup implements Creature {
     @Override
     public Location getLocation() {
         return this.location;
+    }
+
+    @Override
+    public int getColor(byte color) {
+        return 0;
     }
 
     public short getCell() {

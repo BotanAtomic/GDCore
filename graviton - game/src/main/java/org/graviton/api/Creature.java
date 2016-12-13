@@ -13,4 +13,6 @@ public interface Creature {
     void send(String data);
 
     Location getLocation();
+
+    int getColor(byte color);
 }

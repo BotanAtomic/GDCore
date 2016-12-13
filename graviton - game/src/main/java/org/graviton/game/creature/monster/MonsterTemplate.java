@@ -5,9 +5,7 @@ import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.xml.XMLElement;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -76,6 +74,10 @@ public class MonsterTemplate {
 
     public Monster getByLevel(short level) {
         return this.monsters.get(level);
+    }
+
+    public Monster getRandom() {
+        return new ArrayList<>(this.monsters.values()).get(new Random().nextInt(this.monsters.size()));
     }
 
 }

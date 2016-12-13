@@ -26,6 +26,10 @@ public class Cell {
         return movementType != MovementType.Unwalkable;
     }
 
+    public boolean isFree() {
+        return this.creatures.isEmpty();
+    }
+
     public enum MovementType {
         Unwalkable,
         Door,

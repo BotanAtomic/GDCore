@@ -1,7 +1,8 @@
 package org.graviton.game.action.npc;
 
 import lombok.extern.slf4j.Slf4j;
-import org.graviton.game.action.Action;
+import org.graviton.game.action.common.Performer;
+import org.graviton.game.action.common.Transportation;
 import org.graviton.network.game.GameClient;
 
 /**
@@ -32,10 +33,6 @@ public enum NpcAction {
     }
 
     public void apply(GameClient client, String data) {
-        try {
-            ((Action) actionClass.newInstance()).apply(client, data);
-        } catch (Exception e) {
-            log.error("exception > {}", e.getMessage());
-        }
+        Performer.apply(client, actionClass, data);
     }
 }

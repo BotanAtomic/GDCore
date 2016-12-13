@@ -60,6 +60,7 @@ public class GameHandler {
         client.send(GamePacketFormatter.gameCreationSuccessMessage());
 
         client.send(MessageFormatter.welcomeMessage());
+
         client.send(MessageFormatter.lastInformationMessage(account.getLastConnection(), account.getLastAddress()));
         client.send(MessageFormatter.actualInformationMessage(currentAddress));
 

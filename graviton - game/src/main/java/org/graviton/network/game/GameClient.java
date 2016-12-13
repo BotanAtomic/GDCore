@@ -48,7 +48,8 @@ public class GameClient {
     }
 
     void disconnect() {
-        this.player.getGameMap().out(player);
+        if (player != null)
+            this.player.getGameMap().out(player);
 
         this.playerRepository.save(account);
         this.accountRepository.unload(account.getId());

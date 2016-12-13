@@ -26,9 +26,26 @@ public class ItemHandler {
                 objectMove(data.split("\\|"));
                 break;
 
+            case 85: // 'U'
+                objectUse(client.getPlayer().getInventory().get(Integer.parseInt(data.split("\\|")[0])));
+                break;
+
             default:
                 log.error("not implemented item packet '{}'", (char) subHeader);
         }
+    }
+
+    private void objectUse(Item item) {
+        item.getTemplate().applyAction(client);
+
+        item.changeQuantity((short) -1);
+
+        if (item.getQuantity() <= 0) {
+            client.getPlayer().removeItem(item);
+            client.send(ItemPacketFormatter.deleteMessage(item.getId()));
+        } else
+            client.send(ItemPacketFormatter.quantityMessage(item.getId(), item.getQuantity()));
+
     }
 
     private void addItemShortcut(Player player, Item item, Item sliced, ItemPosition position, short quantity) {
@@ -38,7 +55,7 @@ public class ItemHandler {
         item.changeQuantity((short) -quantity);
 
         if (item.getQuantity() <= 0) {
-            player.getInventory().getItems().remove(item.getId());
+            client.getPlayer().removeItem(item);
             client.send(ItemPacketFormatter.deleteMessage(item.getId()));
         } else
             client.send(ItemPacketFormatter.quantityMessage(item.getId(), item.getQuantity()));
@@ -70,7 +87,7 @@ public class ItemHandler {
             same.changeQuantity((short) 1);
             item.setQuantity((short) 0);
 
-            client.getPlayer().removeDatabaseItem(item);
+            client.getPlayer().removeItem(item);
             client.send(ItemPacketFormatter.deleteMessage(item.getId()));
             client.send(ItemPacketFormatter.quantityMessage(same.getId(), same.getQuantity()));
         } else {

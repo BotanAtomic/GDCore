@@ -28,7 +28,7 @@ public class Point {
                         this.equals((Point) that);
     }
 
-    public boolean equals(Point that) {
+    private boolean equals(Point that) {
         return that == this ||
                 that != null &&
                         this.abscissa == that.abscissa && this.ordinate == that.ordinate;

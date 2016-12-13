@@ -91,7 +91,7 @@ public class PlayerRepository {
         this.players.values().forEach(this::save);
     }
 
-    public void save(Player player) {
+    private void save(Player player) {
         database.update(PLAYERS).set(PLAYERS.MAP, player.getGameMap().getId())
 
                 .set(PLAYERS.MAP, player.getGameMap().getId())
@@ -108,7 +108,7 @@ public class PlayerRepository {
                 .set(PLAYERS.SIZE, player.getSize())
                 .set(PLAYERS.TITLE, player.getTitle())
                 .set(PLAYERS.SPELL_POINTS, player.getStatistics().getSpellPoints())
-                .set(PLAYERS.STAT_POINTS, player.getStatistics().getStatisticPoints()).execute();
+                .set(PLAYERS.STAT_POINTS, player.getStatistics().getStatisticPoints()).where(PLAYERS.ID.equal(player.getId())).execute();
         saveItems(player);
     }
 
@@ -143,5 +143,9 @@ public class PlayerRepository {
 
     public void send(String data) {
         this.players.values().stream().filter(Player::isOnline).forEach(player -> player.send(data));
+    }
+
+    public Player get(int id) {
+        return this.players.get(id);
     }
 }

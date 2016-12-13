@@ -6,7 +6,7 @@ import org.graviton.xml.XMLElement;
 
 
 /**
- * Created by Botan on 27/11/16.
+ * Created by Botan on 27/11/16. 23:02
  */
 @Data
 public class NpcTemplate {

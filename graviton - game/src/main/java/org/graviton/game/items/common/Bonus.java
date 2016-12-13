@@ -2,14 +2,10 @@ package org.graviton.game.items.common;
 
 import org.graviton.utils.Utils;
 
-import java.util.Random;
-
 /**
  * Created by Botan on 04/12/2016. 18:32
  */
 public class Bonus {
-    private static final ThreadLocal<Random> RANDOM = ThreadLocal.withInitial(() -> new Random(System.nanoTime()));
-
     private short round, num, add;
 
     public Bonus(short round, short num) {
@@ -17,7 +13,7 @@ public class Bonus {
         this.num = num;
     }
 
-    Bonus(short round, short num, short add) {
+    private Bonus(short round, short num, short add) {
         this.round = round;
         this.num = num;
         this.add = add;
@@ -27,7 +23,7 @@ public class Bonus {
         return parseBonus(string, 10);
     }
 
-    public static Bonus parseBonus(String string, int radix) {
+    private static Bonus parseBonus(String string, int radix) {
         short a = (short) string.indexOf('d'),
                 b = (short) string.indexOf('+');
 
@@ -52,10 +48,10 @@ public class Bonus {
         return (short) Utils.random(min < max ? min : max, min > max ? min : max);
     }
 
-    public String toString(int radix) {
+    public String toString() {
         return add > 0 ?
-                (Integer.toString(round, radix) + "d" + Integer.toString(num, radix) + "+" + Integer.toString(add, radix)) :
-                (Integer.toString(round, radix) + "d" + Integer.toString(num, radix));
+                (Integer.toString(round, 10) + "d" + Integer.toString(num, 10) + "+" + Integer.toString(add, 10)) :
+                (Integer.toString(round, 10) + "d" + Integer.toString(num, 10));
     }
 
 }

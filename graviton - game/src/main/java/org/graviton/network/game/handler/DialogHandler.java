@@ -47,7 +47,7 @@ public class DialogHandler {
         }
     }
 
-    public void createDialog(String data) {
+    private void createDialog(String data) {
         int id = Integer.parseInt(data);
 
         client.getInteractionManager().setInteractionWith(id);
@@ -55,7 +55,7 @@ public class DialogHandler {
         Npc npc = (Npc) getPlayer().getGameMap().getCreature(id);
 
         client.send(NpcPacketFormatter.createDialog(id));
-        client.send(NpcPacketFormatter.questionMessage(entityFactory.getNpcQuestions().get(npc.getTemplate().getInitialQuestion(getPlayer().getGameMap().getId())).toString(player)));
+        client.send(NpcPacketFormatter.questionMessage(entityFactory.getNpcQuestion(npc.getTemplate().getInitialQuestion(getPlayer().getGameMap().getId())).toString(player)));
     }
 
     public void createQuestion(String data) {
@@ -64,12 +64,13 @@ public class DialogHandler {
             return;
         }
 
-        client.send(NpcPacketFormatter.questionMessage(entityFactory.getNpcQuestions().get(Short.parseShort(data)).toString(player)));
+        client.send(NpcPacketFormatter.questionMessage(entityFactory.getNpcQuestion(Short.parseShort(data)).toString(player)));
     }
 
     private void answerDialog(String data) {
-        NpcAnswer npcAnswer = entityFactory.getNpcAnswers().get(Short.parseShort(data.split("\\|")[1]));
-        npcAnswer.getNpcAction().apply(client, npcAnswer.getData());
+        NpcAnswer npcAnswer = entityFactory.getNpcAnswer(Short.parseShort(data.split("\\|")[1]));
+        if (npcAnswer.getNpcAction() != null)
+            npcAnswer.getNpcAction().apply(client, npcAnswer.getData());
     }
 
     public void leaveDialog() {

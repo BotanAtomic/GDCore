@@ -4,6 +4,7 @@ import org.graviton.constant.Dofus;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.experience.Experience;
+import org.graviton.game.fight.Fighter;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.common.ItemPosition;
 import org.graviton.game.statistics.PlayerStatistics;
@@ -126,6 +127,37 @@ public class PlayerPacketFormatter {
         builder.append(gmsMessage(player)).append(";");
         builder.append(player.getLevel() > 99 ? (player.getLevel() > 199 ? (2) : (1)) : (0)).append(";;;");
         builder.append(";;0;;;"); //TODO : guild
+        return builder.toString();
+    }
+
+    public static String fightGmMessage(Fighter fighter) {
+        Player player = (Player) fighter.getCreature();
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(player.getBreed().id()).append(';');
+        builder.append(player.getSkin()).append('^').append(player.getSize()).append(';');
+        builder.append(player.getSex()).append(';');
+        builder.append(player.getLevel()).append(';');
+        builder.append(player.getAlignment().getId()).append(",0,");
+        builder.append(player.getAlignment().isEnabled() ? player.getAlignment().getGrade() : 0).append(',').append(fighter.getId()).append(';');
+        builder.append(toHex(player.getCreature().getColor((byte) 1))).append(";");
+        builder.append(toHex(player.getCreature().getColor((byte) 2))).append(";");
+        builder.append(toHex(player.getCreature().getColor((byte) 3))).append(";");
+
+        builder.append(gmsMessage(player)).append(";");
+
+        builder.append(player.getStatistics().getCurrentLife()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.ActionPoints).total()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.MovementPoints).total()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.ResistancePercentNeutral).total()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.ResistancePercentEarth).total()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.ResistancePercentFire).total()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.ResistancePercentWater).total()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.ResistancePercentWind).total()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.DodgeActionPoints).total()).append(';');
+        builder.append(fighter.getStatistics().get(CharacteristicType.DodgeMovementPoints).total()).append(';');
+        builder.append(fighter.getSide().ordinal()).append(';');
+        builder.append(";\n"); // todo mounts
         return builder.toString();
     }
 

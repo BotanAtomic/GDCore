@@ -11,7 +11,10 @@ import java.util.concurrent.Executors;
  */
 public class FastLoader {
 
-    private final ExecutorService executorService = Executors.newCachedThreadPool();
+    private final ExecutorService executorService = Executors.newCachedThreadPool(r -> new Thread(r) {{
+        setDaemon(true);
+        setPriority(MAX_PRIORITY);
+    }});
 
     private final List<Runnable> tasks;
 

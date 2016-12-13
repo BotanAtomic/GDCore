@@ -88,4 +88,26 @@ public class GamePacketFormatter {
     public static String updateAccessories(int player, String gms) {
         return "Oa" + player + '|' + gms;
     }
+
+    public static String emoteMessage(int playerId, String data) {
+        return "cS" + playerId + '|' + data;
+    }
+
+    public static String askDuelMessage(int playerId, int targetId) {
+        return "GA;900;" + playerId + ';' + targetId;
+    }
+
+    public static String acceptDuelMessage(int playerId, int targetId) {
+        return "GA;901;" + playerId + ';' + targetId;
+    }
+
+
+    public static String cancelDuelMessage(int playerId, int targetId) {
+        return "GA;902;" + playerId + ';' + targetId;
+    }
+
+
+    public static String awayPlayerMessage(int targetId) {
+        return "GA;903;" + targetId + ";o";
+    }
 }

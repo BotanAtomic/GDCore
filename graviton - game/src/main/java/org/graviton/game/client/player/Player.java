@@ -1,12 +1,14 @@
 package org.graviton.game.client.player;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.graviton.api.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.breeds.AbstractBreed;
 import org.graviton.game.breeds.models.Enutrof;
 import org.graviton.game.client.account.Account;
+import org.graviton.game.fight.Fighter;
 import org.graviton.game.inventory.Inventory;
 import org.graviton.game.items.Item;
 import org.graviton.game.look.PlayerLook;
@@ -27,8 +29,9 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
 /**
  * Created by Botan on 05/11/2016 : 22:57
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class Player implements Creature {
+public class Player extends Fighter implements Creature {
     private final EntityFactory entityFactory;
     private final int id;
     private final Account account;
@@ -80,7 +83,7 @@ public class Player implements Creature {
         registerItem(entityFactory.getItemTemplate((short) 7226).createMax(entityFactory.getNextItemId()), true);
         registerItem(entityFactory.getItemTemplate((short) 7235).createMax(entityFactory.getNextItemId()), true);
 
-        Item item = entityFactory.getItemTemplate((short) 7391).createMax(entityFactory.getNextItemId());
+        Item item = entityFactory.getItemTemplate((short) 10219).createMax(entityFactory.getNextItemId());
         item.setQuantity((short) 150);
         registerItem(item, true);
     }
@@ -147,22 +150,24 @@ public class Player implements Creature {
         this.account.getClient().send(data);
     }
 
-    public void changeMap(int newGameMapId, short newCell) {
-        this.getGameMap().out(this);
-
-        GameMap newGameMap = entityFactory.getMap(newGameMapId);
-
-        this.location.setCell(newGameMap.getCells().get(newCell));
-        newGameMap.load(this);
+    @Override
+    public String getFightGM() {
+        return PlayerPacketFormatter.fightGmMessage(this);
     }
 
-    public void changeMap(GameMap newGameMap) {
+    public void changeMap(int newGameMapId, short newCell) {
+        changeMap(entityFactory.getMap(newGameMapId), newCell);
+    }
+
+    public void changeMap(GameMap newGameMap, short cell) {
+        cell = cell == 0 ? newGameMap.getRandomCell() : cell;
+
         if (getGameMap().getId() == newGameMap.getId()) {
-            this.location.setCell(newGameMap.getCells().get(newGameMap.getRandomCell()));
+            this.location.setCell(newGameMap.getCells().get(cell));
             getGameMap().refreshCreature(this);
         } else {
             this.getGameMap().out(this);
-            this.location.setCell(newGameMap.getCells().get(newGameMap.getRandomCell()));
+            this.location.setCell(newGameMap.getCells().get(cell));
             newGameMap.load(this);
         }
     }
@@ -172,7 +177,7 @@ public class Player implements Creature {
         removeDatabaseItem(item);
     }
 
-    public void registerItem(Item item, boolean create) {
+    private void registerItem(Item item, boolean create) {
         this.inventory.addItem(item, create);
     }
 
@@ -180,7 +185,7 @@ public class Player implements Creature {
         this.entityFactory.getPlayerRepository().createItem(item, this.id);
     }
 
-    public void removeDatabaseItem(Item item) {
+    private void removeDatabaseItem(Item item) {
         this.entityFactory.getPlayerRepository().removeItem(item);
     }
 
@@ -191,4 +196,10 @@ public class Player implements Creature {
     public void update() {
         this.entityFactory.getPlayerRepository().save();
     }
+
+    @Override
+    public Creature getCreature() {
+        return this;
+    }
+
 }

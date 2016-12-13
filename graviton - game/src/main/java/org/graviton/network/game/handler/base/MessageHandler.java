@@ -19,13 +19,12 @@ public class MessageHandler {
     private final DialogHandler dialogHandler;
 
     public MessageHandler(GameClient gameClient) {
-        GameClient client = gameClient;
-        this.accountHandler = new AccountHandler(client);
-        this.gameHandler = new GameHandler(client);
-        this.basicHandler = new BasicHandler(client);
-        this.itemHandler = new ItemHandler(client);
-        this.environmentHandler = new EnvironmentHandler(client);
-        this.dialogHandler = new DialogHandler(client);
+        this.accountHandler = new AccountHandler(gameClient);
+        this.gameHandler = new GameHandler(gameClient);
+        this.basicHandler = new BasicHandler(gameClient);
+        this.itemHandler = new ItemHandler(gameClient);
+        this.environmentHandler = new EnvironmentHandler(gameClient);
+        this.dialogHandler = new DialogHandler(gameClient);
     }
 
     public void handle(String data) {

@@ -1,16 +1,17 @@
 package org.graviton.game.items.template;
 
 import lombok.Data;
+import org.graviton.game.action.item.ItemAction;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.common.Bonus;
 import org.graviton.game.items.common.ItemEffect;
 import org.graviton.game.items.common.ItemPosition;
 import org.graviton.game.items.common.ItemType;
+import org.graviton.network.game.GameClient;
 import org.graviton.xml.XMLElement;
 
+import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.IntStream;
-
 
 /**
  * Created by Botan on 03/12/2016. 20:23
@@ -24,12 +25,11 @@ public class ItemTemplate {
     private final short pods;
     private final int price;
     private final String condition;
-
+    private final Map<ItemAction, String> actions = new TreeMap<>();
     private byte actionPointCost;
     private byte[] scopeRange;
     private short criticalRate, criticalBonus, failureRate;
     private boolean twoHands;
-
     private TreeMap<ItemEffect, Bonus> effects = new TreeMap<>();
 
     public ItemTemplate(XMLElement element) {
@@ -52,6 +52,14 @@ public class ItemTemplate {
             criticalBonus = element.getAttribute("criticalBonus").toShort();
             twoHands = element.getAttribute("twoHands").toBoolean();
         }
+    }
+
+    public void addAction(ItemAction itemAction, String parameter) {
+        this.actions.put(itemAction, parameter);
+    }
+
+    public void applyAction(GameClient client) {
+        this.actions.forEach((itemAction, parameter) -> itemAction.apply(client, parameter));
     }
 
     public Item createRandom(int nextId) {
@@ -84,18 +92,10 @@ public class ItemTemplate {
 
             if (argument.contains("d") && argument.contains("+")) {
                 maximum = Short.parseShort(arguments[2], 16);
-                short value = useMax ? maximum > 0 ? maximum : Short.parseShort(arguments[1], 16) : this.getRandomJet(argument);
+                short value = maximum > 0 ? maximum : Short.parseShort(arguments[1], 16);
                 effects.put(ItemEffect.get(statisticId), value);
             }
         }
         return effects;
     }
-
-    private short getRandomJet(String jet) {
-        short faces = Short.parseShort(jet.split("d")[1].split("\\+")[0]);
-        final short[] number = {(short) (Short.parseShort(jet.split("d")[1].split("\\+")[1]) + (int) (Math.random() + faces))};
-        IntStream.range(1, Short.parseShort(jet.split("d")[0])).forEach(i -> number[0] += (int) (Math.random() * faces));
-        return number[0];
-    }
-
 }

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.channel.Channel;
 import org.graviton.game.client.player.Player;
 import org.graviton.network.game.GameClient;
+import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.MessageFormatter;
 
 /**
@@ -24,8 +25,12 @@ public class BasicHandler {
                 speak(data.split("\\|"));
                 break;
 
+            case 83: // 'S'
+                client.getPlayer().getGameMap().send(GamePacketFormatter.emoteMessage(client.getPlayer().getId(), data));
+                break;
+
             case 97: // 'a'
-                changePlayerMapByPosition(data);
+                changePlayerMapByPosition(data.substring(1));
                 break;
 
             default:
@@ -35,7 +40,7 @@ public class BasicHandler {
 
 
     private void changePlayerMapByPosition(String position) {
-        client.getPlayer().changeMap(client.getEntityFactory().getMapByPosition(position));
+        client.getPlayer().changeMap(client.getEntityFactory().getMapByPosition(position), (short) 0);
     }
 
     private void speak(String[] data) {

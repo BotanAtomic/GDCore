@@ -82,6 +82,11 @@ public class Utils {
         return ThreadLocalRandom.current().nextInt(minimum, maximum + 1);
     }
 
+    public static String parsePosition(String position) {
+        String[] data = position.split(",");
+        return data[0] + ',' + data[1];
+    }
+
     static class NameGenerator {
         private static String[] BEGINNING = {"Kr", "Ca", "Ra", "Mrok", "Cru",
                 "Ray", "Bre", "Zed", "Drak", "Mor", "Jag", "Mer", "Jar", "Mjol",
