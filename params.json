@@ -1,0 +1,6 @@
+{
+  "name": "GDCore",
+  "tagline": "Dofus 1.29 emulator",
+  "body": "<p align=\"center\"><IMG SRC=\"https://i.gyazo.com/760ac25569c32430a3d1817a77e0fd6e.png\"></p>\r\n\r\n#What is it ?\r\n\r\nGraviton (GDCore) is a 1.29 dofus emulator, developed in Java. He's supported by gradle and is separated in 3 projects\r\n\r\n- <i>graviton - login</i> : it's the login server, manages connections\r\n\r\n- <i>graviton - game</i> : it's the game server, manages the in-game\r\n\r\n- <i>graviton - common</i> : contains all common class\r\n\r\n#Dependencies\r\n\r\nGraviton (GDCore)  contains a lot of util dependencies\r\n\r\n- <b>Guice</b> by Google: for dependency injections\r\n\r\n- <b>MySQL-Connector</b> by Apache: for JDBC mysql\r\n\r\n- <b>Slf4j</b> & Logback : for loggers\r\n\r\n- <b>Lombok</b> : for meta-data\r\n\r\n- <b>JOOQ</b> : for typesafe SQL query construction and execution\r\n\r\n- <b>Mina Apache</b> : for network\r\n\r\n- <b>Hikari CP</b> : for database pool connection\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
