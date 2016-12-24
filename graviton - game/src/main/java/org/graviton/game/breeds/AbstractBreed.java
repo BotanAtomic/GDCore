@@ -3,6 +3,7 @@ package org.graviton.game.breeds;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.breeds.models.*;
 
+
 /**
  * Created by Botan on 05/11/2016 : 22:59
  */
@@ -32,6 +33,7 @@ public abstract class AbstractBreed {
 
     public abstract short incarnamCell();
 
+    public abstract byte boostCost(byte statistics, short value);
 
     public enum BreedEnum {
         FECA(Feca.class),

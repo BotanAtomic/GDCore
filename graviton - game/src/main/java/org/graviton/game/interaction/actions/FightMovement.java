@@ -34,11 +34,11 @@ public class FightMovement extends Path implements AbstractGameAction {
      * Formulas
      **/
 
-    private static byte getTackleChance(Fighter fighter, Collection<Fighter> enemies) {
+    private static short getTackleChance(Fighter fighter, Collection<Fighter> enemies) {
         short agility = fighter.getStatistics().get(CharacteristicType.Agility).total();
         AtomicInteger enemiesAgility = new AtomicInteger(0);
         enemies.forEach(enemy -> enemiesAgility.addAndGet(enemy.getStatistics().get(CharacteristicType.Agility).total()));
-        return (byte) ((300 * (agility + 25) / ((short) (agility + enemiesAgility.get() + (50 * enemies.size())))) - 100);
+        return (short) ((300 * (agility + 25) / ((short) (agility + enemiesAgility.get() + (50 * enemies.size())))) - 100);
     }
 
     @Override
@@ -48,12 +48,15 @@ public class FightMovement extends Path implements AbstractGameAction {
         Collection<Fighter> aroundFighters = super.getAroundFighters(fightMap, fighter, fighter.getFightCell().getId());
 
         if (!aroundFighters.isEmpty()) {
-            byte tackleChance = getTackleChance(fighter, aroundFighters);
-            System.err.println(tackleChance);
+            short tackleChance = getTackleChance(fighter, aroundFighters);
+
             if (Utils.random(0, 100) > tackleChance) {
                 fightMap.send(FightPacketFormatter.actionMessage(FightAction.TACKLE, fighter.getId()));
 
-                byte looseActionPoint = (byte) (fighter.getCurrentActionPoint() * tackleChance / 100);
+                short looseActionPoint = (short) (fighter.getCurrentActionPoint() * tackleChance / 100);
+
+                if (fighter.getCurrentActionPoint() < looseActionPoint)
+                    looseActionPoint = fighter.getCurrentActionPoint();
 
                 fightMap.send(FightPacketFormatter.looseMovementPointMessage(fighter.getId(), (byte) (fighter.getCurrentMovementPoint() * -1)));
                 fightMap.send(FightPacketFormatter.looseActionPointMessage(fighter.getId(), (byte) ((fighter.getCurrentActionPoint() - looseActionPoint) * -1)));

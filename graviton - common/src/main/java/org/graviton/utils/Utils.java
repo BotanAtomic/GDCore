@@ -87,6 +87,10 @@ public class Utils {
         return data[0] + ',' + data[1];
     }
 
+    public static boolean range(short value, int start, int end) {
+        return value >= start && value <= end;
+    }
+
     static class NameGenerator {
         private static String[] BEGINNING = {"Kr", "Ca", "Ra", "Mrok", "Cru",
                 "Ray", "Bre", "Zed", "Drak", "Mor", "Jag", "Mer", "Jar", "Mjol",

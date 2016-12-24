@@ -2,6 +2,8 @@ package org.graviton.game.breeds.models;
 
 import org.graviton.game.breeds.AbstractBreed;
 
+import static org.graviton.game.breeds.Converter.HARD;
+
 /**
  * Created by Botan on 05/11/2016 : 23:01
  */
@@ -29,5 +31,10 @@ public class Sacrieur extends AbstractBreed {
     @Override
     public short incarnamCell() {
         return 243;
+    }
+
+    @Override
+    public byte boostCost(byte characteristicId, short value) {
+        return HARD.apply(value);
     }
 }

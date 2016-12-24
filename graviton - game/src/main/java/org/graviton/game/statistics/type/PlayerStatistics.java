@@ -120,4 +120,11 @@ public class PlayerStatistics extends Statistics {
     private short getMaxPods() {
         return (short) (1000 + (get(CharacteristicType.Strength).total() * 5) + get(CharacteristicType.Pods).total());
     }
+
+    public void upLevel() {
+        this.spellPoints++;
+        this.statisticPoints += 5;
+        this.level++;
+        this.experience = player.getEntityFactory().getExperience(level).getPlayer();
+    }
 }

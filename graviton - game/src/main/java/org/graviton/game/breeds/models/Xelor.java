@@ -30,4 +30,9 @@ public class Xelor extends AbstractBreed {
     public short incarnamCell() {
         return 300;
     }
+
+    @Override
+    public byte boostCost(byte characteristicId, short value) {
+        return new Eniripsa().boostCost(characteristicId, value); //Eniripsa as same properties
+    }
 }

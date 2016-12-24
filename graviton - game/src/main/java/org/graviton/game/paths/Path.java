@@ -22,7 +22,7 @@ public class Path extends ArrayList<Short> {
     private short finalCell;
     private OrientationEnum finalOrientation;
 
-    protected Path(String path, AbstractMap map, short cell, Fighter fighter) {
+    protected Path(String path, AbstractMap map, short cell) {
         this.startCell = cell;
         short lastCell = cell;
         int size = map.getWidth() * 2 + 1;
@@ -35,11 +35,29 @@ public class Path extends ArrayList<Short> {
                 add(lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth()));
 
             lastCell = stepCell;
+            newPath += stepPath.charAt(0) + Cells.encode(lastCell);
+        }
+    }
 
-            newPath += stepPath.charAt(0) + Cells.encode(stepCell);
+    protected Path(String path, AbstractMap map, short cell, Fighter fighter) {
+        this.startCell = cell;
+        short lastCell = cell;
+        int size = map.getWidth() * 2 + 1;
 
-            if (fighter != null && !getAroundFighters(map, fighter, stepCell).isEmpty())
-                return;
+        for (int i = 0; i < path.length(); i += 3) {
+            String stepPath = path.substring(i, i + 3);
+            short stepCell = Cells.decode(stepPath.substring(1));
+
+            while (lastCell != stepCell && map.getCells().get(lastCell).isWalkable() && size-- > 0) {
+                add(lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth()));
+
+                newPath += stepPath.charAt(0) + Cells.encode(lastCell);
+
+                if (fighter != null && !getAroundFighters(map, fighter, lastCell).isEmpty())
+                    return;
+            }
+
+            lastCell = stepCell;
         }
     }
 
@@ -69,7 +87,6 @@ public class Path extends ArrayList<Short> {
         Collection<Fighter> fighters = new ArrayList<>();
 
         char[] directions = {'h', 'f', 'b', 'd'};
-
         for (char direction : directions) {
             Cell cell = map.getCells().get(Cells.getCellIdByOrientation(cellId, direction, map.getWidth()));
             if (!cell.getCreatures().isEmpty()) {
@@ -78,7 +95,6 @@ public class Path extends ArrayList<Short> {
                     fighters.add(aroundFighter);
             }
         }
-
         return fighters;
     }
 

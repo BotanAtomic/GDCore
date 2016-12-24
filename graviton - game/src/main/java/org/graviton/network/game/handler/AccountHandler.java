@@ -45,6 +45,10 @@ public class AccountHandler {
                 createPlayer(data);
                 break;
 
+            case 66: // 'B'
+                this.client.getPlayer().boostStatistics(Byte.parseByte(data));
+                break;
+
             case 68: // 'D'
                 deletePlayer(data.split("\\|"));
                 break;

@@ -159,7 +159,6 @@ public class FightPacketFormatter {
 
     public static String fightEndMessage(long fightDuration, Fighter leaderWinner, Collection<Fighter> winners, Collection<Fighter> losers) {
         StringBuilder builder = new StringBuilder("GE");
-        //GE4166|958|0|2;1424;Leo-mars;181;0;1317997000;1332575192;1355584000         ; ; ; ;; |0;958;Abcdefghijkl;1  ;0;0         ;0         ;110                ; ; ; ; |
         builder.append(fightDuration).append('|');
         builder.append(leaderWinner.getId()).append('|');
         builder.append('0').append('|');

@@ -80,4 +80,22 @@ public enum CharacteristicType {
             CharacteristicType.ResistancePvpWind, CharacteristicType.ResistancePercentPvpWind,
             CharacteristicType.ResistanceFire, CharacteristicType.ResistancePercentFire,
             CharacteristicType.ResistancePvpFire, CharacteristicType.ResistancePercentPvpFire);
+
+    public static CharacteristicType getBoost(byte characteristics) {
+        switch (characteristics) {
+            case 10:
+                return Strength;
+            case 11:
+                return Vitality;
+            case 12:
+                return Wisdom;
+            case 13:
+                return Chance;
+            case 14:
+                return Agility;
+            case 15:
+                return Intelligence;
+        }
+        return null;
+    }
 }

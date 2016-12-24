@@ -176,4 +176,8 @@ public class PlayerPacketFormatter {
     public static String podsMessage(short[] pods) {
         return "Ow" + pods[0] + "|" + pods[1];
     }
+
+    public static String nextLevelMessage(short level) {
+        return "AN" + level;
+    }
 }

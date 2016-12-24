@@ -105,6 +105,9 @@ public class PlayerRepository {
                 .set(PLAYERS.CHANCE, player.getStatistics().get(CharacteristicType.Chance).base())
                 .set(PLAYERS.AGILITY, player.getStatistics().get(CharacteristicType.Agility).base())
 
+                .set(PLAYERS.EXPERIENCE, player.getExperience())
+                .set(PLAYERS.LEVEL, player.getLevel())
+
                 .set(PLAYERS.SIZE, player.getSize())
                 .set(PLAYERS.TITLE, player.getTitle())
                 .set(PLAYERS.SPELL_POINTS, player.getStatistics().getSpellPoints())

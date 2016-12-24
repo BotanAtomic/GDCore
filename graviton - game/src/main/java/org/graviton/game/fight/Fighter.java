@@ -112,4 +112,9 @@ public abstract class Fighter {
     public int hashCode() {
         return this.getCreature().getId();
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

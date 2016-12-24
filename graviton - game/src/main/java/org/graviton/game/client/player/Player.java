@@ -1,12 +1,12 @@
 package org.graviton.game.client.player;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.graviton.api.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.breeds.AbstractBreed;
 import org.graviton.game.breeds.models.Enutrof;
+import org.graviton.game.breeds.models.Sacrieur;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.inventory.Inventory;
@@ -17,6 +17,7 @@ import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
+import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.type.PlayerStatistics;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
@@ -30,7 +31,6 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
 /**
  * Created by Botan on 05/11/2016 : 22:57
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class Player extends Fighter implements Creature {
     private final EntityFactory entityFactory;
@@ -190,6 +190,28 @@ public class Player extends Fighter implements Creature {
     @Override
     public Creature getCreature() {
         return this;
+    }
+
+    public void upLevel() {
+        this.statistics.upLevel();
+        send(PlayerPacketFormatter.asMessage(this, entityFactory.getExperience(getLevel()), getAlignment(), this.statistics));
+        send(PlayerPacketFormatter.nextLevelMessage(this.statistics.getLevel()));
+    }
+
+    public void boostStatistics(byte characteristicId) {
+        CharacteristicType characteristic = CharacteristicType.getBoost(characteristicId);
+        byte cost = (byte) (characteristic == CharacteristicType.Wisdom ? 3 : 1), bonus = 1;
+
+        if (getBreed() instanceof Sacrieur && characteristic == CharacteristicType.Vitality)
+            bonus = 2;
+
+        if (cost == 1 && bonus == 1)
+            cost = getBreed().boostCost(characteristicId, this.statistics.get(characteristic).base());
+
+        statistics.setStatisticPoints((short) (statistics.getStatisticPoints() - cost));
+        statistics.get(characteristic).addBase(bonus);
+        send(PlayerPacketFormatter.asMessage(this, this.entityFactory.getExperience(getLevel()), getAlignment(), statistics));
+
     }
 
 }

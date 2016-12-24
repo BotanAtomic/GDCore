@@ -40,9 +40,8 @@ public class ItemTemplate {
         this.price = element.getAttribute("price").toInt();
         this.condition = element.getElementByTagName("conditions").toString();
 
-        element.getElementsByTagName("effect").forEach(effect ->
-                this.effects.put(ItemEffect.get(effect.getAttribute("type").toShort()),
-                        Bonus.parseBonus(effect.getAttribute("bonus").toString())));
+        element.getElementsByTagName("effect").forEach(effect -> this.effects.put(ItemEffect.get(effect.getAttribute("type").toShort()),
+                Bonus.parseBonus(effect.getAttribute("bonus").toString())));
 
         if (this.type != null && this.type.isWeapon()) {
             this.actionPointCost = element.getAttribute("cost").toByte();
