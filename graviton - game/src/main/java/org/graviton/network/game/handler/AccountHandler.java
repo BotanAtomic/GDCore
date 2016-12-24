@@ -8,7 +8,12 @@ import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.network.game.protocol.MessageFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
+
+import java.net.InetSocketAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.graviton.utils.Utils.randomPseudo;
 
@@ -91,16 +96,27 @@ public class AccountHandler {
 
         player.setOnline(true);
         client.send(PlayerPacketFormatter.askMessage(player));
-        client.send(PlayerPacketFormatter.asMessage(player, entityFactory.getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
 
-        player.getGameMap().load(player);
-
-        client.send(GamePacketFormatter.regenTimerMessage((short) 2000));
         client.send(GamePacketFormatter.addChannelsMessage(account.getChannels()));
 
         client.send(PlayerPacketFormatter.alignmentMessage(player.getAlignment().getId()));
         client.send(PlayerPacketFormatter.restrictionMessage());
         client.send(PlayerPacketFormatter.podsMessage(player.getPods()));
+        player.getMap().load(player);
+
+        String currentAddress = ((InetSocketAddress) this.client.getSession().getRemoteAddress()).getAddress().getHostAddress();
+
+        client.send(MessageFormatter.welcomeMessage());
+
+        if (!account.getLastConnection().isEmpty() && !account.getLastAddress().isEmpty()) {
+            client.send(MessageFormatter.lastInformationMessage(account.getLastConnection(), account.getLastAddress()));
+            client.send(MessageFormatter.actualInformationMessage(currentAddress));
+        }
+
+        account.setLastConnection(new SimpleDateFormat("yyyy~MM~dd~HH~mm").format(new Date()));
+        account.setLastAddress(currentAddress);
+
+        client.getAccountRepository().updateInformation(account);
     }
 
     private void deletePlayer(String[] data) {

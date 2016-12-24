@@ -30,6 +30,15 @@ public class Cell {
         return this.creatures.isEmpty();
     }
 
+    public int getFirstCreature() {
+        return this.creatures.stream().findFirst().get();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
+    }
+
     public enum MovementType {
         Unwalkable,
         Door,

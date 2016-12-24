@@ -1,9 +1,9 @@
 package org.graviton.game.creature.monster;
 
 import lombok.Data;
-import org.graviton.game.statistics.MonsterStatistics;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
+import org.graviton.game.statistics.type.MonsterStatistics;
 
 import java.util.Map;
 

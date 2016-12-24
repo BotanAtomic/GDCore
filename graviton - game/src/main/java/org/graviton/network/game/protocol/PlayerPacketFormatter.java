@@ -7,9 +7,9 @@ import org.graviton.game.experience.Experience;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.common.ItemPosition;
-import org.graviton.game.statistics.PlayerStatistics;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
+import org.graviton.game.statistics.type.PlayerStatistics;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -66,6 +66,10 @@ public class PlayerPacketFormatter {
         return builder.toString().substring(0, builder.length() - 1);
     }
 
+    public static String asMessage(Player player) {
+        return asMessage(player, player.getEntityFactory().getExperience(player.getLevel()), player.getAlignment(), player.getStatistics());
+    }
+
 
     public static String asMessage(Player player, Experience experience, Alignment alignment, PlayerStatistics statistics) {
         StringBuilder builder = new StringBuilder("As");
@@ -91,7 +95,7 @@ public class PlayerPacketFormatter {
         builder.append(statistics.getEnergy()).append(',');
         builder.append(Dofus.MAX_ENERGY).append('|');
 
-        builder.append(statistics.getInitiative()).append('|');
+        builder.append(statistics.get(CharacteristicType.Initiative).total()).append('|');
         builder.append(statistics.getProspection()).append('|');
 
         Arrays.asList(CharacteristicType.ActionPoints, CharacteristicType.MovementPoints).forEach(characteristic -> builder.append(statistics.get(characteristic).base()).append(',').append(statistics.get(characteristic).equipment()).append(',').append(statistics.get(characteristic).gift()).append(',').append(statistics.get(characteristic).context()).append(',').append(statistics.get(characteristic).total()).append('|'));

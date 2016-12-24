@@ -2,7 +2,9 @@ package org.graviton.game.interaction;
 
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.fight.Fight;
 import org.graviton.game.interaction.actions.AbstractGameAction;
+import org.graviton.game.interaction.actions.FightMovement;
 import org.graviton.game.interaction.actions.PlayerMovement;
 import org.graviton.game.maps.GameMap;
 import org.graviton.network.game.GameClient;
@@ -32,7 +34,7 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
 
         switch (interactionType) {
             case MOVEMENT:
-                addAction(new PlayerMovement(client.getPlayer(), data));
+                move(data);
                 break;
 
             case ASK_DEFY:
@@ -40,11 +42,15 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
                 break;
 
             case ACCEPT_DEFY:
-                acceptDefy(data, client.getPlayer().getGameMap());
+                acceptDefy(data, (GameMap) client.getPlayer().getMap());
                 break;
 
             case CANCEL_DEFY:
                 cancelDefy(data);
+                break;
+
+            case JOIN_FIGHT:
+                joinFight(data);
                 break;
 
             default:
@@ -76,6 +82,13 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
         return this.interactionCreature;
     }
 
+    private void move(String data) {
+        if (client.getPlayer().getFight() == null)
+            addAction(new PlayerMovement(client.getPlayer(), data));
+        else {
+            addAction(new FightMovement(client.getPlayer(), data));
+        }
+    }
 
     private void askDefy(String data) {
         int targetId = Integer.parseInt(data);
@@ -88,7 +101,7 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
 
         setInteractionWith(targetId);
         target.getAccount().getClient().getInteractionManager().setInteractionWith(client.getPlayer().getId());
-        client.getPlayer().getGameMap().send(GamePacketFormatter.askDuelMessage(client.getPlayer().getId(), targetId));
+        client.getPlayer().getMap().send(GamePacketFormatter.askDuelMessage(client.getPlayer().getId(), targetId));
     }
 
     private void cancelDefy(String data) {
@@ -99,7 +112,7 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
             return;
         }
 
-        client.getPlayer().getGameMap().send(GamePacketFormatter.cancelDuelMessage(client.getPlayer().getId(), target.getId()));
+        client.getPlayer().getMap().send(GamePacketFormatter.cancelDuelMessage(client.getPlayer().getId(), target.getId()));
 
         setInteractionWith(0);
         target.getAccount().getClient().getInteractionManager().setInteractionWith(0);
@@ -116,6 +129,23 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
         gameMap.send(GamePacketFormatter.acceptDuelMessage(client.getPlayer().getId(), target.getId()));
 
         gameMap.getFightFactory().newDuel(target, client.getPlayer());
+    }
+
+    private void joinFight(String data) {
+        String[] information = data.split(";");
+
+        if (information.length == 1) {
+            int fight = Integer.parseInt(information[0]);
+
+            // TODO: 19/12/2016 join as spectator
+        } else {
+            Player target = client.getPlayerRepository().get(Integer.parseInt(information[1]));
+
+            if (target != null) {
+                Fight fight = target.getFight();
+                fight.join(target.getTeam(), client.getPlayer());
+            }
+        }
     }
 
 }

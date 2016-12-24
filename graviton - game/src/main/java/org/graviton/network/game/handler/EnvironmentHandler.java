@@ -31,7 +31,7 @@ public class EnvironmentHandler {
 
     private void changeOrientation(byte orientation) {
         Player player = client.getPlayer();
-        player.getGameMap().send(GamePacketFormatter.changeOrientationMessage(player.getId(), orientation));
+        player.getMap().send(GamePacketFormatter.changeOrientationMessage(player.getId(), orientation));
         player.getLocation().setOrientation(OrientationEnum.valueOf(orientation));
     }
 }

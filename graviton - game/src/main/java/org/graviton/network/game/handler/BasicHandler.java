@@ -26,7 +26,7 @@ public class BasicHandler {
                 break;
 
             case 83: // 'S'
-                client.getPlayer().getGameMap().send(GamePacketFormatter.emoteMessage(client.getPlayer().getId(), data));
+                client.getPlayer().getMap().send(GamePacketFormatter.emoteMessage(client.getPlayer().getId(), data));
                 break;
 
             case 97: // 'a'
@@ -62,7 +62,7 @@ public class BasicHandler {
     private void speak(Channel channel, String generatedPacket) {
         switch (channel) {
             case General:
-                client.getPlayer().getGameMap().send(generatedPacket);
+                client.getPlayer().getMap().send(generatedPacket);
                 break;
 
             case Trade:

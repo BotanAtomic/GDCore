@@ -1,11 +1,13 @@
-package org.graviton.game.statistics;
+package org.graviton.game.statistics.type;
 
 
 import javafx.util.Pair;
+import lombok.Data;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.common.ItemPosition;
-import org.graviton.game.statistics.common.Characteristic;
+import org.graviton.game.statistics.BaseCharacteristic;
+import org.graviton.game.statistics.Initiative;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.common.Statistics;
 import org.jooq.Record;
@@ -17,6 +19,8 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
 /**
  * Created by Botan on 11/11/2016 : 21:12
  */
+
+@Data
 public class PlayerStatistics extends Statistics {
     private final Player player;
 
@@ -34,20 +38,22 @@ public class PlayerStatistics extends Statistics {
         this.energy = record.get(PLAYERS.ENERGY);
         this.level = record.get(PLAYERS.LEVEL);
         this.experience = record.get(PLAYERS.EXPERIENCE);
-        this.life = new short[]{50, 55}; //TODO : life
+        this.life = new short[]{55, 55}; //TODO : life
 
         for (CharacteristicType type : CharacteristicType.values())
-            put(type, new Characteristic((short) 0));
+            put(type, new BaseCharacteristic((short) 0));
 
-        put(CharacteristicType.Vitality, new Characteristic(record.get(PLAYERS.VITALITY)));
-        put(CharacteristicType.Wisdom, new Characteristic(record.get(PLAYERS.WISDOM)));
-        put(CharacteristicType.Strength, new Characteristic(record.get(PLAYERS.STRENGTH)));
-        put(CharacteristicType.Intelligence, new Characteristic(record.get(PLAYERS.INTELLIGENCE)));
-        put(CharacteristicType.Chance, new Characteristic(record.get(PLAYERS.CHANCE)));
-        put(CharacteristicType.Agility, new Characteristic(record.get(PLAYERS.AGILITY)));
-        put(CharacteristicType.ActionPoints, new Characteristic((short) (level == 200 ? 8 : level >= 100 ? 7 : 6)));
-        put(CharacteristicType.MovementPoints, new Characteristic((short) 3));
-        put(CharacteristicType.Prospection, new Characteristic(prospection));
+        put(CharacteristicType.Vitality, new BaseCharacteristic(record.get(PLAYERS.VITALITY)));
+        put(CharacteristicType.Wisdom, new BaseCharacteristic(record.get(PLAYERS.WISDOM)));
+        put(CharacteristicType.Strength, new BaseCharacteristic(record.get(PLAYERS.STRENGTH)));
+        put(CharacteristicType.Intelligence, new BaseCharacteristic(record.get(PLAYERS.INTELLIGENCE)));
+        put(CharacteristicType.Chance, new BaseCharacteristic(record.get(PLAYERS.CHANCE)));
+        put(CharacteristicType.Agility, new BaseCharacteristic(record.get(PLAYERS.AGILITY)));
+        put(CharacteristicType.ActionPoints, new BaseCharacteristic((short) (level == 200 ? 8 : level >= 100 ? 7 : 6)));
+        put(CharacteristicType.MovementPoints, new BaseCharacteristic((short) 3));
+        put(CharacteristicType.Prospection, new BaseCharacteristic(prospection));
+        put(CharacteristicType.Initiative, new Initiative(this, (short) 0));
+
         applyItemEffects();
         refreshPods();
     }
@@ -63,11 +69,13 @@ public class PlayerStatistics extends Statistics {
         this.pods = new short[]{0, 1000};
 
         for (CharacteristicType type : CharacteristicType.values())
-            put(type, new Characteristic((short) 0));
+            put(type, new BaseCharacteristic((short) 0));
 
-        put(CharacteristicType.ActionPoints, new Characteristic((short) 6));
-        put(CharacteristicType.MovementPoints, new Characteristic((short) 3));
-        put(CharacteristicType.Prospection, new Characteristic(prospection));
+        put(CharacteristicType.ActionPoints, new BaseCharacteristic((short) 6));
+        put(CharacteristicType.MovementPoints, new BaseCharacteristic((short) 3));
+        put(CharacteristicType.Prospection, new BaseCharacteristic(prospection));
+        put(CharacteristicType.Initiative, new Initiative(this, (short) 0));
+
     }
 
     private void applyItemEffects() {
@@ -89,27 +97,14 @@ public class PlayerStatistics extends Statistics {
         }));
     }
 
-    public Characteristic get(CharacteristicType type) {
-        return super.get(type);
-    }
-
+    @Override
     public short getCurrentLife() {
         return life[0];
     }
 
+    @Override
     public short getMaxLife() {
         return life[1];
-    }
-
-    public short getInitiative() {
-        short total = (short) (get(CharacteristicType.Strength).total() + get(CharacteristicType.Intelligence).total() +
-                get(CharacteristicType.Chance).total() + get(CharacteristicType.Agility).total());
-
-        total += get(CharacteristicType.Initiative).total();
-
-        total *= (life[0] / life[1]);
-
-        return total;
     }
 
     public short getProspection() {
@@ -124,29 +119,5 @@ public class PlayerStatistics extends Statistics {
 
     private short getMaxPods() {
         return (short) (1000 + (get(CharacteristicType.Strength).total() * 5) + get(CharacteristicType.Pods).total());
-    }
-
-    public short getEnergy() {
-        return this.energy;
-    }
-
-    public long getExperience() {
-        return this.experience;
-    }
-
-    public short getStatisticPoints() {
-        return statisticPoints;
-    }
-
-    public short getSpellPoints() {
-        return spellPoints;
-    }
-
-    public short[] getPods() {
-        return this.pods;
-    }
-
-    public short getLevel() {
-        return this.level;
     }
 }

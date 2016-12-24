@@ -12,9 +12,10 @@
     <orderEntry type="module" module-name="graviton_-_game_main" />
     <orderEntry type="library" name="Gradle: org.apache.mina:mina-core:2.0.15" level="project" />
     <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:2.5.1" level="project" />
-    <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.6" level="project" />
+    <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.7" level="project" />
     <orderEntry type="library" name="Gradle: com.google.inject:guice:4.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:guava:20.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.22" level="project" />
     <orderEntry type="library" name="Gradle: org.jooq:jooq:3.8.6" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-all:2.4.7" level="project" />
     <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.8.6" level="project" />
@@ -24,7 +25,6 @@
     <orderEntry type="module" module-name="graviton_-_common_main" />
     <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Gradle: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.guava:guava:19.0" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.1.7" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="graviton_-_game_main" />

@@ -6,6 +6,7 @@ import org.graviton.constant.Dofus;
 import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.position.Location;
+import org.graviton.game.statistics.common.Statistics;
 import org.graviton.network.game.protocol.MonsterPacketFormatter;
 import org.joda.time.Interval;
 
@@ -51,6 +52,11 @@ public class MonsterGroup implements Creature {
     @Override
     public int getColor(byte color) {
         return 0;
+    }
+
+    @Override
+    public Statistics getStatistics() {
+        return null;
     }
 
     public short getCell() {

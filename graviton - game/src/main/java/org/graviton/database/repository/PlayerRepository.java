@@ -56,7 +56,7 @@ public class PlayerRepository {
                         player.getSex(),
                         player.getSkin(),
                         Utils.parseColors(player.getColors()),
-                        player.getGameMap().getId(),
+                        player.getMap().getId(),
                         player.getCell().getId(),
                         (byte) ExchangeConnector.serverId).execute();
     }
@@ -92,9 +92,9 @@ public class PlayerRepository {
     }
 
     private void save(Player player) {
-        database.update(PLAYERS).set(PLAYERS.MAP, player.getGameMap().getId())
+        database.update(PLAYERS).set(PLAYERS.MAP, player.getMap().getId())
 
-                .set(PLAYERS.MAP, player.getGameMap().getId())
+                .set(PLAYERS.MAP, player.getMap().getId())
                 .set(PLAYERS.CELL, player.getCell().getId())
                 .set(PLAYERS.ORIENTATION, (byte) player.getOrientation().ordinal())
 

@@ -52,10 +52,10 @@ public class DialogHandler {
 
         client.getInteractionManager().setInteractionWith(id);
 
-        Npc npc = (Npc) getPlayer().getGameMap().getCreature(id);
+        Npc npc = (Npc) getPlayer().getMap().getCreature(id);
 
         client.send(NpcPacketFormatter.createDialog(id));
-        client.send(NpcPacketFormatter.questionMessage(entityFactory.getNpcQuestion(npc.getTemplate().getInitialQuestion(getPlayer().getGameMap().getId())).toString(player)));
+        client.send(NpcPacketFormatter.questionMessage(entityFactory.getNpcQuestion(npc.getTemplate().getInitialQuestion(getPlayer().getMap().getId())).toString(player)));
     }
 
     public void createQuestion(String data) {

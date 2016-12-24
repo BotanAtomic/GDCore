@@ -20,7 +20,7 @@ public class PlayerMovement extends Path implements AbstractGameAction {
     private Cell newCell;
 
     public PlayerMovement(Player player, String path) {
-        super(path, player.getGameMap(), player.getCell().getId());
+        super(path, player.getMap(), player.getCell().getId(), null);
         this.player = player;
         this.gameMap = player.getGameMap();
     }

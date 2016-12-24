@@ -13,6 +13,7 @@ public enum InteractionType {
     ASK_DEFY((short) 900),
     ACCEPT_DEFY((short) 901),
     CANCEL_DEFY((short) 902),
+    JOIN_FIGHT((short) 903),
     UNKNOWN((short) 0);
 
     private final short id;

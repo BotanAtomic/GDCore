@@ -17,4 +17,9 @@ public abstract class Statistics {
     public Characteristic get(CharacteristicType type) {
         return this.characteristics.get(type);
     }
+
+    public abstract short getCurrentLife();
+
+    public abstract short getMaxLife();
+
 }

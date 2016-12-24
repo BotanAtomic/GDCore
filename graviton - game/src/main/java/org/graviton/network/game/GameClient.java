@@ -49,7 +49,7 @@ public class GameClient {
 
     void disconnect() {
         if (player != null)
-            this.player.getGameMap().out(player);
+            this.player.getMap().out(player);
 
         this.playerRepository.save(account);
         this.accountRepository.unload(account.getId());
@@ -62,6 +62,10 @@ public class GameClient {
 
     public final MessageHandler getBaseHandler() {
         return ((MessageHandler) session.getAttribute((byte) 1));
+    }
+
+    public void setEndFight() {
+        getBaseHandler().getGameHandler().setEndFight();
     }
 
 }

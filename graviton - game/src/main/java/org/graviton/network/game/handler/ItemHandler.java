@@ -113,7 +113,7 @@ public class ItemHandler {
         client.send(PlayerPacketFormatter.podsMessage(player.getPods()));
 
         if (item.getPosition().needUpdate() || lastPosition.needUpdate())
-            player.getGameMap().send(GamePacketFormatter.updateAccessories(player.getId(), PlayerPacketFormatter.gmsMessage(player)));
+            player.getMap().send(GamePacketFormatter.updateAccessories(player.getId(), PlayerPacketFormatter.gmsMessage(player)));
     }
 
     private void applyEffects(Player player, Item item) {

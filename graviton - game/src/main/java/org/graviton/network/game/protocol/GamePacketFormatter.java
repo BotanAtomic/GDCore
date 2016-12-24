@@ -1,5 +1,9 @@
 package org.graviton.network.game.protocol;
 
+import org.graviton.game.fight.Fight;
+
+import java.util.Collection;
+
 /**
  * Created by Botan on 05/11/2016 : 00:48
  */
@@ -110,4 +114,24 @@ public class GamePacketFormatter {
     public static String awayPlayerMessage(int targetId) {
         return "GA;903;" + targetId + ";o";
     }
+
+    public static String fightCountMessage(byte numberOfFight) {
+        return "fC" + numberOfFight;
+    }
+
+    public static String fightInformationMessage(Collection<Fight> fights) {
+        StringBuilder builder = new StringBuilder("fL");
+        fights.forEach(fight -> builder.append(fight.information()));
+        return builder.substring(0, builder.length() - 1);
+    }
+
+    public static String fightDetailsMessage(Fight fight) {
+        StringBuilder builder = new StringBuilder("fD");
+        builder.append(fight.getId()).append("|");
+        fight.getFirstTeam().getFighters().forEach(fighter -> builder.append(fighter.getName()).append('~').append(fighter.getLevel()).append(';'));
+        builder.append('|');
+        fight.getSecondTeam().getFighters().forEach(fighter -> builder.append(fighter.getName()).append('~').append(fighter.getLevel()).append(';'));
+        return builder.toString();
+    }
+
 }

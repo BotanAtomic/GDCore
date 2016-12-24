@@ -13,10 +13,11 @@ import org.graviton.game.inventory.Inventory;
 import org.graviton.game.items.Item;
 import org.graviton.game.look.PlayerLook;
 import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
-import org.graviton.game.statistics.PlayerStatistics;
+import org.graviton.game.statistics.type.PlayerStatistics;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
 import org.graviton.utils.Utils;
@@ -34,12 +35,14 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
 public class Player extends Fighter implements Creature {
     private final EntityFactory entityFactory;
     private final int id;
+
     private final Account account;
     private final String name;
     private final PlayerLook look;
     private final PlayerStatistics statistics;
     private final Alignment alignment;
     private final Inventory inventory;
+
     private boolean online = false;
     private Location location;
 
@@ -48,6 +51,16 @@ public class Player extends Fighter implements Creature {
         this.account = account;
         this.id = record.get(PLAYERS.ID);
         this.name = record.get(PLAYERS.NAME);
+
+        Item item = entityFactory.getItemTemplate((short) 2473).createRandom(entityFactory.getNextItemId());
+        Item item1 = entityFactory.getItemTemplate((short) 2474).createRandom(entityFactory.getNextItemId());
+        Item item2 = entityFactory.getItemTemplate((short) 2475).createRandom(entityFactory.getNextItemId());
+        Item item3 = entityFactory.getItemTemplate((short) 2476).createRandom(entityFactory.getNextItemId());
+
+        items.put(item.getId(), item);
+        items.put(item1.getId(), item1);
+        items.put(item2.getId(), item2);
+        items.put(item3.getId(), item3);
 
         this.inventory = new Inventory(this, record.get(PLAYERS.KAMAS), items);
         this.look = new PlayerLook(record);
@@ -71,21 +84,6 @@ public class Player extends Fighter implements Creature {
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell(), (byte) 1);
         this.inventory = new Inventory(this);
-
-        this.registerItem(entityFactory.getItemTemplate((short) 9191).createMax(entityFactory.getNextItemId()), true);
-
-        registerItem(entityFactory.getItemTemplate((short) 7250).createMax(entityFactory.getNextItemId()), true);
-        registerItem(entityFactory.getItemTemplate((short) 7251).createMax(entityFactory.getNextItemId()), true);
-        registerItem(entityFactory.getItemTemplate((short) 7233).createMax(entityFactory.getNextItemId()), true);
-        registerItem(entityFactory.getItemTemplate((short) 7253).createMax(entityFactory.getNextItemId()), true);
-        registerItem(entityFactory.getItemTemplate((short) 7254).createMax(entityFactory.getNextItemId()), true);
-        registerItem(entityFactory.getItemTemplate((short) 7249).createMax(entityFactory.getNextItemId()), true);
-        registerItem(entityFactory.getItemTemplate((short) 7226).createMax(entityFactory.getNextItemId()), true);
-        registerItem(entityFactory.getItemTemplate((short) 7235).createMax(entityFactory.getNextItemId()), true);
-
-        Item item = entityFactory.getItemTemplate((short) 10219).createMax(entityFactory.getNextItemId());
-        item.setQuantity((short) 150);
-        registerItem(item, true);
     }
 
     public int getColor(byte color) {
@@ -132,8 +130,12 @@ public class Player extends Fighter implements Creature {
         return this.statistics.getPods();
     }
 
+    public AbstractMap getMap() {
+        return this.location.getMap();
+    }
+
     public GameMap getGameMap() {
-        return this.location.getGameMap();
+        return (GameMap) this.location.getMap();
     }
 
     public Cell getCell() {
@@ -162,13 +164,13 @@ public class Player extends Fighter implements Creature {
     public void changeMap(GameMap newGameMap, short cell) {
         cell = cell == 0 ? newGameMap.getRandomCell() : cell;
 
-        if (getGameMap().getId() == newGameMap.getId()) {
+        if (getMap().getId() == newGameMap.getId()) {
             this.location.setCell(newGameMap.getCells().get(cell));
-            getGameMap().refreshCreature(this);
+            getMap().refreshCreature(this);
         } else {
-            this.getGameMap().out(this);
+            getMap().out(this);
             this.location.setCell(newGameMap.getCells().get(cell));
-            newGameMap.load(this);
+            newGameMap.loadAndEnter(this);
         }
     }
 
@@ -177,24 +179,12 @@ public class Player extends Fighter implements Creature {
         removeDatabaseItem(item);
     }
 
-    private void registerItem(Item item, boolean create) {
-        this.inventory.addItem(item, create);
-    }
-
     public void createItem(Item item) {
         this.entityFactory.getPlayerRepository().createItem(item, this.id);
     }
 
     private void removeDatabaseItem(Item item) {
         this.entityFactory.getPlayerRepository().removeItem(item);
-    }
-
-    public void updateItems() {
-        this.entityFactory.getPlayerRepository().saveItems(this);
-    }
-
-    public void update() {
-        this.entityFactory.getPlayerRepository().save();
     }
 
     @Override

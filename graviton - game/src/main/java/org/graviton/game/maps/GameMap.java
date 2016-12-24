@@ -8,9 +8,11 @@ import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.monster.extra.ExtraMonster;
+import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.FightFactory;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
+import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.maps.utils.CellLoader;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.utils.Utils;
@@ -29,17 +31,21 @@ import static org.graviton.utils.Utils.random;
  * Created by Botan on 12/11/2016 : 17:55
  */
 @Data
-public class GameMap {
+public class GameMap implements AbstractMap {
     private final EntityFactory entityFactory;
+
+    private final List<Creature> toRegister = new ArrayList<>();
 
     private final int id;
     private final String date, key, data, places, position;
     private final byte width, height;
-    private final Map<Short, Cell> cells;
     private final Map<Integer, Creature> creatures = newConcurrentMap();
     private final String descriptionPacket;
     private final AtomicInteger idGenerator = new AtomicInteger(-1000);
+
+    private Map<Short, Cell> cells;
     private Map<Short, Trigger> triggers;
+
     private List<Pair<Integer, Short>> possibleGroups;
     private byte minimumGroupSize, maximumGroupSize, fixedGroupSize;
     private byte numberOfGroup;
@@ -64,7 +70,6 @@ public class GameMap {
         this.width = element.getElementByTagName("size", "width").toByte();
         this.height = element.getElementByTagName("size", "height").toByte();
 
-        this.cells = CellLoader.parse(this.data);
         this.triggersData = element.getElementByTagName("triggers").toString();
 
         this.minimumGroupSize = element.getElementByTagName("monsters", "min").toByte();
@@ -77,37 +82,14 @@ public class GameMap {
         this.monsters = element.getElementByTagName("monsters").toString();
     }
 
-    private GameMap(GameMap gameMap) {
-        this.entityFactory = null;
-
-        this.id = gameMap.getId();
-
-        this.date = gameMap.getDate();
-        this.key = gameMap.getKey();
-        this.data = gameMap.getData();
-        this.places = gameMap.getPlaces();
-        this.position = gameMap.getPosition();
-
-        this.width = gameMap.getWidth();
-        this.height = gameMap.getHeight();
-
-        this.cells = (CellLoader.parse(data));
-
-        this.minimumGroupSize = 0;
-        this.maximumGroupSize = 0;
-        this.fixedGroupSize = 0;
-
-        this.numberOfGroup = 0;
-
-        this.descriptionPacket = GamePacketFormatter.mapDataMessage(this.id, this.date, this.key);
-
-    }
-
-    public GameMap initialize() {
+    public synchronized GameMap initialize() {
         if (initialized)
             return this;
 
+        this.cells = CellLoader.parse(this.data);
         this.triggers = (CellLoader.parseTrigger(triggersData));
+
+        this.toRegister.forEach(creature -> register(creature, false));
 
         if (!(this.possibleGroups = synchronizedList(initializeMonsters(monsters))).isEmpty())
             this.generateMonsters(false);
@@ -155,14 +137,19 @@ public class GameMap {
         });
     }
 
-    private String buildData() {
+    @Override
+    public String buildData() {
         StringBuilder packet = new StringBuilder();
         creatures.values().forEach(creature -> packet.append(GamePacketFormatter.showCreatureMessage(creature.getGm())).append("\n"));
         return packet.toString();
     }
 
 
-    public void register(Creature creature, boolean send) {
+    public void addFuture(Creature creature) {
+        this.toRegister.add(creature);
+    }
+
+    private void register(Creature creature, boolean send) {
         this.creatures.put(creature.getId(), creature);
         creature.getLocation().getCell().getCreatures().add(creature.getId());
 
@@ -174,21 +161,31 @@ public class GameMap {
         return idGenerator.incrementAndGet();
     }
 
+    public void enterAfterFight(Creature creature) {
+        creature.send(this.descriptionPacket);
+        creature.getLocation().getCell().getCreatures().add(creature.getId());
+        enter(creature);
+    }
+
     public void enter(Creature creature) {
         send(GamePacketFormatter.showCreatureMessage(creature.getGm()));
-
         this.creatures.put(creature.getId(), creature);
-        creature.send(buildData());
     }
 
     public void load(Creature creature) {
         creature.send(this.descriptionPacket);
         creature.send(GamePacketFormatter.creatureChangeMapMessage(creature.getId()));
         creature.send(GamePacketFormatter.mapLoadedSuccessfullyMessage());
-        creature.getLocation().setGameMap(this);
         creature.getLocation().getCell().getCreatures().add(creature.getId());
+        creature.getLocation().setMap(this);
     }
 
+    public void loadAndEnter(Creature creature) {
+        load(creature);
+        enter(creature);
+    }
+
+    @Override
     public void send(String data) {
         this.creatures.values().forEach(creature -> creature.send(data));
     }
@@ -221,8 +218,8 @@ public class GameMap {
         }
     }
 
-    public GameMap copy() {
-        return new GameMap(this);
+    public FightMap createFightMap(Fight fight) {
+        return new FightMap(this, fight);
     }
 
 }

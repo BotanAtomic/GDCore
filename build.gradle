@@ -20,6 +20,7 @@ allprojects  {
         compile group: 'com.zaxxer', name: 'HikariCP', version: '+'
         compile group: 'joda-time', name: 'joda-time', version: '+'
         compile group: 'com.google.inject', name: 'guice', version: '+'
+        compile group: 'com.google.guava', name: 'guava', version: '20.0'
         compile group: 'org.slf4j', name: 'slf4j-api', version: '+'
         compile group: 'org.jooq', name: 'jooq', version: '+'
         compile 'org.codehaus.groovy:groovy-all:+'

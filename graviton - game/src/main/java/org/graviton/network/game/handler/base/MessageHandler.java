@@ -11,6 +11,7 @@ import org.graviton.network.game.handler.*;
 @Slf4j
 @Data
 public class MessageHandler {
+    private final GameClient client;
     private final AccountHandler accountHandler;
     private final GameHandler gameHandler;
     private final BasicHandler basicHandler;
@@ -19,6 +20,7 @@ public class MessageHandler {
     private final DialogHandler dialogHandler;
 
     public MessageHandler(GameClient gameClient) {
+        this.client = gameClient;
         this.accountHandler = new AccountHandler(gameClient);
         this.gameHandler = new GameHandler(gameClient);
         this.basicHandler = new BasicHandler(gameClient);
@@ -41,6 +43,7 @@ public class MessageHandler {
                 this.dialogHandler.handle(data.substring(2), (byte) data.charAt(1));
                 break;
 
+            case 102: //Fight 'f'
             case 71: //Game ('G')
                 this.gameHandler.handle(data.substring(2), (byte) data.charAt(1));
                 break;
@@ -54,7 +57,10 @@ public class MessageHandler {
                 break;
 
             default:
-                log.error("not implemented packet {}", data);
+                if (data.equals("qping"))
+                    client.send("qpong");
+                else
+                    log.error("not implemented packet {}", data);
         }
 
     }

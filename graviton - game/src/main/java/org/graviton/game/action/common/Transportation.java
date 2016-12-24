@@ -19,6 +19,6 @@ public class Transportation implements Action {
     }
 
     private boolean checkAccess(GameClient client, int restrictedGameMap) {
-        return client.getPlayer().getGameMap().getId() == restrictedGameMap;
+        return client.getPlayer().getMap().getId() == restrictedGameMap;
     }
 }

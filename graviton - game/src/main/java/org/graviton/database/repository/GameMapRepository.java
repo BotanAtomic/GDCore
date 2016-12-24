@@ -45,7 +45,7 @@ public class GameMapRepository {
         Collection<XMLElement> elements = file.getElementsByTagName("Npc");
         elements.forEach(element -> {
             GameMap gameMap = this.maps.get(element.getAttribute("map").toInt());
-            gameMap.register(new Npc(entityFactory.getNpcTemplate(element.getAttribute("id").toInt()), gameMap, element), false);
+            gameMap.addFuture(new Npc(entityFactory.getNpcTemplate(element.getAttribute("id").toInt()), gameMap, element));
         });
         return elements.size();
     }

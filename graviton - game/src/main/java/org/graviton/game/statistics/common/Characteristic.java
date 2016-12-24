@@ -4,8 +4,8 @@ package org.graviton.game.statistics.common;
 /**
  * Created by Botan on 12/11/2016 : 15:06
  */
-public class Characteristic {
-    private short base, equipment, gift, context;
+public abstract class Characteristic {
+    protected short base, equipment, gift, context;
 
     public Characteristic(short base) {
         this.base = base;
@@ -43,7 +43,5 @@ public class Characteristic {
         return context;
     }
 
-    public short total() {
-        return (short) (base + equipment + gift + context);
-    }
+    public abstract short total();
 }
