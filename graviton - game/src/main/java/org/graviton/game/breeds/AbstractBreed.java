@@ -33,6 +33,11 @@ public abstract class AbstractBreed {
 
     public abstract short incarnamCell();
 
+    public abstract short[] getStartSpells();
+
+    public abstract short getSpell(short level);
+
+
     public abstract byte boostCost(byte statistics, short value);
 
     public enum BreedEnum {

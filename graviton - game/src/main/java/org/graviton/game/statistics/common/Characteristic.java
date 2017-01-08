@@ -44,4 +44,8 @@ public abstract class Characteristic {
     }
 
     public abstract short total();
+
+    public void clearBuff() {
+        this.context = 0;
+    }
 }

@@ -15,6 +15,8 @@ public class Attribute {
     }
 
     public short toShort() {
+        if (data.isEmpty())
+            return 0;
         return Short.parseShort(data);
     }
 

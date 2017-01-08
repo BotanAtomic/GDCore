@@ -65,6 +65,10 @@ public class GamePacketFormatter {
         return "ILS" + time;
     }
 
+    public static String fightRegenTimerMessage(short time) {
+        return "ILF" + time;
+    }
+
     public static String addChannelsMessage(String canals) {
         return "cC+".concat(canals);
     }
@@ -132,6 +136,10 @@ public class GamePacketFormatter {
         builder.append('|');
         fight.getSecondTeam().getFighters().forEach(fighter -> builder.append(fighter.getName()).append('~').append(fighter.getLevel()).append(';'));
         return builder.toString();
+    }
+
+    public static String serverTimeMessage(long time) {
+        return "BT" + (time + (3600000));
     }
 
 }

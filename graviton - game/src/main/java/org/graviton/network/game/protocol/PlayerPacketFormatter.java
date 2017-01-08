@@ -41,17 +41,13 @@ public class PlayerPacketFormatter {
         builder.append(toHex(player.getColor((byte) 1))).append('|');
         builder.append(toHex(player.getColor((byte) 2))).append('|');
         builder.append(toHex(player.getColor((byte) 3))).append('|');
-        builder.append(ItemPacketFormatter.formatItems(player.getInventory().getItems().values()));
+        builder.append(ItemPacketFormatter.formatItems(player.getInventory().values()));
         return builder.toString();
     }
 
     private static String alkMessage(Player player) {
-        return new StringBuilder("|").append(player.getId()).append(';').append(player.getName()).append(';').append(player.getLevel()).append(';').
-                append(player.getSkin()).append(';').
-                append(toHex(player.getColor((byte) 1))).append(';').
-                append(toHex(player.getColor((byte) 2))).append(';').
-                append(toHex(player.getColor((byte) 3))).append(';').
-                append(gmsMessage(player)).append(";;;;;;").toString();
+        return "|" + player.getId() + ';' + player.getName() + ';' + player.getLevel() + ';' + player.getSkin() + ';' + toHex(player.getColor((byte) 1))
+                + ';' + toHex(player.getColor((byte) 2)) + ';' + toHex(player.getColor((byte) 3)) + ';' + gmsMessage(player) + ";;;;;;";
     }
 
     public static String gmsMessage(Player player) {
@@ -89,8 +85,8 @@ public class PlayerPacketFormatter {
         builder.append(alignment.getDishonor()).append(',');
         builder.append(alignment.isEnabled() ? "1|" : "0|");
 
-        builder.append(statistics.getCurrentLife()).append(',');
-        builder.append(statistics.getMaxLife()).append('|');
+        builder.append(statistics.getLife().getCurrent()).append(',');
+        builder.append(statistics.getLife().getMaximum()).append('|');
 
         builder.append(statistics.getEnergy()).append(',');
         builder.append(Dofus.MAX_ENERGY).append('|');
@@ -150,7 +146,7 @@ public class PlayerPacketFormatter {
 
         builder.append(gmsMessage(player)).append(";");
 
-        builder.append(player.getStatistics().getCurrentLife()).append(';');
+        builder.append(player.getStatistics().getLife().getCurrent()).append(';');
         builder.append(fighter.getStatistics().get(CharacteristicType.ActionPoints).total()).append(';');
         builder.append(fighter.getStatistics().get(CharacteristicType.MovementPoints).total()).append(';');
         builder.append(fighter.getStatistics().get(CharacteristicType.ResistancePercentNeutral).total()).append(';');

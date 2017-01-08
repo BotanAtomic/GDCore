@@ -12,5 +12,7 @@ public class Dofus {
 
     public static long TURN_TIME = 30000; //ms
 
+    public static byte MAX_SPELL_LEVEL = 6;
+
 
 }

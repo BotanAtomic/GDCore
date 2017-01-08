@@ -10,6 +10,7 @@ import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.MessageFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
+import org.graviton.network.game.protocol.SpellPacketFormatter;
 
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
@@ -100,7 +101,7 @@ public class AccountHandler {
 
         player.setOnline(true);
         client.send(PlayerPacketFormatter.askMessage(player));
-
+        client.send(SpellPacketFormatter.spellListMessage(player.getSpellList()));
         client.send(GamePacketFormatter.addChannelsMessage(account.getChannels()));
 
         client.send(PlayerPacketFormatter.alignmentMessage(player.getAlignment().getId()));

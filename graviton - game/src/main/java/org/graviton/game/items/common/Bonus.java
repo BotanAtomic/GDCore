@@ -8,11 +8,6 @@ import org.graviton.utils.Utils;
 public class Bonus {
     private short round, num, add;
 
-    public Bonus(short round, short num) {
-        this.round = round;
-        this.num = num;
-    }
-
     private Bonus(short round, short num, short add) {
         this.round = round;
         this.num = num;
@@ -20,16 +15,15 @@ public class Bonus {
     }
 
     public static Bonus parseBonus(String string) {
-        return parseBonus(string, 10);
-    }
+        if (string.isEmpty())
+            return new Bonus((short) 0, (short) 0, (short) 0);
 
-    private static Bonus parseBonus(String string, int radix) {
         short a = (short) string.indexOf('d'),
                 b = (short) string.indexOf('+');
 
-        short round = Short.parseShort(string.substring(0, a), radix),
-                num = b >= 0 ? Short.parseShort(string.substring(a + 1, b), radix) : Short.parseShort(string.substring(a + 1), radix),
-                add = b >= 0 ? Short.parseShort(string.substring(b + 1), radix) : 0;
+        short round = Short.parseShort(string.substring(0, a), 10);
+        short num = b >= 0 ? Short.parseShort(string.substring(a + 1, b), 10) : Short.parseShort(string.substring(a + 1), 10);
+        short add = b >= 0 ? Short.parseShort(string.substring(b + 1), 10) : 0;
 
         return new Bonus(round, num, add);
     }

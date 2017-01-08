@@ -7,6 +7,10 @@ import org.graviton.game.client.player.Player;
  */
 public class MessageFormatter {
 
+    public static String customMessage(String data) {
+        return "Im".concat(data);
+    }
+
     public static String lastInformationMessage(String lastConnection, String lastAddress) {
         return "Im0152;".concat(lastConnection).concat("~").concat(lastAddress);
     }
@@ -37,5 +41,13 @@ public class MessageFormatter {
 
     public static String savedPositionMessage() {
         return "Im06";
+    }
+
+    public static String levelRequiredErrorMessage() {
+        return "OAEL";
+    }
+
+    public static String conditionErrorMessage() {
+        return "Im119|44";
     }
 }

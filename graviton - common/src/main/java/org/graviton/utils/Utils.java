@@ -4,8 +4,10 @@ import org.apache.mina.core.buffer.IoBuffer;
 
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
@@ -79,12 +81,36 @@ public class Utils {
     }
 
     public static int random(int minimum, int maximum) {
+        if (maximum <= 0)
+            return 0;
         return ThreadLocalRandom.current().nextInt(minimum, maximum + 1);
     }
 
     public static String parsePosition(String position) {
         String[] data = position.split(",");
         return data[0] + ',' + data[1];
+    }
+
+    public static byte getNextPosition(Collection<Byte> places) {
+        AtomicInteger nextPosition = new AtomicInteger(-1);
+
+        for (int i = 1; i < 24; i++) {
+            if (!places.contains((byte) i)) {
+                nextPosition.set(i);
+                break;
+            }
+        }
+
+        return (byte) nextPosition.get();
+    }
+
+
+    public static <C> C getRandomObject(Collection<C> from) {
+        return (C) from.toArray()[RANDOM.get().nextInt(from.size())];
+    }
+
+    public static int limit(int value, int maximum) {
+        return value > maximum ? maximum : value < 0 ? 0 : value;
     }
 
     public static boolean range(short value, int start, int end) {

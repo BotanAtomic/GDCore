@@ -37,7 +37,6 @@ public class GameServer implements IoHandler, Manageable {
         program.register(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
-        // this.socketAcceptor.getFilterChain().addFirst("security", new SecurityFilter((byte) 3));
         this.socketAcceptor.getFilterChain().addFirst("executor", new ExecutorFilter(Executors.newCachedThreadPool()));
         this.socketAcceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF8"), LineDelimiter.NUL, new LineDelimiter("\n\0"))));
         this.socketAcceptor.setHandler(this);

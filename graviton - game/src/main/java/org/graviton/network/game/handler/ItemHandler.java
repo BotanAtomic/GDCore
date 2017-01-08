@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.common.ItemPosition;
+import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.ItemPacketFormatter;
+import org.graviton.network.game.protocol.MessageFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
 
 /**
@@ -66,13 +68,12 @@ public class ItemHandler {
         client.send(ItemPacketFormatter.itemMovementMessage(sliced.getId(), position));
     }
 
-
     private void objectMove(String data[]) {
-        Player player = client.getPlayer();
+        objectMove(client.getPlayer().getInventory().get(Integer.parseInt(data[0])), ItemPosition.get(Byte.parseByte(data[1])), data);
+    }
 
-        Item item = player.getInventory().get(Integer.parseInt(data[0]));
-        ItemPosition position = ItemPosition.get(Byte.parseByte(data[1]));
-        ItemPosition lastPosition;
+    private synchronized void objectMove(Item item, ItemPosition position, String[] data) {
+        Player player = client.getPlayer();
 
         if (position == null)
             return;
@@ -84,42 +85,73 @@ public class ItemHandler {
 
         Item same;
         if (!position.equipped() && (same = player.getInventory().same(item, position)) != null) {
-            same.changeQuantity((short) 1);
-            item.setQuantity((short) 0);
-
-            client.getPlayer().removeItem(item);
-            client.send(ItemPacketFormatter.deleteMessage(item.getId()));
-            client.send(ItemPacketFormatter.quantityMessage(same.getId(), same.getQuantity()));
+            duplicateItem(item, same);
         } else {
-            if (item.getQuantity() > 1) {
-                Item sliced = item.clone(client.getEntityFactory().getNextItemId());
+            if (position.equipped() && !checkConditions(player, item.getTemplate()))
+                return;
 
-                player.getInventory().addItem(sliced, false);
-
-                client.send(ItemPacketFormatter.addItemMessage(sliced));
-                client.send(ItemPacketFormatter.quantityMessage(item.getId(), item.getQuantity()));
-
-                item = sliced;
-            }
+            if (item.getQuantity() > 1)
+                item = cloneItem(player, item);
 
             client.send(ItemPacketFormatter.itemMovementMessage(item.getId(), position));
         }
 
-        lastPosition = item.getPosition();
+        ItemPosition lastPosition = item.getPosition();
         item.setPosition(position);
 
         applyEffects(player, item);
-
         client.send(PlayerPacketFormatter.podsMessage(player.getPods()));
+        checkItemsCondition(player);
 
         if (item.getPosition().needUpdate() || lastPosition.needUpdate())
             player.getMap().send(GamePacketFormatter.updateAccessories(player.getId(), PlayerPacketFormatter.gmsMessage(player)));
     }
 
+    private Item cloneItem(Player player, Item item) {
+        Item sliced = item.clone(client.getEntityFactory().getNextItemId());
+
+        player.getInventory().addItem(sliced, false);
+
+        client.send(ItemPacketFormatter.addItemMessage(sliced));
+        client.send(ItemPacketFormatter.quantityMessage(item.getId(), item.getQuantity()));
+        return sliced;
+    }
+
+    private void duplicateItem(Item item, Item same) {
+        same.changeQuantity((short) 1);
+        item.setQuantity((short) 0);
+
+        client.getPlayer().removeItem(item);
+        client.send(ItemPacketFormatter.deleteMessage(item.getId()));
+        client.send(ItemPacketFormatter.quantityMessage(same.getId(), same.getQuantity()));
+    }
+
     private void applyEffects(Player player, Item item) {
         player.getStatistics().applyItemEffects(item);
-        client.send(PlayerPacketFormatter.asMessage(player, client.getEntityFactory().getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
         client.getPlayer().getStatistics().refreshPods();
+
+        if (item.getTemplate().getPanoply() != null)
+            player.getStatistics().applyPanoplyEffect(item.getTemplate().getPanoply(), item.getPosition().equipped());
+
+        client.send(PlayerPacketFormatter.asMessage(player, client.getEntityFactory().getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
+    }
+
+    private void checkItemsCondition(Player player) {
+        player.getInventory().getEquippedItems().forEach(item -> {
+            if (!item.getTemplate().getConditionList().check(player))
+                objectMove(item, ItemPosition.NotEquipped, new String[]{});
+        });
+    }
+
+    private boolean checkConditions(Player player, ItemTemplate template) {
+        if (player.getLevel() < template.getLevel()) {
+            player.send(MessageFormatter.levelRequiredErrorMessage());
+            return false;
+        } else if (!template.getConditionList().check(player)) {
+            player.send(MessageFormatter.conditionErrorMessage());
+            return false;
+        }
+        return true;
     }
 
 

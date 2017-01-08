@@ -2,12 +2,36 @@ package org.graviton.game.breeds.models;
 
 import org.graviton.game.breeds.AbstractBreed;
 
-import static org.graviton.game.breeds.Converter.*;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Created by Botan on 05/11/2016 : 23:01
  */
 public class Feca extends AbstractBreed {
+    private static final Map<Short, Short> spells = new HashMap<Short, Short>() {{
+        put((short) 3, (short) 4);
+        put((short) 6, (short) 2);
+        put((short) 9, (short) 1);
+        put((short) 13, (short) 9);
+        put((short) 17, (short) 18);
+        put((short) 21, (short) 20);
+        put((short) 26, (short) 14);
+        put((short) 31, (short) 19);
+        put((short) 36, (short) 5);
+        put((short) 42, (short) 16);
+        put((short) 48, (short) 8);
+        put((short) 54, (short) 12);
+        put((short) 60, (short) 11);
+        put((short) 70, (short) 10);
+        put((short) 80, (short) 7);
+        put((short) 90, (short) 15);
+        put((short) 100, (short) 13);
+        put((short) 200, (short) 1901);
+    }};
+    private static short[] startSpells = {3, 6, 17};
+
     @Override
     public byte id() {
         return 1;
@@ -25,29 +49,28 @@ public class Feca extends AbstractBreed {
 
     @Override
     public int incarnamMap() {
-        return 323;
-    }
-
-    @Override
-    public short incarnamCell() {
         return 10300;
     }
 
     @Override
+    public short incarnamCell() {
+        return 323;
+    }
+
+    @Override
     public byte boostCost(byte characteristicId, short value) {
-        switch (characteristicId) {
-            case 10: //Strength
-                return VERY_LITTLE.apply(value);
+        return new Eniripsa().boostCost(characteristicId, value); //same...
+    }
 
-            case 13: //Chance
-                return LITTLE.apply(value);
+    @Override
+    public short[] getStartSpells() {
+        return startSpells;
+    }
 
-            case 14: //Agility
-                return LITTLE.apply(value);
-
-            case 15: //Intelligence
-                return MEDIUM.apply(value);
-        }
-        return 1;
+    @Override
+    public short getSpell(short level) {
+        if (!spells.containsKey(level))
+            return 0;
+        return spells.get(level);
     }
 }

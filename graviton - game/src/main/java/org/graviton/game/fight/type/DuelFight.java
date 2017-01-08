@@ -11,11 +11,8 @@ import org.graviton.game.fight.turn.FightTurnList;
 import org.graviton.game.maps.GameMap;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.network.game.protocol.GamePacketFormatter;
-import org.joda.time.Interval;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Botan on 10/12/2016. 21:47
@@ -78,17 +75,17 @@ public class DuelFight extends Fight {
     public void start() {
         super.state = FightState.ACTIVE;
         super.turnList = new FightTurnList(this);
-        List<Fighter> fighters = new ArrayList<>(fighters());
+
+        Collection<Fighter> fighters = fighters();
 
         getGameMap().send(FightPacketFormatter.removeFlagMessage(getId()));
         super.getFlagData().clear();
 
-        send(FightPacketFormatter.fightersPlacementMessage(fighters), fighters);
-        send(FightPacketFormatter.fightStartMessage(), fighters);
-        send(FightPacketFormatter.turnListMessage(super.turnList.getTurns()), fighters);
-        send(FightPacketFormatter.fighterInformationMessage(fighters), fighters);
+        send(FightPacketFormatter.fightersPlacementMessage(fighters));
+        send(FightPacketFormatter.fightStartMessage());
+        send(FightPacketFormatter.turnListMessage(super.turnList.getTurns()));
 
-        super.turnList.getCurrent().startTurn();
+        schedule(() -> super.turnList.getCurrent().begin(), 500);
 
         getGameMap().send(GamePacketFormatter.fightCountMessage(getGameMap().getFightFactory().getFightSize()));
     }
@@ -103,7 +100,6 @@ public class DuelFight extends Fight {
             cancelFight();
         else
             fighter.left();
-
     }
 
     private void onFighterQuit(Fighter fighter) {
@@ -111,10 +107,14 @@ public class DuelFight extends Fight {
         fighter.quit();
     }
 
-    private void destroyFight(Fighter fighter) {
-        send(endMessage(fighter));
+    @Override
+    protected void destroyFight(Fighter looser) {
+        send(endMessage(looser));
         schedule(() -> {
-            super.fighters().forEach(Fighter::quit);
+            super.fighters().forEach(fighter -> {
+                fighter.getLife().set(fighter.getLastLife());
+                fighter.quit();
+            });
             super.destroy();
         }, 1000);
     }
@@ -131,7 +131,7 @@ public class DuelFight extends Fight {
         FightTeam winner = fighter.getTeam().getSide().ordinal() == getFirstTeam().getSide().ordinal() ? getSecondTeam() : getFirstTeam();
         FightTeam looser = winner.getSide().ordinal() == getFirstTeam().getSide().ordinal() ? getSecondTeam() : getFirstTeam();
 
-        return FightPacketFormatter.fightEndMessage(new Interval(super.getStartTime().getTime(), new Date().getTime()).toDurationMillis(), winner.getLeader(), winner.getFighters(), looser.getFighters());
+        return FightPacketFormatter.duelFightEndMessage(getDuration(), winner.getLeader(), winner.getFighters(), looser.getFighters());
     }
 
 }

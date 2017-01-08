@@ -7,6 +7,8 @@ import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.MessageFormatter;
 
+import java.util.Date;
+
 /**
  * Created by Botan on 03/12/2016. 16:21
  */
@@ -21,6 +23,10 @@ public class BasicHandler {
 
     public void handle(String data, byte subHeader) { // 'B'
         switch (subHeader) {
+            case 68: // 'D'
+                client.send(GamePacketFormatter.serverTimeMessage(new Date().getTime()));
+                break;
+
             case 77: // 'M'
                 speak(data.split("\\|"));
                 break;

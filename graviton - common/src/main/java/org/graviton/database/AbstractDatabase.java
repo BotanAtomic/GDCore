@@ -18,19 +18,24 @@ import java.util.Properties;
 @Slf4j
 public abstract class AbstractDatabase implements Manageable {
     private final HikariDataSource dataSource;
-
     @Getter
     public DSLContext dslContext;
+    private boolean startWithThread;
 
-    public AbstractDatabase(Properties properties, Program program) {
-        program.register(this);
+    public AbstractDatabase(Properties properties, Program program, boolean startWithThread) {
+        if (!startWithThread)
+            program.register(this);
         this.dataSource = new HikariDataSource(new HikariConfig(properties));
+        this.startWithThread = startWithThread;
+
+        if (startWithThread)
+            new Thread(this::start).start();
     }
 
     @Override
     public void start() {
         try {
-            this.dslContext = DSL.using(dataSource.getConnection(), SQLDialect.MYSQL);
+            dslContext = DSL.using(dataSource.getConnection(), SQLDialect.MYSQL);
             log.info("Connected successfully to database server [{}]", dataSource.getDataSourceProperties().getProperty("url"));
         } catch (SQLException e) {
             log.error("Unable to connect to database {} [cause:{}]", dataSource.getDataSourceProperties().getProperty("url"), e.getMessage());

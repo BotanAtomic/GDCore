@@ -4,14 +4,14 @@ package org.graviton.collection;
  * Created by Botan on 21/12/2016. 21:50
  */
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Ordering;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,7 +28,7 @@ public class CollectionQuery<T> implements Iterable<T> {
     }
 
     public CollectionQuery<T> filter(Predicate<T> predicate) {
-        return from(StreamSupport.stream(from.spliterator(), false).filter(predicate::apply).collect(Collectors.toList()));
+        return from(StreamSupport.stream(from.spliterator(), false).filter(predicate).collect(Collectors.toList()));
     }
 
     public <E> CollectionQuery<E> transform(Function<T, E> function) {

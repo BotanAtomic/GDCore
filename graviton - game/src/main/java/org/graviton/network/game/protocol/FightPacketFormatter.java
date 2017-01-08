@@ -1,5 +1,7 @@
 package org.graviton.network.game.protocol;
 
+import org.graviton.game.client.player.Player;
+import org.graviton.game.experience.Experience;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
@@ -8,6 +10,7 @@ import org.graviton.game.fight.common.FightState;
 import org.graviton.game.fight.common.FightType;
 import org.graviton.game.fight.flag.FlagAttribute;
 import org.graviton.game.fight.turn.FightTurn;
+import org.graviton.game.spell.common.SpellEffects;
 import org.graviton.game.statistics.common.CharacteristicType;
 
 import java.util.Collection;
@@ -32,14 +35,7 @@ public class FightPacketFormatter {
     }
 
     public static String showFighter(Fighter fighter) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("GM|+");
-        builder.append(fighter.getFightCell().getId()).append(';');
-        builder.append("1;0;");//1; = Orientation
-        builder.append(fighter.getId()).append(';');
-        builder.append(fighter.getName()).append(';');
-        builder.append(fighter.getFightGM());
-        return builder.toString();
+        return "GM|+" + fighter.getFightCell().getId() + ';' + "1;0;" + fighter.getId() + ';' + fighter.getName() + ';' + fighter.getFightGM();
     }
 
     public static String showFighters(Collection<Fighter> fighters) {
@@ -49,15 +45,11 @@ public class FightPacketFormatter {
     }
 
     public static String addFlagMessage(int fightId, FightType fightType, Fighter challenger, Fighter defender) {
-        StringBuilder builder = new StringBuilder().append("Gc+");
-        builder.append(fightId).append(';').append(fightType.ordinal()).append('|');
 
-        builder.append(challenger.getId()).append(';').append(challenger.getLastLocation().getCell().getId()).append(';')
-                .append("0;")                 // {player: 0, monster: 1}
-                .append("-1").append('|');    // alignment
-
-        builder.append(defender.getId()).append(';').append(defender.getLastLocation().getCell().getId()).append(';').append("0;").append("-1");
-        return builder.toString();
+        return "Gc+" + fightId + ';' + fightType.ordinal() + '|' + challenger.getId() + ';' + challenger.getLastLocation().getCell().getId() + ';' +
+                "0;" +  // {player: 0, monster: 1}
+                "-1" +  // alignment
+                '|' + defender.getId() + ';' + defender.getLastLocation().getCell().getId() + ';' + "0;" + "-1";
     }
 
     public static String teamMessage(int leaderId, Collection<Fighter> fighters) {
@@ -132,13 +124,16 @@ public class FightPacketFormatter {
             builder.append(fighter.getId()).append(';');
             builder.append(fighter.isDead() ? '1' : '0').append(';');
 
+            short actionPoint = fighter.getStatistics().get(CharacteristicType.ActionPoints).total();
+            short movementPoint = fighter.getStatistics().get(CharacteristicType.MovementPoints).total();
+
             if (!fighter.isDead()) {
-                builder.append(fighter.getStatistics().getCurrentLife()).append(';');
-                builder.append(fighter.getStatistics().get(CharacteristicType.ActionPoints).total()).append(';');
-                builder.append(fighter.getStatistics().get(CharacteristicType.MovementPoints).total()).append(';');
+                builder.append(fighter.getStatistics().getLife().getCurrent()).append(';');
+                builder.append(actionPoint < 0 ? 0 : actionPoint).append(';');
+                builder.append(movementPoint < 0 ? 0 : movementPoint).append(';');
                 builder.append(fighter.getFightCell().getId()).append(';');
                 builder.append(';'); //todo ???
-                builder.append(fighter.getStatistics().getMaxLife());
+                builder.append(fighter.getStatistics().getLife().getMaximum());
             }
         });
 
@@ -157,41 +152,43 @@ public class FightPacketFormatter {
         return "GTR" + fighterId;
     }
 
-    public static String fightEndMessage(long fightDuration, Fighter leaderWinner, Collection<Fighter> winners, Collection<Fighter> losers) {
+    public static String duelFightEndMessage(long fightDuration, Fighter leaderWinner, Collection<Fighter> winners, Collection<Fighter> losers) {
         StringBuilder builder = new StringBuilder("GE");
         builder.append(fightDuration).append('|');
         builder.append(leaderWinner.getId()).append('|');
         builder.append('0').append('|');
 
-        formatFightNormalEndMessage(builder, winners, true);
-        formatFightNormalEndMessage(builder, losers, false);
+        formatFightPlayerNormalEndMessage(builder, winners, true);
+        formatFightPlayerNormalEndMessage(builder, losers, false);
 
         return builder.toString();
     }
 
-    private static void formatFightNormalEndMessage(StringBuilder builder, Collection<Fighter> team, boolean winner) {
+    private static void formatFightPlayerNormalEndMessage(StringBuilder builder, Collection<Fighter> team, boolean winner) {
         for (Fighter fighter : team) {
-            formatFightNormalEndMessage(builder, fighter, winner);
+            formatFightPlayerEndMessage(builder, fighter, winner);
             builder.append('|');
         }
     }
 
-    private static void formatFightNormalEndMessage(StringBuilder builder, Fighter fighter, boolean winner) {
+    private static void formatFightPlayerEndMessage(StringBuilder builder, Fighter fighter, boolean winner) {
+        Player player = (Player) fighter.getCreature();
         builder.append(winner ? '2' : '0').append(';');
         builder.append(fighter.getId()).append(';');
         builder.append(fighter.getName()).append(';');
         builder.append(fighter.getLevel()).append(';');
         builder.append(winner ? fighter.isDead() ? '1' : '0' : '1').append(';');
 
-        builder.append(0).append(';'); //min exp
-        builder.append(1).append(';'); //current xp
-        builder.append(2).append(';'); //max XP
+        Experience experience = player.getEntityFactory().getExperience(player.getLevel());
+        builder.append(experience.getPlayer()).append(';');
+        builder.append(player.getExperience()).append(';');
+        builder.append(experience.getNext().getPlayer()).append(';');
 
-        builder.append("0").append(';'); //Xp gagné
-        builder.append("0").append(';'); //guilde xp gagné
-        builder.append("0").append(';'); //mount xp gagné
-        builder.append(';');//todo won items
-        builder.append("0"); //kamas gagné
+        builder.append("0").append(';'); //wp won
+        builder.append("0").append(';'); //guild xp won
+        builder.append("0").append(';'); //mount xp won
+        builder.append(';'); // items won
+        builder.append("0"); //kamas won
     }
 
     public static String fighterDieMessage(int fighter) {
@@ -213,28 +210,67 @@ public class FightPacketFormatter {
         return "GAS" + fighterId;
     }
 
-    public static String looseMovementPointMessage(int fighterId, byte movementPointUsed) {
-        return actionMessage(FightAction.LOOSE_MOVEMENT_POINT, fighterId, String.valueOf(fighterId), String.valueOf(movementPointUsed));
+    public static String movementPointEventMessage(int fighterId, byte movementPointUsed) {
+        return actionMessage(FightAction.MOVEMENT_POINT_EVENT, fighterId, String.valueOf(fighterId), String.valueOf(movementPointUsed));
     }
 
-    public static String looseActionPointMessage(int fighterId, byte actionPointUsed) {
-        return actionMessage(FightAction.LOOSE_ACTION_POINT, fighterId, String.valueOf(fighterId), String.valueOf(actionPointUsed));
+    public static String actionPointEventMessage(int fighterId, byte actionPointUsed) {
+        return actionMessage(FightAction.ACTION_POINT_EVENT, fighterId, String.valueOf(fighterId), String.valueOf(actionPointUsed));
     }
 
-    public static String actionMessage(FightAction actionType, int fighterId, String... extra) {
+    public static String lifeEventMessage(int fighterId, int targetId, int life) {
+        return actionMessage(FightAction.LIFE_EVENT, fighterId, String.valueOf(targetId), String.valueOf(life));
+    }
+
+    public static String actionMessage(FightAction actionType, int fighterId, Object... extra) {
+        return actionMessage(actionType.getId(), fighterId, extra);
+    }
+
+    public static String actionMessage(short actionType, int fighterId, Object... extra) {
         StringBuilder builder = new StringBuilder("GA;");
 
-        builder.append(actionType.getId()).append(';');
+        builder.append(actionType).append(';');
         builder.append(fighterId).append(';');
 
         if (extra != null) {
-            for (String arg : extra) {
-                builder.append(arg);
+            for (Object arg : extra) {
+                builder.append(String.valueOf(arg));
                 builder.append(',');
             }
         }
 
         return builder.substring(0, builder.length() - 1);
+    }
+
+    public static String fighterBuffMessage(int fighterId, SpellEffects effectId, int value1, int value2, int value3, int chance, short remainingTurn, int spellId) {
+        return "GIE" + effectId.value() + ";" +
+                fighterId + ";" +
+                (value1 == 0 ? "" : value1) + ";" +
+                (value2 == 0 ? "" : value2) + ";" +
+                (value3 == 0 ? "" : value3) + ";" +
+                (chance == 0 ? "" : chance) + ";" +
+                remainingTurn + ";" +
+                spellId;
+    }
+
+    public static String trapUsedMessage(long triggerId, int originalSpellId, short triggerCellId, long trapOwnerId) {
+        return "GA1;306;" + triggerId + ";" + originalSpellId + "," + triggerCellId + ",407,1,1," + trapOwnerId;
+    }
+
+    public static String trapDeletedMessage(long trapOwnerId, short trapCellId, int trapSize) {
+        return "GA;999;" + trapOwnerId + ";GDZ-" + trapCellId + ";" + trapSize + ";7";
+    }
+
+    public static String localTrapDeleteMessage(long trapOwnerId, short trapCellId) {
+        return "GA;999;" + trapOwnerId + ";GDC" + trapCellId;
+    }
+
+    public static String trapAddedMessage(long trapOwnerId, short trapCellid, int trapSize) {
+        return "GA;999;" + trapOwnerId + ";GDZ+" + trapCellid + ";" + trapSize + ";7";
+    }
+
+    public static String localTrapAddedMessage(long trapOwnerId, short trapCellId) {
+        return "GA;999;" + trapOwnerId + ";GDC" + trapCellId + ";Haaaaaaaaz3005;";
     }
 
 

@@ -12,6 +12,6 @@ import java.util.Properties;
 public class LoginDatabase extends AbstractDatabase {
     @Inject
     public LoginDatabase(@Named("database.login.properties") Properties properties, Program program) {
-        super(properties, program);
+        super(properties, program, true);
     }
 }

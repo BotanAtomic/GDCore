@@ -2,6 +2,8 @@ package org.graviton.game.creature.npc;
 
 import lombok.Data;
 import org.graviton.api.Creature;
+import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.look.AbstractLook;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.position.Location;
 import org.graviton.game.statistics.common.Statistics;
@@ -62,5 +64,15 @@ public class Npc implements Creature {
     @Override
     public Statistics getStatistics() {
         return null;
+    }
+
+    @Override
+    public EntityFactory entityFactory() {
+        return gameMap.getEntityFactory();
+    }
+
+    @Override
+    public AbstractLook look() {
+        return template.getLook();
     }
 }

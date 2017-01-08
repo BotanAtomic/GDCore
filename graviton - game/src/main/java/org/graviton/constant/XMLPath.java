@@ -23,5 +23,6 @@ public class XMLPath {
 
     public final static String MAPS = "map/gameMaps.xml";
 
+    public final static String SPELLS = "spell/spells.xml";
 
 }

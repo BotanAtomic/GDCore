@@ -21,12 +21,12 @@ public class Initiative extends Characteristic {
         return playerStatistics.getPlayer();
     }
 
-    private short getMaxLife() {
-        return playerStatistics.getMaxLife();
+    private int getMaxLife() {
+        return playerStatistics.getLife().getMaximum();
     }
 
-    private short getCurrentLife() {
-        return playerStatistics.getCurrentLife();
+    private int getCurrentLife() {
+        return playerStatistics.getLife().getCurrent();
     }
 
     private Characteristic get(CharacteristicType type) {

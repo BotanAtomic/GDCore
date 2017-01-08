@@ -1,5 +1,7 @@
 package org.graviton.api;
 
+import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.look.AbstractLook;
 import org.graviton.game.position.Location;
 import org.graviton.game.statistics.common.Statistics;
 
@@ -20,4 +22,8 @@ public interface Creature {
     int getColor(byte color);
 
     Statistics getStatistics();
+
+    EntityFactory entityFactory();
+
+    AbstractLook look();
 }

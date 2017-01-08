@@ -5,7 +5,6 @@ import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.maps.GameMap;
 import org.graviton.xml.XMLElement;
-import org.graviton.xml.XMLFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -41,17 +40,16 @@ public class GameMapRepository {
         return record.isPresent() ? record.get().initialize() : null;
     }
 
-    public int loadNpc(XMLFile file) {
-        Collection<XMLElement> elements = file.getElementsByTagName("Npc");
-        elements.forEach(element -> {
+    public int loadNpc(Document file) {
+        return entityFactory.apply(file.getElementsByTagName("Npc"), element -> {
             GameMap gameMap = this.maps.get(element.getAttribute("map").toInt());
             gameMap.addFuture(new Npc(entityFactory.getNpcTemplate(element.getAttribute("id").toInt()), gameMap, element));
         });
-        return elements.size();
     }
 
     public int load(Document file) {
         NodeList list = file.getElementsByTagName("GameMap");
+
         IntStream.range(0, list.getLength()).forEach(i -> {
             XMLElement element = new XMLElement((Element) list.item(i));
             int id = element.getAttribute("id").toInt();
@@ -60,6 +58,7 @@ public class GameMapRepository {
             entityFactory.getSubArea(subArea).registerGameMap(gameMap);
             this.maps.put(id, gameMap);
         });
+
         return maps.size();
     }
 

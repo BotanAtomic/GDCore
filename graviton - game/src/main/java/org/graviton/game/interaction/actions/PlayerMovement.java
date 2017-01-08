@@ -2,6 +2,7 @@ package org.graviton.game.interaction.actions;
 
 
 import org.graviton.game.client.player.Player;
+import org.graviton.game.interaction.AbstractGameAction;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;

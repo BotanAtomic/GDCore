@@ -2,7 +2,9 @@ package org.graviton.game.items.template;
 
 import lombok.Data;
 import org.graviton.game.action.item.ItemAction;
+import org.graviton.game.filter.ConditionList;
 import org.graviton.game.items.Item;
+import org.graviton.game.items.Panoply;
 import org.graviton.game.items.common.Bonus;
 import org.graviton.game.items.common.ItemEffect;
 import org.graviton.game.items.common.ItemPosition;
@@ -24,7 +26,7 @@ public class ItemTemplate {
     private final short level;
     private final short pods;
     private final int price;
-    private final String condition;
+    private final ConditionList conditionList;
     private final Map<ItemAction, String> actions = new TreeMap<>();
     private byte actionPointCost;
     private byte[] scopeRange;
@@ -32,13 +34,16 @@ public class ItemTemplate {
     private boolean twoHands;
     private TreeMap<ItemEffect, Bonus> effects = new TreeMap<>();
 
+    private Panoply panoply;
+
     public ItemTemplate(XMLElement element) {
         this.id = element.getAttribute("id").toShort();
         this.type = ItemType.get(element.getAttribute("type").toByte());
         this.level = element.getAttribute("level").toShort();
         this.pods = element.getAttribute("weight").toShort();
         this.price = element.getAttribute("price").toInt();
-        this.condition = element.getElementByTagName("conditions").toString();
+
+        this.conditionList = new ConditionList(element.getElementByTagName("conditions").toString());
 
         element.getElementsByTagName("effect").forEach(effect -> this.effects.put(ItemEffect.get(effect.getAttribute("type").toShort()),
                 Bonus.parseBonus(effect.getAttribute("bonus").toString())));

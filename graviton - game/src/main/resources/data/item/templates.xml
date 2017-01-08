@@ -8589,7 +8589,7 @@
     <effect type="0" bonus="0d0" />
   </item>
   <item id="2156" type="6" level="1" weight="1" price="1" cost="5" minRange="1" maxRange="1" criticalRate="30" failureRate="50" criticalBonus="30" twoHands="false" ethereal="false">
-    <conditions>PN~Silaisie</conditions>
+    <conditions>PN=Silaisie</conditions>
     <effect type="95" bonus="1d20+40" />
   </item>
   <item id="2157" type="16" level="50" weight="10" price="1">
@@ -8601,12 +8601,12 @@
     <effect type="117" bonus="0d0+2" />
   </item>
   <item id="2154" type="9" level="1" weight="1" price="1">
-    <conditions>PN~Silaisie</conditions>
+    <conditions>PN=Silaisie</conditions>
     <effect type="183" bonus="0d0+100" />
     <effect type="184" bonus="0d0+100" />
   </item>
   <item id="2155" type="1" level="1" weight="1" price="1">
-    <conditions>PN~Silaisie</conditions>
+    <conditions>PN=Silaisie</conditions>
     <effect type="0" bonus="1d26+4" />
   </item>
   <item id="2152" type="32" level="1" weight="0" price="1">
@@ -39797,7 +39797,7 @@
     <effect type="213" bonus="1d2+3" />
   </item>
   <item id="7156" type="7" level="107" weight="20" price="6571" cost="3" minRange="1" maxRange="1" criticalRate="30" failureRate="100" criticalBonus="10" twoHands="false" ethereal="false">
-    <conditions>CI&gt;150&amp;CV&gt;150&amp;(PG=2|PG=5)</conditions>
+    <conditions>CI&gt;150&amp;CV&gt;150&amp;PG=2|PG=5</conditions>
     <effect type="100" bonus="1d20" />
     <effect type="0" bonus="1d80" />
     <effect type="125" bonus="1d50+150" />
@@ -39957,11 +39957,11 @@
   </item>
   <item id="6928" type="9" level="38" weight="1" price="4000">
     <conditions />
-    <effect type="0" bonus="0d0+1" />
+    <effect type="220" bonus="0d0+3" />
   </item>
   <item id="6929" type="10" level="33" weight="2" price="3000">
     <conditions />
-    <effect type="0" bonus="0d0+1" />
+    <effect type= "220" bonus="0d0+2" />
   </item>
   <item id="6942" type="17" level="45" weight="2" price="5500">
     <conditions />
@@ -41098,7 +41098,7 @@
     <effect type="155" bonus="1d100+100" />
   </item>
   <item id="6713" type="5" level="100" weight="10" price="1" cost="3" minRange="1" maxRange="1" criticalRate="30" failureRate="30" criticalBonus="10" twoHands="false" ethereal="false">
-    <conditions>PN~Lordsoth</conditions>
+    <conditions>PN=Lordsoth</conditions>
     <effect type="110" bonus="0d0+20" />
     <effect type="118" bonus="0d0+50" />
     <effect type="111" bonus="0d0+1" />
@@ -43271,7 +43271,7 @@
     <effect type="212" bonus="1d3+4" />
   </item>
   <item id="7197" type="7" level="150" weight="100" price="14999" cost="5" minRange="1" maxRange="1" criticalRate="50" failureRate="50" criticalBonus="10" twoHands="false" ethereal="false">
-    <conditions>CI&gt;150&amp;CV&gt;200&amp;(PG=5|PG=2)</conditions>
+    <conditions>CI&gt;150&amp;CV&gt;200&amp;PG=5|PG=2</conditions>
     <effect type="100" bonus="1d19+17" />
     <effect type="94" bonus="1d4+4" />
     <effect type="101" bonus="0d0+1" />
@@ -43830,7 +43830,7 @@
     <conditions />
   </item>
   <item id="8095" type="6" level="143" weight="20" price="20949" cost="4" minRange="1" maxRange="1" criticalRate="80" failureRate="50" criticalBonus="15" twoHands="false" ethereal="false">
-    <conditions>CI&gt;300&amp;CS&gt;130&amp;(PG=6|PG=8|PG=11)</conditions>
+    <conditions>CI&gt;300&amp;CS&gt;130&amp;PG=6|PG=8|PG=11</conditions>
     <effect type="100" bonus="1d15+25" />
     <effect type="94" bonus="1d3+3" />
     <effect type="126" bonus="1d20+30" />
@@ -49262,10 +49262,10 @@
     <conditions />
   </item>
   <item id="8428" type="12" level="1" weight="1" price="1">
-    <conditions>(PX=3)|(PX=4)</conditions>
+    <conditions>PX=3|PX=4</conditions>
   </item>
   <item id="8431" type="12" level="1" weight="1" price="1">
-    <conditions>(PX=3)|(PX=4)</conditions>
+    <conditions>PX=3|PX=4</conditions>
   </item>
   <item id="8430" type="94" level="1" weight="1" price="1">
     <conditions />
@@ -49765,7 +49765,7 @@
     <effect type="138" bonus="1d50" />
   </item>
   <item id="8575" type="4" level="200" weight="20" price="31072" cost="3" minRange="1" maxRange="2" criticalRate="42" failureRate="42" criticalBonus="7" twoHands="false" ethereal="false">
-    <conditions>PN~xxramboplxx</conditions>
+    <conditions>PN=xxramboplxx</conditions>
     <effect type="115" bonus="0d0+5" />
     <effect type="138" bonus="0d0+25" />
     <effect type="112" bonus="0d0+10" />
@@ -51872,7 +51872,7 @@
     <conditions />
   </item>
   <item id="10119" type="30" level="1" weight="0" price="0">
-    <conditions>POX10055&amp;POX10054&amp;POX10056&amp;POX10061&amp;POX10058&amp;POX10102</conditions>
+    <conditions/>
   </item>
   <item id="10118" type="32" level="1" weight="0" price="1">
     <conditions />

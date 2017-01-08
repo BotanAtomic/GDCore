@@ -2,6 +2,7 @@ package org.graviton.game.client.player;
 
 import lombok.Data;
 import org.graviton.api.Creature;
+import org.graviton.converter.Converters;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.breeds.AbstractBreed;
@@ -11,20 +12,26 @@ import org.graviton.game.client.account.Account;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.inventory.Inventory;
 import org.graviton.game.items.Item;
+import org.graviton.game.look.AbstractLook;
 import org.graviton.game.look.PlayerLook;
 import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
+import org.graviton.game.spell.SpellList;
+import org.graviton.game.spell.SpellView;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.type.PlayerStatistics;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
+import org.graviton.network.game.protocol.SpellPacketFormatter;
 import org.graviton.utils.Utils;
 import org.jooq.Record;
 
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.IntStream;
 
 import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
 
@@ -42,31 +49,34 @@ public class Player extends Fighter implements Creature {
     private final PlayerStatistics statistics;
     private final Alignment alignment;
     private final Inventory inventory;
+    private final SpellList spellList;
 
     private boolean online = false;
     private Location location;
 
-    public Player(Record record, Account account, Map<Integer, Item> items, EntityFactory entityFactory) {
+    public Player(Record record, Account account, Map<Integer, Item> items, Map<Short, SpellView> spells, EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
         this.account = account;
         this.id = record.get(PLAYERS.ID);
         this.name = record.get(PLAYERS.NAME);
-
-        Item item = entityFactory.getItemTemplate((short) 2473).createRandom(entityFactory.getNextItemId());
-        Item item1 = entityFactory.getItemTemplate((short) 2474).createRandom(entityFactory.getNextItemId());
-        Item item2 = entityFactory.getItemTemplate((short) 2475).createRandom(entityFactory.getNextItemId());
-        Item item3 = entityFactory.getItemTemplate((short) 2476).createRandom(entityFactory.getNextItemId());
-
-        items.put(item.getId(), item);
-        items.put(item1.getId(), item1);
-        items.put(item2.getId(), item2);
-        items.put(item3.getId(), item3);
 
         this.inventory = new Inventory(this, record.get(PLAYERS.KAMAS), items);
         this.look = new PlayerLook(record);
         this.statistics = new PlayerStatistics(this, record, (byte) (getBreed() instanceof Enutrof ? 120 : 100));
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(record.get(PLAYERS.MAP)), record.get(PLAYERS.CELL), record.get(PLAYERS.ORIENTATION));
+        this.spellList = new SpellList(spells);
+
+        inventory.addItem(entityFactory.getItemTemplate((short) 6926).createRandom(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 6927).createRandom(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 6928).createMax(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 6929).createMax(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 7226).createRandom(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 7230).createRandom(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 7238).createRandom(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 6526).createRandom(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 7242).createRandom(entityFactory.getNextItemId()), false);
+        inventory.addItem(entityFactory.getItemTemplate((short) 10496).createRandom(entityFactory.getNextItemId()), false);
     }
 
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
@@ -84,10 +94,30 @@ public class Player extends Fighter implements Creature {
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell(), (byte) 1);
         this.inventory = new Inventory(this);
+
+        inventory.addItem(entityFactory.getItemTemplate((short) 9461).createMax(entityFactory.getNextItemId()), true);
+        inventory.addItem(entityFactory.getItemTemplate((short) 9021).createMax(entityFactory.getNextItemId()), true);
+        inventory.addItem(entityFactory.getItemTemplate((short) 6540).createMax(entityFactory.getNextItemId()), true);
+
+        this.spellList = new SpellList(new TreeMap<>());
+
+        IntStream.range(0, 3).forEach(i -> this.spellList.add(new SpellView((byte) (i + 1),
+                entityFactory.getSpellTemplate(getBreed().getStartSpells()[i]).getLevel((byte) 1), (byte) (i + 1))));
+
     }
 
     public int getColor(byte color) {
         return this.look.getColors()[color - 1];
+    }
+
+    @Override
+    public EntityFactory entityFactory() {
+        return this.entityFactory;
+    }
+
+    @Override
+    public AbstractLook look() {
+        return this.look;
     }
 
     public int[] getColors() {
@@ -172,10 +202,11 @@ public class Player extends Fighter implements Creature {
             this.location.setCell(newGameMap.getCells().get(cell));
             newGameMap.loadAndEnter(this);
         }
+        this.entityFactory.getPlayerRepository().save(this);
     }
 
     public void removeItem(Item item) {
-        this.inventory.getItems().remove(item.getId());
+        this.inventory.remove(item.getId());
         removeDatabaseItem(item);
     }
 
@@ -192,10 +223,25 @@ public class Player extends Fighter implements Creature {
         return this;
     }
 
-    public void upLevel() {
-        this.statistics.upLevel();
-        send(PlayerPacketFormatter.asMessage(this, entityFactory.getExperience(getLevel()), getAlignment(), this.statistics));
-        send(PlayerPacketFormatter.nextLevelMessage(this.statistics.getLevel()));
+    public void upLevel() { //fixme TEST ONLY
+        while (getLevel() < 100) {
+            this.statistics.upLevel();
+            learnSpell(getBreed().getSpell(this.getLevel()));
+            send(PlayerPacketFormatter.asMessage(this, entityFactory.getExperience(getLevel()), getAlignment(), this.statistics));
+        }
+        entityFactory.getPlayerRepository().save(this);
+        //TODO : send(PlayerPacketFormatter.nextLevelMessage(this.statistics.getLevel()));
+    }
+
+    private void learnSpell(short spell) {
+        if (spell == 0)
+            return;
+
+        short nextId = (short) (this.spellList.size() + 1);
+        SpellView spellView = new SpellView(nextId, entityFactory.getSpellTemplate(spell).getLevel((byte) 1), Utils.getNextPosition(Converters.SPELL_TO_BYTE.apply(this.spellList.values())));
+        this.spellList.add(spellView);
+        send(SpellPacketFormatter.spellListMessage(this.spellList));
+        this.entityFactory.getPlayerRepository().createSpell(nextId, spellView, this);
     }
 
     public void boostStatistics(byte characteristicId) {
@@ -210,8 +256,19 @@ public class Player extends Fighter implements Creature {
 
         statistics.setStatisticPoints((short) (statistics.getStatisticPoints() - cost));
         statistics.get(characteristic).addBase(bonus);
-        send(PlayerPacketFormatter.asMessage(this, this.entityFactory.getExperience(getLevel()), getAlignment(), statistics));
 
+        if (characteristic == CharacteristicType.Vitality)
+            this.statistics.getLife().add(bonus);
+
+        send(PlayerPacketFormatter.asMessage(this, this.entityFactory.getExperience(getLevel()), getAlignment(), statistics));
+    }
+
+    public SpellView getSpellView(short spell) {
+        return spellList.get(spell);
+    }
+
+    public SpellView getSpellView(byte position) {
+        return spellList.get(position);
     }
 
 }

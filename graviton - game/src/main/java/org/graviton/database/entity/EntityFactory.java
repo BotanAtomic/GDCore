@@ -3,7 +3,6 @@ package org.graviton.database.entity;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.api.Manageable;
 import org.graviton.core.Program;
@@ -24,9 +23,10 @@ import org.graviton.game.experience.Experience;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.maps.GameMap;
+import org.graviton.game.spell.SpellTemplate;
 import org.graviton.utils.Utils;
+import org.graviton.xml.Performer;
 import org.graviton.xml.XMLElement;
-import org.graviton.xml.XMLFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -48,7 +48,6 @@ import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 /**
  * Created by Botan on 11/11/2016 : 22:42
  */
-@EqualsAndHashCode(callSuper = true)
 @Slf4j
 @Data
 public class EntityFactory extends EntityData implements Manageable {
@@ -56,6 +55,7 @@ public class EntityFactory extends EntityData implements Manageable {
     private final ExecutorService worker = Executors.newCachedThreadPool();
 
     private AtomicInteger itemIdentityGenerator;
+    private GameDatabase database;
 
     @Inject
     private GameMapRepository gameMapRepository;
@@ -63,43 +63,61 @@ public class EntityFactory extends EntityData implements Manageable {
     @Inject
     private PlayerRepository playerRepository;
 
-    private GameDatabase database;
-
     @Inject
     public EntityFactory(Program program, @Named("database.game") AbstractDatabase database) {
         program.register(this);
         this.database = (GameDatabase) database;
     }
 
+    private void loadSpells() {
+        long time = System.currentTimeMillis() / 1000;
+
+        NodeList list = get(SPELLS).getElementsByTagName("spell");
+        apply(list, element -> this.spells.put(element.getAttribute("id").toShort(), new SpellTemplate(element)));
+
+        log.debug("Successfully load {} spells in {}", this.spells.size(), System.currentTimeMillis() / 1000 - time);
+    }
+
     private void loadGameMaps() {
-        get(AREA).getElementsByTagName("Area").forEach(element -> this.area.put(element.getAttribute("id").toShort(), new Area(element)));
-        log.debug("Successfully load {} area", this.area.size());
+        long time = System.currentTimeMillis() / 1000;
+        apply(get(AREA).getElementsByTagName("Area"), (element -> this.area.put(element.getAttribute("id").toShort(), new Area(element))));
+        log.debug("Successfully load {} area in {}", this.area.size(), System.currentTimeMillis() / 1000 - time);
 
-        get(SUBAREA).getElementsByTagName("SubArea").forEach(element -> this.subArea.put(element.getAttribute("id").toShort(), new SubArea(element, this.area.get(element.getElementByTagName("area").toShort()))));
-        log.debug("Successfully load {} sub area", this.subArea.size());
+        time = System.currentTimeMillis() / 1000;
+        apply(get(SUBAREA).getElementsByTagName("SubArea"), (element -> this.subArea.put(element.getAttribute("id").toShort(), new SubArea(element, this.area.get(element.getElementByTagName("area").toShort())))));
 
-        log.debug("Successfully load {} game map", gameMapRepository.load(getFast(MAPS)));
-        log.debug("Successfully register {} npc", gameMapRepository.loadNpc(get(NPCS)));
+        log.debug("Successfully load {} sub area in {}", this.subArea.size(), System.currentTimeMillis() / 1000 - time);
+
+        time = System.currentTimeMillis() / 1000;
+        log.debug("Successfully load {} game map in {}", gameMapRepository.load(get(MAPS)), System.currentTimeMillis() / 1000 - time);
+
+        time = System.currentTimeMillis() / 1000;
+        log.debug("Successfully register {} npc in {}", gameMapRepository.loadNpc(get(NPCS)), System.currentTimeMillis() / 1000 - time);
+
         loadExtraMonsters();
     }
 
     private void loadExtraMonsters() {
-        get(EXTRA_MONSTERS).getElementsByTagName("ExtraMonster").forEach(element -> {
+        long time = System.currentTimeMillis() / 1000;
+
+        apply(get(EXTRA_MONSTERS).getElementsByTagName("ExtraMonster"), element -> {
             int id = element.getAttribute("id").toInt();
             ExtraMonster extraMonster = new ExtraMonster(getMonsterTemplate(id), element.getElementByTagName("chance").toByte());
 
             for (String subArea : element.getElementByTagName("subarea").toString().split(","))
                 extraMonster.registerSubArea(Short.parseShort(subArea));
 
-            this.extraMonsters.put(id, extraMonster);
+            extraMonsters.put(id, extraMonster);
         });
 
-        log.debug("Successfully load {} extra monsters", this.extraMonsters.size());
+        log.debug("Successfully load {} extra monsters in {}", this.extraMonsters.size(), System.currentTimeMillis() / 1000 - time);
 
         placeExtraMonsters();
     }
 
     private void placeExtraMonsters() {
+        long time = System.currentTimeMillis() / 1000;
+
         this.extraMonsters.values().forEach(extraMonster -> extraMonster.getSubArea().forEach(subAreaId -> {
             byte random = (byte) Utils.random(0, 100);
 
@@ -109,61 +127,59 @@ public class EntityFactory extends EntityData implements Manageable {
             }
 
         }));
+        log.debug("Successfully places extra monsters in {}", System.currentTimeMillis() / 1000 - time);
     }
 
     private void loadExperiences() {
-        get(EXPERIENCE).getElementsByTagName("experience").forEach(element -> this.experiences.put(element.getAttribute("level").toShort(), new Experience(element)));
+        long time = System.currentTimeMillis() / 1000;
+
+        apply(get(EXPERIENCE).getElementsByTagName("experience"), element -> this.experiences.put(element.getAttribute("level").toShort(), new Experience(element)));
 
         this.experiences.keySet().forEach(i -> {
             Experience experience = this.experiences.get(i);
             experience.setNext(this.experiences.get((short) (i + 1)));
         });
 
-        log.debug("Successfully load {} experiences data", this.experiences.size());
+        log.debug("Successfully load {} experiences data in {}", this.experiences.size(), System.currentTimeMillis() / 1000 - time);
     }
 
     private void loadNpcTemplates() {
         loadNpcData();
-        get(NPC_TEMPLATE).getElementsByTagName("NpcTemplate").forEach(element -> this.npcTemplates.put(element.getAttribute("id").toInt(), new NpcTemplate(element)));
-        log.debug("Successfully load {} npc templates", this.npcTemplates.size());
+        long time = System.currentTimeMillis() / 1000;
+
+
+        log.debug("Successfully load {} npc templates in {}", apply(get(NPC_TEMPLATE).getElementsByTagName("NpcTemplate"), element ->
+                this.npcTemplates.put(element.getAttribute("id").toInt(), new NpcTemplate(element))), System.currentTimeMillis() / 1000 - time);
     }
 
     private void loadNpcData() {
-        NodeList list = getFast(NPC_ANSWER).getElementsByTagName("NpcAnswer");
+        long time = System.currentTimeMillis() / 1000;
 
-        IntStream.range(0, list.getLength()).forEach(i -> {
-            XMLElement element = new XMLElement((Element) list.item(i));
-            this.npcAnswers.put(element.getAttribute("id").toShort(), new NpcAnswer(element));
-        });
+        log.debug("Successfully load {} npc answers in {}", apply(get(NPC_ANSWER).getElementsByTagName("NpcAnswer"), element ->
+                this.npcAnswers.put(element.getAttribute("id").toShort(), new NpcAnswer(element))), System.currentTimeMillis() / 1000 - time);
 
-        log.debug("Successfully load {} npc answers", this.npcAnswers.size());
+        time = System.currentTimeMillis() / 1000;
 
-
-        NodeList secondList = getFast(NPC_QUESTION).getElementsByTagName("NpcQuestion");
-
-        IntStream.range(0, list.getLength()).forEach(i -> {
-            XMLElement element = new XMLElement((Element) secondList.item(i));
-            this.npcQuestions.put(element.getAttribute("id").toShort(), new NpcQuestion(element, this.npcAnswers));
-        });
-
-        log.debug("Successfully load {} npc questions", this.npcQuestions.size());
+        log.debug("Successfully load {} npc questions in {}", apply(get(NPC_QUESTION).getElementsByTagName("NpcQuestion"), element ->
+                this.npcQuestions.put(element.getAttribute("id").toShort(), new NpcQuestion(element, this.npcAnswers))), System.currentTimeMillis() / 1000 - time);
     }
 
     private void loadMonsterTemplates() {
-        get(MONSTER_TEMPLATE).getElementsByTagName("MonsterTemplate").forEach(element -> this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element)));
-        log.debug("Successfully load {} monster templates", this.monsterTemplates.size());
+        long time = System.currentTimeMillis() / 1000;
+        log.debug("Successfully load {} monster templates in {}", apply(get(MONSTER_TEMPLATE).getElementsByTagName("MonsterTemplate"),
+                element -> this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element))), System.currentTimeMillis() / 1000 - time);
     }
 
     private void loadItemTemplates() {
-        NodeList list = getFast(ITEM_TEMPLATE).getElementsByTagName("item");
+        long time = System.currentTimeMillis() / 1000;
 
-        IntStream.range(0, list.getLength()).forEach(i -> {
-            XMLElement element = new XMLElement((Element) list.item(i));
+        apply(get(ITEM_TEMPLATE).getElementsByTagName("item"), element -> {
             ItemTemplate template = new ItemTemplate(element);
             this.itemTemplates.put(template.getId(), template);
         });
 
-        get(ITEM_ACTION).getElementsByTagName("action").forEach(element -> {
+
+        apply(get(ITEM_ACTION).getElementsByTagName("action"), element -> {
             String[] types = element.getElementByTagName("type").toString().split(";");
             String[] parameters = element.getElementByTagName("parameter").toString().split("\\|");
 
@@ -174,11 +190,15 @@ public class EntityFactory extends EntityData implements Manageable {
             }
         });
 
-        log.debug("Successfully load {} item templates", this.itemTemplates.size());
+        log.debug("Successfully load {} item templates in {}", this.itemTemplates.size(), System.currentTimeMillis() / 1000 - time);
+
+        loadPanoplyTemplates();
     }
 
     private void loadPanoplyTemplates() {
-        get(PANOPLY_TEMPLATE).getElementsByTagName("Panoply").forEach(element -> {
+        long time = System.currentTimeMillis() / 1000;
+
+        apply(get(PANOPLY_TEMPLATE).getElementsByTagName("Panoply"), element -> {
             Map<Short, ItemTemplate> templates = new HashMap<>();
             for (String item : element.getElementByTagName("items").toString().split(",")) {
                 short template = Short.parseShort(item);
@@ -187,7 +207,7 @@ public class EntityFactory extends EntityData implements Manageable {
             this.panoply.put(element.getAttribute("id").toShort(), new Panoply(element, templates));
         });
 
-        log.debug("Successfully load {} panoply", this.panoply.size());
+        log.debug("Successfully load {} panoply in {}", this.panoply.size(), System.currentTimeMillis() / 1000 - time);
     }
 
     private void startScheduledAction() {
@@ -203,12 +223,13 @@ public class EntityFactory extends EntityData implements Manageable {
     @Override
     public void start() {
         this.itemIdentityGenerator = new AtomicInteger(database.getNextId(ITEMS, ITEMS.ID));
-        new FastLoader(this::loadItemTemplates, this::loadNpcTemplates,
-                this::loadMonsterTemplates,
-                this::loadExperiences,
-                this::loadPanoplyTemplates, this::loadGameMaps).launch();
-
+        new FastLoader(this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadSpells, this::loadGameMaps).launch();
         startScheduledAction();
+    }
+
+    public int apply(NodeList list, Performer performer) {
+        IntStream.range(0, list.getLength()).forEach(i -> performer.accept(new XMLElement((Element) list.item(i))));
+        return list.getLength();
     }
 
 
@@ -217,11 +238,7 @@ public class EntityFactory extends EntityData implements Manageable {
         playerRepository.save();
     }
 
-    private XMLFile get(String path) {
-        return new XMLFile(getFast(path));
-    }
-
-    private Document getFast(String path) {
+    private Document get(String path) {
         try {
             return (documentBuilderFactory.newDocumentBuilder().parse(getClass().getClassLoader().getResourceAsStream("data/" + path)));
         } catch (Exception e) {

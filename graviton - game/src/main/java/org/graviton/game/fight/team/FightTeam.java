@@ -7,6 +7,7 @@ import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.maps.utils.CellLoader;
+import org.graviton.network.game.protocol.GamePacketFormatter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,7 +25,7 @@ public class FightTeam implements Iterable<Fighter> {
     private final Fighter leader;
     private final FightSide side;
 
-    private final List<Cell> cells;
+    private List<Cell> cells;
 
     private boolean locked = false;
     private boolean allowSpectator = false;
@@ -33,17 +34,19 @@ public class FightTeam implements Iterable<Fighter> {
     public FightTeam(Fighter fighter, FightSide side) {
         this.leader = fighter;
         this.side = side;
-        this.cells = CellLoader.getFightCells((GameMap) fighter.getCreature().getLocation().getMap(), side);
         add(fighter);
     }
 
     public void add(Fighter fighter) {
+        fighter.setLastLife(fighter.getLife().getCurrent());
+        fighter.send(GamePacketFormatter.fightRegenTimerMessage((short) 0));
         fighter.setTeam(this);
         fighter.setSide(side);
         this.fighters.add(fighter);
     }
 
     public void actualizeMap(GameMap gameMap, FightMap fightMap, Fighter fighter) {
+        this.cells = CellLoader.getFightCells(fightMap, gameMap.getPlaces(), side);
         fighter.setLastLocation(fighter.getCreature().getLocation().copy());
         gameMap.out(fighter.getCreature());
         fightMap.register(fighter.getCreature());

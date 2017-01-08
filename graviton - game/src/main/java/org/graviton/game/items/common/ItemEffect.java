@@ -9,7 +9,7 @@ import org.graviton.game.statistics.common.CharacteristicType;
  */
 public enum ItemEffect {
     NONE((short) 0),
-    AddRenvoiDamage((short) 107, CharacteristicType.DamageReturn),
+    AddReturnDamage((short) 220, CharacteristicType.DamageReturn),
     Heal((short) 108),
     AddAgility((short) 119, CharacteristicType.Agility),
     AddChance((short) 123, CharacteristicType.Chance),
@@ -32,7 +32,7 @@ public enum ItemEffect {
     AddWisdom((short) 124, CharacteristicType.Wisdom),
     AddHealPoints((short) 178, CharacteristicType.HealPoints),
     AddVitality((short) 125, CharacteristicType.Vitality),
-    MultiplyDamage((short) 114),
+    MultiplyDamage((short) 114, CharacteristicType.MultiplyDamage),
     SubAgility((short) 154, CharacteristicType.Agility),
     SubChance((short) 152, CharacteristicType.Chance),
     SubDamage((short) 164, CharacteristicType.Damage),
@@ -120,8 +120,8 @@ public enum ItemEffect {
     SubActionPointsDodge((short) 101),
     SubMovementPointsDodge((short) 127),
 
-    AddReduceDamagePhysic((short) 183),
-    AddReduceDamageMagic((short) 184),
+    AddReduceDamagePhysic((short) 184, CharacteristicType.ReducePhysic),
+    AddReduceDamageMagic((short) 183, CharacteristicType.ReduceMagic),
 
     PetLife((short) 800);
 

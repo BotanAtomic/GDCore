@@ -1,12 +1,13 @@
 package org.graviton.game.statistics.common;
 
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.collect.ImmutableList;
+
 
 /**
  * Created by Botan on 11/11/2016 : 21:15
  */
 public enum CharacteristicType {
+    Empty,
     Life,
     Pods,
     Prospection,
@@ -22,7 +23,10 @@ public enum CharacteristicType {
     RangePoints,
     Summons,
     Damage,
+    MultiplyDamage,
     PhysicalDamage,
+    ReducePhysic,
+    ReduceMagic,
     WeaponControl,
     DamagePer,
     HealPoints,
@@ -31,6 +35,8 @@ public enum CharacteristicType {
     DamageReturn,
     CriticalHit,
     CriticalFailure,
+
+    Armor,
 
     DodgeActionPoints,
     DodgeMovementPoints,
@@ -60,7 +66,7 @@ public enum CharacteristicType {
     ResistancePvpFire,
     ResistancePercentPvpFire;
 
-    public static List<CharacteristicType> asBuild = Arrays.asList(CharacteristicType.Strength, CharacteristicType.Vitality,
+    public static ImmutableList<CharacteristicType> asBuild = ImmutableList.of(CharacteristicType.Strength, CharacteristicType.Vitality,
             CharacteristicType.Wisdom, CharacteristicType.Chance,
             CharacteristicType.Agility, CharacteristicType.Intelligence,
             CharacteristicType.RangePoints, CharacteristicType.Summons,
@@ -80,6 +86,7 @@ public enum CharacteristicType {
             CharacteristicType.ResistancePvpWind, CharacteristicType.ResistancePercentPvpWind,
             CharacteristicType.ResistanceFire, CharacteristicType.ResistancePercentFire,
             CharacteristicType.ResistancePvpFire, CharacteristicType.ResistancePercentPvpFire);
+
 
     public static CharacteristicType getBoost(byte characteristics) {
         switch (characteristics) {

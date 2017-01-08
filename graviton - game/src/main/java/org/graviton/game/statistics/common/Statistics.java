@@ -1,6 +1,7 @@
 package org.graviton.game.statistics.common;
 
 import com.google.common.collect.Maps;
+import org.graviton.game.statistics.Life;
 
 import java.util.Map;
 
@@ -18,8 +19,10 @@ public abstract class Statistics {
         return this.characteristics.get(type);
     }
 
-    public abstract short getCurrentLife();
+    public abstract Life getLife();
 
-    public abstract short getMaxLife();
+    public void clearBuffs() {
+        this.characteristics.values().forEach(Characteristic::clearBuff);
+    }
 
 }

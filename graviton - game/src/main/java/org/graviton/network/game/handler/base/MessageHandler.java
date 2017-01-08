@@ -18,6 +18,7 @@ public class MessageHandler {
     private final ItemHandler itemHandler;
     private final EnvironmentHandler environmentHandler;
     private final DialogHandler dialogHandler;
+    private final SpellHandler spellHandler;
 
     public MessageHandler(GameClient gameClient) {
         this.client = gameClient;
@@ -27,6 +28,7 @@ public class MessageHandler {
         this.itemHandler = new ItemHandler(gameClient);
         this.environmentHandler = new EnvironmentHandler(gameClient);
         this.dialogHandler = new DialogHandler(gameClient);
+        this.spellHandler = new SpellHandler(gameClient);
     }
 
     public void handle(String data) {
@@ -52,15 +54,16 @@ public class MessageHandler {
                 this.itemHandler.handle(data.substring(2), (byte) data.charAt(1));
                 break;
 
+            case 83: //Spell ('S')
+                this.spellHandler.handle(data.substring(2), (byte) data.charAt(1));
+                break;
+
             case 101: //Environment ('e')
                 this.environmentHandler.handle(data.substring(2), (byte) data.charAt(1));
                 break;
 
             default:
-                if (data.equals("qping"))
-                    client.send("qpong");
-                else
-                    log.error("not implemented packet {}", data);
+                log.error("not implemented packet {}", data);
         }
 
     }

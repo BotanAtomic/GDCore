@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Created by Botan on 12/11/2016 : 18:17
@@ -23,7 +24,7 @@ public class Cell {
     }
 
     public boolean isWalkable() {
-        return movementType != MovementType.Unwalkable;
+        return movementType != MovementType.Unwalkable && movementType != MovementType.Door;
     }
 
     public boolean isFree() {
@@ -31,7 +32,8 @@ public class Cell {
     }
 
     public int getFirstCreature() {
-        return this.creatures.stream().findFirst().get();
+        Optional<Integer> value = this.creatures.stream().findFirst();
+        return value.isPresent() ? value.get() : 0;
     }
 
     @Override

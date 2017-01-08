@@ -1,9 +1,9 @@
 package org.graviton.game.maps.utils;
 
 import org.graviton.game.fight.common.FightSide;
-import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
+import org.graviton.game.maps.fight.FightMap;
 import org.graviton.utils.Utils;
 
 import java.util.ArrayList;
@@ -60,12 +60,12 @@ public class CellLoader {
         cell.setGroundSlope(groundSlope);
     }
 
-    public static List<Cell> getFightCells(GameMap gameMap, FightSide team) {
+    public static List<Cell> getFightCells(FightMap fightMap, String places, FightSide team) {
         List<Cell> cells = new ArrayList<>();
-        String data = gameMap.getPlaces().split("\\|")[team.ordinal()];
+        String data = places.split("\\|")[team.ordinal()];
 
         for (int i = 0; i < data.length(); i += 2)
-            cells.add(gameMap.getCells().get((short) ((Utils.parseBase64Char(data.charAt(i)) << 6) + Utils.parseBase64Char(data.charAt(i + 1)))));
+            cells.add(fightMap.getCells().get((short) ((Utils.parseBase64Char(data.charAt(i)) << 6) + Utils.parseBase64Char(data.charAt(i + 1)))));
 
         return cells;
     }

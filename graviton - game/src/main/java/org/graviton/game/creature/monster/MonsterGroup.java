@@ -3,6 +3,8 @@ package org.graviton.game.creature.monster;
 import lombok.Data;
 import org.graviton.api.Creature;
 import org.graviton.constant.Dofus;
+import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.look.AbstractLook;
 import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.position.Location;
@@ -56,6 +58,16 @@ public class MonsterGroup implements Creature {
 
     @Override
     public Statistics getStatistics() {
+        return null;
+    }
+
+    @Override
+    public EntityFactory entityFactory() {
+        return ((GameMap) location.getMap()).getEntityFactory();
+    }
+
+    @Override
+    public AbstractLook look() {
         return null;
     }
 

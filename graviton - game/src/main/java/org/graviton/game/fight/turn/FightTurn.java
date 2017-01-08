@@ -3,11 +3,13 @@ package org.graviton.game.fight.turn;
 import lombok.Data;
 import org.graviton.constant.Dofus;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.effect.buff.Buff;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
 
+import java.util.ArrayList;
 import java.util.concurrent.ScheduledFuture;
 
 /**
@@ -27,24 +29,37 @@ public class FightTurn {
         this.fighter = fighter;
     }
 
-    private void begin() {
+    public void begin() {
         fighter.send(PlayerPacketFormatter.asMessage((Player) fighter.getCreature()));
         fight.send(FightPacketFormatter.fighterInformationMessage(fight.fighters()));
         fight.send(FightPacketFormatter.turnReadyMessage(fighter.getId()));
+        fight.send(FightPacketFormatter.turnStartMessage(fighter.getId(), Dofus.TURN_TIME));
+
+        if (fighter.isPassTurn()) {
+            fighter.setPassTurn(false);
+            end();
+            return;
+        }
+
         startTurn();
     }
 
-    public void startTurn() {
-        fighter.initializeFighterPoints();
-
-        fight.send(FightPacketFormatter.turnStartMessage(fighter.getId(), Dofus.TURN_TIME));
+    private void startTurn() {
+        fighter.getBuffs().forEach(Buff::check);
         future = fight.schedule(this::end, Dofus.TURN_TIME + 750);
     }
 
     public void end() {
-        this.future.cancel(true);
-        fight.send(FightPacketFormatter.turnEndMessage(this.fighter.getId()));
-        fight.getTurnList().next().begin();
+        fight.schedule(() -> {
+            if (future != null)
+                this.future.cancel(true);
+            fight.send(FightPacketFormatter.turnEndMessage(this.fighter.getId()));
+            fight.getTurnList().next().begin();
+            fighter.setOnAction(false);
+            new ArrayList<>(fighter.getBuffs()).forEach(Buff::decrement);
+            fighter.initializeFighterPoints();
+            fighter.clearLaunchedSpell();
+        }, fighter.isOnAction() ? 1100 : 1);
     }
 
     @Override

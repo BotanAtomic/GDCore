@@ -3,6 +3,7 @@ package org.graviton.game.interaction.actions;
 
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
+import org.graviton.game.interaction.AbstractGameAction;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.paths.Path;
@@ -28,6 +29,7 @@ public class FightMovement extends Path implements AbstractGameAction {
         super(path, fighter.getLocation().getMap(), fighter.getFightCell().getId(), fighter);
         this.fighter = fighter;
         this.fightMap = (FightMap) fighter.getLocation().getMap();
+        fighter.setOnAction(true);
     }
 
     /**
@@ -45,7 +47,7 @@ public class FightMovement extends Path implements AbstractGameAction {
     public boolean begin() {
         boolean valid = super.isValid() && fighter.getCurrentMovementPoint() >= super.size();
 
-        Collection<Fighter> aroundFighters = super.getAroundFighters(fightMap, fighter, fighter.getFightCell().getId());
+        Collection<Fighter> aroundFighters = getAroundFighters(fightMap, fighter, fighter.getFightCell().getId());
 
         if (!aroundFighters.isEmpty()) {
             short tackleChance = getTackleChance(fighter, aroundFighters);
@@ -58,8 +60,8 @@ public class FightMovement extends Path implements AbstractGameAction {
                 if (fighter.getCurrentActionPoint() < looseActionPoint)
                     looseActionPoint = fighter.getCurrentActionPoint();
 
-                fightMap.send(FightPacketFormatter.looseMovementPointMessage(fighter.getId(), (byte) (fighter.getCurrentMovementPoint() * -1)));
-                fightMap.send(FightPacketFormatter.looseActionPointMessage(fighter.getId(), (byte) ((fighter.getCurrentActionPoint() - looseActionPoint) * -1)));
+                fightMap.send(FightPacketFormatter.movementPointEventMessage(fighter.getId(), (byte) (fighter.getCurrentMovementPoint() * -1)));
+                fightMap.send(FightPacketFormatter.actionPointEventMessage(fighter.getId(), (byte) ((fighter.getCurrentActionPoint() - looseActionPoint) * -1)));
 
                 fighter.setCurrentMovementPoint((byte) 0);
                 fighter.setCurrentActionPoint((byte) (fighter.getCurrentActionPoint() - looseActionPoint));
@@ -93,8 +95,13 @@ public class FightMovement extends Path implements AbstractGameAction {
         fighter.getLocation().setOrientation(getOrientation());
         fighter.getLocation().setCell(newCell);
 
-        fightMap.send(FightPacketFormatter.looseMovementPointMessage(fighter.getId(), (byte) (super.size() * -1)));
+        fightMap.send(FightPacketFormatter.movementPointEventMessage(fighter.getId(), (byte) (super.size() * -1)));
         fighter.setCurrentMovementPoint((byte) (fighter.getCurrentMovementPoint() - super.size()));
+
+        if (!tasks.isEmpty())
+            tasks.forEach(Runnable::run);
+
+        fighter.setOnAction(false);
     }
 
 }

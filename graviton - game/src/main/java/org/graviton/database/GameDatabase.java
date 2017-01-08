@@ -12,6 +12,6 @@ import java.util.Properties;
 public class GameDatabase extends AbstractDatabase {
     @Inject
     public GameDatabase(@Named("database.game.properties") Properties properties, Program program) {
-        super(properties, program);
+        super(properties, program, true);
     }
 }

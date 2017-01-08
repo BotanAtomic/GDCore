@@ -1,6 +1,8 @@
 package org.graviton.game.fight;
 
 import lombok.Data;
+import org.graviton.game.effect.type.push.PushBackEffect;
+import org.graviton.game.effect.type.transport.TranspositionEffect;
 import org.graviton.game.fight.common.FightState;
 import org.graviton.game.fight.common.FightType;
 import org.graviton.game.fight.flag.FlagAttribute;
@@ -9,14 +11,15 @@ import org.graviton.game.fight.turn.FightTurnList;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.fight.FightMap;
+import org.graviton.game.paths.Path;
+import org.graviton.game.trap.Trap;
 import org.graviton.network.game.protocol.FightPacketFormatter;
+import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.network.game.protocol.MessageFormatter;
+import org.joda.time.Interval;
 
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,15 +29,19 @@ import java.util.stream.Stream;
 
 @Data
 public abstract class Fight {
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
     private final Date startTime = new Date();
     private final int id;
+
     private final GameMap gameMap;
     private final FightMap fightMap;
     private final FightTeam firstTeam, secondTeam;
+
     private final List<String> flagData = new LinkedList<>();
+    private final Map<Short, Trap> traps = new ConcurrentHashMap<>();
     protected FightState state = FightState.INIT;
     protected FightTurnList turnList;
-    private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     protected Fight(int id, FightTeam firstTeam, FightTeam secondTeam, GameMap gameMap) {
         this.id = id;
@@ -44,9 +51,12 @@ public abstract class Fight {
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
 
-        startInitialization();
+        initialize();
 
-        fighters().forEach(fighter -> fighter.setFight(this));
+        fighters().forEach(fighter -> {
+            fighter.setFight(this);
+            fighter.initializeFighterPoints();
+        });
 
         generateFlag();
     }
@@ -67,7 +77,7 @@ public abstract class Fight {
         }
     }
 
-    private void startInitialization() {
+    private void initialize() {
         this.state = FightState.PLACE;
         List<FightTeam> teams = Arrays.asList(firstTeam, secondTeam);
 
@@ -79,7 +89,7 @@ public abstract class Fight {
             fightTeam.placeFighters();
         });
 
-        send(FightPacketFormatter.showFighters(fighters()), teams);
+        send(FightPacketFormatter.showFighters(fighters()));
     }
 
     public Collection<Fighter> fighters() {
@@ -94,9 +104,8 @@ public abstract class Fight {
         teams.forEach(fightTeam -> fightTeam.send(data));
     }
 
-
     public void send(String data) {
-        fighters().forEach(fighter -> fighter.send(data));
+        fightMap.send(data);
     }
 
     protected void send(String data, Fighter exclude) {
@@ -106,18 +115,17 @@ public abstract class Fight {
     public void changeFighterPlace(Fighter fighter, short cellId) {
         Cell cell = fightMap.getCells().get(cellId);
 
-        if (cell.getCreatures().isEmpty() && fighter.getTeam().containsCell(cellId)) {
+        if (cell.getCreatures().isEmpty() && fighter.getTeam().containsCell(cellId) && !fighter.isReady()) {
             fighter.setFightCell(cell);
             send(FightPacketFormatter.fighterPlacementMessage(fighter.getId(), cellId));
         }
     }
 
     public List<String> buildFlag() {
-        List<String> fullData = new LinkedList<>();
-        fullData.addAll(flagData);
+        if (flagData.isEmpty())
+            return new ArrayList<>();
 
-        if (fullData.isEmpty())
-            return fullData;
+        List<String> fullData = new LinkedList<>(flagData);
 
         Arrays.asList(firstTeam, secondTeam).forEach(team -> {
             fullData.add(FightPacketFormatter.flagAttributeMessage(team.isAllowSpectator(), FlagAttribute.DENY_SPECTATORS, team.getLeader().getId()));
@@ -131,15 +139,28 @@ public abstract class Fight {
     public void setReady(Fighter fighter, boolean ready) {
         fighter.setReady(ready);
 
-        final AtomicBoolean startFight = new AtomicBoolean(true);
-        fighters().forEach(current -> {
-            current.send(FightPacketFormatter.fighterReadyMessage(fighter.getId(), ready));
-            if (!current.isReady())
-                startFight.set(false);
-        });
 
-        if (startFight.get())
+        if (fighters().stream().filter(current -> !current.isReady()).count() == 0)
             start();
+        else
+            send(FightPacketFormatter.fighterReadyMessage(fighter.getId(), ready));
+    }
+
+    public void hit(Fighter fighter, Fighter target, int damage) {
+        if (target.isDodgeAttack() && Path.getAroundFighters(fightMap, fighter, fighter.getFightCell().getId()).contains(target))
+            PushBackEffect.apply(fighter, target, null, (short) 1);
+        else {
+            if (target.getSacrificedFighter() != null) {
+                TranspositionEffect.transpose(target, target.getSacrificed());
+                target = target.getSacrificed();
+            }
+
+            target.getLife().remove(damage);
+            send(FightPacketFormatter.lifeEventMessage(fighter.getId(), target.getId(), (damage * -1)));
+
+            if (target.getLife().getCurrent() <= 0)
+                kill(target);
+        }
     }
 
     public ScheduledFuture<?> schedule(Runnable runnable, long time) {
@@ -147,34 +168,50 @@ public abstract class Fight {
     }
 
     public void switchSpectator(Fighter fighter) {
-        FightTeam team = fighter.getTeam();
-        team.setAllowSpectator(!team.isAllowSpectator());
-        String packet = FightPacketFormatter.flagAttributeMessage(team.isAllowSpectator(), FlagAttribute.DENY_SPECTATORS, fighter.getTeam().getLeader().getId());
-        gameMap.send(packet);
+        fighter.getTeam().setAllowSpectator(!fighter.getTeam().isAllowSpectator());
+        gameMap.send(FightPacketFormatter.flagAttributeMessage(fighter.getTeam().isAllowSpectator(), FlagAttribute.DENY_SPECTATORS, fighter.getTeam().getLeader().getId()));
+        fighter.send(MessageFormatter.customMessage(fighter.getTeam().isAllowSpectator() ? "039" : "040"));
     }
 
     public void switchLocked(Fighter fighter) {
-        FightTeam team = fighter.getTeam();
-        team.setLocked(!team.isLocked());
-        String packet = FightPacketFormatter.flagAttributeMessage(team.isLocked(), FlagAttribute.DENY_ALL, fighter.getTeam().getLeader().getId());
-        gameMap.send(packet);
+        fighter.getTeam().setLocked(!fighter.getTeam().isLocked());
+        gameMap.send(FightPacketFormatter.flagAttributeMessage(fighter.getTeam().isLocked(), FlagAttribute.DENY_ALL, fighter.getTeam().getLeader().getId()));
+        fighter.send(MessageFormatter.customMessage(fighter.getTeam().isLocked() ? "095" : "096"));
     }
 
     public void switchHelp(Fighter fighter) {
-        FightTeam team = fighter.getTeam();
-        team.setNeedHelp(!team.isNeedHelp());
-        String packet = FightPacketFormatter.flagAttributeMessage(team.isNeedHelp(), FlagAttribute.NEED_HELP, fighter.getTeam().getLeader().getId());
-        gameMap.send(packet);
+        fighter.getTeam().setNeedHelp(!fighter.getTeam().isNeedHelp());
+        gameMap.send(FightPacketFormatter.flagAttributeMessage(fighter.getTeam().isNeedHelp(), FlagAttribute.NEED_HELP, fighter.getTeam().getLeader().getId()));
+        fighter.send(MessageFormatter.customMessage(fighter.getTeam().isNeedHelp() ? "0103" : "0104"));
     }
 
     protected void destroy() {
         gameMap.getFightFactory().getFights().remove(getId());
         this.scheduler.shutdownNow();
+        gameMap.send(GamePacketFormatter.fightCountMessage(gameMap.getFightFactory().getFightSize()));
     }
 
     protected void kill(Fighter fighter) {
+        fighter.setDead(true);
         this.turnList.remove(fighter);
-        send(FightPacketFormatter.fighterDieMessage(fighter.getId()), fighter);
+        send(FightPacketFormatter.fighterDieMessage(fighter.getId()));
+
+        schedule(this::check, 1800); //time for spell animation
+    }
+
+    private void check() {
+        if (getFirstTeam().getFighters().stream().filter(current -> !current.isDead()).count() == 0)
+            destroyFight(getFirstTeam().getLeader());
+        else if (getSecondTeam().getFighters().stream().filter(current -> !current.isDead()).count() == 0)
+            destroyFight(getSecondTeam().getLeader());
+    }
+
+    public Collection<Trap> checkTrap(short cell) {
+        return this.traps.values().stream().filter(trap -> trap.containCell(cell)).collect(Collectors.toList());
+    }
+
+    protected long getDuration() {
+        return new Interval(startTime.getTime(), new Date().getTime()).toDurationMillis();
     }
 
     public abstract String information();
@@ -190,5 +227,7 @@ public abstract class Fight {
     public abstract void quit(Fighter fighter);
 
     public abstract void start();
+
+    protected abstract void destroyFight(Fighter looser);
 
 }

@@ -22,6 +22,10 @@ public class FastLoader {
         this.tasks = Arrays.asList(runnableArray);
     }
 
+    public void run(Runnable runnable) {
+        this.executorService.execute(runnable);
+    }
+
     public void launch() {
         CompletableFuture.allOf(tasks.stream().map(this::runAsync).toArray(CompletableFuture[]::new)).join();
     }

@@ -10,6 +10,7 @@ import org.graviton.game.creature.npc.NpcTemplate;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
+import org.graviton.game.spell.SpellTemplate;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.Map;
@@ -37,6 +38,8 @@ class EntityData {
     final Map<Short, Area> area = new ConcurrentHashMap<>();
     final Map<Short, SubArea> subArea = new ConcurrentHashMap<>();
 
+    final Map<Short, SpellTemplate> spells = new ConcurrentHashMap<>();
+
     public NpcTemplate getNpcTemplate(int id) {
         return this.npcTemplates.get(id);
     }
@@ -63,6 +66,10 @@ class EntityData {
 
     public SubArea getSubArea(short id) {
         return this.subArea.get(id);
+    }
+
+    public SpellTemplate getSpellTemplate(short spell) {
+        return this.spells.get(spell);
     }
 
 }

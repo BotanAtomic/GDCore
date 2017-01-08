@@ -6,7 +6,7 @@ import lombok.Data;
  * Created by Botan on 11/11/2016 : 21:35
  */
 @Data
-abstract class AbstractLook {
+public abstract class AbstractLook {
     private int[] colors;
     private short skin;
 
