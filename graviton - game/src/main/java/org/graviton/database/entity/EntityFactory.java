@@ -9,11 +9,13 @@ import org.graviton.core.Program;
 import org.graviton.core.loader.FastLoader;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
+import org.graviton.database.repository.CommandRepository;
 import org.graviton.database.repository.GameMapRepository;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.action.item.ItemAction;
 import org.graviton.game.area.Area;
 import org.graviton.game.area.SubArea;
+import org.graviton.game.command.AbstractCommand;
 import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.creature.npc.NpcAnswer;
@@ -62,6 +64,9 @@ public class EntityFactory extends EntityData implements Manageable {
 
     @Inject
     private PlayerRepository playerRepository;
+
+    @Inject
+    private CommandRepository commandRepository;
 
     @Inject
     public EntityFactory(Program program, @Named("database.game") AbstractDatabase database) {
@@ -198,7 +203,8 @@ public class EntityFactory extends EntityData implements Manageable {
     @Override
     public void start() {
         this.itemIdentityGenerator = new AtomicInteger(database.getNextId(ITEMS, ITEMS.ID));
-        new FastLoader(this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadSpells, this::loadGameMaps).launch();
+        new FastLoader(this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadSpells, this::loadGameMaps,
+                commandRepository::load).launch();
         startScheduledAction();
     }
 
@@ -228,5 +234,10 @@ public class EntityFactory extends EntityData implements Manageable {
 
     public int getNextItemId() {
         return this.itemIdentityGenerator.getAndIncrement();
+    }
+
+
+    public AbstractCommand getCommand(String name) {
+        return commandRepository.get(name);
     }
 }
