@@ -21,13 +21,18 @@ public class SpellBoostBuff extends Buff {
         this.fighter = fighter;
         this.spellEffect = spellEffect;
 
-        fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), spellEffect.getType(), spellTemplate.getId(), spellEffect.getThird(), 0, 0, (short) (super.remainingTurns - 1), spellEffect.getSpell().getId()));
+        fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), spellEffect.getType(), spellTemplate.getId(), spellEffect.getThird(), 0, 0, (short) (super.remainingTurns - 1), spellEffect.getSpellId()));
     }
 
     @Override
     public void destroy() {
         if (!fighter.hasLaunchedSpell(spellTemplate.getId()))
             fighter.removeSpellBoost(spellTemplate.getId());
+    }
+
+    @Override
+    public void clear() {
+
     }
 
     @Override

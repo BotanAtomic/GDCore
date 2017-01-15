@@ -49,22 +49,34 @@ public class StealPointEffect implements Effect {
         short turn = effect.getTurns() == 0 ? 1 : effect.getTurns();
 
         targets.forEach(target -> {
-            int value = StatisticDodgeEffect.value(fighter, target, effect.getFirst(), characteristicType);
-            byte dodge = (byte) (effect.getFirst() + value);
-
-            if (value == 0) {
-                fighter.getFight().send(actionMessage(StatisticDodgeEffect.fightAction(characteristicType), fighter.getId(), target.getId(), effect.getFirst()));
-                return;
-            }
-
-            if (dodge > 0)
-                fighter.getFight().send(actionMessage(StatisticDodgeEffect.fightAction(characteristicType), fighter.getId(), target.getId(), dodge));
-
-            fighter.getFight().send(actionMessage((short) removeEffect(), fighter.getId(), target.getId(), value, turn));
-            fighter.getFight().send(actionMessage((short) addEffect(), fighter.getId(), fighter.getId(), value * -1, turn));
-
-            new SimpleStatisticBuff(characteristicType, true, fighter, value * -1, effect, turn);
-            new SimpleStatisticBuff(characteristicType, false, target, value, effect, turn);
+            if (target.canReturnSpell(effect.getSpell()))
+                apply(target, fighter, effect, turn);
+            else
+                apply(fighter, target, effect, turn);
         });
+    }
+
+    private void apply(Fighter fighter, Fighter target, SpellEffect effect, short turn) {
+        int value = StatisticDodgeEffect.value(fighter, target, effect.getFirst(), characteristicType);
+        byte dodge = (byte) (effect.getFirst() + value);
+
+        if (value == 0) {
+            fighter.getFight().send(actionMessage(StatisticDodgeEffect.fightAction(characteristicType), fighter.getId(), target.getId(), effect.getFirst()));
+            return;
+        }
+
+        if (dodge > 0)
+            fighter.getFight().send(actionMessage(StatisticDodgeEffect.fightAction(characteristicType), fighter.getId(), target.getId(), dodge));
+
+        fighter.getFight().send(actionMessage((short) removeEffect(), fighter.getId(), target.getId(), value, turn));
+        fighter.getFight().send(actionMessage((short) addEffect(), fighter.getId(), fighter.getId(), value * -1, turn));
+
+        new SimpleStatisticBuff(characteristicType, true, fighter, value * -1, effect, turn);
+        new SimpleStatisticBuff(characteristicType, false, target, value, effect, turn);
+    }
+
+    @Override
+    public Effect copy() {
+        return new StealPointEffect(this.characteristicType);
     }
 }

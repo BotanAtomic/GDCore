@@ -10,10 +10,12 @@ import org.graviton.network.game.protocol.FightPacketFormatter;
  */
 public class DamageSufferBuff extends Buff {
     private final short bonus;
+    private final SpellEffect spellEffect;
 
     public DamageSufferBuff(Fighter fighter, SpellEffect spellEffect) {
         super(fighter, spellEffect.getTurns());
         this.bonus = spellEffect.getFirst();
+        this.spellEffect = spellEffect;
         fighter.setDamageSuffer((short) (fighter.getDamageSuffer() + this.bonus));
         fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), spellEffect.getType(), spellEffect.getFirst(), 0, 0, 0, super.remainingTurns, spellEffect.getSpellId()));
 
@@ -22,6 +24,12 @@ public class DamageSufferBuff extends Buff {
     @Override
     public void destroy() {
         fighter.setDamageSuffer((short) (fighter.getDamageSuffer() - this.bonus));
+    }
+
+    @Override
+    public void clear() {
+        destroy();
+        fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), spellEffect.getType(), spellEffect.getFirst(), 0, 0, 0, (short) 0, spellEffect.getSpellId()));
     }
 
     @Override

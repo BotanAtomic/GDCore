@@ -10,7 +10,7 @@ import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
-import org.graviton.game.trap.Trap;
+import org.graviton.game.trap.AbstractTrap;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.utils.Cells;
 import org.graviton.utils.Utils;
@@ -24,9 +24,9 @@ import java.util.Collection;
  */
 public class PushBackEffect implements Effect {
 
-    private static Pair<Cell, Collection<Trap>> result(Fighter fighter, short size, Cell initialCell, OrientationEnum orientation, AbstractMap map) {
+    private static Pair<Cell, Collection<AbstractTrap>> result(Fighter fighter, short size, Cell initialCell, OrientationEnum orientation, AbstractMap map) {
         Cell lastCell = initialCell;
-        Collection<Trap> traps = null;
+        Collection<AbstractTrap> traps = null;
 
         for (int a = 0; a < size; a++) {
             Cell nextCell = map.getCells().get(Cells.getCellIdByOrientation(lastCell.getId(), orientation, map.getWidth()));
@@ -34,7 +34,7 @@ public class PushBackEffect implements Effect {
             if (nextCell != null && nextCell.isWalkable() && nextCell.getCreatures().isEmpty()) {
                 lastCell = nextCell;
 
-                Collection<Trap> currentTraps = fighter.getFight().checkTrap(nextCell.getId());
+                Collection<AbstractTrap> currentTraps = fighter.getFight().getTrap(nextCell.getId());
 
                 if (!currentTraps.isEmpty()) {
                     traps = currentTraps;
@@ -57,15 +57,18 @@ public class PushBackEffect implements Effect {
     }
 
     public static void apply(Fighter fighter, Fighter target, Cell selectedCell, short size) {
+        if (target.isStatic())
+            return;
+
         OrientationEnum orientation = Cells.getOrientationByCells(fighter.getFightCell(), target.getFightCell(), fighter.getFight().getFightMap().getWidth());
 
         if (orientation == null)
             return;
 
-        Pair<Cell, Collection<Trap>> result = result(target, size, target.getFightCell(), orientation, fighter.getFight().getFightMap());
+        Pair<Cell, Collection<AbstractTrap>> result = result(target, size, target.getFightCell(), orientation, fighter.getFight().getFightMap());
 
         Cell lastCell = result.getKey();
-        Collection<Trap> traps = result.getValue();
+        Collection<AbstractTrap> traps = result.getValue();
 
         target.setFightCell(lastCell);
         fighter.getFight().send(FightPacketFormatter.actionMessage(FightAction.PUSH, fighter.getId(), target.getId(), lastCell.getId()));
@@ -74,7 +77,7 @@ public class PushBackEffect implements Effect {
             traps.forEach(trap -> trap.onTrapped(target));
     }
 
-    public void applyForTrap(Trap trap, Fight fight, Collection<Cell> cells, SpellEffect effect) {
+    public void applyForTrap(AbstractTrap trap, Fight fight, Collection<Cell> cells, SpellEffect effect) {
         Lists.reverse(new ArrayList<>(cells)).forEach(cellTarget -> {
             Fighter fighter = fight.getFighter(cellTarget.getFirstCreature());
 
@@ -84,10 +87,10 @@ public class PushBackEffect implements Effect {
                 if (orientation == null)
                     return;
 
-                Pair<Cell, Collection<Trap>> result = result(fighter, effect.getFirst(), fighter.getFightCell(), orientation, fighter.getFight().getFightMap());
+                Pair<Cell, Collection<AbstractTrap>> result = result(fighter, effect.getFirst(), fighter.getFightCell(), orientation, fighter.getFight().getFightMap());
 
                 Cell lastCell = result.getKey();
-                Collection<Trap> traps = result.getValue();
+                Collection<AbstractTrap> traps = result.getValue();
 
                 fighter.setFightCell(lastCell);
                 fighter.getFight().send(FightPacketFormatter.actionMessage(FightAction.PUSH, fighter.getId(), fighter.getId(), lastCell.getId()));
@@ -102,5 +105,10 @@ public class PushBackEffect implements Effect {
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> apply(fighter, target, selectedCell, effect.getFirst()));
+    }
+
+    @Override
+    public Effect copy() {
+        return new PushBackEffect();
     }
 }

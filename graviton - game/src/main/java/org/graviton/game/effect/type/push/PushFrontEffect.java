@@ -7,7 +7,7 @@ import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
-import org.graviton.game.trap.Trap;
+import org.graviton.game.trap.AbstractTrap;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.utils.Cells;
 
@@ -23,10 +23,13 @@ public class PushFrontEffect implements Effect {
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> {
+            if (target.isStatic())
+                return;
+
             AbstractMap map = fighter.getFight().getFightMap();
             OrientationEnum orientation = Cells.getOrientationByCells(target.getFightCell(), fighter.getFightCell(), map.getWidth());
 
-            Collection<Trap> traps = null;
+            Collection<AbstractTrap> traps = null;
             Cell lastCell = target.getFightCell();
 
             for (int a = 0; a < effect.getFirst(); a++) {
@@ -37,7 +40,7 @@ public class PushFrontEffect implements Effect {
 
                 lastCell = nextCell;
 
-                Collection<Trap> currentTraps = fighter.getFight().checkTrap(nextCell.getId());
+                Collection<AbstractTrap> currentTraps = fighter.getFight().getTrap(nextCell.getId());
 
                 if (!currentTraps.isEmpty()) {
                     traps = currentTraps;
@@ -51,5 +54,10 @@ public class PushFrontEffect implements Effect {
             if (traps != null)
                 traps.forEach(trap -> trap.onTrapped(target));
         });
+    }
+
+    @Override
+    public Effect copy() {
+        return new PushFrontEffect();
     }
 }

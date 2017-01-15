@@ -22,7 +22,12 @@ public class HealBuff extends Buff {
     }
 
     @Override
+    public void clear() {
+
+    }
+
+    @Override
     public void check() {
-        HealEffect.heal(fighter, fighter, spellEffect);
+        HealEffect.heal(fighter, fighter, spellEffect, 0);
     }
 }

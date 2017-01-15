@@ -1,8 +1,6 @@
 package org.graviton.game.trap;
 
-import lombok.Data;
 import org.graviton.game.effect.type.push.PushBackEffect;
-import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.Spell;
@@ -17,42 +15,32 @@ import java.util.List;
  * Created by Botan on 30/12/2016. 16:18
  */
 
-@Data
-public class Trap {
-    private final Fighter owner;
-    private final Fight fight;
-    private final SpellTemplate originalSpell;
-    private final SpellEffect spellEffect;
-    private final Spell spell;
-    private final Cell center;
-    private final List<Cell> cells;
+public class Trap extends AbstractTrap {
 
     public Trap(Fighter owner, SpellTemplate originalSpell, SpellEffect spellEffect, Spell spell, List<Cell> cells) {
-        this.owner = owner;
-        this.fight = owner.getFight();
-        this.originalSpell = originalSpell;
-        this.spellEffect = spellEffect;
-        this.spell = spell;
-        this.center = cells.get(0);
-        this.cells = cells;
-
-        show();
+        super(owner, originalSpell, 7, spellEffect, spell, cells);
     }
 
-    public boolean containCell(short cellId) {
-        return cells.stream().filter(cell -> cell.getId() == cellId).count() != 0;
-    }
-
+    @Override
     public void show() {
-        send(FightPacketFormatter.trapAddedMessage(owner.getId(), center.getId(), spellEffect.getZone().getLength()));
+        send(FightPacketFormatter.trapAddedMessage(owner.getId(), center.getId(), spellEffect.getZone().getLength(), 7));
+        send(FightPacketFormatter.localTrapAddedMessage(owner.getId(), center.getId()));
         fight.getTraps().put(center.getId(), this);
     }
 
-    private void hide() {
-        send(FightPacketFormatter.trapDeletedMessage(owner.getId(), center.getId(), spellEffect.getZone().getLength()));
+    @Override
+    public void hide() {
+        send(FightPacketFormatter.trapDeletedMessage(owner.getId(), center.getId(), spellEffect.getZone().getLength(), 7));
+        send(FightPacketFormatter.localTrapDeleteMessage(owner.getId(), center.getId()));
         fight.getTraps().remove(center.getId());
     }
 
+    @Override
+    public void check(Fighter fighter) {
+
+    }
+
+    @Override
     public void onTrapped(Fighter fighter) {
         if (!containCell(fighter.getFightCell().getId()))
             this.cells.add(fighter.getFightCell());
@@ -61,13 +49,17 @@ public class Trap {
 
         hide();
 
+        applyEffect(fighter);
+    }
+
+    @Override
+    protected void applyEffect(Fighter fighter) {
         spell.getEffects().forEach(effect -> {
             if (effect.getType() == SpellEffects.PushBack)
                 new PushBackEffect().applyForTrap(this, fighter.getFight(), cells, effect);
             else
                 effect.getType().apply(owner, spellEffect.getZone().getTargets(this.cells, fighter), center, effect);
         });
-
     }
 
     private void send(String data) {

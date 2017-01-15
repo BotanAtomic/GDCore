@@ -21,8 +21,18 @@ public class PunishmentLifeEffect implements Effect {
 
             damage = DamageEffect.reduce(damage, fighter, target, DamageType.NEUTRAL);
 
+            if (target.canReturnSpell(effect.getSpell())) {
+                fighter.getFight().hit(target, fighter, damage);
+                return;
+            }
+
             fighter.getFight().hit(fighter, target, damage);
         });
+    }
+
+    @Override
+    public Effect copy() {
+        return new PunishmentLifeEffect();
     }
 
 }

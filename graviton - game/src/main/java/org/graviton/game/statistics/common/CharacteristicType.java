@@ -23,6 +23,8 @@ public enum CharacteristicType {
     RangePoints,
     Summons,
     Damage,
+    DamagePhysic,
+    DamageMagic,
     MultiplyDamage,
     PhysicalDamage,
     ReducePhysic,
@@ -37,6 +39,9 @@ public enum CharacteristicType {
     CriticalFailure,
 
     Armor,
+    ArmorFire,
+    ArmorWind,
+    ArmorWater,
 
     DodgeActionPoints,
     DodgeMovementPoints,

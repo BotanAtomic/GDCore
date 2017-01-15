@@ -5,6 +5,7 @@ import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
+import org.graviton.game.trap.AbstractTrap;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 
 import java.util.Collection;
@@ -20,6 +21,16 @@ public class TeleportEffect implements Effect {
         if (selectedCell.isWalkable() && selectedCell.getCreatures().isEmpty()) {
             fighter.setFightCell(selectedCell);
             fighter.getFight().send(FightPacketFormatter.actionMessage(FightAction.TELEPORT_EVENT, fighter.getId(), fighter.getId(), selectedCell.getId()));
+
+            Collection<AbstractTrap> traps = fighter.getFight().getTrap(selectedCell.getId());
+
+            if (traps != null)
+                traps.forEach(trap -> trap.onTrapped(fighter));
         }
+    }
+
+    @Override
+    public Effect copy() {
+        return new TeleportEffect();
     }
 }

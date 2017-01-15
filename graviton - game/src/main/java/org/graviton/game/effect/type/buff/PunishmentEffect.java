@@ -17,4 +17,9 @@ public class PunishmentEffect implements Effect {
         new PunishmentBuff(fighter, effect);
         System.err.println(fighter.getBuffs(PunishmentBuff.class).size() + " for " + effect.getTurns());
     }
+
+    @Override
+    public Effect copy() {
+        return new PunishmentEffect();
+    }
 }

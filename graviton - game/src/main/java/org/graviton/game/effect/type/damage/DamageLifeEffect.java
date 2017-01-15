@@ -23,8 +23,18 @@ public class DamageLifeEffect implements Effect {
         targets.forEach(target -> {
             double percent = target.getLife().getCurrent() / 100;
             double damage = percent * (effect.getSecond() != -1 ? effect.getDice().random() : effect.getFirst());
+
+            if (target.canReturnSpell(effect.getSpell())) {
+                fighter.getFight().hit(target, fighter, DamageEffect.reduce((int) damage, fighter, target, damageType));
+                return;
+            }
+
             fighter.getFight().hit(fighter, target, DamageEffect.reduce((int) damage, fighter, target, damageType));
         });
     }
 
+    @Override
+    public Effect copy() {
+        return new DamageLifeEffect(this.damageType);
+    }
 }

@@ -8,7 +8,7 @@ import org.graviton.utils.Utils;
 public class Bonus {
     private short round, num, add;
 
-    private Bonus(short round, short num, short add) {
+    public Bonus(short round, short num, short add) {
         this.round = round;
         this.num = num;
         this.add = add;

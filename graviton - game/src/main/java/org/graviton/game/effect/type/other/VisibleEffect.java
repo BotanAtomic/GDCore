@@ -17,4 +17,8 @@ public class VisibleEffect implements Effect {
         targets.stream().filter(target -> !target.isVisible()).forEach(target -> target.setVisible(true, (short) 0));
     }
 
+    @Override
+    public Effect copy() {
+        return new VisibleEffect();
+    }
 }

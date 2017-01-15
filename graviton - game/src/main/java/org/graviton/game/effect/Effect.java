@@ -11,4 +11,6 @@ import java.util.Collection;
  */
 public interface Effect {
     void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect);
+
+    Effect copy();
 }

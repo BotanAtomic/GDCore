@@ -23,7 +23,7 @@ public class SpellEffect {
     private Bonus dice;
     private Target target;
     private Zone zone;
-    private SpellTemplate spell;
+    private Spell spell;
 
     public SpellEffect(int type) {
         this.type = SpellEffects.get(type);
@@ -51,7 +51,7 @@ public class SpellEffect {
     }
 
     public short getSpellId() {
-        return this.spell != null ? this.spell.getId() : 0;
+        return this.spell != null ? this.spell.getTemplate().getId() : 0;
     }
 
 }

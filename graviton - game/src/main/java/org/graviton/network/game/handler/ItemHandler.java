@@ -101,7 +101,7 @@ public class ItemHandler {
 
         applyEffects(player, item);
         client.send(PlayerPacketFormatter.podsMessage(player.getPods()));
-        checkItemsCondition(player);
+        // checkItemsCondition(player);
 
         if (item.getPosition().needUpdate() || lastPosition.needUpdate())
             player.getMap().send(GamePacketFormatter.updateAccessories(player.getId(), PlayerPacketFormatter.gmsMessage(player)));
@@ -146,10 +146,10 @@ public class ItemHandler {
     private boolean checkConditions(Player player, ItemTemplate template) {
         if (player.getLevel() < template.getLevel()) {
             player.send(MessageFormatter.levelRequiredErrorMessage());
-            return false;
+            return true; //TODO : set false
         } else if (!template.getConditionList().check(player)) {
             player.send(MessageFormatter.conditionErrorMessage());
-            return false;
+            return true; //TODO : set false
         }
         return true;
     }

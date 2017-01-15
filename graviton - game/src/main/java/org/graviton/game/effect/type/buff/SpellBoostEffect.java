@@ -16,4 +16,9 @@ public class SpellBoostEffect implements Effect {
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         new SpellBoostBuff(fighter, fighter.getCreature().entityFactory().getSpellTemplate(effect.getFirst()), effect, (short) (effect.getTurns() + 1));
     }
+
+    @Override
+    public Effect copy() {
+        return new SpellBoostEffect();
+    }
 }

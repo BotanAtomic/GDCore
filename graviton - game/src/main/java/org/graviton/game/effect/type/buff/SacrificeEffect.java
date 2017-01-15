@@ -18,13 +18,20 @@ public class SacrificeEffect implements Effect {
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> {
             target.setSacrificed(fighter);
-            fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(target.getId(), effect.getType(), 0, 0, 0, 0, effect.getTurns(), effect.getSpell().getId()));
-            fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), effect.getType(), 0, 0, 0, 0, effect.getTurns(), effect.getSpell().getId()));
+            fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(target.getId(), effect.getType(), 0, 0, 0, 0, effect.getTurns(), effect.getSpellId()));
+            fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), effect.getType(), 0, 0, 0, 0, effect.getTurns(), effect.getSpellId()));
 
             new Buff(fighter, effect.getTurns()) {
                 @Override
                 public void destroy() {
                     fighter.setSacrificed(null);
+                }
+
+                @Override
+                public void clear() {
+                    fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(target.getId(), effect.getType(), 0, 0, 0, 0, (short) 0, effect.getSpellId()));
+                    fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), effect.getType(), 0, 0, 0, 0, (short) 0, effect.getSpellId()));
+                    destroy();
                 }
 
                 @Override
@@ -34,5 +41,10 @@ public class SacrificeEffect implements Effect {
             };
 
         });
+    }
+
+    @Override
+    public Effect copy() {
+        return new SacrificeEffect();
     }
 }

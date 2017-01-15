@@ -73,19 +73,30 @@ public class StatisticDodgeEffect implements Effect {
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> {
-            byte value = value(fighter, target, effect.getSecond() < 0 ? effect.getFirst() : effect.getDice().random(), characteristicType);
-
-            if (value == 0) {
-                fighter.getFight().send(actionMessage(fightAction(characteristicType), fighter.getId(), target.getId(), effect.getFirst()));
-                return;
-            }
-
-            if (effect.getFirst() + value > 0)
-                fighter.getFight().send(actionMessage(fightAction(characteristicType), fighter.getId(), target.getId(), effect.getFirst() + value));
-
-            fighter.getFight().send(actionMessage((short) effect.getType().value(), fighter.getId(), target.getId(), value, effect.getTurns()));
-
-            new SimpleStatisticBuff(characteristicType, true, target, value, effect, effect.getTurns());
+            if (target.canReturnSpell(effect.getSpell()))
+                apply(target, fighter, effect);
+            else
+                apply(fighter, target, effect);
         });
+    }
+
+    private void apply(Fighter fighter, Fighter target, SpellEffect effect) {
+        byte value = value(fighter, target, effect.getSecond() < 0 ? effect.getFirst() : effect.getDice().random(), characteristicType);
+
+        if (value == 0) {
+            fighter.getFight().send(actionMessage(fightAction(characteristicType), fighter.getId(), target.getId(), effect.getFirst()));
+            return;
+        }
+
+        if (effect.getFirst() + value > 0)
+            fighter.getFight().send(actionMessage(fightAction(characteristicType), fighter.getId(), target.getId(), effect.getFirst() + value));
+
+        fighter.getFight().send(actionMessage((short) effect.getType().value(), fighter.getId(), target.getId(), value, effect.getTurns()));
+        new SimpleStatisticBuff(characteristicType, true, target, value, effect, effect.getTurns());
+    }
+
+    @Override
+    public Effect copy() {
+        return new StatisticDodgeEffect(this.characteristicType);
     }
 }

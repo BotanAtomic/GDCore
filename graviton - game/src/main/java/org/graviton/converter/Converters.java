@@ -64,7 +64,7 @@ public class Converters {
         else return (byte) 5;
     };
 
-    public static java.util.function.Function<DamageType, CharacteristicType> DAMAGE_TO_CHARACTERISTIC = input -> {
+    public static Function<DamageType, CharacteristicType> DAMAGE_TO_CHARACTERISTIC = input -> {
         switch (input) {
             case WIND:
                 return CharacteristicType.Agility;

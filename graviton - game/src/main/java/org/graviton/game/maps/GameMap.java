@@ -197,9 +197,8 @@ public class GameMap implements AbstractMap {
     }
 
     public short getRandomCell() {
-        List<Cell> freeCells = this.cells.values().stream().filter(cell -> cell.isWalkable() &&
-                cell.getCreatures().isEmpty()).collect(Collectors.toList());
-        return freeCells.get(random(0, freeCells.size() - 1)).getId();
+        return Utils.getRandomObject(this.cells.values().stream().filter(cell -> cell.isWalkable() &&
+                cell.getCreatures().isEmpty()).collect(Collectors.toList())).getId();
     }
 
     public Creature getCreature(int id) {

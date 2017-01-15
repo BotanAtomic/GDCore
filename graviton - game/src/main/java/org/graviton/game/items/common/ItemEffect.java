@@ -1,6 +1,11 @@
 package org.graviton.game.items.common;
 
 import javafx.util.Pair;
+import org.graviton.game.effect.enums.DamageType;
+import org.graviton.game.items.weapon.WeaponEffect;
+import org.graviton.game.items.weapon.damage.DamageEffect;
+import org.graviton.game.items.weapon.damage.StealEffect;
+import org.graviton.game.items.weapon.heal.HealEffect;
 import org.graviton.game.statistics.common.CharacteristicType;
 
 
@@ -10,7 +15,7 @@ import org.graviton.game.statistics.common.CharacteristicType;
 public enum ItemEffect {
     NONE((short) 0),
     AddReturnDamage((short) 220, CharacteristicType.DamageReturn),
-    Heal((short) 108),
+    Heal((short) 108, new HealEffect()),
     AddAgility((short) 119, CharacteristicType.Agility),
     AddChance((short) 123, CharacteristicType.Chance),
     AddDamage((short) 112, CharacteristicType.Damage),
@@ -96,16 +101,17 @@ public enum ItemEffect {
     SubReduceDamageFire((short) 248, CharacteristicType.ResistanceFire),
     SubReduceDamageNeutral((short) 249, CharacteristicType.ResistanceNeutral),
 
-    StolenWater((short) 91),
-    StolenEarth((short) 92),
-    StolenWind((short) 93),
-    StolenFire((short) 94),
-    StolenNeutral((short) 95),
-    InflictDamageWater((short) 96),
-    InflictDamageEarth((short) 97),
-    InflictDamageWind((short) 98),
-    InflictDamageFire((short) 99),
-    InflictDamageNeutral((short) 100),
+    StolenWater((short) 91, new StealEffect(DamageType.WATER)),
+    StolenEarth((short) 92, new StealEffect(DamageType.EARTH)),
+    StolenWind((short) 93, new StealEffect(DamageType.WIND)),
+    StolenFire((short) 94, new StealEffect(DamageType.FIRE)),
+    StolenNeutral((short) 95, new StealEffect(DamageType.NEUTRAL)),
+
+    InflictDamageWater((short) 96, new DamageEffect(DamageType.WATER)),
+    InflictDamageEarth((short) 97, new DamageEffect(DamageType.EARTH)),
+    InflictDamageWind((short) 98, new DamageEffect(DamageType.WIND)),
+    InflictDamageFire((short) 99, new DamageEffect(DamageType.FIRE)),
+    InflictDamageNeutral((short) 100, new DamageEffect(DamageType.NEUTRAL)),
 
     AddSpell((short) 604),
     AddCharactForce((short) 607),
@@ -127,10 +133,16 @@ public enum ItemEffect {
 
     private short value;
     private CharacteristicType characteristic = null;
+    private WeaponEffect weaponEffect;
 
     ItemEffect(short value, CharacteristicType characteristic) {
         this.value = value;
         this.characteristic = characteristic;
+    }
+
+    ItemEffect(short value, WeaponEffect weaponEffect) {
+        this.value = value;
+        this.weaponEffect = weaponEffect;
     }
 
     ItemEffect(short value) {
@@ -148,25 +160,17 @@ public enum ItemEffect {
         return value;
     }
 
+    public WeaponEffect weaponEffect() {
+        if (this.weaponEffect != null)
+            return this.weaponEffect.copy();
+        return null;
+    }
+
     public Pair<CharacteristicType, Boolean> convert() {
         return new Pair<>(this.characteristic, !this.name().contains("Sub"));
     }
 
     public boolean isWeaponEffect() {
-        switch (this) {
-            case StolenWater:
-            case StolenEarth:
-            case StolenWind:
-            case StolenFire:
-            case StolenNeutral:
-            case InflictDamageWater:
-            case InflictDamageEarth:
-            case InflictDamageWind:
-            case InflictDamageFire:
-            case InflictDamageNeutral:
-                return true;
-            default:
-                return false;
-        }
+        return this.weaponEffect != null;
     }
 }

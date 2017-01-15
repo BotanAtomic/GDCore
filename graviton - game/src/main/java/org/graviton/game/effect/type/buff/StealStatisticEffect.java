@@ -55,11 +55,16 @@ public class StealStatisticEffect implements Effect {
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> {
-            fighter.getFight().send(actionMessage((short) removeEffect(), fighter.getId(), target.getId(), effect.getFirst(), effect.getTurns()));
-            fighter.getFight().send(actionMessage((short) addEffect(), fighter.getId(), target.getId(), effect.getFirst(), effect.getTurns()));
+            fighter.getFight().send(actionMessage((short) removeEffect(), target.getId(), target.getId(), effect.getFirst(), effect.getTurns()));
+            fighter.getFight().send(actionMessage((short) addEffect(), fighter.getId(), fighter.getId(), effect.getFirst(), effect.getTurns()));
 
             new SimpleStatisticBuff(characteristicType, false, target, effect.getFirst() * -1, effect, effect.getTurns());
             new SimpleStatisticBuff(characteristicType, true, fighter, effect.getFirst(), effect, effect.getTurns());
         });
+    }
+
+    @Override
+    public Effect copy() {
+        return new StealStatisticEffect(this.characteristicType);
     }
 }

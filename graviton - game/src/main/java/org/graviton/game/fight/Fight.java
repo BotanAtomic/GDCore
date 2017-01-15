@@ -12,6 +12,8 @@ import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.paths.Path;
+import org.graviton.game.trap.AbstractTrap;
+import org.graviton.game.trap.Glyph;
 import org.graviton.game.trap.Trap;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.network.game.protocol.GamePacketFormatter;
@@ -39,7 +41,7 @@ public abstract class Fight {
     private final FightTeam firstTeam, secondTeam;
 
     private final List<String> flagData = new LinkedList<>();
-    private final Map<Short, Trap> traps = new ConcurrentHashMap<>();
+    private final Map<Short, AbstractTrap> traps = new ConcurrentHashMap<>();
     protected FightState state = FightState.INIT;
     protected FightTurnList turnList;
 
@@ -206,9 +208,14 @@ public abstract class Fight {
             destroyFight(getSecondTeam().getLeader());
     }
 
-    public Collection<Trap> checkTrap(short cell) {
-        return this.traps.values().stream().filter(trap -> trap.containCell(cell)).collect(Collectors.toList());
+    public Collection<AbstractTrap> getTrap(short cell) {
+        return this.traps.values().stream().filter(trap -> trap instanceof Trap && trap.containCell(cell)).collect(Collectors.toList());
     }
+
+    public void checkGlyph(Fighter fighter) {
+        this.traps.values().stream().filter(trap -> trap instanceof Glyph).forEach(abstractTrap -> abstractTrap.check(fighter));
+    }
+
 
     protected long getDuration() {
         return new Interval(startTime.getTime(), new Date().getTime()).toDurationMillis();

@@ -10,10 +10,7 @@ import org.graviton.game.items.Item;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.common.ItemEffect;
 import org.graviton.game.items.common.ItemPosition;
-import org.graviton.game.statistics.BaseCharacteristic;
-import org.graviton.game.statistics.Dodge;
-import org.graviton.game.statistics.Initiative;
-import org.graviton.game.statistics.Life;
+import org.graviton.game.statistics.*;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.common.Statistics;
 import org.graviton.network.game.protocol.ItemPacketFormatter;
@@ -70,6 +67,7 @@ public class PlayerStatistics extends Statistics {
         put(CharacteristicType.Initiative, new Initiative(this, (short) 0));
         put(CharacteristicType.DodgeActionPoints, new Dodge(this));
         put(CharacteristicType.DodgeMovementPoints, new Dodge(this));
+        put(CharacteristicType.CriticalHit, new CriticalRate(this));
 
         applyItemEffects();
         applyPanoplyEffect();
@@ -96,6 +94,8 @@ public class PlayerStatistics extends Statistics {
         put(CharacteristicType.Initiative, new Initiative(this, (short) 0));
         put(CharacteristicType.DodgeActionPoints, new Dodge(this));
         put(CharacteristicType.DodgeMovementPoints, new Dodge(this));
+        put(CharacteristicType.CriticalHit, new CriticalRate(this));
+
     }
 
     private void applyItemEffects() {

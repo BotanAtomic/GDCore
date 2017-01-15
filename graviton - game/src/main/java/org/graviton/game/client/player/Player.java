@@ -67,16 +67,10 @@ public class Player extends Fighter implements Creature {
         this.location = new Location(entityFactory.getMap(record.get(PLAYERS.MAP)), record.get(PLAYERS.CELL), record.get(PLAYERS.ORIENTATION));
         this.spellList = new SpellList(spells);
 
-        inventory.addItem(entityFactory.getItemTemplate((short) 6926).createRandom(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 6927).createRandom(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 6928).createMax(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 6929).createMax(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 7226).createRandom(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 7230).createRandom(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 7238).createRandom(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 6526).createRandom(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 7242).createRandom(entityFactory.getNextItemId()), false);
-        inventory.addItem(entityFactory.getItemTemplate((short) 10496).createRandom(entityFactory.getNextItemId()), false);
+        this.inventory.addItem(entityFactory.getItemTemplate((short) 6537).createMax(entityFactory.getNextItemId()), false);
+        this.inventory.addItem(entityFactory.getItemTemplate((short) 6519).createMax(entityFactory.getNextItemId()), false);
+        this.inventory.addItem(entityFactory.getItemTemplate((short) 8118).createMax(entityFactory.getNextItemId()), false);
+
     }
 
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
@@ -94,10 +88,6 @@ public class Player extends Fighter implements Creature {
         this.alignment = new Alignment((byte) 0, 0, 0, false); //TODO : pvp
         this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell(), (byte) 1);
         this.inventory = new Inventory(this);
-
-        inventory.addItem(entityFactory.getItemTemplate((short) 9461).createMax(entityFactory.getNextItemId()), true);
-        inventory.addItem(entityFactory.getItemTemplate((short) 9021).createMax(entityFactory.getNextItemId()), true);
-        inventory.addItem(entityFactory.getItemTemplate((short) 6540).createMax(entityFactory.getNextItemId()), true);
 
         this.spellList = new SpellList(new TreeMap<>());
 

@@ -49,7 +49,7 @@ public class SpellTemplate {
                 spellEffect.setTarget(effect.getAttribute("target").toInt());
                 spellEffect.setDice(Bonus.parseBonus(effect.getAttribute("dice").toString()));
                 spellEffect.setCompiledZone(effect.getAttribute("zone").toString());
-                spellEffect.setSpell(this);
+                spellEffect.setSpell(current);
 
                 current.addEffect(spellEffect, effect.getAttribute("critical").toBoolean());
 

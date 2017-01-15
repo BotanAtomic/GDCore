@@ -21,6 +21,11 @@ public class InvisibleBuff extends Buff {
     }
 
     @Override
+    public void clear() {
+        destroy();
+    }
+
+    @Override
     public void check() {
 
     }

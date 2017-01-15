@@ -13,6 +13,7 @@ import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.utils.Utils;
 
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -39,8 +40,13 @@ public class FightMovement extends Path implements AbstractGameAction {
     private static short getTackleChance(Fighter fighter, Collection<Fighter> enemies) {
         short agility = fighter.getStatistics().get(CharacteristicType.Agility).total();
         AtomicInteger enemiesAgility = new AtomicInteger(0);
-        enemies.forEach(enemy -> enemiesAgility.addAndGet(enemy.getStatistics().get(CharacteristicType.Agility).total()));
-        return (short) ((300 * (agility + 25) / ((short) (agility + enemiesAgility.get() + (50 * enemies.size())))) - 100);
+        AtomicBoolean blocked = new AtomicBoolean(fighter.isStatic());
+        enemies.forEach(enemy -> {
+            enemiesAgility.addAndGet(enemy.getStatistics().get(CharacteristicType.Agility).total());
+            if (enemy.isStatic() && !blocked.get())
+                blocked.set(true);
+        });
+        return blocked.get() ? 0 : (short) ((300 * (agility + 25) / ((short) (agility + enemiesAgility.get() + (50 * enemies.size())))) - 100);
     }
 
     @Override
@@ -89,19 +95,25 @@ public class FightMovement extends Path implements AbstractGameAction {
 
     @Override
     public void finish(String data) {
+        finish(fighter);
+
+        if (fighter.getHolding() != null)
+            finish(fighter.getHolding());
+
+        fightMap.send(FightPacketFormatter.movementPointEventMessage(fighter.getId(), (byte) (super.size() * -1)));
+        fighter.setCurrentMovementPoint((byte) (fighter.getCurrentMovementPoint() - super.size()));
+        if (!tasks.isEmpty())
+            tasks.forEach(Runnable::run);
+
+        fighter.setOnAction(false);
+    }
+
+    private void finish(Fighter fighter) {
         fighter.getLocation().getCell().getCreatures().remove(fighter.getId());
         newCell.getCreatures().add(fighter.getId());
 
         fighter.getLocation().setOrientation(getOrientation());
         fighter.getLocation().setCell(newCell);
-
-        fightMap.send(FightPacketFormatter.movementPointEventMessage(fighter.getId(), (byte) (super.size() * -1)));
-        fighter.setCurrentMovementPoint((byte) (fighter.getCurrentMovementPoint() - super.size()));
-
-        if (!tasks.isEmpty())
-            tasks.forEach(Runnable::run);
-
-        fighter.setOnAction(false);
     }
 
 }

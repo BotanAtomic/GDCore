@@ -23,4 +23,9 @@ public class RemoveDamageEffect implements Effect {
             new SimpleStatisticBuff(CharacteristicType.Damage, false, target, effect.getFirst() * -1, effect, effect.getTurns());
         });
     }
+
+    @Override
+    public Effect copy() {
+        return new RemoveDamageEffect();
+    }
 }

@@ -28,4 +28,9 @@ public class StealRangeEffect implements Effect {
             new SimpleStatisticBuff(CharacteristicType.RangePoints, true, fighter, effect.getFirst(), effect, effect.getTurns());
         });
     }
+
+    @Override
+    public Effect copy() {
+        return new StealRangeEffect();
+    }
 }

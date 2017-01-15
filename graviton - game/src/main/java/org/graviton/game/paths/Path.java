@@ -1,10 +1,11 @@
 package org.graviton.game.paths;
 
+import org.graviton.game.effect.state.State;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
-import org.graviton.game.trap.Trap;
+import org.graviton.game.trap.AbstractTrap;
 import org.graviton.network.game.protocol.MessageFormatter;
 import org.graviton.utils.Cells;
 import org.graviton.utils.Utils;
@@ -63,14 +64,23 @@ public class Path extends ArrayList<Short> {
                 add(lastCell);
                 newPath += stepPath.charAt(0) + Cells.encode(lastCell);
 
-                Collection<Trap> traps = fighter.getFight().checkTrap(lastCell);
+                Collection<AbstractTrap> traps = fighter.getFight().getTrap(lastCell);
 
                 if (!traps.isEmpty()) {
-                    fighter.getFight().checkTrap(lastCell).forEach(trap -> tasks.add((() -> trap.onTrapped(fighter))));
+                    fighter.getFight().getTrap(lastCell).forEach(trap -> tasks.add((() -> trap.onTrapped(fighter))));
                     return;
                 }
 
-                if (fighter != null && !getAroundFighters(map, fighter, lastCell).isEmpty())
+                if (fighter.getHoldingBy() != null) {
+                    fighter.getHoldingBy().getStates().remove(State.Carrier);
+                    fighter.getHoldingBy().setHolding(null);
+
+                    fighter.setHoldingBy(null);
+                    fighter.getStates().remove(State.Carried);
+                    return;
+                }
+
+                if (!getAroundFighters(map, fighter, lastCell).isEmpty())
                     return;
             }
 

@@ -7,7 +7,7 @@ import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
-import org.graviton.game.trap.Trap;
+import org.graviton.game.trap.AbstractTrap;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.utils.Cells;
 
@@ -30,7 +30,7 @@ public class PushFearEffect implements Effect {
 
 
         if (target != null) {
-            Collection<Trap> traps = null;
+            Collection<AbstractTrap> traps = null;
 
             while (true) {
                 Cell currentCell = map.getCells().get(Cells.getCellIdByOrientation(lastCell.getId(), orientation, map.getWidth()));
@@ -40,7 +40,7 @@ public class PushFearEffect implements Effect {
 
                 lastCell = currentCell;
 
-                Collection<Trap> currentTraps = fighter.getFight().checkTrap(currentCell.getId());
+                Collection<AbstractTrap> currentTraps = fighter.getFight().getTrap(currentCell.getId());
 
                 if (!currentTraps.isEmpty()) {
                     traps = currentTraps;
@@ -56,5 +56,10 @@ public class PushFearEffect implements Effect {
             if (traps != null)
                 traps.forEach(currentTrap -> currentTrap.onTrapped(target));
         }
+    }
+
+    @Override
+    public Effect copy() {
+        return new PushFearEffect();
     }
 }

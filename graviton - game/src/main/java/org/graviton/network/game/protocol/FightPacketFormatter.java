@@ -257,16 +257,16 @@ public class FightPacketFormatter {
         return "GA1;306;" + triggerId + ";" + originalSpellId + "," + triggerCellId + ",407,1,1," + trapOwnerId;
     }
 
-    public static String trapDeletedMessage(long trapOwnerId, short trapCellId, int trapSize) {
-        return "GA;999;" + trapOwnerId + ";GDZ-" + trapCellId + ";" + trapSize + ";7";
+    public static String trapDeletedMessage(long trapOwnerId, short trapCellId, int trapSize, int color) {
+        return "GA;999;" + trapOwnerId + ";GDZ-" + trapCellId + ";" + trapSize + ";" + color;
     }
 
     public static String localTrapDeleteMessage(long trapOwnerId, short trapCellId) {
         return "GA;999;" + trapOwnerId + ";GDC" + trapCellId;
     }
 
-    public static String trapAddedMessage(long trapOwnerId, short trapCellid, int trapSize) {
-        return "GA;999;" + trapOwnerId + ";GDZ+" + trapCellid + ";" + trapSize + ";7";
+    public static String trapAddedMessage(long trapOwnerId, short trapCellid, int trapSize, int color) {
+        return "GA;999;" + trapOwnerId + ";GDZ+" + trapCellid + ";" + trapSize + ";" + color;
     }
 
     public static String localTrapAddedMessage(long trapOwnerId, short trapCellId) {

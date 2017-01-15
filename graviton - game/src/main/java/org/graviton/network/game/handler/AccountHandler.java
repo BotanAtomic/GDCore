@@ -55,7 +55,7 @@ public class AccountHandler {
                 break;
 
             case 76: // 'L'
-                client.send(client.getAccount().getPlayerPacket(true));
+                client.send(client.getAccount().getPlayerPacket(data.isEmpty()));
                 break;
 
             case 80: // 'P'

@@ -18,5 +18,10 @@ public class InvisibleEffect implements Effect {
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> new InvisibleBuff(target, effect.getTurns()));
     }
+
+    @Override
+    public Effect copy() {
+        return new InvisibleEffect();
+    }
 }
 

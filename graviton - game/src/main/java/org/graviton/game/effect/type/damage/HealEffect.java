@@ -14,9 +14,9 @@ import java.util.Collection;
  */
 public class HealEffect implements Effect {
 
-    public static void heal(Fighter fighter, Fighter target, SpellEffect effect) {
+    public static void heal(Fighter fighter, Fighter target, SpellEffect effect, int boost) {
         double factor = (100 + fighter.getStatistics().get(CharacteristicType.Intelligence).total()) / 100;
-        int heal = (int) (effect.getDice().random() * factor + fighter.getStatistics().get(CharacteristicType.HealPoints).total());
+        int heal = (int) ((effect.getDice().random() + boost) * factor + fighter.getStatistics().get(CharacteristicType.HealPoints).total());
 
         if (target.getLife().getCurrent() + heal > target.getLife().getMaximum())
             heal = target.getLife().getMaximum() - target.getLife().getCurrent();
@@ -28,9 +28,14 @@ public class HealEffect implements Effect {
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> {
             if (effect.getTurns() <= 0)
-                heal(fighter, target, effect);
+                heal(fighter, target, effect, effect.getThird());
             else
                 new HealBuff(target, effect);
         });
+    }
+
+    @Override
+    public Effect copy() {
+        return new HealEffect();
     }
 }

@@ -13,16 +13,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Data
 public class SubArea {
-    private final List<GameMap> gameMap = new CopyOnWriteArrayList<>();
+    private final List<GameMap> gameMaps;
     private short id;
     private Area area;
 
     public SubArea(XMLElement element, Area area) {
+        this.gameMaps = new CopyOnWriteArrayList<>();
         this.id = element.getAttribute("id").toShort();
         this.area = area;
     }
 
     public void registerGameMap(GameMap gameMap) {
-        this.gameMap.add(gameMap);
+        this.gameMaps.add(gameMap);
     }
 }

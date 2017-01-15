@@ -12,7 +12,7 @@ import org.graviton.network.game.protocol.GamePacketFormatter;
 public class AskDefy implements AbstractGameAction {
 
     public AskDefy(GameClient client, int targetId) {
-        Player target = client.getPlayerRepository().get(targetId);
+        Player target = client.getPlayerRepository().find(targetId);
 
         if (target == null) {
             client.send(GamePacketFormatter.awayPlayerMessage(targetId));

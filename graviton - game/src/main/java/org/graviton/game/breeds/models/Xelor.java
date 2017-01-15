@@ -9,6 +9,7 @@ import java.util.Map;
  * Created by Botan on 05/11/2016 : 23:05
  */
 public class Xelor extends AbstractBreed {
+
     private static final Map<Short, Short> spells = new HashMap<Short, Short>() {{
         put((short) 3, (short) 84);
         put((short) 6, (short) 100);
@@ -29,6 +30,7 @@ public class Xelor extends AbstractBreed {
         put((short) 100, (short) 97);
         put((short) 200, (short) 1909);
     }};
+
     private static short[] startSpells = {82, 81, 83};
 
     @Override

@@ -25,6 +25,11 @@ public class PoisonBuff extends Buff {
     }
 
     @Override
+    public void clear() {
+
+    }
+
+    @Override
     public void check() {
         fighter.getFight().hit(fighter, fighter, DamageEffect.damage(effect, fighter, fighter, this.damageType, 0));
     }

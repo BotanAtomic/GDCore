@@ -5,11 +5,14 @@ import org.graviton.api.Creature;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.effect.buff.Buff;
 import org.graviton.game.effect.buff.type.InvisibleBuff;
+import org.graviton.game.effect.state.State;
+import org.graviton.game.fight.common.FightAction;
 import org.graviton.game.fight.common.FightSide;
 import org.graviton.game.fight.team.FightTeam;
 import org.graviton.game.fight.turn.FightTurn;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
+import org.graviton.game.spell.Spell;
 import org.graviton.game.statistics.Life;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.common.Statistics;
@@ -25,7 +28,6 @@ import java.util.stream.Collectors;
 
 @Data
 public abstract class Fighter {
-    private static final short INVISIBLE_ACTION = 150;
     private Fight fight;
     private FightSide side;
     private FightTeam team;
@@ -43,8 +45,13 @@ public abstract class Fighter {
     private short damageSuffer = 0;
     private List<Short> launchedSpells = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
+    private List<State> states = new ArrayList<>();
     private Map<Short, Short> spellBoost = new HashMap<>();
+    private byte returnSpell = 0;
+
     private Fighter sacrificed;
+    private Fighter holdingBy;
+    private Fighter holding;
 
     public static Comparator<Fighter> compareByInitiative() {
         return Comparator.comparingInt(Fighter::getInitiative);
@@ -63,6 +70,10 @@ public abstract class Fighter {
     public abstract void send(String data);
 
     public abstract String getFightGM();
+
+    public boolean isStatic() {
+        return this.states.contains(State.Rooted);
+    }
 
     public void addLaunchedSpell(short spell) {
         this.launchedSpells.add(spell);
@@ -98,7 +109,7 @@ public abstract class Fighter {
 
     public void setVisible(boolean visible, short turns) {
         this.visible = visible;
-        getFight().send(FightPacketFormatter.actionMessage(INVISIBLE_ACTION, getId(), getId(), turns));
+        getFight().send(FightPacketFormatter.actionMessage(FightAction.INVISIBLE_EVENT, getId(), getId(), turns));
     }
 
     public void setVisibleAfterAttack() {
@@ -201,7 +212,7 @@ public abstract class Fighter {
 
     public void clearBuffs() {
         new ArrayList<>(this.buffs).forEach(buff -> {
-            buff.destroy();
+            buff.clear();
             this.buffs.remove(buff);
         });
     }
@@ -238,6 +249,14 @@ public abstract class Fighter {
         send(FightPacketFormatter.fighterLeft());
         destroy();
         fight.generateFlag();
+    }
+
+    public boolean canReturnSpell(Spell spell) {
+        if (this.returnSpell >= spell.getLevel()) {
+            fight.send(FightPacketFormatter.actionMessage(FightAction.RETURN_SPELL, getId(), getId(), 1));
+            return true;
+        }
+        return false;
     }
 
     @Override

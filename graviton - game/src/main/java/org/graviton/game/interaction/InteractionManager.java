@@ -35,6 +35,10 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
                 addAction(new SpellAttack(client.getPlayer(), new short[]{Short.parseShort(data.split(";")[0]), Short.parseShort(data.split(";")[1])}));
                 break;
 
+            case WEAPON_ATTACK:
+                addAction(new WeaponAttack(client.getPlayer(), Short.parseShort(data)));
+                break;
+
             case ASK_DEFY:
                 addAction(new AskDefy(client, Integer.parseInt(data)));
                 break;

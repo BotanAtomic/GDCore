@@ -42,6 +42,7 @@ public class SimpleStatisticBuff extends Buff {
         }
 
         fighter.refreshStatistics();
+
     }
 
     @Override
@@ -59,7 +60,12 @@ public class SimpleStatisticBuff extends Buff {
         }
 
         fighter.refreshStatistics();
+    }
 
+    @Override
+    public void clear() {
+        destroy();
+        fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), spellEffect.getType(), add ? value : value * -1, 0, 0, 0, (short) 0, spellEffect.getSpellId()));
     }
 
     @Override

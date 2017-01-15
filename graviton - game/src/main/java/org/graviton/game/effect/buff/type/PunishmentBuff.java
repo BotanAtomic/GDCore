@@ -24,12 +24,17 @@ public class PunishmentBuff extends Buff {
         this.effect = baseEffect;
         this.bonusEffect = build(baseEffect);
         this.maximum = baseEffect.getSecond();
-        fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), baseEffect.getType(), 0, baseEffect.getSecond(), baseEffect.getTurns(), 0, super.remainingTurns, baseEffect.getSpell().getId()));
+        fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), baseEffect.getType(), 0, baseEffect.getSecond(), baseEffect.getTurns(), 0, super.remainingTurns, baseEffect.getSpellId()));
     }
 
     @Override
     public void destroy() {
 
+    }
+
+    @Override
+    public void clear() {
+        fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), effect.getType(), 0, effect.getSecond(), effect.getTurns(), 0, (short) 0, effect.getSpellId()));
     }
 
     @Override

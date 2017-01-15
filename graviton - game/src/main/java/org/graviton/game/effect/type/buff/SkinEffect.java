@@ -16,7 +16,15 @@ public class SkinEffect implements Effect {
 
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
-        targets.forEach(target -> fighter.getFight().send(actionMessage((short) effect.getType().value(), fighter.getId(), target.getId(), target.getCreature().look().getSkin(), effect.getThird(), effect.getTurns())));
+        targets.forEach(target -> {
+            short skin = effect.getThird() == -1 ? target.getCreature().look().getSkin() : effect.getThird();
+            short turns = effect.getThird() == -1 ? 0 : effect.getTurns();
+            fighter.getFight().send(actionMessage((short) effect.getType().value(), fighter.getId(), target.getId(), target.getCreature().look().getSkin(), skin, turns));
+        });
     }
 
+    @Override
+    public Effect copy() {
+        return new SkinEffect();
+    }
 }

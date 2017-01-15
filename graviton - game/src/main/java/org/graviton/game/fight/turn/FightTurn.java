@@ -45,6 +45,7 @@ public class FightTurn {
     }
 
     private void startTurn() {
+        fight.checkGlyph(fighter);
         fighter.getBuffs().forEach(Buff::check);
         future = fight.schedule(this::end, Dofus.TURN_TIME + 750);
     }

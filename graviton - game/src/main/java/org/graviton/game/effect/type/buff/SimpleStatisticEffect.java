@@ -1,7 +1,6 @@
 package org.graviton.game.effect.type.buff;
 
 import org.graviton.game.effect.Effect;
-import org.graviton.game.effect.buff.Buff;
 import org.graviton.game.effect.buff.type.SimpleStatisticBuff;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.maps.cell.Cell;
@@ -26,7 +25,11 @@ public class SimpleStatisticEffect implements Effect {
 
     private void apply(Fighter fighter, Fighter target, SpellEffect effect) {
         short value = effect.getSecond() != -1 ? effect.getDice().random() : effect.getFirst();
+
         short finalValue = (short) (add ? value : -value);
+
+        if (characteristicType == CharacteristicType.MovementPoints || characteristicType == CharacteristicType.ActionPoints)
+            value = finalValue;
 
         fighter.getFight().send(actionMessage((short) effect.getType().value(), fighter.getId(), target.getId(), value, effect.getTurns() == 1 ? 2 : effect.getTurns()));
         new SimpleStatisticBuff(characteristicType, add, target, finalValue, effect, effect.getTurns());
@@ -35,24 +38,11 @@ public class SimpleStatisticEffect implements Effect {
 
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
-        targets.forEach(target -> {
-            if (effect.getTurns() > 0) {
-                System.err.println("Turns = " + effect.getTurns());
-                new Buff(target, effect.getTurns()) {
-                    @Override
-                    public void destroy() {
-                        System.err.println("destroy........");
-                    }
+        targets.forEach(target -> apply(fighter, target, effect));
+    }
 
-                    @Override
-                    public void check() {
-                        apply(fighter, target, effect);
-                        System.err.println("aply........" + remainingTurns);
-
-                    }
-                };
-            } else
-                apply(fighter, target, effect);
-        });
+    @Override
+    public Effect copy() {
+        return new SimpleStatisticEffect(this.characteristicType, add);
     }
 }

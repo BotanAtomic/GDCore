@@ -20,13 +20,18 @@ public class DodgeAttackEffect implements Effect {
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> {
             target.setDodgeAttack(true);
-            fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(target.getId(), Transpose_ally, effect.getFirst(), effect.getSecond(), 0, 0, effect.getTurns(), effect.getSpell().getId()));
+            fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(target.getId(), Transpose_ally, effect.getFirst(), effect.getSecond(), 0, 0, effect.getTurns(), effect.getSpellId()));
 
             new Buff(target, effect.getTurns()) {
                 @Override
                 public void destroy() {
                     target.setDodgeAttack(false);
-                    target.removeBuff(this);
+                }
+
+                @Override
+                public void clear() {
+                    fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(target.getId(), Transpose_ally, effect.getFirst(), effect.getSecond(), 0, 0, (short) 0, effect.getSpellId()));
+                    destroy();
                 }
 
                 @Override
@@ -35,7 +40,11 @@ public class DodgeAttackEffect implements Effect {
                 }
             };
         });
+    }
 
+    @Override
+    public Effect copy() {
+        return new DodgeAttackEffect();
     }
 
 }

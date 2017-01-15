@@ -12,6 +12,7 @@ import org.graviton.network.game.protocol.FightPacketFormatter;
 
 @Data
 public class RandomAttackResultBuff extends Buff {
+    private final SpellEffect spellEffect;
     private short rateHeal;
     private short rateDamage;
 
@@ -19,12 +20,18 @@ public class RandomAttackResultBuff extends Buff {
         super(fighter, spellEffect.getTurns());
         this.rateHeal = spellEffect.getSecond();
         this.rateDamage = spellEffect.getFirst();
+        this.spellEffect = spellEffect;
         fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), spellEffect.getType(), rateDamage, rateHeal, spellEffect.getThird(), 0, (short) (super.remainingTurns - 1), spellEffect.getSpellId()));
     }
 
     @Override
     public void destroy() {
 
+    }
+
+    @Override
+    public void clear() {
+        fighter.getFight().send(FightPacketFormatter.fighterBuffMessage(fighter.getId(), spellEffect.getType(), rateDamage, rateHeal, spellEffect.getThird(), 0, (short) 0, spellEffect.getSpellId()));
     }
 
     @Override

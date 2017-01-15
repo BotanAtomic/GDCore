@@ -30,8 +30,20 @@ public class StealEffect implements Effect {
 
             int damage = DamageEffect.damage(effect, fighter, target, damageType, 0);
             int heal = damage / 2;
+
+            if (effect.getSpell() != null && target.canReturnSpell(effect.getSpell())) {
+                fighter.getFight().hit(target, fighter, damage);
+                fighter.getFight().hit(fighter, target, Utils.limit(heal, target.getLife().getMaximum() - target.getLife().getCurrent()) * -1);
+                return;
+            }
+
             fighter.getFight().hit(fighter, target, damage);
             fighter.getFight().hit(target, fighter, Utils.limit(heal, fighter.getLife().getMaximum() - fighter.getLife().getCurrent()) * -1);
         });
+    }
+
+    @Override
+    public Effect copy() {
+        return new StealEffect(damageType, onlyAlly);
     }
 }

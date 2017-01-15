@@ -6,7 +6,7 @@ package org.graviton.game.items.common;
 public enum ItemPosition {
     NotEquipped((byte) -1),
     Amulet((byte) 0),
-    Weapon((byte) 1),
+    Weapon((byte) 1, true),
     LeftRing((byte) 2),
     Belt((byte) 3),
     RightRing((byte) 4),

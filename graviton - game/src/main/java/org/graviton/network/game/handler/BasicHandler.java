@@ -36,7 +36,7 @@ public class BasicHandler {
                 break;
 
             case 97: // 'a'
-                changePlayerMapByPosition(data.substring(1));
+                client.getPlayer().changeMap(client.getEntityFactory().getMap(data.substring(1)), (short) 0);
                 break;
 
             default:
@@ -44,10 +44,6 @@ public class BasicHandler {
         }
     }
 
-
-    private void changePlayerMapByPosition(String position) {
-        client.getPlayer().changeMap(client.getEntityFactory().getMapByPosition(position), (short) 0);
-    }
 
     private void speak(String[] data) {
         Player player = client.getPlayer();

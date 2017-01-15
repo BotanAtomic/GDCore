@@ -13,12 +13,13 @@ public class Alignment {
     private byte grade, alignmentLevel;
     private boolean enabled;
 
+    //TODO : PVP
     public Alignment(byte id, int honor, int dishonor, boolean enabled) {
         this.type = AlignmentType.get(id);
         this.honor = honor;
         this.dishonor = dishonor;
-        this.grade = 1; //TODO : calcul grade
-        this.alignmentLevel = 1; //TODO : pvp
+        this.grade = 1;
+        this.alignmentLevel = 1;
         this.enabled = enabled;
     }
 

@@ -30,7 +30,7 @@ public class Item {
         this.template = template;
         this.position = ItemPosition.get(record.get(ITEMS.POSITION));
         this.quantity = record.get(ITEMS.QUANTITY);
-        this.statistics = this.template.getEffectByString(record.get(ITEMS.STATISTICS), true);
+        this.statistics = this.template.getEffectByString(record.get(ITEMS.STATISTICS));
     }
 
     public Item(int id, ItemTemplate template, ItemPosition position, TreeMap<ItemEffect, Short> statistics) {

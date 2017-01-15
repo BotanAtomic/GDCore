@@ -20,4 +20,9 @@ public class LifeTransferEffect implements Effect {
         targets.forEach(target -> target.getFight().hit(fighter, target, toGive * -1));
         fighter.getFight().hit(fighter, fighter, toGive);
     }
+
+    @Override
+    public Effect copy() {
+        return new LifeTransferEffect();
+    }
 }

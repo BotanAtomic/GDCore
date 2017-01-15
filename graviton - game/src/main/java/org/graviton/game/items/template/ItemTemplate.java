@@ -9,9 +9,12 @@ import org.graviton.game.items.common.Bonus;
 import org.graviton.game.items.common.ItemEffect;
 import org.graviton.game.items.common.ItemPosition;
 import org.graviton.game.items.common.ItemType;
+import org.graviton.game.items.weapon.WeaponEffect;
 import org.graviton.network.game.GameClient;
 import org.graviton.xml.XMLElement;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -32,7 +35,10 @@ public class ItemTemplate {
     private byte[] scopeRange;
     private short criticalRate, criticalBonus, failureRate;
     private boolean twoHands;
+
     private TreeMap<ItemEffect, Bonus> effects = new TreeMap<>();
+
+    private Collection<WeaponEffect> weaponEffects;
 
     private Panoply panoply;
 
@@ -49,6 +55,7 @@ public class ItemTemplate {
                 Bonus.parseBonus(effect.getAttribute("bonus").toString())));
 
         if (this.type != null && this.type.isWeapon()) {
+            this.weaponEffects = buildSpellEffects();
             this.actionPointCost = element.getAttribute("cost").toByte();
             scopeRange = new byte[]{element.getAttribute("minRange").toByte(), element.getAttribute("maxRange").toByte()};
             criticalRate = element.getAttribute("criticalRate").toShort();
@@ -56,6 +63,16 @@ public class ItemTemplate {
             criticalBonus = element.getAttribute("criticalBonus").toShort();
             twoHands = element.getAttribute("twoHands").toBoolean();
         }
+    }
+
+    private Collection<WeaponEffect> buildSpellEffects() {
+        Collection<WeaponEffect> weaponEffects = new ArrayList<>();
+        this.effects.forEach((itemEffect, bonus) -> {
+            if (itemEffect.weaponEffect() != null)
+                weaponEffects.add(itemEffect.weaponEffect().setBonus(bonus));
+
+        });
+        return weaponEffects;
     }
 
     public void addAction(ItemAction itemAction, String parameter) {
@@ -80,7 +97,7 @@ public class ItemTemplate {
         }};
     }
 
-    public TreeMap<ItemEffect, Short> getEffectByString(String data, boolean useMax) {
+    public TreeMap<ItemEffect, Short> getEffectByString(String data) {
         TreeMap<ItemEffect, Short> effects = new TreeMap<>();
         if (data.isEmpty()) return effects;
 

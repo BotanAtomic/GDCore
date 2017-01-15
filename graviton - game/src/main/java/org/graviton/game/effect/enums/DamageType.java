@@ -9,5 +9,9 @@ public enum DamageType {
     NEUTRAL,
     WATER,
     WIND,
-    EARTH
+    EARTH;
+
+    public static DamageType get(short value) {
+        return values()[value];
+    }
 }

@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.LoginDatabase;
+import org.graviton.database.Repository;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
@@ -26,15 +27,13 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
 /**
  * Created by Botan on 06/11/2016 : 12:51
  */
-public class PlayerRepository {
-    private final Map<Integer, Player> players;
+public class PlayerRepository extends Repository<Integer, Player> {
     private final LoginDatabase database;
     @Inject
     private EntityFactory entityFactory;
 
     @Inject
     public PlayerRepository(@Named("database.login") AbstractDatabase database) {
-        this.players = new ConcurrentHashMap<>();
         this.database = (LoginDatabase) database;
     }
 
@@ -68,7 +67,7 @@ public class PlayerRepository {
                         (byte) ExchangeConnector.serverId).execute();
 
         createSpells(player);
-        this.players.put(player.getId(), player);
+        super.add(player.getId(), player);
     }
 
     private void createSpells(Player player) {
@@ -90,7 +89,7 @@ public class PlayerRepository {
     public Collection<Player> getPlayers(Account account) {
         return Collections.synchronizedList(database.getResult(PLAYERS, PLAYERS.OWNER.equal(account.getId())).stream().map(record -> {
             Player player = new Player(record, account, loadItems(record.get(PLAYERS.ID)), loadSpells(record.get(PLAYERS.ID)), entityFactory);
-            this.players.put(player.getId(), player);
+            super.add(player.getId(), player);
             return player;
         }).collect(Collectors.toList()));
     }
@@ -113,12 +112,12 @@ public class PlayerRepository {
                 .where(SPELLS.OWNER.equal(player.getId()), SPELLS.SPELL.equal(spellView.getId())).execute();
     }
 
-    public void removeSpellView(Player player) {
+    private void removeSpellView(Player player) {
         database.getDslContext().delete(SPELLS).where(SPELLS.OWNER.equal(player.getId())).execute();
     }
 
     void unload(int player) {
-        this.players.remove(player);
+        super.remove(player);
     }
 
     public int getNextId() {
@@ -126,7 +125,7 @@ public class PlayerRepository {
     }
 
     public void save() {
-        this.players.values().forEach(this::save);
+        super.stream().forEach(this::save);
     }
 
     public void save(Player player) {
@@ -166,7 +165,7 @@ public class PlayerRepository {
                 values(item.getId(), item.getTemplate().getId(), owner, item.getPosition().value(), item.getQuantity(), item.parseEffects()).execute();
     }
 
-    public void saveItems(Player player) {
+    private void saveItems(Player player) {
         player.getInventory().values().forEach(item -> database.update(ITEMS)
                 .set(ITEMS.POSITION, item.getPosition().value())
                 .set(ITEMS.QUANTITY, item.getQuantity())
@@ -177,17 +176,20 @@ public class PlayerRepository {
         account.getPlayers().forEach(this::save);
     }
 
-    public Player find(String name) {
+    private Player getByName(String name) {
         Optional<Player> record;
-        return (record = this.players.values().stream().filter(player -> player.getName().equals(name)).findFirst()).isPresent() ? record.get() : null;
+        return (record = super.stream().filter(player -> player.getName().equals(name)).findFirst()).isPresent() ? record.get() : null;
     }
 
     public void send(String data) {
-        this.players.values().stream().filter(Player::isOnline).forEach(player -> player.send(data));
+        super.stream().filter(Player::isOnline).forEach(player -> player.send(data));
     }
 
-    public Player get(int id) {
-        System.err.println("Contains " + id + " ? " + this.players.containsKey(id));
-        return this.players.get(id);
+    @Override
+    public Player find(Object value) {
+        if (value instanceof Integer)
+            return super.get((int) value);
+        else
+            return getByName((String) value);
     }
 }

@@ -1,5 +1,6 @@
 package org.graviton.game.effect.type.damage;
 
+import javafx.util.Pair;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.effect.Effect;
 import org.graviton.game.effect.buff.type.PoisonBuff;
@@ -8,6 +9,7 @@ import org.graviton.game.effect.buff.type.RandomAttackResultBuff;
 import org.graviton.game.effect.enums.DamageType;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
+import org.graviton.game.items.common.Bonus;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
 import org.graviton.game.statistics.common.CharacteristicType;
@@ -39,13 +41,21 @@ public class DamageEffect implements Effect {
 
         Statistics statistics = fighter.getStatistics();
 
-        AtomicInteger damage = new AtomicInteger((effect.getDice().random() + boost) * ((100 + statistics.get(DAMAGE_TO_CHARACTERISTIC.apply(damageType)).total() +
-                statistics.get(CharacteristicType.DamagePer).total() + (100 * statistics.get(CharacteristicType.MultiplyDamage).total())) / 100) + statistics.get(CharacteristicType.Damage).total());
+        AtomicInteger damage = new AtomicInteger((effect.getDice().random() + boost) *
+                ((100 + statistics.get(DAMAGE_TO_CHARACTERISTIC.apply(damageType)).total() +
+                        statistics.get(CharacteristicType.DamagePer).total() + (100 * statistics.get(CharacteristicType.MultiplyDamage).total())) / 100) +
+                statistics.get(CharacteristicType.Damage).total() + specialDamage(statistics, damageType));
 
         damage.set(reduce(damage.get(), fighter, target, damageType));
 
-
         return damage.get();
+    }
+
+    private static int specialDamage(Statistics statistics, DamageType damageType) {
+        if (damageType == DamageType.NEUTRAL || damageType == DamageType.EARTH)
+            return statistics.get(CharacteristicType.DamagePhysic).total();
+        else
+            return statistics.get(CharacteristicType.DamageMagic).total();
     }
 
     static int reduce(int baseDamage, Fighter fighter, Fighter target, DamageType damageType) {
@@ -56,21 +66,20 @@ public class DamageEffect implements Effect {
         damage.addAndGet(-applyReturnDamage(fighter, target, targetStatistics));
         damage.addAndGet(getDamageReduction(damageType, targetStatistics, baseDamage));
 
-        damage.addAndGet(-getReduction(targetStatistics, damageType));
-
-        short armor = target.getStatistics().get(CharacteristicType.Armor).total();
+        Pair<Short, Short> reduction = getReduction(targetStatistics, damageType);
+        short armor = (short) (target.getStatistics().get(CharacteristicType.Armor).total() + reduction.getKey());
 
         if (armor != 0) {
-            target.getFight().send(FightPacketFormatter.actionMessage(FightAction.ARMOR, target.getId(), target.getId(), armor));
+            target.getFight().send(FightPacketFormatter.actionMessage(FightAction.ARMOR, target.getId(), target.getId(), armor - reduction.getValue()));
             damage.addAndGet(-armor);
         }
-
-        damage.set(Utils.limit(damage.get(), target.getLife().getCurrent()));
 
         if (target.getDamageSuffer() != 0) {
             double factor = (double) target.getDamageSuffer() / 100;
             damage.addAndGet((int) (damage.get() * factor));
         }
+
+        damage.set(Utils.limit(damage.get(), target.getLife().getCurrent()));
 
         target.getBuffs(PunishmentBuff.class).forEach(buff -> ((PunishmentBuff) buff).add((short) (damage.get() / (fighter.getCreature() instanceof Player ? 2 : 1))));
 
@@ -82,7 +91,7 @@ public class DamageEffect implements Effect {
                 damage.set(damage.get() * randomAttackResultBuff.getRateHeal() * -1);
         }
 
-        return Utils.limit(damage.get(), damage.get());
+        return damage.get();
     }
 
     private static int applyReturnDamage(Fighter fighter, Fighter target, Statistics statistics) {
@@ -106,20 +115,51 @@ public class DamageEffect implements Effect {
         return ((int) (((double) (1 - resistancePercent) / (double) 100) * (damage - resistance)));
     }
 
-    private static int getReduction(Statistics targetStatistics, DamageType damageType) {
+    private static Pair<Short, Short> getReduction(Statistics targetStatistics, DamageType damageType) {
         if (damageType == DamageType.NEUTRAL || damageType == DamageType.EARTH)
-            return targetStatistics.get(CharacteristicType.ReducePhysic).total();
+            return new Pair<>(targetStatistics.get(CharacteristicType.ReducePhysic).total(), targetStatistics.get(CharacteristicType.ReducePhysic).equipment());
         else
-            return targetStatistics.get(CharacteristicType.ReduceMagic).total();
+            return new Pair<>(totalMagic(targetStatistics, damageType), targetStatistics.get(CharacteristicType.ReduceMagic).equipment());
+    }
+
+    private static short totalMagic(Statistics statistics, DamageType damageType) {
+        switch (damageType) {
+            case NEUTRAL:
+                return statistics.get(CharacteristicType.ReducePhysic).total();
+            case FIRE:
+                return statistics.get(CharacteristicType.ArmorFire).total();
+            case WATER:
+                return statistics.get(CharacteristicType.ArmorWater).total();
+            case WIND:
+                return statistics.get(CharacteristicType.ArmorWind).total();
+        }
+        return 0;
     }
 
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> {
-            if (effect.getTurns() < 1)
-                fighter.getFight().hit(fighter, target, damage(effect, fighter, target, this.damageType, fighter.getSpellBoost(effect.getSpell().getId())));
-            else
+            if (effect.getTurns() < 1) {
+
+                if (effect.getSpell() != null && target.canReturnSpell(effect.getSpell())) {
+                    fighter.getFight().hit(target, fighter, damage(effect, fighter, target, this.damageType, fighter.getSpellBoost(effect.getSpellId())));
+                    return;
+                }
+                fighter.getFight().hit(fighter, target, damage(effect, fighter, target, this.damageType, fighter.getSpellBoost(effect.getSpellId()) + effect.getThird()));
+            } else
                 new PoisonBuff(target, this.damageType, effect, effect.getTurns());
         });
+    }
+
+    public void applyWeapon(Fighter fighter, Fighter target) {
+        if (target != null)
+            fighter.getFight().hit(fighter, target, damage(new SpellEffect(-1) {{
+                setDice(new Bonus((short) 1, (short) 5, (short) 0));
+            }}, fighter, target, this.damageType, 0));
+    }
+
+    @Override
+    public Effect copy() {
+        return new DamageEffect(this.damageType);
     }
 }
