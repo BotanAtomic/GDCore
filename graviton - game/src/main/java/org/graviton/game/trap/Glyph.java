@@ -40,7 +40,6 @@ public class Glyph extends AbstractTrap {
     @Override
     void hide() {
         send(FightPacketFormatter.trapDeletedMessage(owner.getId(), center.getId(), spellEffect.getZone().getLength(), this.color));
-        System.err.println("Delete");
         fight.getTraps().remove(center.getId());
     }
 

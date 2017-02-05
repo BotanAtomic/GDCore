@@ -35,7 +35,7 @@ task generateLogin {
         def writer = new StringWriter()
         //noinspection GroovyUnusedAssignment
         def xml = new MarkupBuilder(writer)
-                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.8.0.xsd') {
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd') {
             jdbc() {
                 driver('com.mysql.cj.jdbc.Driver')
                 url('jdbc:mysql://localhost/login?serverTimezone=UTC')
@@ -52,7 +52,13 @@ task generateLogin {
                     inputSchema('login')
                 }
                 generate() {
+                    relations(true)
+                    deprecated(false)
+                    records(true)
+                    immutablePojos(true)
+                    fluentSetters(true)
                 }
+
                 target() {
                     packageName('org.graviton.database.jooq.login')
                     directory('../graviton - common/src/main/java')
@@ -78,7 +84,7 @@ task generateGame {
         def writer = new StringWriter()
         //noinspection GroovyUnusedAssignment
         def xml = new MarkupBuilder(writer)
-                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.8.0.xsd') {
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd') {
             jdbc() {
                 driver('com.mysql.cj.jdbc.Driver')
                 url('jdbc:mysql://localhost/game?serverTimezone=UTC')
@@ -95,6 +101,11 @@ task generateGame {
                     inputSchema('game')
                 }
                 generate() {
+                    relations(true)
+                    deprecated(false)
+                    records(true)
+                    immutablePojos(true)
+                    fluentSetters(true)
                 }
                 target() {
                     packageName('org.graviton.database.jooq.game')

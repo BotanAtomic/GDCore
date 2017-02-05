@@ -2,12 +2,16 @@ package org.graviton.game.fight;
 
 import lombok.Data;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.fight.common.FightState;
 import org.graviton.game.fight.type.DuelFight;
+import org.graviton.game.fight.type.MonsterFight;
 import org.graviton.game.maps.GameMap;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -17,6 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Data
 public class FightFactory {
     private final AtomicInteger identityGenerator = new AtomicInteger(0);
+    private final ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(0);
 
     private final GameMap gameMap;
 
@@ -27,11 +32,19 @@ public class FightFactory {
     }
 
     public void newDuel(Player first, Player second) {
-        add(new DuelFight(identityGenerator.incrementAndGet(), first, second, gameMap));
+        add(new DuelFight(scheduledExecutorService, identityGenerator.incrementAndGet(), first, second, gameMap));
+    }
+
+    public void newMonsterFight(Player first, MonsterGroup second) {
+        add(new MonsterFight(scheduledExecutorService, identityGenerator.incrementAndGet(), first, second, gameMap));
     }
 
     private void add(Fight fight) {
         this.fights.put(fight.getId(), fight);
+    }
+
+    void removeFight(Fight fight) {
+        this.fights.remove(fight.getId());
     }
 
     public byte getFightSize() {

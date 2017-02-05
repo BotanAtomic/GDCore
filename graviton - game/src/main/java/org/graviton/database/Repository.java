@@ -22,7 +22,7 @@ public abstract class Repository<K, V> {
         return objects.get(key);
     }
 
-    protected Stream<V> stream() {
+    public Stream<V> stream() {
         return objects.values().stream();
     }
 

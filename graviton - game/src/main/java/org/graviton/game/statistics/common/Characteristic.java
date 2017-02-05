@@ -15,6 +15,10 @@ public abstract class Characteristic {
         this.base += value;
     }
 
+    public void addCoefficientBase(float value) {
+        this.base *= value;
+    }
+
     public void addEquipment(short value) {
         this.equipment += value;
     }
@@ -43,9 +47,9 @@ public abstract class Characteristic {
         return context;
     }
 
-    public abstract short total();
+    public abstract int total();
 
-    public void clearBuff() {
+    void clearBuff() {
         this.context = 0;
     }
 }

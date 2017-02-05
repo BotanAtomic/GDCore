@@ -7,12 +7,16 @@ import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.creature.npc.NpcAnswer;
 import org.graviton.game.creature.npc.NpcQuestion;
 import org.graviton.game.creature.npc.NpcTemplate;
+import org.graviton.game.drop.Drop;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.spell.SpellTemplate;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,6 +43,8 @@ class EntityData {
     final Map<Short, SubArea> subArea = new ConcurrentHashMap<>();
 
     final Map<Short, SpellTemplate> spells = new ConcurrentHashMap<>();
+
+    final List<Drop> drops = Collections.synchronizedList(new ArrayList<>());
 
     public NpcTemplate getNpcTemplate(int id) {
         return this.npcTemplates.get(id);
@@ -70,6 +76,10 @@ class EntityData {
 
     public SpellTemplate getSpellTemplate(short spell) {
         return this.spells.get(spell);
+    }
+
+    public List<Drop> getDrops() {
+        return this.drops;
     }
 
 }

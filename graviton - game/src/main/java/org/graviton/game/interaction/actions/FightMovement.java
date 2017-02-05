@@ -38,7 +38,7 @@ public class FightMovement extends Path implements AbstractGameAction {
      **/
 
     private static short getTackleChance(Fighter fighter, Collection<Fighter> enemies) {
-        short agility = fighter.getStatistics().get(CharacteristicType.Agility).total();
+        int agility = fighter.getStatistics().get(CharacteristicType.Agility).total();
         AtomicInteger enemiesAgility = new AtomicInteger(0);
         AtomicBoolean blocked = new AtomicBoolean(fighter.isStatic());
         enemies.forEach(enemy -> {

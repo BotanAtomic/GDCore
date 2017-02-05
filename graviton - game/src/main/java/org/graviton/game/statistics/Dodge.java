@@ -2,21 +2,21 @@ package org.graviton.game.statistics;
 
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
-import org.graviton.game.statistics.type.PlayerStatistics;
+import org.graviton.game.statistics.common.Statistics;
 
 /**
  * Created by Botan on 29/12/2016. 15:54
  */
 public class Dodge extends Characteristic {
-    private final PlayerStatistics playerStatistics;
+    private final Statistics statistics;
 
-    public Dodge(PlayerStatistics statistics) {
+    public Dodge(Statistics statistics) {
         super((short) 0);
-        this.playerStatistics = statistics;
+        this.statistics = statistics;
     }
 
     @Override
-    public short total() {
-        return (short) (super.base + super.equipment + super.context + super.gift + (playerStatistics.get(CharacteristicType.Wisdom).total() / 4));
+    public int total() {
+        return (short) (super.base + super.equipment + super.context + super.gift + (statistics.get(CharacteristicType.Wisdom).total() / 4));
     }
 }

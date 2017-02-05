@@ -42,7 +42,7 @@ public enum ItemEffect {
     SubChance((short) 152, CharacteristicType.Chance),
     SubDamage((short) 164, CharacteristicType.Damage),
     SubCriticalHit((short) 171, CharacteristicType.CriticalHit),
-    SubDamageMagic((short) 172),
+    SubDamageMagic((short) 172, CharacteristicType.DamageMagic),
     TrapDamage((short) 225),
     SubDamagePhysic((short) 173, CharacteristicType.PhysicalDamage),
     SubDodgeAP((short) 162, CharacteristicType.ActionPoints),
@@ -123,8 +123,8 @@ public enum ItemEffect {
     AddCharactPoint((short) 612),
     AddSpellPoint((short) 613),
 
-    SubActionPointsDodge((short) 101),
-    SubMovementPointsDodge((short) 127),
+    SubActionPointsDodge((short) 101, CharacteristicType.DodgeActionPoints),
+    SubMovementPointsDodge((short) 127, CharacteristicType.DodgeMovementPoints),
 
     AddReduceDamagePhysic((short) 184, CharacteristicType.ReducePhysic),
     AddReduceDamageMagic((short) 183, CharacteristicType.ReduceMagic),

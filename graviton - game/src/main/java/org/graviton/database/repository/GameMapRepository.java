@@ -31,7 +31,7 @@ public class GameMapRepository extends Repository<Integer, GameMap> {
 
     public int loadNpc(Document file) {
         return entityFactory.apply(file.getElementsByTagName("Npc"), element -> {
-            GameMap gameMap = find(element.getAttribute("map").toInt());
+            GameMap gameMap = this.get(element.getAttribute("map").toInt());
             gameMap.addFuture(new Npc(entityFactory.getNpcTemplate(element.getAttribute("id").toInt()), gameMap, element));
         });
     }

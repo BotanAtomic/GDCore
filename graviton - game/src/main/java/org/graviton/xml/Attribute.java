@@ -32,6 +32,10 @@ public class Attribute {
         return Boolean.parseBoolean(data);
     }
 
+    public double toDouble() {
+        return Double.parseDouble(data);
+    }
+
     public String toString() {
         return data == null ? "" : data;
     }

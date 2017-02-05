@@ -28,4 +28,6 @@ public interface AbstractMap {
     Map<Short, Cell> getCells();
 
     byte getWidth();
+
+    String getPosition();
 }

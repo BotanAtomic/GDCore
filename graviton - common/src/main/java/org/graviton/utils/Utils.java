@@ -113,10 +113,17 @@ public class Utils {
         return value > maximum ? maximum : value < 0 ? 0 : value;
     }
 
-    public static boolean range(short value, int start, int end) {
+    public static double limit(double value, double maximum) {
+        return value > maximum ? maximum : value < 0 ? 0 : value;
+    }
+
+    public static boolean range(double value, double start, double end) {
         return value >= start && value <= end;
     }
 
+    public static double difference(double first, double second) {
+        return (first > second ? first - second : second - first);
+    }
     static class NameGenerator {
         private static String[] BEGINNING = {"Kr", "Ca", "Ra", "Mrok", "Cru",
                 "Ray", "Bre", "Zed", "Drak", "Mor", "Jag", "Mer", "Jar", "Mjol",

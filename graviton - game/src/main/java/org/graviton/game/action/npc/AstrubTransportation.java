@@ -19,5 +19,6 @@ public class AstrubTransportation implements Action {
 
         AbstractBreed breed = client.getPlayer().getBreed();
         client.getPlayer().changeMap(breed.astrubMap(), breed.astrubCell());
+        client.getPlayer().setSavedLocation(client.getPlayer().getLocation());
     }
 }

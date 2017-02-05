@@ -1,13 +1,13 @@
 package org.graviton.game.fight.team;
 
 import lombok.Data;
+import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightSide;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.maps.utils.CellLoader;
-import org.graviton.network.game.protocol.GamePacketFormatter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,53 +20,44 @@ import java.util.stream.Collectors;
  */
 
 @Data
-public class FightTeam implements Iterable<Fighter> {
-    private final List<Fighter> fighters = new ArrayList<>();
-    private final Fighter leader;
-    private final FightSide side;
-
+public abstract class FightTeam extends ArrayList<Fighter> implements Iterable<Fighter> {
+    protected final FightSide side;
+    private Fight fight;
+    private Fighter leader;
     private List<Cell> cells;
 
     private boolean locked = false;
-    private boolean allowSpectator = false;
+    private boolean allowSpectator = true;
     private boolean needHelp = false;
+    private boolean onlyGroup;
 
-    public FightTeam(Fighter fighter, FightSide side) {
-        this.leader = fighter;
+    private Fighter lastDead;
+
+    FightTeam(Fighter leader, FightSide side) {
+        this.leader = leader;
         this.side = side;
-        add(fighter);
     }
 
-    public void add(Fighter fighter) {
-        fighter.setLastLife(fighter.getLife().getCurrent());
-        fighter.send(GamePacketFormatter.fightRegenTimerMessage((short) 0));
-        fighter.setTeam(this);
-        fighter.setSide(side);
-        this.fighters.add(fighter);
-    }
+    public abstract void addFighter(Fighter fighter);
 
-    public void actualizeMap(GameMap gameMap, FightMap fightMap, Fighter fighter) {
-        this.cells = CellLoader.getFightCells(fightMap, gameMap.getPlaces(), side);
-        fighter.setLastLocation(fighter.getCreature().getLocation().copy());
-        gameMap.out(fighter.getCreature());
-        fightMap.register(fighter.getCreature());
-        fighter.getCreature().getLocation().setMap(fightMap);
-    }
+    public abstract void actualizeMap(GameMap gameMap, FightMap fightMap, Fighter fighter);
 
     public void actualizeMap(GameMap gameMap, FightMap fightMap) {
-        this.fighters.forEach(fighter -> actualizeMap(gameMap, fightMap, fighter));
+        this.cells = CellLoader.getFightCells(fightMap, gameMap.getPlaces(), side);
+        forEach(fighter -> actualizeMap(gameMap, fightMap, fighter));
     }
 
     public void send(String data) {
-        this.fighters.forEach(fighter -> fighter.send(data));
+        forEach(fighter -> fighter.send(data));
     }
 
     public void placeFighter(Fighter fighter) {
         fighter.setFightCell(random());
+        fighter.setStartCell(fighter.getFightCell());
     }
 
     public void placeFighters() {
-        this.fighters.forEach(this::placeFighter);
+        forEach(this::placeFighter);
     }
 
     private Cell random() {
@@ -78,8 +69,18 @@ public class FightTeam implements Iterable<Fighter> {
         return this.cells.stream().anyMatch(cell1 -> cell1.getId() == cell);
     }
 
+    public int realSize() {
+        return (int) stream().filter(fighter -> fighter.getMaster() == null).count();
+    }
+
+    public abstract void initialize(Fight fight);
+
+    public int getLevel() {
+        return stream().mapToInt(Fighter::getLevel).sum();
+    }
+
     @Override
     public Iterator<Fighter> iterator() {
-        return this.fighters.iterator();
+        return super.iterator();
     }
 }

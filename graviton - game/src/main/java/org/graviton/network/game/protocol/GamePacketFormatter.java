@@ -132,9 +132,9 @@ public class GamePacketFormatter {
     public static String fightDetailsMessage(Fight fight) {
         StringBuilder builder = new StringBuilder("fD");
         builder.append(fight.getId()).append("|");
-        fight.getFirstTeam().getFighters().forEach(fighter -> builder.append(fighter.getName()).append('~').append(fighter.getLevel()).append(';'));
+        fight.getFirstTeam().stream().filter(fighter -> !fighter.isInvocation()).forEach(fighter -> builder.append(fighter.getName()).append('~').append(fighter.getLevel()).append(';'));
         builder.append('|');
-        fight.getSecondTeam().getFighters().forEach(fighter -> builder.append(fighter.getName()).append('~').append(fighter.getLevel()).append(';'));
+        fight.getSecondTeam().stream().filter(fighter -> !fighter.isInvocation()).forEach(fighter -> builder.append(fighter.getName()).append('~').append(fighter.getLevel()).append(';'));
         return builder.toString();
     }
 

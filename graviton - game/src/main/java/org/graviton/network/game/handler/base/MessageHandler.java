@@ -19,6 +19,7 @@ public class MessageHandler {
     private final EnvironmentHandler environmentHandler;
     private final DialogHandler dialogHandler;
     private final SpellHandler spellHandler;
+    private final PartyHandler partyHandler;
 
     public MessageHandler(GameClient gameClient) {
         this.client = gameClient;
@@ -29,6 +30,7 @@ public class MessageHandler {
         this.environmentHandler = new EnvironmentHandler(gameClient);
         this.dialogHandler = new DialogHandler(gameClient);
         this.spellHandler = new SpellHandler(gameClient);
+        this.partyHandler = new PartyHandler(gameClient);
     }
 
     public void handle(String data) {
@@ -52,6 +54,10 @@ public class MessageHandler {
 
             case 79: //Item ('O')
                 this.itemHandler.handle(data.substring(2), (byte) data.charAt(1));
+                break;
+
+            case 80: //Party ('I')
+                this.partyHandler.handle(data.substring(2), (byte) data.charAt(1));
                 break;
 
             case 83: //Spell ('S')

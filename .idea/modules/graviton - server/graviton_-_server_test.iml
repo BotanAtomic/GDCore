@@ -11,16 +11,17 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="graviton_-_server_main" />
     <orderEntry type="library" name="Gradle: org.apache.mina:mina-core:2.0.15" level="project" />
-    <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:2.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:2.6.0" level="project" />
     <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.7" level="project" />
     <orderEntry type="library" name="Gradle: com.google.inject:guice:4.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:20.0" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.22" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq:3.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq:3.9.1" level="project" />
     <orderEntry type="library" name="Gradle: org.reflections:reflections:0.9.10" level="project" />
+    <orderEntry type="library" name="Gradle: commons-cli:commons-cli:1.3.1" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-all:2.4.8" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.9.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq-codegen:3.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.9.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq-codegen:3.9.1" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.1.7" level="project" />
     <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:6.0.5" level="project" />
     <orderEntry type="module" module-name="graviton_-_common_main" />

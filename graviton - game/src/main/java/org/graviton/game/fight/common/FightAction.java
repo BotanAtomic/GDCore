@@ -20,6 +20,7 @@ public enum FightAction {
     REMOVE_MOVEMENT_POINT((short) 127),
     ADD_MOVEMENT_POINT((short) 128),
     INVISIBLE_EVENT((short) 150),
+    INVOCATION((short) 181),
     USE_SPELL((short) 300),
     CRITICAL_SPELL((short) 301),
     CRITICAL_FAILURE((short) 302),

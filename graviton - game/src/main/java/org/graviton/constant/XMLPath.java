@@ -25,4 +25,7 @@ public class XMLPath {
 
     public final static String SPELLS = "spell/spells.xml";
 
+    public final static String DROPS = "drop/drops.xml";
+
+
 }

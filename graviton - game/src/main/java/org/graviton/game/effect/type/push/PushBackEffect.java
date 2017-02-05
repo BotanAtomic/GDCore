@@ -60,7 +60,7 @@ public class PushBackEffect implements Effect {
         if (target.isStatic())
             return;
 
-        OrientationEnum orientation = Cells.getOrientationByCells(fighter.getFightCell(), target.getFightCell(), fighter.getFight().getFightMap().getWidth());
+        OrientationEnum orientation = Cells.getOrientationByCells(selectedCell, target.getFightCell(), fighter.getFight().getFightMap().getWidth());
 
         if (orientation == null)
             return;
@@ -104,7 +104,7 @@ public class PushBackEffect implements Effect {
 
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
-        targets.forEach(target -> apply(fighter, target, selectedCell, effect.getFirst()));
+        targets.forEach(target -> apply(fighter, target, effect.getSecond() <= 0 ? fighter.getFightCell() : selectedCell, effect.getFirst()));
     }
 
     @Override

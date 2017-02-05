@@ -54,6 +54,7 @@ public class PlayerRepository extends Repository<Integer, Player> {
                 PLAYERS.COLORS,
                 PLAYERS.MAP,
                 PLAYERS.CELL,
+                PLAYERS.SAVEDLOCATION,
                 PLAYERS.SERVER).
                 values(player.getId(),
                         player.getAccount().getId(),
@@ -64,6 +65,7 @@ public class PlayerRepository extends Repository<Integer, Player> {
                         Utils.parseColors(player.getColors()),
                         player.getMap().getId(),
                         player.getCell().getId(),
+                        player.compileSavedLocation(),
                         (byte) ExchangeConnector.serverId).execute();
 
         createSpells(player);
@@ -134,6 +136,7 @@ public class PlayerRepository extends Repository<Integer, Player> {
                 .set(PLAYERS.MAP, player.getMap().getId())
                 .set(PLAYERS.CELL, player.getCell().getId())
                 .set(PLAYERS.ORIENTATION, (byte) player.getOrientation().ordinal())
+                .set(PLAYERS.SAVEDLOCATION, player.compileSavedLocation())
 
                 .set(PLAYERS.VITALITY, player.getStatistics().get(CharacteristicType.Vitality).base())
                 .set(PLAYERS.WISDOM, player.getStatistics().get(CharacteristicType.Wisdom).base())
@@ -144,6 +147,7 @@ public class PlayerRepository extends Repository<Integer, Player> {
 
                 .set(PLAYERS.EXPERIENCE, player.getExperience())
                 .set(PLAYERS.LEVEL, player.getLevel())
+                .set(PLAYERS.KAMAS, player.getInventory().getKamas())
 
                 .set(PLAYERS.SIZE, player.getSize())
                 .set(PLAYERS.TITLE, player.getTitle())

@@ -2,8 +2,10 @@ package org.graviton.game.fight.turn;
 
 import com.google.common.collect.Lists;
 import lombok.Data;
+import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
+import org.graviton.network.game.protocol.FightPacketFormatter;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -21,6 +23,8 @@ public class FightTurnList {
     private final List<FightTurn> turns = Collections.synchronizedList(new LinkedList<>());
 
     private FightTurn current;
+
+    private int index = 0;
 
     public FightTurnList(Fight fight) {
         List<FightTurn> firstTeam = Lists.reverse(from(fight.getFirstTeam()).orderBy(Fighter.compareByInitiative()).transform(input -> new FightTurn(fight, input))
@@ -40,17 +44,23 @@ public class FightTurnList {
         current = turns.get(0);
     }
 
-    public void remove(Fighter fighter) {
+    public void remove(Fighter fighter, boolean invocation) {
         if (current.equals(fighter.getTurn()))
             current.end();
-        this.turns.remove(fighter.getTurn());
+
+        if (invocation && fighter instanceof Monster) {
+            this.turns.remove(fighter.getTurn());
+            fighter.getFight().send(FightPacketFormatter.turnListMessage(this.turns));
+        }
     }
 
     FightTurn next() {
-        turns.remove(0);
-        turns.add(current);
+        return current = turns.get(nextIndex());
+    }
 
-        return (current = turns.get(0));
+    private int nextIndex() {
+        index++;
+        return (index > (turns.size() - 1)) ? (index = 0) : index;
     }
 
     private void initialize(List<FightTurn> first, List<FightTurn> second, int size) {
@@ -59,6 +69,15 @@ public class FightTurnList {
                 turns.add(first.get(i));
             if (second.size() > i)
                 turns.add(second.get(i));
+        });
+    }
+
+    public void destroy() {
+        this.turns.forEach(turn -> {
+            if (turn.getTimer() != null)
+                turn.getTimer().cancel();
+            if (turn.getTimerTask() != null)
+                turn.getTimerTask().cancel();
         });
     }
 }

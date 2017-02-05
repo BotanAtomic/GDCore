@@ -24,6 +24,7 @@ allprojects  {
         compile group: 'org.slf4j', name: 'slf4j-api', version: '+'
         compile group: 'org.jooq', name: 'jooq', version: '+'
         compile group: 'org.reflections', name: 'reflections', version: '+'
+        compile group: 'commons-cli', name: 'commons-cli', version: '+'
         compile 'org.codehaus.groovy:groovy-all:+'
 
         compile 'org.jooq:jooq-meta:+'

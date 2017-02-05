@@ -1,28 +1,26 @@
 package org.graviton.game.statistics.common;
 
-import com.google.common.collect.Maps;
+import org.graviton.game.statistics.BaseCharacteristic;
 import org.graviton.game.statistics.Life;
 
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Created by Botan on 11/12/2016. 11:39
  */
-public abstract class Statistics {
-    private final Map<CharacteristicType, Characteristic> characteristics = Maps.newHashMap();
+public abstract class Statistics extends HashMap<CharacteristicType, Characteristic> {
 
-    public void put(CharacteristicType type, Characteristic characteristic) {
-        this.characteristics.put(type, characteristic);
-    }
-
-    public Characteristic get(CharacteristicType type) {
-        return this.characteristics.get(type);
-    }
+    public abstract Statistics copy();
 
     public abstract Life getLife();
 
     public void clearBuffs() {
-        this.characteristics.values().forEach(Characteristic::clearBuff);
+        super.values().forEach(Characteristic::clearBuff);
+    }
+
+    protected void initialize() {
+        for (CharacteristicType type : CharacteristicType.values())
+            put(type, new BaseCharacteristic((short) 0));
     }
 
 }

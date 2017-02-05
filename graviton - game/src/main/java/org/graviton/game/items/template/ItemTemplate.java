@@ -1,6 +1,7 @@
 package org.graviton.game.items.template;
 
 import lombok.Data;
+import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.action.item.ItemAction;
 import org.graviton.game.filter.ConditionList;
 import org.graviton.game.items.Item;
@@ -81,6 +82,10 @@ public class ItemTemplate {
 
     public void applyAction(GameClient client) {
         this.actions.forEach((itemAction, parameter) -> itemAction.apply(client, parameter));
+    }
+
+    public Item createRandom(EntityFactory entityFactory) {
+        return createRandom(entityFactory.getNextItemId());
     }
 
     public Item createRandom(int nextId) {

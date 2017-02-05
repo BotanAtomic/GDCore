@@ -12,7 +12,7 @@ public class BaseCharacteristic extends Characteristic {
     }
 
     @Override
-    public short total() {
-        return (short) (base + equipment + gift + context);
+    public int total() {
+        return (base + equipment + gift + context);
     }
 }

@@ -1,28 +1,26 @@
 package org.graviton.game.command.commands;
 
 import org.graviton.game.client.player.Player;
-import org.graviton.game.command.AbstractCommand;
+import org.graviton.game.command.api.AbstractCommand;
+import org.graviton.game.command.api.Command;
 
 /**
  * Created by Botan on 15/01/2017. 16:10
  */
+
+@Command("teleport")
 public class TeleportCommand implements AbstractCommand {
 
     @Override
-    public String name() {
-        return "teleport";
-    }
-
-    @Override
-    public String information() {
-        StringBuilder builder = new StringBuilder(name());
-        builder.append(" (player = optional);(map);(cell = optional)").append(" > ");
-        builder.append("Teleport player to selected map / cell");
+    public String description() {
+        StringBuilder builder = new StringBuilder("<u>teleport</u> ");
+        builder.append("map [cell=optional] [player=optional] ").append(" > ");
+        builder.append("Teleport player to map / cell");
         return builder.toString();
     }
 
     @Override
     public void apply(Player player, String data) {
-        System.err.println("Teleportation !!!");
+
     }
 }

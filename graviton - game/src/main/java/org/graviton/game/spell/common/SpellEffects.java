@@ -9,10 +9,7 @@ import org.graviton.game.effect.type.other.*;
 import org.graviton.game.effect.type.push.PushBackEffect;
 import org.graviton.game.effect.type.push.PushFearEffect;
 import org.graviton.game.effect.type.push.PushFrontEffect;
-import org.graviton.game.effect.type.transport.HoldingEffect;
-import org.graviton.game.effect.type.transport.LaunchEffect;
-import org.graviton.game.effect.type.transport.TeleportEffect;
-import org.graviton.game.effect.type.transport.TranspositionEffect;
+import org.graviton.game.effect.type.transport.*;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
@@ -116,7 +113,7 @@ public enum SpellEffects {
     SubCarePoints(179, new SimpleStatisticEffect(CharacteristicType.HealPoints, false)),
     SubVitality(153, new SimpleStatisticEffect(CharacteristicType.Vitality, false)),
 
-    Invocation(181),
+    Invocation(181, new InvocationEffect(false)),
 
     AddReduceDamagePhysic(183, new SimpleStatisticEffect(CharacteristicType.ReducePhysic, true)),
     AddReduceDamageMagic(184, new SimpleStatisticEffect(CharacteristicType.ReduceMagic, true)),
@@ -217,7 +214,7 @@ public enum SpellEffects {
 
     Remove_damage(145, new RemoveDamageEffect()),
 
-    Unknown_185(185),
+    Static_Invocation(185, new InvocationEffect(true)),
 
     Unknown_131(131),
 
@@ -269,7 +266,7 @@ public enum SpellEffects {
 
     Unknown_786(786),
 
-    Unknown_784(784),
+    Rollback(784, new RollBackEffect()),
 
     Unknown_165(165),
 
@@ -293,7 +290,7 @@ public enum SpellEffects {
 
     Unknown_782(782),
 
-    Unknown_780(780),
+    ResuscitateFighter(780, new ResuscitateFighterEffect()),
 
     Unknown_781(781),
 

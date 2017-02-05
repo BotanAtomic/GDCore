@@ -26,10 +26,10 @@ public class StatisticDodgeEffect implements Effect {
     }
 
     public static byte value(Fighter fighter, Fighter target, short value, CharacteristicType characteristicType) {
-        short fighterDodge = fighter.getStatistics().get(pointToDodge(characteristicType)).total();
-        short targetDodge = target.getStatistics().get(pointToDodge(characteristicType)).total();
+        int fighterDodge = fighter.getStatistics().get(pointToDodge(characteristicType)).total();
+        int targetDodge = target.getStatistics().get(pointToDodge(characteristicType)).total();
 
-        short actionPoint = target.getStatistics().get(characteristicType).total();
+        int actionPoint = target.getStatistics().get(characteristicType).total();
 
         AtomicInteger toRemove = new AtomicInteger(0);
 

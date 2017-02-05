@@ -71,4 +71,8 @@ public class Inventory extends ConcurrentHashMap<Integer, Item> {
         return values().stream().filter(item -> item.getPosition().equipped()).collect(Collectors.toList());
     }
 
+    public void addKamas(long kamas) {
+        this.kamas += kamas;
+    }
+
 }

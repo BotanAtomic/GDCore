@@ -15,12 +15,13 @@ import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.action.item.ItemAction;
 import org.graviton.game.area.Area;
 import org.graviton.game.area.SubArea;
-import org.graviton.game.command.AbstractCommand;
+import org.graviton.game.command.api.AbstractCommand;
 import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.creature.npc.NpcAnswer;
 import org.graviton.game.creature.npc.NpcQuestion;
 import org.graviton.game.creature.npc.NpcTemplate;
+import org.graviton.game.drop.Drop;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
@@ -72,6 +73,10 @@ public class EntityFactory extends EntityData implements Manageable {
     public EntityFactory(Program program, @Named("database.game") AbstractDatabase database) {
         program.register(this);
         this.database = (GameDatabase) database;
+    }
+
+    private void loadCommands() {
+        log.debug("Successfully load {} commands", commandRepository.load());
     }
 
     private void loadSpells() {
@@ -150,6 +155,20 @@ public class EntityFactory extends EntityData implements Manageable {
     private void loadMonsterTemplates() {
         log.debug("Successfully load {} monster templates", apply(get(MONSTER_TEMPLATE).getElementsByTagName("MonsterTemplate"),
                 element -> this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element))));
+
+        AtomicInteger appliquedDrop = new AtomicInteger(0);
+        short drops = (short) apply(get(DROPS).getElementsByTagName("Drop"), element -> {
+            Drop drop = new Drop(element);
+            if (monsterTemplates.containsKey(drop.getMonster())) {
+                getMonsterTemplate(drop.getMonster()).getDrops().add(drop);
+                appliquedDrop.incrementAndGet();
+            } else
+                this.drops.add(drop);
+        });
+
+        log.debug("Successfully load {} drops", drops);
+        log.debug("Successfully appliqued {} drops", appliquedDrop);
+        log.debug("Successfully add {} free drops", drops - appliquedDrop.intValue());
     }
 
     private void loadItemTemplates() {
@@ -176,8 +195,6 @@ public class EntityFactory extends EntityData implements Manageable {
     }
 
     private void loadPanoplyTemplates() {
-
-
         apply(get(PANOPLY_TEMPLATE).getElementsByTagName("Panoply"), element -> {
             Map<Short, ItemTemplate> templates = new HashMap<>();
             for (String item : element.getElementByTagName("items").toString().split(",")) {
@@ -204,7 +221,7 @@ public class EntityFactory extends EntityData implements Manageable {
     public void start() {
         this.itemIdentityGenerator = new AtomicInteger(database.getNextId(ITEMS, ITEMS.ID));
         new FastLoader(this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadSpells, this::loadGameMaps,
-                commandRepository::load).launch();
+                this::loadCommands).launch();
         startScheduledAction();
     }
 

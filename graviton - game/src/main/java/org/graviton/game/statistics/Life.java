@@ -19,6 +19,11 @@ public class Life {
         this.maximum = maximum;
     }
 
+    public void setPercent(short percent) {
+        double coefficient = percent / 100F;
+        set((int) (getMaximum() * coefficient));
+    }
+
     public int getMaximum() {
         return this.maximum + statistics.get(CharacteristicType.Life).total() + statistics.get(CharacteristicType.Vitality).total();
     }

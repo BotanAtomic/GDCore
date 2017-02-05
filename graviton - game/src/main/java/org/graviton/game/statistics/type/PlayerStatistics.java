@@ -49,8 +49,7 @@ public class PlayerStatistics extends Statistics {
         this.experience = record.get(PLAYERS.EXPERIENCE);
         this.life = new Life(this, 55 + ((level - 1) * 5), 55 + ((level - 1) * 5));
 
-        for (CharacteristicType type : CharacteristicType.values())
-            put(type, new BaseCharacteristic((short) 0));
+        super.initialize();
 
         short vitality = record.get(PLAYERS.VITALITY);
         life.add(vitality);
@@ -68,6 +67,7 @@ public class PlayerStatistics extends Statistics {
         put(CharacteristicType.DodgeActionPoints, new Dodge(this));
         put(CharacteristicType.DodgeMovementPoints, new Dodge(this));
         put(CharacteristicType.CriticalHit, new CriticalRate(this));
+        put(CharacteristicType.Summons, new BaseCharacteristic((short) 1));
 
         applyItemEffects();
         applyPanoplyEffect();
@@ -85,8 +85,7 @@ public class PlayerStatistics extends Statistics {
         this.life = new Life(this, 55, 55);
         this.pods = new short[]{0, 1000};
 
-        for (CharacteristicType type : CharacteristicType.values())
-            put(type, new BaseCharacteristic((short) 0));
+        super.initialize();
 
         put(CharacteristicType.ActionPoints, new BaseCharacteristic((short) 6));
         put(CharacteristicType.MovementPoints, new BaseCharacteristic((short) 3));
@@ -95,7 +94,7 @@ public class PlayerStatistics extends Statistics {
         put(CharacteristicType.DodgeActionPoints, new Dodge(this));
         put(CharacteristicType.DodgeMovementPoints, new Dodge(this));
         put(CharacteristicType.CriticalHit, new CriticalRate(this));
-
+        put(CharacteristicType.Summons, new BaseCharacteristic((short) 1));
     }
 
     private void applyItemEffects() {
@@ -177,5 +176,17 @@ public class PlayerStatistics extends Statistics {
 
         if (level % 100 == 0)
             get(CharacteristicType.ActionPoints).addBase((short) 1);
+    }
+
+    public void addExperience(long experience) {
+        this.experience += experience;
+
+        while (this.experience > player.getEntityFactory().getExperience(this.level).getNext().getPlayer())
+            player.upLevel();
+    }
+
+    @Override
+    public Statistics copy() {
+        return null;
     }
 }

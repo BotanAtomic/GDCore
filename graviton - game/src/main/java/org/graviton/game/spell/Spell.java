@@ -47,6 +47,7 @@ public class Spell {
 
     public void applyToFight(Fighter fighter, Cell target) {
         Fight fight = fighter.getFight();
+        fight.setToWait(0);
 
         Collection<SpellEffect> effects = null;
 

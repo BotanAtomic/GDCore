@@ -60,6 +60,10 @@ public class GameHandler {
                 client.getPlayer().getFight().switchLocked(client.getPlayer());
                 break;
 
+            case 80: // 'P'
+                client.getPlayer().getFight().switchGroup(client.getPlayer());
+                break;
+
             case 81: // 'Q'
                 quitFight(data);
                 break;
@@ -122,7 +126,7 @@ public class GameHandler {
     private void quitFight(String data) {
         Fighter fighter = data.isEmpty() ? client.getPlayer() : client.getPlayerRepository().get(Integer.parseInt(data));
 
-        if (!client.getPlayer().getTeam().getFighters().contains(fighter))
+        if (!client.getPlayer().getTeam().contains(fighter))
             return;
 
         fighter.getFight().quit(fighter);

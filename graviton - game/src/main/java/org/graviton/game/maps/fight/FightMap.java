@@ -83,4 +83,9 @@ public class FightMap implements AbstractMap {
         return model.getWidth();
     }
 
+    @Override
+    public String getPosition() {
+        return model.getPosition();
+    }
+
 }

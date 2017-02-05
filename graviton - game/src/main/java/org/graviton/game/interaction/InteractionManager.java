@@ -79,4 +79,8 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
         this.interactionCreature = creature;
     }
 
+    public int getInteractionCreature() {
+        return this.interactionCreature;
+    }
+
 }

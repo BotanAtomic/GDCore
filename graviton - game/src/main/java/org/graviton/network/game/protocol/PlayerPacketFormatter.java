@@ -177,15 +177,4 @@ public class PlayerPacketFormatter {
         return "AN" + level;
     }
 
-    public static String whiteConsoleMessage(String message) {
-        return "BAT0" + message;
-    }
-
-    public static String greenConsoleMessage(String message) {
-        return "BAT2" + message;
-    }
-
-    public static String redConsoleMessage(String message) {
-        return "BAT1" + message;
-    }
 }

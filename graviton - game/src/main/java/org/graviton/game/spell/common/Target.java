@@ -10,7 +10,8 @@ public enum Target {
     PLAYER((byte) 2),
     PLAYER_AND_ALLY((byte) 3),
     INVOCATION((byte) 4),
-    EXCLUDE_PLAYER((byte) 5);
+    EXCLUDE_PLAYER((byte) 5),
+    ALLY_EXCLUDE_PLAYER((byte) 5);
 
     private byte value;
 

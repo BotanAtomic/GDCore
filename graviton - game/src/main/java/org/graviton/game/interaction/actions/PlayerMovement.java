@@ -1,7 +1,9 @@
 package org.graviton.game.interaction.actions;
 
 
+import org.graviton.api.Creature;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.interaction.AbstractGameAction;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
@@ -9,6 +11,9 @@ import org.graviton.game.maps.cell.Trigger;
 import org.graviton.game.paths.Path;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.MessageFormatter;
+import org.graviton.utils.Cells;
+
+import java.util.Optional;
 
 
 /**
@@ -56,14 +61,21 @@ public class PlayerMovement extends Path implements AbstractGameAction {
     public void finish(String data) {
         player.getLocation().setOrientation(getOrientation());
 
+        Optional<Creature> groupOptional = gameMap.getCreatures().values().stream()
+                .filter(creature -> creature instanceof MonsterGroup)
+                .filter(creature -> Cells.distanceBetween(gameMap.getWidth(), creature.getLocation().getCell().getId(), newCell.getId()) < 3).findFirst();
+
+        if (groupOptional.isPresent()) {
+            gameMap.getFightFactory().newMonsterFight(player, (MonsterGroup) groupOptional.get());
+            return;
+        }
+
         Trigger trigger = gameMap.getTriggers().get(newCell.getId());
 
         if (trigger != null)
             player.changeMap(trigger.getNextMap(), trigger.getNextCell());
         else
             player.getLocation().setCell(newCell);
-
-        player.upLevel();
     }
 
 }

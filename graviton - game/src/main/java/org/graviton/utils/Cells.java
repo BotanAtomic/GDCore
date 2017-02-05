@@ -96,4 +96,19 @@ public final class Cells {
         return null;
     }
 
+    public static int distanceBetween(byte width, short firstCell, short secondCell) {
+        return (Math.abs(getXCoordinates(width, firstCell) - getXCoordinates(width, secondCell)) + Math.abs(getYCoordinates(width, firstCell) - getYCoordinates(width, secondCell)));
+    }
+
+    private static int getXCoordinates(byte width, short cell) {
+        return ((cell - (width - 1) * getYCoordinates(width, cell)) / width);
+    }
+
+    private static int getYCoordinates(byte width, short cell) {
+        int loc5 = (cell / ((width * 2) - 1));
+        int loc6 = cell - loc5 * ((width * 2) - 1);
+        int loc7 = loc6 % width;
+        return (loc5 - loc7);
+    }
+
 }

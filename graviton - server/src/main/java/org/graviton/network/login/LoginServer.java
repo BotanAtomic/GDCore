@@ -95,7 +95,7 @@ public class LoginServer implements IoHandler, Manageable {
     @Override
     public void start() {
         try {
-            this.socketAcceptor.bind(new InetSocketAddress("192.168.0.5", port));
+            this.socketAcceptor.bind(new InetSocketAddress(port));
             log.debug("Login server was successfully bind on port {}", port);
         } catch (IOException e) {
             log.error("Unable to bind the port {} [cause : {}]", port, e.getMessage());

@@ -1,4 +1,4 @@
-package org.graviton.game.command;
+package org.graviton.game.command.api;
 
 import org.graviton.game.client.player.Player;
 
@@ -7,9 +7,7 @@ import org.graviton.game.client.player.Player;
  */
 public interface AbstractCommand {
 
-    String name();
-
-    String information();
+    String description();
 
     void apply(Player player, String data);
 }

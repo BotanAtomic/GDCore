@@ -2,23 +2,23 @@ package org.graviton.game.statistics;
 
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
-import org.graviton.game.statistics.type.PlayerStatistics;
+import org.graviton.game.statistics.common.Statistics;
 
 /**
  * Created by Botan on 15/01/2017. 14:17
  */
 public class CriticalRate extends Characteristic {
-    private final PlayerStatistics playerStatistics;
+    private final Statistics statistics;
 
-    public CriticalRate(PlayerStatistics statistics) {
+    public CriticalRate(Statistics statistics) {
         super((short) 0);
-        this.playerStatistics = statistics;
+        this.statistics = statistics;
     }
 
     @Override
-    public short total() {
+    public int total() {
         short baseTotal = (short) (super.base + super.equipment + super.context + super.gift);
-        short agility = playerStatistics.get(CharacteristicType.Agility).total();
+        int agility = statistics.get(CharacteristicType.Agility).total();
 
         if (agility < 8)
             return baseTotal;

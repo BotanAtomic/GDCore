@@ -1,42 +1,39 @@
 package org.graviton.game.statistics;
 
-import org.graviton.game.breeds.models.Sacrieur;
-import org.graviton.game.client.player.Player;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
-import org.graviton.game.statistics.type.PlayerStatistics;
+import org.graviton.game.statistics.common.Statistics;
 
 /**
  * Created by Botan on 22/12/2016. 00:17
  */
 public class Initiative extends Characteristic {
-    private final PlayerStatistics playerStatistics;
+    private final Statistics statistics;
 
-    public Initiative(PlayerStatistics playerStatistics, short base) {
+    public Initiative(Statistics statistics, short base) {
         super(base);
-        this.playerStatistics = playerStatistics;
-    }
-
-    private Player player() {
-        return playerStatistics.getPlayer();
+        this.statistics = statistics;
     }
 
     private int getMaxLife() {
-        return playerStatistics.getLife().getMaximum();
+        return statistics.getLife().getMaximum();
     }
 
     private int getCurrentLife() {
-        return playerStatistics.getLife().getCurrent();
+        return statistics.getLife().getCurrent();
     }
 
     private Characteristic get(CharacteristicType type) {
-        return playerStatistics.get(type);
+        return statistics.get(type);
     }
 
     @Override
-    public short total() {
-        double total = ((getMaxLife() - 55) / (byte) (player().getBreed() instanceof Sacrieur ? 8 : 4)) + (short) (get(CharacteristicType.Strength).total() +
-                get(CharacteristicType.Intelligence).total() + get(CharacteristicType.Chance).total() + get(CharacteristicType.Agility).total());
+    public int total() {
+        double total = get(CharacteristicType.Strength).total() +
+                get(CharacteristicType.Intelligence).total() +
+                get(CharacteristicType.Chance).total() +
+                get(CharacteristicType.Agility).total() +
+                gift + context + equipment;
         return (short) (total * ((double) getCurrentLife() / (double) getMaxLife()));
     }
 }

@@ -1,6 +1,7 @@
 package org.graviton.game.creature.monster;
 
 import lombok.Data;
+import org.graviton.game.drop.Drop;
 import org.graviton.game.statistics.BaseCharacteristic;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
@@ -8,6 +9,8 @@ import org.graviton.xml.XMLElement;
 
 import java.util.*;
 import java.util.stream.IntStream;
+
+import static java.lang.Short.parseShort;
 
 /**
  * Created by Botan on 02/12/2016. 21:32
@@ -26,14 +29,15 @@ public class MonsterTemplate {
 
     private final Map<Short, Monster> monsters;
 
+    private final List<Drop> drops = new ArrayList<>();
+
     public MonsterTemplate(XMLElement element) {
         this.id = element.getAttribute("id").toInt();
         this.name = element.getElementByTagName("name").toString();
         this.skin = element.getElementByTagName("skin").toShort();
         this.alignment = element.getElementByTagName("alignment").toByte();
         this.colors = element.getElementByTagName("colors").toString();
-        this.winKamas = new short[]{element.getElementByTagName("kamas", "min").toShort(),
-                element.getElementByTagName("kamas", "max").toShort()};
+        this.winKamas = new short[]{element.getElementByTagName("kamas", "min").toShort(), element.getElementByTagName("kamas", "max").toShort()};
         this.artificialIntelligence = element.getElementByTagName("IA").toByte();
         this.capture = element.getElementByTagName("capture").toBoolean();
         this.aggressionDistance = element.getElementByTagName("aggression").toByte();
@@ -52,21 +56,22 @@ public class MonsterTemplate {
         String[] statistics = element.getElementByTagName("statistics").toString().split("\\|");
 
         Map<CharacteristicType, Characteristic> baseCharacteristics = new HashMap<CharacteristicType, Characteristic>() {{
-            put(CharacteristicType.Damage, new BaseCharacteristic(Short.parseShort(optionalStatistics[0])));
-            put(CharacteristicType.DamagePer, new BaseCharacteristic(Short.parseShort(optionalStatistics[1])));
-            put(CharacteristicType.HealPoints, new BaseCharacteristic(Short.parseShort(optionalStatistics[2])));
-            put(CharacteristicType.Summons, new BaseCharacteristic(Short.parseShort(optionalStatistics[3])));
+            put(CharacteristicType.Damage, new BaseCharacteristic(parseShort(optionalStatistics[0])));
+            put(CharacteristicType.DamagePer, new BaseCharacteristic(parseShort(optionalStatistics[1])));
+            put(CharacteristicType.HealPoints, new BaseCharacteristic(parseShort(optionalStatistics[2])));
+            put(CharacteristicType.Summons, new BaseCharacteristic(parseShort(optionalStatistics[3])));
         }};
 
         IntStream.range(0, grade.length).forEach(i -> {
             Map<CharacteristicType, Characteristic> characteristics = new HashMap<>();
             characteristics.putAll(baseCharacteristics);
 
-            baseCharacteristics.put(CharacteristicType.Initiative, new BaseCharacteristic(Short.parseShort(initiative[i])));
-            baseCharacteristics.put(CharacteristicType.ActionPoints, new BaseCharacteristic(Short.parseShort(points[i].split(";")[0])));
-            baseCharacteristics.put(CharacteristicType.MovementPoints, new BaseCharacteristic(Short.parseShort(points[i].split(";")[1])));
+            characteristics.put(CharacteristicType.Initiative, new BaseCharacteristic(parseShort(initiative[i])));
+            characteristics.put(CharacteristicType.ActionPoints, new BaseCharacteristic(parseShort(points[i].split(";")[0])));
+            characteristics.put(CharacteristicType.MovementPoints, new BaseCharacteristic(parseShort(points[i].split(";")[1])));
 
-            short level = Short.parseShort(grade[i].split("@")[0]);
+
+            short level = parseShort(grade[i].split("@")[0]);
             monsters.put(level, new Monster(this, ((byte) (i + 1)), level, Integer.parseInt(experience[i]), grade[i], life[i], statistics[i], characteristics));
         });
 

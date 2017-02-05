@@ -3,11 +3,10 @@ package org.graviton.network.game.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.channel.Channel;
 import org.graviton.game.client.player.Player;
-import org.graviton.game.command.AbstractCommand;
+import org.graviton.game.command.api.AbstractCommand;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.network.game.protocol.MessageFormatter;
-import org.graviton.network.game.protocol.PlayerPacketFormatter;
 
 import java.util.Date;
 
@@ -93,6 +92,6 @@ public class BasicHandler {
         if (command != null)
             command.apply(client.getPlayer(), data);
         else
-            client.send(PlayerPacketFormatter.redConsoleMessage("Cannot find command '" + data.split(" ")[0] + "', tap help for all commands"));
+            client.send(MessageFormatter.redConsoleMessage("Cannot find command '" + data.split(" ")[0] + "', tap help for all commands"));
     }
 }

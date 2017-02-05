@@ -3,13 +3,16 @@ package org.graviton.game.fight;
 import lombok.Data;
 import org.graviton.api.Creature;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.effect.buff.Buff;
 import org.graviton.game.effect.buff.type.InvisibleBuff;
 import org.graviton.game.effect.state.State;
+import org.graviton.game.fight.bonus.FightBonus;
 import org.graviton.game.fight.common.FightAction;
 import org.graviton.game.fight.common.FightSide;
 import org.graviton.game.fight.team.FightTeam;
 import org.graviton.game.fight.turn.FightTurn;
+import org.graviton.game.intelligence.ArtificialIntelligence;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
 import org.graviton.game.spell.Spell;
@@ -28,33 +31,45 @@ import java.util.stream.Collectors;
 
 @Data
 public abstract class Fighter {
+    private Location lastLocation;
+
     private Fight fight;
     private FightSide side;
     private FightTeam team;
     private FightTurn turn;
+    private FightBonus fightBonus;
+
+    private Fighter sacrificed;
+    private Fighter holdingBy;
+    private Fighter holding;
+    private Fighter master;
+
     private boolean ready = false;
     private boolean dead = false;
     private boolean onAction = false;
     private boolean passTurn = false;
     private boolean visible = true;
     private boolean dodgeAttack = false;
-    private byte currentActionPoint;
-    private byte currentMovementPoint;
-    private Location lastLocation;
+    private boolean isStatic = false;
+
+    private byte currentActionPoint, currentMovementPoint, returnSpell;
     private int lastLife;
     private short damageSuffer = 0;
+
     private List<Short> launchedSpells = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
     private List<State> states = new ArrayList<>();
     private Map<Short, Short> spellBoost = new HashMap<>();
-    private byte returnSpell = 0;
+    private List<Fighter> invocations = new ArrayList<>();
 
-    private Fighter sacrificed;
-    private Fighter holdingBy;
-    private Fighter holding;
+    private Cell startCell;
 
     public static Comparator<Fighter> compareByInitiative() {
         return Comparator.comparingInt(Fighter::getInitiative);
+    }
+
+    public static Comparator<Fighter> compareByProspection() {
+        return Comparator.comparingInt(Fighter::getProspection);
     }
 
     public abstract int getId();
@@ -71,8 +86,10 @@ public abstract class Fighter {
 
     public abstract String getFightGM();
 
+    public abstract ArtificialIntelligence artificialIntelligence();
+
     public boolean isStatic() {
-        return this.states.contains(State.Rooted);
+        return this.states.contains(State.Rooted) || isStatic;
     }
 
     public void addLaunchedSpell(short spell) {
@@ -168,8 +185,12 @@ public abstract class Fighter {
         this.currentMovementPoint = (byte) getCreature().getStatistics().get(CharacteristicType.MovementPoints).total();
     }
 
-    public short getInitiative() {
+    public int getInitiative() {
         return getStatistics().get(CharacteristicType.Initiative).total();
+    }
+
+    public int getProspection() {
+        return getStatistics().get(CharacteristicType.Prospection).total();
     }
 
     public Cell getFightCell() {
@@ -177,9 +198,12 @@ public abstract class Fighter {
     }
 
     public void setFightCell(Cell cell) {
-        getFightCell().getCreatures().remove(getId());
-        cell.getCreatures().add(getId());
-        this.getCreature().getLocation().setCell(cell);
+        if (getFightCell() != null)
+            getFightCell().getCreatures().remove(getId());
+        if (cell != null) {
+            cell.getCreatures().add(getId());
+            this.getCreature().getLocation().setCell(cell);
+        }
     }
 
     public FightSide getSide() {
@@ -218,6 +242,11 @@ public abstract class Fighter {
     }
 
     private void destroy() {
+        if (fightBonus != null) {
+            fightBonus.validate();
+            this.fightBonus = null;
+        }
+
         this.lastLocation = null;
         this.fight = null;
         this.side = null;
@@ -226,29 +255,24 @@ public abstract class Fighter {
         this.turn = null;
         this.dead = false;
         this.visible = true;
+        this.master = null;
         this.buffs.clear();
         this.spellBoost.clear();
         this.launchedSpells.clear();
         this.getStatistics().clearBuffs();
     }
 
-    public void quit() {
-        this.team.getFighters().remove(this);
+    public void left(boolean activeFight) {
+        this.team.remove(this);
         fight.getFightMap().out(getCreature());
         getCreature().setLocation(this.lastLocation);
         ((Player) getCreature()).getAccount().getClient().setEndFight();
         send(FightPacketFormatter.fighterLeft());
-        destroy();
-    }
 
-    public void left() {
-        this.team.getFighters().remove(this);
-        fight.getFightMap().out(getCreature());
-        getCreature().setLocation(this.lastLocation);
-        ((Player) getCreature()).getAccount().getClient().setEndFight();
-        send(FightPacketFormatter.fighterLeft());
+        if (!activeFight)
+            fight.generateFlag();
+
         destroy();
-        fight.generateFlag();
     }
 
     public boolean canReturnSpell(Spell spell) {
@@ -269,5 +293,9 @@ public abstract class Fighter {
         return this.getName();
     }
 
+
+    public boolean isInvocation() {
+        return master != null && this instanceof Monster;
+    }
 
 }

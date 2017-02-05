@@ -66,8 +66,8 @@ public class DamageEffect implements Effect {
         damage.addAndGet(-applyReturnDamage(fighter, target, targetStatistics));
         damage.addAndGet(getDamageReduction(damageType, targetStatistics, baseDamage));
 
-        Pair<Short, Short> reduction = getReduction(targetStatistics, damageType);
-        short armor = (short) (target.getStatistics().get(CharacteristicType.Armor).total() + reduction.getKey());
+        Pair<Integer, Short> reduction = getReduction(targetStatistics, damageType);
+        int armor = (target.getStatistics().get(CharacteristicType.Armor).total() + reduction.getKey());
 
         if (armor != 0) {
             target.getFight().send(FightPacketFormatter.actionMessage(FightAction.ARMOR, target.getId(), target.getId(), armor - reduction.getValue()));
@@ -109,20 +109,20 @@ public class DamageEffect implements Effect {
         if (damageType == DamageType.NULL)
             return 0;
 
-        short resistancePercent = targetStatistics.get(DAMAGE_TO_RESISTANCE_P.apply(damageType)).total();
-        short resistance = targetStatistics.get(DAMAGE_TO_RESISTANCE.apply(damageType)).total();
+        int resistancePercent = targetStatistics.get(DAMAGE_TO_RESISTANCE_P.apply(damageType)).total();
+        int resistance = targetStatistics.get(DAMAGE_TO_RESISTANCE.apply(damageType)).total();
 
         return ((int) (((double) (1 - resistancePercent) / (double) 100) * (damage - resistance)));
     }
 
-    private static Pair<Short, Short> getReduction(Statistics targetStatistics, DamageType damageType) {
+    private static Pair<Integer, Short> getReduction(Statistics targetStatistics, DamageType damageType) {
         if (damageType == DamageType.NEUTRAL || damageType == DamageType.EARTH)
             return new Pair<>(targetStatistics.get(CharacteristicType.ReducePhysic).total(), targetStatistics.get(CharacteristicType.ReducePhysic).equipment());
         else
             return new Pair<>(totalMagic(targetStatistics, damageType), targetStatistics.get(CharacteristicType.ReduceMagic).equipment());
     }
 
-    private static short totalMagic(Statistics statistics, DamageType damageType) {
+    private static int totalMagic(Statistics statistics, DamageType damageType) {
         switch (damageType) {
             case NEUTRAL:
                 return statistics.get(CharacteristicType.ReducePhysic).total();

@@ -64,6 +64,10 @@ public abstract class Zone {
                     return target.getSide() == fighter.getSide();
                 case ENEMY:
                     return target.getSide() != fighter.getSide();
+                case INVOCATION:
+                    return target.isInvocation();
+                case ALLY_EXCLUDE_PLAYER:
+                    return target.getSide() == fighter.getSide() && target.getId() != fighter.getId();
             }
             return false;
         }).map(cell -> spellEffect.getTarget() == Target.PLAYER ? fighter : fight.getFighter(cell.getFirstCreature())).collect(Collectors.toCollection(NoDuplicatesList::new));

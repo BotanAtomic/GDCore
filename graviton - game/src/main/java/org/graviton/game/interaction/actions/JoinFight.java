@@ -12,11 +12,14 @@ public class JoinFight implements AbstractGameAction {
 
     public JoinFight(GameClient client, String[] data) {
         if (data.length == 1) {
-            int fight = Integer.parseInt(data[0]);
+            Fight fight = client.getPlayer().getGameMap().getFightFactory().getFights().get(Integer.parseInt(data[0]));
 
-            // TODO: 19/12/2016 join as spectator
+            if (fight != null)
+                fight.joinAsSpectator(client.getPlayer());
+
+
         } else {
-            Player target = client.getPlayerRepository().get(Integer.parseInt(data[1]));
+            Player target = client.getPlayerRepository().find(Integer.parseInt(data[1]));
 
             if (target != null) {
                 Fight fight = target.getFight();

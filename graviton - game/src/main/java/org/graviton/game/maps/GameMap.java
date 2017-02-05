@@ -88,7 +88,6 @@ public class GameMap implements AbstractMap {
 
         this.cells = CellLoader.parse(this.data);
         this.triggers = (CellLoader.parseTrigger(triggersData));
-
         this.toRegister.forEach(creature -> register(creature, false));
 
         if (!(this.possibleGroups = synchronizedList(initializeMonsters(monsters))).isEmpty())
@@ -113,28 +112,30 @@ public class GameMap implements AbstractMap {
     }
 
     private void generateMonsters(boolean send) {
+        IntStream.range(0, numberOfGroup).forEach(i -> register(randomMonsterGroup(), send));
+    }
+
+    public MonsterGroup randomMonsterGroup() {
         Random random = new Random();
-        IntStream.range(0, numberOfGroup).forEach(i -> {
-            Collection<Monster> monsters = new ArrayList<>();
-            byte groupSize = fixedGroupSize > 0 ? fixedGroupSize : (byte) random(minimumGroupSize, maximumGroupSize);
+        Collection<Monster> monsters = new ArrayList<>();
+        byte groupSize = fixedGroupSize > 0 ? fixedGroupSize : (byte) random(minimumGroupSize, maximumGroupSize);
 
-            IntStream.range(0, groupSize).forEach(inc -> {
-                if (this.extraMonster != null) {
-                    monsters.add(this.extraMonster.getTemplate().getRandom());
-                    this.extraMonster = null;
-                } else {
-                    Pair<Integer, Short> randomPair = this.possibleGroups.get(random.nextInt(this.possibleGroups.size()));
-                    MonsterTemplate template = entityFactory.getMonsterTemplate(randomPair.getKey());
-                    Monster monster;
+        IntStream.range(0, groupSize).forEach(inc -> {
+            if (this.extraMonster != null) {
+                monsters.add(this.extraMonster.getTemplate().getRandom());
+                this.extraMonster = null;
+            } else {
+                Pair<Integer, Short> randomPair = this.possibleGroups.get(random.nextInt(this.possibleGroups.size()));
+                MonsterTemplate template = entityFactory.getMonsterTemplate(randomPair.getKey());
+                Monster monster;
 
-                    if (template == null || (monster = template.getByLevel(randomPair.getValue())) == null)
-                        return;
+                if (template == null || (monster = template.getByLevel(randomPair.getValue())) == null)
+                    return;
 
-                    monsters.add(monster);
-                }
-            });
-            register(new MonsterGroup(getNextId(), this, getRandomCell(), monsters), send);
+                monsters.add(monster);
+            }
         });
+        return new MonsterGroup(getNextId(), this, getRandomCell(), monsters);
     }
 
     @Override
@@ -149,7 +150,7 @@ public class GameMap implements AbstractMap {
         this.toRegister.add(creature);
     }
 
-    private void register(Creature creature, boolean send) {
+    public void register(Creature creature, boolean send) {
         this.creatures.put(creature.getId(), creature);
         creature.getLocation().getCell().getCreatures().add(creature.getId());
 

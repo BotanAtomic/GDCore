@@ -6,6 +6,7 @@ import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.trap.AbstractTrap;
+import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.network.game.protocol.MessageFormatter;
 import org.graviton.utils.Cells;
 import org.graviton.utils.Utils;
@@ -34,7 +35,7 @@ public class Path extends ArrayList<Short> {
             String stepPath = path.substring(i, i + 3);
             short stepCell = Cells.decode(stepPath.substring(1));
 
-            while (lastCell != stepCell && map.getCells().get(lastCell).isWalkable() && size-- > 0)
+            while (lastCell != stepCell && map.getCells().containsKey(lastCell) && map.getCells().get(lastCell).isWalkable() && size-- > 0)
                 add(lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth()));
 
             lastCell = stepCell;
@@ -58,6 +59,7 @@ public class Path extends ArrayList<Short> {
                 Cell last = map.getCells().get(lastCell);
                 if (!last.getCreatures().isEmpty() && fighter.getFight().getFighter(last.getFirstCreature()) != null) {
                     fighter.send(MessageFormatter.customMessage("0161"));
+                    fighter.send(FightPacketFormatter.showCellMessage(fighter.getId(), last.getId()));
                     return;
                 }
 
@@ -95,7 +97,7 @@ public class Path extends ArrayList<Short> {
             Cell cell = map.getCells().get(Cells.getCellIdByOrientation(cellId, orientation, map.getWidth()));
             if (!cell.getCreatures().isEmpty()) {
                 Fighter aroundFighter = fighter.getFight().getFighter(cell.getFirstCreature());
-                if (aroundFighter.getTeam().getSide().ordinal() != fighter.getSide().ordinal() && aroundFighter.isVisible())
+                if (aroundFighter != null && aroundFighter.getTeam().getSide().ordinal() != fighter.getSide().ordinal() && aroundFighter.isVisible())
                     fighters.add(aroundFighter);
             }
         }
