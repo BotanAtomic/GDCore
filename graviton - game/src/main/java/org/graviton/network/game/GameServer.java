@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Botan on 04/11/2016 : 22:50
@@ -47,6 +49,8 @@ public class GameServer implements IoHandler, Manageable {
 
         session.setAttribute((byte) 0, client);
         session.setAttribute((byte) 1, new MessageHandler(client));
+        session.setAttribute((byte) 2, new ReentrantLock());
+
         client.getBaseHandler().getAccountHandler().initialize();
 
         log.debug("[Session {}] created", session.getId());
@@ -75,14 +79,20 @@ public class GameServer implements IoHandler, Manageable {
 
     @Override
     public void messageReceived(IoSession session, Object message) {
-        log.info("[Session {}] receives < {}", session.getId(), message);
-        ((MessageHandler) session.getAttribute((byte) 1)).handle(message.toString());
+        Lock lock = ((Lock) session.getAttribute((byte) 2));
+
+        lock.lock();
+        try {
+            log.info("[Session {}] receives < {}", session.getId(), message);
+            ((MessageHandler) session.getAttribute((byte) 1)).handle(message.toString());
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
     public void messageSent(IoSession session, Object message) {
         log.info("[Session {}] send > {}", session.getId(), message);
-
     }
 
     @Override

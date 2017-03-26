@@ -6,10 +6,7 @@ import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
 import org.graviton.database.LoginDatabase;
 import org.graviton.database.entity.EntityFactory;
-import org.graviton.database.repository.AccountRepository;
-import org.graviton.database.repository.CommandRepository;
-import org.graviton.database.repository.GameMapRepository;
-import org.graviton.database.repository.PlayerRepository;
+import org.graviton.database.repository.*;
 
 /**
  * Created by Botan on 04/11/2016 : 22:12
@@ -25,6 +22,7 @@ public class DatabaseModule extends AbstractModule {
         bind(AccountRepository.class).asEagerSingleton();
         bind(GameMapRepository.class).asEagerSingleton();
         bind(CommandRepository.class).asEagerSingleton();
+        bind(GuildRepository.class).asEagerSingleton();
 
         bind(EntityFactory.class).asEagerSingleton();
     }

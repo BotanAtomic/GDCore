@@ -22,18 +22,18 @@ public class ItemHandler {
         this.client = client;
     }
 
-    public void handle(String data, byte subHeader) { // 'O'
+    public void handle(String data, char subHeader) {
         switch (subHeader) {
-            case 77: // 'M'
+            case 'M':
                 objectMove(data.split("\\|"));
                 break;
 
-            case 85: // 'U'
+            case 'U':
                 objectUse(client.getPlayer().getInventory().get(Integer.parseInt(data.split("\\|")[0])));
                 break;
 
             default:
-                log.error("not implemented item packet '{}'", (char) subHeader);
+                log.error("not implemented item packet '{}'", subHeader);
         }
     }
 
@@ -131,7 +131,7 @@ public class ItemHandler {
         client.getPlayer().getStatistics().refreshPods();
 
         if (item.getTemplate().getPanoply() != null)
-            player.getStatistics().applyPanoplyEffect(item.getTemplate().getPanoply(), item.getPosition().equipped());
+            player.getStatistics().applyPanoplyEffect(item.getTemplate().getPanoply(), item.getPosition().equipped(), true);
 
         client.send(PlayerPacketFormatter.asMessage(player, client.getEntityFactory().getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
     }

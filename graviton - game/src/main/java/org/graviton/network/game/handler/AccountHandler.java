@@ -6,11 +6,10 @@ import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.guild.Guild;
+import org.graviton.game.house.House;
 import org.graviton.network.game.GameClient;
-import org.graviton.network.game.protocol.GamePacketFormatter;
-import org.graviton.network.game.protocol.MessageFormatter;
-import org.graviton.network.game.protocol.PlayerPacketFormatter;
-import org.graviton.network.game.protocol.SpellPacketFormatter;
+import org.graviton.network.game.protocol.*;
 
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
@@ -40,50 +39,50 @@ public class AccountHandler {
         this.account = client.getAccount();
     }
 
-    public void handle(String data, byte subHeader) { // 'A'
+    public void handle(String data, char subHeader) {
         switch (subHeader) {
-            case 65: // 'A'
+            case 'A':
                 createPlayer(data);
                 break;
 
-            case 66: // 'B'
+            case 'B':
                 this.client.getPlayer().boostStatistics(Byte.parseByte(data));
                 break;
 
-            case 68: // 'D'
+            case 'D':
                 deletePlayer(data.split("\\|"));
                 break;
 
-            case 76: // 'L'
+            case 'L':
                 client.send(client.getAccount().getPlayerPacket(data.isEmpty()));
                 break;
 
-            case 80: // 'P'
+            case 'P':
                 client.send(GamePacketFormatter.playerNameSuggestionSuccessMessage(randomPseudo()));
                 break;
 
-            case 83: // 'S'
+            case 'S':
                 selectPlayer(Integer.parseInt(data));
                 break;
 
-            case 84: // 'T'
+            case 'T':
                 applyTicket(Integer.parseInt(data));
                 break;
 
-            case 86: // 'V'
+            case 'V':
                 client.send(GamePacketFormatter.requestRegionalVersionMessage());
                 break;
 
-            case 102: // 'f'
+            case 'f':
                 client.send(GamePacketFormatter.getQueuePositionMessage());
                 break;
 
-            case 103: // 'g'
+            case 'g':
                 client.setLanguage(data);
                 break;
 
             default:
-                log.error("not implemented account packet '{}'", (char) subHeader);
+                log.error("not implemented account packet '{}'", subHeader);
         }
 
     }
@@ -107,6 +106,7 @@ public class AccountHandler {
         client.send(PlayerPacketFormatter.alignmentMessage(player.getAlignment().getId()));
         client.send(PlayerPacketFormatter.restrictionMessage());
         client.send(PlayerPacketFormatter.podsMessage(player.getPods()));
+
         player.getMap().load(player);
 
         String currentAddress = ((InetSocketAddress) this.client.getSession().getRemoteAddress()).getAddress().getHostAddress();
@@ -118,10 +118,11 @@ public class AccountHandler {
             client.send(MessageFormatter.actualInformationMessage(currentAddress));
         }
 
-        account.setLastConnection(new SimpleDateFormat("yyyy~MM~dd~HH~mm").format(new Date()));
-        account.setLastAddress(currentAddress);
+        Guild guild;
+        if((guild = player.getGuild()) != null)
+            client.send(GuildPacketFormatter.gsMessage(guild.getMember(playerId).setPlayer(player)));
 
-        client.getAccountRepository().updateInformation(account);
+        account.setLastAddress(currentAddress);
     }
 
     private void deletePlayer(String[] data) {

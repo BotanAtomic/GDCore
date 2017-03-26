@@ -18,14 +18,14 @@ public class EnvironmentHandler {
         this.client = client;
     }
 
-    public void handle(String data, byte subHeader) { // 'e'
+    public void handle(String data, char subHeader) {
         switch (subHeader) {
-            case 68: // 'D'
+            case 'D': // 'D'
                 changeOrientation(Byte.parseByte(data));
                 break;
 
             default:
-                log.error("not implemented environment packet '{}'", (char) subHeader);
+                log.error("not implemented environment packet '{}'", subHeader);
         }
     }
 

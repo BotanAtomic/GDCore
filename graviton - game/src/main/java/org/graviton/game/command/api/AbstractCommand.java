@@ -9,5 +9,5 @@ public interface AbstractCommand {
 
     String description();
 
-    void apply(Player player, String data);
+    void apply(Player player, String[] data);
 }

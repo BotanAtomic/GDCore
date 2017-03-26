@@ -32,15 +32,17 @@ public class Inventory extends ConcurrentHashMap<Integer, Item> {
         this.player = player;
     }
 
-    public void addItem(Item item, boolean create) {
+    public Item addItem(Item item, boolean create) {
         Item same;
         if ((same = same(item)) != null) {
             same.changeQuantity(item.getQuantity());
             player.send(ItemPacketFormatter.quantityMessage(same.getId(), same.getQuantity()));
+            return same;
         } else {
             super.put(item.getId(), item);
             if (create)
                 player.createItem(item);
+            return null;
         }
     }
 
@@ -75,4 +77,8 @@ public class Inventory extends ConcurrentHashMap<Integer, Item> {
         this.kamas += kamas;
     }
 
+    public Item haveItem(int template) {
+        Optional<Item> same = values().stream().filter(item -> item.getTemplate().getId() == template).findFirst();
+        return same.isPresent() ? same.get() : null;
+    }
 }

@@ -30,12 +30,11 @@ public class DropBonus {
         List<Drop> sortedDrop = team.getMonsterGroup().allDrops(entityFactory);
 
         while (!sortedDrop.isEmpty()) {
-            sortedFighter.forEach(player -> {
+            sortedFighter.stream().filter(fighter -> !fighter.isInvocation()).forEach(player -> {
                 if (!sortedDrop.isEmpty()) {
                     Drop currentDrop = sortedDrop.get(0);
 
                     if (currentDrop.validate((Player) player, totalProspection)) {
-                        currentDrop.setAlreadyDropped(true);
                         if (items.containsKey(player.getId()))
                             add(player, currentDrop);
                         else {

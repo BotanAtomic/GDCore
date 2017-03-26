@@ -26,7 +26,7 @@ public class CrossZone extends Zone {
 
         List<Cell> cells = new CopyOnWriteArrayList<>();
 
-        for (OrientationEnum orientation : OrientationEnum.ADJACENTS)
+        for (OrientationEnum orientation : OrientationEnum.ADJACENT)
             calculateLine(super.getLength(), initialCell, cells, map, orientation);
 
         cells.add(initialCell);

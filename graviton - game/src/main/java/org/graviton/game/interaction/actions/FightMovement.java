@@ -13,6 +13,7 @@ import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.utils.Utils;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -51,7 +52,9 @@ public class FightMovement extends Path implements AbstractGameAction {
 
     @Override
     public boolean begin() {
+
         boolean valid = super.isValid() && fighter.getCurrentMovementPoint() >= super.size();
+
 
         Collection<Fighter> aroundFighters = getAroundFighters(fightMap, fighter, fighter.getFightCell().getId());
 

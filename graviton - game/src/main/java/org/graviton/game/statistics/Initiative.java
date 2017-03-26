@@ -15,10 +15,6 @@ public class Initiative extends Characteristic {
         this.statistics = statistics;
     }
 
-    private int getMaxLife() {
-        return statistics.getLife().getMaximum();
-    }
-
     private int getCurrentLife() {
         return statistics.getLife().getCurrent();
     }
@@ -34,7 +30,7 @@ public class Initiative extends Characteristic {
                 get(CharacteristicType.Chance).total() +
                 get(CharacteristicType.Agility).total() +
                 gift + context + equipment;
-        return (short) (total * ((double) getCurrentLife() / (double) getMaxLife()));
+        return (short) (total * ((double) getCurrentLife() / (double)  statistics.getLife().getMaximum()));
     }
 }
 

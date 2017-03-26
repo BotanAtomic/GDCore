@@ -14,6 +14,8 @@ public class SpellTemplate {
     private final short id;
     private final short sprite;
     private final String spriteInformation;
+    private final byte type;
+    private final short duration;
 
     private Spell[] spells = new Spell[Dofus.MAX_SPELL_LEVEL];
 
@@ -21,6 +23,9 @@ public class SpellTemplate {
         this.id = element.getAttribute("id").toShort();
         this.sprite = element.getElementByTagName("sprite", "id").toShort();
         this.spriteInformation = element.getElementByTagName("sprite", "infos").toString();
+        this.type = element.getAttribute("type").toByte();
+        this.duration = element.getAttribute("duration").toShort();
+
 
         element.getElementsByTagName("level").forEach(spell -> {
             Spell current = new Spell(spell.getAttribute("id").toByte(), this);

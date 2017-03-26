@@ -13,7 +13,9 @@ import org.graviton.network.game.GameClient;
 public enum NpcAction {
     TRANSPORTATION((short) 0, Transportation.class),
     DIALOG((short) 1, Dialog.class),
+    DUNGEON((short) 15, DungeonAction.class),
     QUEST((short) 40, Quest.class),
+    ALIGNMENT((short) 40, AlignmentCondition.class),
     ASTRUB_TRANSPORTATION((short) 229, AstrubTransportation.class),
     FINISH_QUEST((short) 984, FinishQuest.class);
 

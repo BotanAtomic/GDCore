@@ -44,7 +44,9 @@ public class DuelFight extends Fight {
 
     @Override
     public void quit(Fighter fighter) {
-        if (DuelFight.super.state != FightState.FINISHED)
+        if (super.state != FightState.FINISHED) {
+            fighter.getTeam().setOtherLeader(fighter);
+
             if (fighter.getTeam().realSize() == 1) {
                 if (state == FightState.ACTIVE)
                     destroyFight(fighter);
@@ -52,6 +54,7 @@ public class DuelFight extends Fight {
                     cancelFight();
             } else
                 onFighterLeft(fighter);
+        }
     }
 
     private void onFighterLeft(Fighter fighter) {
@@ -61,8 +64,11 @@ public class DuelFight extends Fight {
         }
         if (fighter.getTeam().getLeader().getId() == fighter.getId())
             cancelFight();
-        else
+        else {
+            if (fighter.getTeam().getLeader() == fighter)
+                fighter.getTeam().setOtherLeader(fighter);
             fighter.left(false);
+        }
     }
 
     private void onFighterQuit(Fighter fighter) {
@@ -72,6 +78,9 @@ public class DuelFight extends Fight {
 
     @Override
     protected void destroyFight(Fighter looser) {
+        if(state == FightState.FINISHED)
+            return;
+
         state = FightState.FINISHED;
         send(endMessage(looser));
         schedule(() -> {
@@ -84,6 +93,11 @@ public class DuelFight extends Fight {
 
     }
 
+    @Override
+    protected void onStart() {
+
+    }
+
     private void cancelFight() {
         getGameMap().send(FightPacketFormatter.removeFlagMessage(getId()));
         super.fighters().forEach(fighter -> fighter.left(true));
@@ -92,7 +106,7 @@ public class DuelFight extends Fight {
 
     private String endMessage(Fighter fighter) {
         FightTeam winner = otherTeam(fighter.getTeam());
-        return FightPacketFormatter.duelFightEndMessage(getDuration(), winner.getLeader().getId(), winner, fighter.getTeam());
+        return FightPacketFormatter.fightEndMessage(getDuration(), winner.getLeader().getId(), winner, fighter.getTeam());
     }
 
 }

@@ -24,7 +24,7 @@ public class SimpleStatisticEffect implements Effect {
     }
 
     private void apply(Fighter fighter, Fighter target, SpellEffect effect) {
-        short value = effect.getSecond() != -1 ? effect.getDice().random() : effect.getFirst();
+        short value = effect.getSecond() == -1 ? effect.getFirst() : effect.getDice().random();
 
         short finalValue = (short) (add ? value : -value);
 

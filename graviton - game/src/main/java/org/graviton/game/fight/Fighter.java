@@ -2,8 +2,10 @@ package org.graviton.game.fight;
 
 import lombok.Data;
 import org.graviton.api.Creature;
+import org.graviton.game.alignment.Alignment;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.monster.Monster;
+import org.graviton.game.creature.monster.extra.Double;
 import org.graviton.game.effect.buff.Buff;
 import org.graviton.game.effect.buff.type.InvisibleBuff;
 import org.graviton.game.effect.state.State;
@@ -13,6 +15,8 @@ import org.graviton.game.fight.common.FightSide;
 import org.graviton.game.fight.team.FightTeam;
 import org.graviton.game.fight.turn.FightTurn;
 import org.graviton.game.intelligence.ArtificialIntelligence;
+import org.graviton.game.maps.fight.FightMap;
+import org.graviton.game.spell.SpellFilter;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
 import org.graviton.game.spell.Spell;
@@ -56,13 +60,19 @@ public abstract class Fighter {
     private int lastLife;
     private short damageSuffer = 0;
 
-    private List<Short> launchedSpells = new ArrayList<>();
     private List<Buff> buffs = new ArrayList<>();
     private List<State> states = new ArrayList<>();
     private Map<Short, Short> spellBoost = new HashMap<>();
+    private Map<Short, Byte> spellTime = new HashMap<>();
+    private Map<Short, Byte> launchedSpells = new HashMap<>();
+
     private List<Fighter> invocations = new ArrayList<>();
 
     private Cell startCell;
+
+    private final SpellFilter spellFilter = new SpellFilter(this);
+
+    private final List<Runnable> toExecute = new ArrayList<>();
 
     public static Comparator<Fighter> compareByInitiative() {
         return Comparator.comparingInt(Fighter::getInitiative);
@@ -70,6 +80,10 @@ public abstract class Fighter {
 
     public static Comparator<Fighter> compareByProspection() {
         return Comparator.comparingInt(Fighter::getProspection);
+    }
+
+    public static Comparator<Fighter> compareByLife() {
+        return Comparator.comparingInt(fighter -> fighter.getLife().getCurrent());
     }
 
     public abstract int getId();
@@ -86,14 +100,20 @@ public abstract class Fighter {
 
     public abstract String getFightGM();
 
+    public abstract String doubleGm(Double clone);
+
     public abstract ArtificialIntelligence artificialIntelligence();
+
+    public abstract List<Spell> getSpells();
+
+    public abstract Alignment getAlignment();
 
     public boolean isStatic() {
         return this.states.contains(State.Rooted) || isStatic;
     }
 
     public void addLaunchedSpell(short spell) {
-        this.launchedSpells.add(spell);
+        this.launchedSpells.put(spell, (byte) (this.launchedSpells.getOrDefault(spell, (byte) 0) + 1));
     }
 
     public void clearLaunchedSpell() {
@@ -101,7 +121,11 @@ public abstract class Fighter {
     }
 
     public boolean hasLaunchedSpell(short spell) {
-        return this.launchedSpells.contains(spell);
+        return this.launchedSpells.containsKey(spell);
+    }
+
+    public byte countOfLaunchedSpell(short spell) {
+        return this.launchedSpells.getOrDefault(spell, (byte) 0);
     }
 
     public void addBuff(Buff buff) {
@@ -137,10 +161,14 @@ public abstract class Fighter {
 
     public void passTurn() {
         this.passTurn = true;
-        if (this.fight.getTurnList().getCurrent() == this.turn) {
-            this.turn.end();
+        if (this.fight.getTurnList().getCurrent().getFighter().getId() == this.turn.getFighter().getId()) {
+            this.turn.end(false);
             this.passTurn = false;
         }
+    }
+
+    public boolean isAlive() {
+        return !dead;
     }
 
     public Buff getBuff(Class<?> buffClass) {
@@ -172,9 +200,9 @@ public abstract class Fighter {
     public byte getCurrentPoint(CharacteristicType characteristicType) {
         switch (characteristicType) {
             case ActionPoints:
-                return getCurrentActionPoint();
+                return this.currentActionPoint;
             case MovementPoints:
-                return getCurrentMovementPoint();
+                return this.currentMovementPoint;
             default:
                 return 0;
         }
@@ -242,10 +270,8 @@ public abstract class Fighter {
     }
 
     private void destroy() {
-        if (fightBonus != null) {
-            fightBonus.validate();
+        if (fightBonus != null)
             this.fightBonus = null;
-        }
 
         this.lastLocation = null;
         this.fight = null;
@@ -259,7 +285,10 @@ public abstract class Fighter {
         this.buffs.clear();
         this.spellBoost.clear();
         this.launchedSpells.clear();
+        this.spellTime.clear();
         this.getStatistics().clearBuffs();
+
+        getLife().blockRegeneration(false);
     }
 
     public void left(boolean activeFight) {
@@ -268,6 +297,7 @@ public abstract class Fighter {
         getCreature().setLocation(this.lastLocation);
         ((Player) getCreature()).getAccount().getClient().setEndFight();
         send(FightPacketFormatter.fighterLeft());
+        getLife().refreshRegenTime();
 
         if (!activeFight)
             fight.generateFlag();
@@ -283,6 +313,19 @@ public abstract class Fighter {
         return false;
     }
 
+    public boolean canLaunchSpell(short spell) {
+        return !this.spellTime.containsKey(spell);
+    }
+
+    public void decrementSpellTime() {
+        new HashMap<>(this.spellTime).forEach((spell, time) -> {
+            if (time <= 1)
+                this.spellTime.remove(spell);
+            else
+                this.spellTime.replace(spell, (byte) (time - 1));
+        });
+    }
+
     @Override
     public int hashCode() {
         return this.getCreature().getId();
@@ -295,7 +338,7 @@ public abstract class Fighter {
 
 
     public boolean isInvocation() {
-        return master != null && this instanceof Monster;
+        return master != null && (this instanceof Monster || this instanceof Double);
     }
 
 }

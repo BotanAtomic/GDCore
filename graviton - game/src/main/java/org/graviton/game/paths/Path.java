@@ -1,9 +1,12 @@
 package org.graviton.game.paths;
 
+import org.graviton.game.client.player.Player;
+import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.effect.state.State;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.AbstractMap;
+import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.trap.AbstractTrap;
 import org.graviton.network.game.protocol.FightPacketFormatter;
@@ -20,13 +23,13 @@ import java.util.List;
  */
 public class Path extends ArrayList<Short> {
 
-    private final short startCell;
+    private short startCell;
     protected List<Runnable> tasks = new ArrayList<>();
     private String newPath = "";
     private short finalCell;
     private OrientationEnum finalOrientation;
 
-    protected Path(String path, AbstractMap map, short cell) {
+    protected Path(String path, GameMap map, short cell, Player player) {
         this.startCell = cell;
         short lastCell = cell;
         int size = map.getWidth() * 2 + 1;
@@ -35,8 +38,17 @@ public class Path extends ArrayList<Short> {
             String stepPath = path.substring(i, i + 3);
             short stepCell = Cells.decode(stepPath.substring(1));
 
-            while (lastCell != stepCell && map.getCells().containsKey(lastCell) && map.getCells().get(lastCell).isWalkable() && size-- > 0)
+            while (lastCell != stepCell && map.getCells().containsKey(lastCell) && map.getCells().get(lastCell).isWalkable() && size-- > 0) {
                 add(lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth()));
+
+                MonsterGroup monsterGroup = map.searchMonsterGroupByPath(player.getAlignment(), lastCell);
+
+                if(monsterGroup != null) {
+                    tasks.add(() -> map.getFightFactory().newMonsterFight(player, monsterGroup));
+                    return;
+                }
+
+            }
 
             lastCell = stepCell;
             newPath += stepPath.charAt(0) + Cells.encode(lastCell);
@@ -46,18 +58,17 @@ public class Path extends ArrayList<Short> {
     protected Path(String path, AbstractMap map, short cell, Fighter fighter) {
         this.startCell = cell;
         short lastCell = cell;
-        int size = map.getWidth() * 2 + 1;
+        int size = (map.getWidth() << 1) + 1;
 
         for (int i = 0; i < path.length(); i += 3) {
             String stepPath = path.substring(i, i + 3);
             short stepCell = Cells.decode(stepPath.substring(1));
 
-
             while (lastCell != stepCell && map.getCells().get(lastCell).isWalkable() && size-- > 0) {
                 lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth());
 
                 Cell last = map.getCells().get(lastCell);
-                if (!last.getCreatures().isEmpty() && fighter.getFight().getFighter(last.getFirstCreature()) != null) {
+                if (!last.getCreatures().isEmpty() && fighter.getFight().getAliveFighter(last.getFirstCreature()) != null) {
                     fighter.send(MessageFormatter.customMessage("0161"));
                     fighter.send(FightPacketFormatter.showCellMessage(fighter.getId(), last.getId()));
                     return;
@@ -93,8 +104,12 @@ public class Path extends ArrayList<Short> {
     public static Collection<Fighter> getAroundFighters(AbstractMap map, Fighter fighter, short cellId) {
         Collection<Fighter> fighters = new ArrayList<>();
 
-        for (OrientationEnum orientation : OrientationEnum.ADJACENTS) {
+        for (OrientationEnum orientation : OrientationEnum.ADJACENT) {
             Cell cell = map.getCells().get(Cells.getCellIdByOrientation(cellId, orientation, map.getWidth()));
+
+            if(cell == null)
+                continue;
+
             if (!cell.getCreatures().isEmpty()) {
                 Fighter aroundFighter = fighter.getFight().getFighter(cell.getFirstCreature());
                 if (aroundFighter != null && aroundFighter.getTeam().getSide().ordinal() != fighter.getSide().ordinal() && aroundFighter.isVisible())

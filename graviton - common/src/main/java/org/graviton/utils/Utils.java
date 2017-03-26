@@ -4,8 +4,9 @@ import org.apache.mina.core.buffer.IoBuffer;
 
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
-import java.util.Collection;
-import java.util.Random;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -104,6 +105,15 @@ public class Utils {
         return (byte) nextPosition.get();
     }
 
+    public static Date parseDate(String format, String source) {
+        try {
+            return new SimpleDateFormat(format).parse(source);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public static <C> C getRandomObject(Collection<C> from) {
         return (C) from.toArray()[RANDOM.get().nextInt(from.size())];
@@ -124,6 +134,25 @@ public class Utils {
     public static double difference(double first, double second) {
         return (first > second ? first - second : second - first);
     }
+
+    public static List<Integer> parseZaaps(String data) {
+        List<Integer> zaaps = new ArrayList<>();
+        for (String zaap : data.split(";"))
+            if (!zaap.isEmpty())
+                zaaps.add(Integer.parseInt(zaap));
+        return zaaps;
+    }
+
+    public static String parseZaaps(List<Integer> data) {
+        if(data.isEmpty())
+            return "";
+
+        String zaap = "";
+        for (int i : data)
+            zaap += i + ";";
+        return zaap.substring(0, zaap.length() - 1);
+    }
+
     static class NameGenerator {
         private static String[] BEGINNING = {"Kr", "Ca", "Ra", "Mrok", "Cru",
                 "Ray", "Bre", "Zed", "Drak", "Mor", "Jag", "Mer", "Jar", "Mjol",

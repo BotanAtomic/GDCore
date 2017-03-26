@@ -31,7 +31,7 @@ public class CircleZone extends Zone {
         cells.add(initialCell);
 
         IntStream.range(0, getLength()).forEach(i -> cells.forEach(current -> {
-            for (OrientationEnum orientation : OrientationEnum.ADJACENTS) {
+            for (OrientationEnum orientation : OrientationEnum.ADJACENT) {
                 Cell cell = map.getCells().get(Cells.getCellIdByOrientation(current.getId(), orientation, map.getWidth()));
 
                 if (cell == null)

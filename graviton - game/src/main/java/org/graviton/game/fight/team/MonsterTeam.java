@@ -54,7 +54,4 @@ public class MonsterTeam extends FightTeam {
         monsterGroup.getMonsters().forEach(monster -> addFighter(monster.copy()));
     }
 
-    public List<Monster> getMonsters() {
-        return CollectionQuery.from(this).filter(fighter -> !fighter.isInvocation()).transform(fighter -> (Monster) fighter).computeList(new ArrayList<>());
-    }
 }

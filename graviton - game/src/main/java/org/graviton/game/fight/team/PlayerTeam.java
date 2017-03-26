@@ -29,6 +29,8 @@ public class PlayerTeam extends FightTeam {
         fighter.send(GamePacketFormatter.fightRegenTimerMessage((short) 0));
         fighter.setTeam(this);
         fighter.setSide(side);
+        fighter.getLife().applyRegenTime();
+        fighter.getLife().blockRegeneration(true);
         add(fighter);
     }
 

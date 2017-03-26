@@ -77,6 +77,14 @@ public class GamePacketFormatter {
         return "GA" + actionId + ";1;" + actorId + ';' + path;
     }
 
+    public static String interactiveObjectActionMessage(short gameAction, int creatureId, short cellId, int duration) {
+        return "GA" + gameAction + ";" + 501 + ";" + creatureId + ";" + cellId + "," + duration + ",4";
+    }
+
+    public static String quantityAnimationMessage(int creature,int quantity) {
+        return "IQ" + creature + "|" + quantity;
+    }
+
     public static String noActionMessage() {
         return "GA;0";
     }
@@ -109,6 +117,9 @@ public class GamePacketFormatter {
         return "GA;901;" + playerId + ';' + targetId;
     }
 
+    public static String aggressionMessage(int playerId, int targetId) {
+        return "GA;906;" + playerId + ';' + targetId;
+    }
 
     public static String cancelDuelMessage(int playerId, int targetId) {
         return "GA;902;" + playerId + ';' + targetId;
@@ -140,6 +151,10 @@ public class GamePacketFormatter {
 
     public static String serverTimeMessage(long time) {
         return "BT" + (time + (3600000));
+    }
+
+    public static String interactiveObjectMessage(short cell, byte state, boolean interactive) {
+        return "GDF|" + cell + ";" + state + ";" + (interactive ? 1 : 0);
     }
 
 }

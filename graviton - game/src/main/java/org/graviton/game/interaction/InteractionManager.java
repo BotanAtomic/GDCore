@@ -1,6 +1,9 @@
 package org.graviton.game.interaction;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.graviton.game.house.House;
 import org.graviton.game.interaction.actions.*;
 import org.graviton.network.game.GameClient;
 
@@ -10,11 +13,18 @@ import java.util.ArrayDeque;
 /**
  * Created by Botan on 16/11/2016 : 21:03
  */
+
 @Slf4j
 public class InteractionManager extends ArrayDeque<AbstractGameAction> {
     private final GameClient client;
 
     private int interactionCreature;
+
+    @Getter
+    @Setter
+    private House houseInteraction;
+
+    private Status status = Status.DEFAULT;
 
     public InteractionManager(GameClient gameClient) {
         this.client = gameClient;
@@ -32,27 +42,39 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
                 break;
 
             case SPELL_ATTACK:
-                addAction(new SpellAttack(client.getPlayer(), new short[]{Short.parseShort(data.split(";")[0]), Short.parseShort(data.split(";")[1])}));
+                new SpellAttack(client.getPlayer(), new short[]{Short.parseShort(data.split(";")[0]), Short.parseShort(data.split(";")[1])}).begin();
                 break;
 
             case WEAPON_ATTACK:
-                addAction(new WeaponAttack(client.getPlayer(), Short.parseShort(data)));
+                new WeaponAttack(client.getPlayer(), Short.parseShort(data)).begin();
                 break;
 
             case ASK_DEFY:
-                addAction(new AskDefy(client, Integer.parseInt(data)));
+                new AskDefy(client, Integer.parseInt(data)).begin();
                 break;
 
             case ACCEPT_DEFY:
-                addAction(new AcceptDefy(client, interactionCreature, client.getPlayer().getGameMap()));
+                new AcceptDefy(client, interactionCreature, client.getPlayer().getGameMap()).begin();
                 break;
 
             case CANCEL_DEFY:
-                addAction(new CancelDefy(client, interactionCreature));
+                new CancelDefy(client, interactionCreature).begin();
                 break;
 
             case JOIN_FIGHT:
-                addAction(new JoinFight(client, data.split(";")));
+                new JoinFight(client, data.split(";")).begin();
+                break;
+
+            case AGGRESSION:
+                new Aggression(client.getPlayer(), client.getPlayerRepository().find(Integer.parseInt(data))).begin();
+                break;
+
+            case MAP_ACTION:
+                addAction(new MapGameAction(client, data));
+                break;
+
+            case HOUSE_ACTION:
+                new HouseAction(client, Short.parseShort(data));
                 break;
 
             default:
@@ -63,16 +85,24 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
 
     public void end(AbstractGameAction gameAction, boolean success, String data) {
         if (gameAction != null) {
-            if (!success)
-                gameAction.cancel(data);
-            else
-                gameAction.finish(data);
+            if (success) gameAction.finish(data);
+            else gameAction.cancel(data);
         }
+
+        AbstractGameAction abstractGameAction = super.peekFirst();
+        if (abstractGameAction != null)
+            abstractGameAction.begin();
     }
 
     private void addAction(AbstractGameAction gameAction) {
-        if (gameAction.begin())
-            super.add(gameAction);
+        super.add(gameAction);
+
+        System.err.println("Super size = " + super.size());
+        if (super.size() == 1)
+            if (!gameAction.begin())
+                super.pollFirst();
+
+
     }
 
     public void setInteractionWith(int creature) {
@@ -81,6 +111,14 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
 
     public int getInteractionCreature() {
         return this.interactionCreature;
+    }
+
+    public boolean isBusy() {
+        return this.status != Status.DEFAULT;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
 }

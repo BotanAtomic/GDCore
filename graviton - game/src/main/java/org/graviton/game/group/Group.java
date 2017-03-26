@@ -56,7 +56,7 @@ public class Group extends CopyOnWriteArraySet<Player> {
         player.send(PartyPacketFormatter.cancelMessage());
     }
 
-    private void send(String data) {
+    public void send(String data) {
         forEach(player -> player.send(data));
     }
 

@@ -6,7 +6,9 @@ import org.graviton.xml.Attribute;
 import org.graviton.xml.XMLElement;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Botan on 07/12/2016. 21:19
@@ -17,11 +19,11 @@ public class NpcQuestion {
     private final short id;
     private final String parameter;
     private final String answersData;
-    private final Map<Short, NpcAnswer> answers = new HashMap<>();
+    private final Map<Short, List<NpcAnswer>> answers = new HashMap<>();
     private final String conditions;
-    private NpcAnswer alternative;
+    private List<NpcAnswer> alternative;
 
-    public NpcQuestion(XMLElement element, Map<Short, NpcAnswer> answers) {
+    public NpcQuestion(XMLElement element, List<NpcAnswer> answers) {
         this.id = element.getAttribute("id").toShort();
         this.parameter = element.getElementByTagName("parameters").toString();
 
@@ -30,19 +32,19 @@ public class NpcQuestion {
         if (!answersData.isEmpty())
             for (String answer : answersData.split(";")) {
                 short answerId = Short.parseShort(answer);
-                this.answers.put(answerId, answers.get(answerId));
+                this.answers.put(answerId, answers.stream().filter(current -> current.getId() == answerId).collect(Collectors.toList()));
             }
 
         Attribute alternativeData = element.getElementByTagName("alternative");
 
         if (!alternativeData.toString().isEmpty())
-            this.alternative = answers.get(alternativeData.toShort());
+            this.alternative = answers.stream().filter(current -> current.getId() == alternativeData.toShort()).collect(Collectors.toList());
 
         this.conditions = element.getElementByTagName("conditions").toString();
     }
 
     public String toString(Player player) {
-        return id + convertParameter(player) + "|" + answersData;
+        return id + convertParameter(player) + (answersData.isEmpty() ? "" : "|" + answersData);
     }
 
     private String convertParameter(Player player) {

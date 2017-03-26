@@ -1,6 +1,7 @@
 package org.graviton.game.fight.team;
 
 import lombok.Data;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightSide;
@@ -8,6 +9,7 @@ import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.maps.utils.CellLoader;
+import org.graviton.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
  */
 
 @Data
-public abstract class FightTeam extends ArrayList<Fighter> implements Iterable<Fighter> {
+public abstract class FightTeam extends ArrayList<Fighter> {
     protected final FightSide side;
     private Fight fight;
     private Fighter leader;
@@ -38,6 +40,10 @@ public abstract class FightTeam extends ArrayList<Fighter> implements Iterable<F
         this.side = side;
     }
 
+    public byte getId() {
+        return (byte) this.side.ordinal();
+    }
+
     public abstract void addFighter(Fighter fighter);
 
     public abstract void actualizeMap(GameMap gameMap, FightMap fightMap, Fighter fighter);
@@ -52,7 +58,11 @@ public abstract class FightTeam extends ArrayList<Fighter> implements Iterable<F
     }
 
     public void placeFighter(Fighter fighter) {
-        fighter.setFightCell(random());
+        placeFighter(fighter, random());
+    }
+
+    public void placeFighter(Fighter fighter, Cell cell) {
+        fighter.setFightCell(cell);
         fighter.setStartCell(fighter.getFightCell());
     }
 
@@ -60,9 +70,9 @@ public abstract class FightTeam extends ArrayList<Fighter> implements Iterable<F
         forEach(this::placeFighter);
     }
 
-    private Cell random() {
+    public Cell random() {
         List<Cell> freeCells = this.cells.stream().filter(Cell::isFree).map(cell -> cell).collect(Collectors.toList());
-        return freeCells.get(new Random().nextInt(freeCells.size()));
+        return freeCells.size() == 0 ? null : freeCells.get(new Random().nextInt(freeCells.size()));
     }
 
     public boolean containsCell(short cell) {
@@ -73,10 +83,25 @@ public abstract class FightTeam extends ArrayList<Fighter> implements Iterable<F
         return (int) stream().filter(fighter -> fighter.getMaster() == null).count();
     }
 
+    public int realPlayer() {
+        return (int) stream().filter(fighter -> fighter instanceof Player).count();
+    }
+
     public abstract void initialize(Fight fight);
 
     public int getLevel() {
         return stream().mapToInt(Fighter::getLevel).sum();
+    }
+
+    public void setOtherLeader(Fighter excepted) {
+        Fighter newChief = null;
+        while (excepted != newChief)
+            newChief = Utils.getRandomObject(this);
+        this.leader = newChief;
+    }
+
+    public boolean containsFighter(Fighter fighter) {
+        return stream().filter(target -> target.getId() == fighter.getId()).count() > 0;
     }
 
     @Override

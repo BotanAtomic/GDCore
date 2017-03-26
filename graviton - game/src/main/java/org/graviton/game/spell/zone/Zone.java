@@ -26,9 +26,11 @@ import java.util.stream.IntStream;
 public abstract class Zone {
     private final SpellEffect spellEffect;
     private final byte length;
+    private final String value;
 
     public Zone(SpellEffect spellEffect, String zone) {
         this.spellEffect = spellEffect;
+        this.value = zone;
         this.length = (byte) Utils.EXTENDED_ALPHABET.indexOf(zone.charAt(1));
     }
 

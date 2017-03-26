@@ -27,22 +27,22 @@ public class DialogHandler {
         return this.player != null ? this.player : (player = client.getPlayer());
     }
 
-    public void handle(String data, byte subHeader) { // 'D'
+    public void handle(String data, char subHeader) {
         switch (subHeader) {
-            case 67: // 'C'
+            case 'C':
                 createDialog(data);
                 break;
 
-            case 82: // 'R'
+            case 'R':
                 answerDialog(data);
                 break;
 
-            case 86: // 'V'
+            case 'V':
                 leaveDialog();
                 break;
 
             default:
-                log.error("not implemented dialog packet '{}'", (char) subHeader);
+                log.error("not implemented dialog packet '{}'", subHeader);
 
         }
     }
@@ -59,7 +59,7 @@ public class DialogHandler {
     }
 
     public void createQuestion(String data) {
-        if (data.equals("DV")) {
+        if ("DV".equals(data)) {
             leaveDialog();
             return;
         }
@@ -68,9 +68,10 @@ public class DialogHandler {
     }
 
     private void answerDialog(String data) {
-        NpcAnswer npcAnswer = entityFactory.getNpcAnswer(Short.parseShort(data.split("\\|")[1]));
-        if (npcAnswer.getNpcAction() != null)
-            npcAnswer.getNpcAction().apply(client, npcAnswer.getData());
+        entityFactory.getNpcAnswer(Short.parseShort(data.split("\\|")[1])).forEach(answer -> {
+            System.err.println(answer.getNpcAction().name());
+            answer.getNpcAction().apply(client, answer.getData());
+        });
     }
 
     public void leaveDialog() {

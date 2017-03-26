@@ -8,8 +8,13 @@ import org.graviton.network.game.GameClient;
  */
 public class Quest implements Action {
     @Override
-    public void apply(GameClient client, String data) {
+    public void apply(GameClient client, Object data) {
         System.err.println("New quest"); //TODO : quest
         client.getBaseHandler().getDialogHandler().leaveDialog();
+    }
+
+    @Override
+    public void finish() {
+
     }
 }

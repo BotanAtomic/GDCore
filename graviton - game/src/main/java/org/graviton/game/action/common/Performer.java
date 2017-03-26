@@ -11,11 +11,14 @@ import org.graviton.network.game.GameClient;
 @Slf4j
 public class Performer {
 
-    public static void apply(GameClient client, Class<?> actionClass, String data) {
+    public static Action apply(GameClient client, Class<?> actionClass, Object data) {
         try {
-            ((Action) actionClass.newInstance()).apply(client, data);
+            Action action = ((Action) actionClass.newInstance());
+            action.apply(client, data);
+            return action;
         } catch (Exception e) {
-            log.error("exception > {}", e.getMessage());
+            log.error("Performer exception > {}", e.getMessage());
         }
+        return null;
     }
 }

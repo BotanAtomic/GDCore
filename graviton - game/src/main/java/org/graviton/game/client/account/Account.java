@@ -8,6 +8,7 @@ import org.graviton.network.game.protocol.PlayerPacketFormatter;
 import org.jooq.Record;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import static org.graviton.database.jooq.login.tables.Accounts.ACCOUNTS;
@@ -18,7 +19,7 @@ import static org.graviton.database.jooq.login.tables.Accounts.ACCOUNTS;
 @Data
 public class Account {
     private final int id;
-    private final String question, answer;
+    private final String question, answer, nickname;
 
     private byte rights;
     private String channels;
@@ -28,6 +29,8 @@ public class Account {
 
     private Collection<Player> players;
 
+    private List<Integer> friends, enemies;
+
     private GameClient client;
 
     private String cachedPlayerPacket;
@@ -36,6 +39,7 @@ public class Account {
         this.id = record.get(ACCOUNTS.ID);
         this.question = record.get(ACCOUNTS.QUESTION);
         this.answer = record.get(ACCOUNTS.ANSWER);
+        this.nickname = record.get(ACCOUNTS.NICKNAME);
         this.rights = record.get(ACCOUNTS.RIGHTS);
         this.channels = record.get(ACCOUNTS.CHANNELS);
         this.lastConnection = record.get(ACCOUNTS.LAST_CONNECTION);

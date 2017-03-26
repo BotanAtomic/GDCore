@@ -154,7 +154,7 @@ public class DamageEffect implements Effect {
     public void applyWeapon(Fighter fighter, Fighter target) {
         if (target != null)
             fighter.getFight().hit(fighter, target, damage(new SpellEffect(-1) {{
-                setDice(new Bonus((short) 1, (short) 5, (short) 0));
+                setDice(new Bonus("",(short) 1, (short) 5, (short) 0));
             }}, fighter, target, this.damageType, 0));
     }
 

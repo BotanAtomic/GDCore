@@ -3,6 +3,7 @@ package org.graviton.game.fight.turn;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.graviton.game.creature.monster.Monster;
+import org.graviton.game.creature.monster.extra.Double;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.network.game.protocol.FightPacketFormatter;
@@ -46,9 +47,9 @@ public class FightTurnList {
 
     public void remove(Fighter fighter, boolean invocation) {
         if (current.equals(fighter.getTurn()))
-            current.end();
+            current.end(true);
 
-        if (invocation && fighter instanceof Monster) {
+        if (invocation && (fighter instanceof Monster || fighter instanceof Double)) {
             this.turns.remove(fighter.getTurn());
             fighter.getFight().send(FightPacketFormatter.turnListMessage(this.turns));
         }

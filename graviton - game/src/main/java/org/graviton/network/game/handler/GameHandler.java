@@ -3,95 +3,101 @@ package org.graviton.network.game.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.fight.Fighter;
+import org.graviton.game.house.House;
 import org.graviton.game.interaction.InteractionManager;
 import org.graviton.game.maps.GameMap;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.network.game.protocol.HousePacketFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Created by Botan on 22/11/2016 : 22:10
  */
 @Slf4j
 public class GameHandler {
-
     private final GameClient client;
     private final InteractionManager interactionManager;
 
-    private boolean endFight = false;
+    private boolean endFight;
 
     public GameHandler(GameClient client) {
         this.client = client;
         this.interactionManager = client.getInteractionManager();
     }
 
-    public void handle(String data, byte subHeader) { // 'G'
+    public void handle(String data, char subHeader) {
         switch (subHeader) {
-            case 65: // 'A'
+            case 'A':
                 createAction(Short.parseShort(data.substring(0, 3)), data.substring(3));
                 break;
 
-            case 67: // 'C'
+            case 'C':
                 createGame(client.getPlayer());
                 break;
 
-            case 68: // 'D'
+            case 'D':
                 client.send(GamePacketFormatter.fightDetailsMessage(client.getPlayer().getGameMap().getFightFactory().get(Integer.parseInt(data))));
                 break;
 
-            case 72: // 'H'
+            case 'H':
                 client.getPlayer().getFight().switchHelp(client.getPlayer());
                 break;
 
-            case 73: // 'I'
+            case 'I':
                 sendGameInformation(client.getPlayer());
                 break;
 
-            case 75: // 'K'
+            case 'K':
                 finishAction(data);
                 break;
 
-            case 76: // 'L'
+            case 'L':
                 client.send(GamePacketFormatter.fightInformationMessage(client.getPlayer().getGameMap().getFightFactory().getFights().values()));
                 break;
 
-            case 78: // 'N'
+            case 'N':
                 client.getPlayer().getFight().switchLocked(client.getPlayer());
                 break;
 
-            case 80: // 'P'
-                client.getPlayer().getFight().switchGroup(client.getPlayer());
+            case 'P':
+                if (client.getPlayer().getFight() == null)
+                    client.getPlayer().switchAlignmentEnabled(data.charAt(0));
+                else
+                    client.getPlayer().getFight().switchGroup(client.getPlayer());
                 break;
 
-            case 81: // 'Q'
+            case 'Q': // 'Q'
                 quitFight(data);
                 break;
 
-            case 82: // 'R'
+            case 'R': // 'R'
                 client.getPlayer().getFight().setReady(client.getPlayer(), data.charAt(0) == '1');
                 break;
 
-            case 83: // 'S'
+            case 'S': // 'S'
                 client.getPlayer().getFight().switchSpectator(client.getPlayer());
                 break;
 
-            case 102: // 'f'
+            case 'f': // 'f'
                 client.getPlayer().getTeam().send(FightPacketFormatter.showCellMessage(client.getPlayer().getId(), Short.parseShort(data)));
                 break;
 
-            case 112: // 'p'
+            case 'p': // 'p'
                 client.getPlayer().getFight().changeFighterPlace(client.getPlayer(), Short.parseShort(data));
                 break;
 
-            case 116: // 't'
-                client.getPlayer().getFight().getTurnList().getCurrent().end();
+            case 't': // 't'
+                client.getPlayer().getFight().getTurnList().getCurrent().end(false);
                 break;
 
             default:
-                log.error("not implemented game packet '{}'", (char) subHeader);
+                log.error("not implemented game packet '{}'", subHeader);
         }
-
     }
 
 
@@ -110,17 +116,29 @@ public class GameHandler {
     }
 
     private void sendGameInformation(Player player) {
-        client.send(player.getMap().buildData());
+        client.send(player.getGameMap().buildData());
+
+        if (player.getGameMap().getHouses() != null) {
+            client.sendFormat(HousePacketFormatter.loadMessage(player.getGameMap().getHouses().values(), client.getEntityFactory()), "#");
+
+            Collection<House> personalHouse = player.getGameMap().getHouses().values().stream().filter(house -> house.getOwner() == client.getAccount().getId()).collect(Collectors.toList());
+            if (!personalHouse.isEmpty())
+                client.sendFormat(HousePacketFormatter.loadPersonalHouse(personalHouse, true), "#");
+        }
+
+
+        client.sendFormat(player.getGameMap().interactiveObjectData(), "#");
         client.send(GamePacketFormatter.fightCountMessage(((GameMap) player.getMap()).getFightFactory().getFightSize()));
         ((GameMap) player.getMap()).getFightFactory().getFights().values().forEach(fight -> fight.buildFlag().forEach(client::send));
     }
 
     private void createAction(short id, String arguments) {
+        System.err.println("Create template action id = " + id);
         this.interactionManager.create(id, arguments);
     }
 
     private void finishAction(String data) {
-        interactionManager.end(interactionManager.pollLast(), data.charAt(0) == 'K', data.substring(1));
+        interactionManager.end(interactionManager.pollFirst(), data.charAt(0) == 'K', data.substring(1));
     }
 
     private void quitFight(String data) {

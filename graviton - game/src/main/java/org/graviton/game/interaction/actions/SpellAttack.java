@@ -2,6 +2,7 @@ package org.graviton.game.interaction.actions;
 
 import org.graviton.game.client.player.Player;
 import org.graviton.game.interaction.AbstractGameAction;
+import org.graviton.game.spell.Spell;
 
 /**
  * Created by Botan on 28/12/2016. 21:19
@@ -9,9 +10,10 @@ import org.graviton.game.interaction.AbstractGameAction;
 public class SpellAttack implements AbstractGameAction {
 
     public SpellAttack(Player player, short[] data) {
+        Spell spell =  player.getSpellView(data[0]).getSpell();
         player.setOnAction(true);
-        player.getSpellView(data[0]).getSpell().applyToFight(player, player.getMap().getCells().get(data[1]));
-        player.getFight().schedule(() -> player.setOnAction(false), 1200);
+        spell.applyToFight(player, player.getMap().getCells().get(data[1]));
+        player.getFight().schedule(() -> player.setOnAction(false), spell.getTemplate().getDuration());
     }
 
     @Override

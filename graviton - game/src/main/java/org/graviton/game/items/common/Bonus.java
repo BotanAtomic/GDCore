@@ -8,7 +8,10 @@ import org.graviton.utils.Utils;
 public class Bonus {
     private short round, num, add;
 
-    public Bonus(short round, short num, short add) {
+    private final String format;
+
+    public Bonus(String base, short round, short num, short add) {
+        this.format = base.contains("+") ? base : base + "+0";
         this.round = round;
         this.num = num;
         this.add = add;
@@ -16,16 +19,20 @@ public class Bonus {
 
     public static Bonus parseBonus(String string) {
         if (string.isEmpty())
-            return new Bonus((short) 0, (short) 0, (short) 0);
+            return new Bonus("0d+0", (short) 0, (short) 0, (short) 0);
 
         short a = (short) string.indexOf('d'),
                 b = (short) string.indexOf('+');
 
         short round = Short.parseShort(string.substring(0, a), 10);
-        short num = b >= 0 ? Short.parseShort(string.substring(a + 1, b), 10) : Short.parseShort(string.substring(a + 1), 10);
+        short num = Short.parseShort(b >= 0 ? string.substring(a + 1, b) : string.substring(a + 1), 10);
         short add = b >= 0 ? Short.parseShort(string.substring(b + 1), 10) : 0;
 
-        return new Bonus(round, num, add);
+        return new Bonus(string, round, num, add);
+    }
+
+    public short middle() {
+        return (short) (((1 + num) / 2 * round) + add);
     }
 
     public short min() {
@@ -37,15 +44,15 @@ public class Bonus {
     }
 
     public short random() {
+        if (round + num + add == 0)
+            return 0;
         int min = min();
         int max = max();
         return (short) Utils.random(min < max ? min : max, min > max ? min : max);
     }
 
     public String toString() {
-        return add > 0 ?
-                (Integer.toString(round, 10) + "d" + Integer.toString(num, 10) + "+" + Integer.toString(add, 10)) :
-                (Integer.toString(round, 10) + "d" + Integer.toString(num, 10));
+        return this.format;
     }
 
 }

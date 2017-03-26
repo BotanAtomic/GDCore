@@ -24,8 +24,6 @@ public class Drop {
 
     private byte jobLevel;
 
-    private boolean alreadyDropped = false;
-
     public Drop(XMLElement element) {
         this.item = element.getAttribute("item").toShort();
         this.ceil = element.getAttribute("ceil").toShort();
@@ -45,15 +43,24 @@ public class Drop {
         this.monster = drop.monster;
         this.ceil = drop.ceil;
         this.chance = Arrays.copyOf(drop.chance, 5);
-        this.finalChance = drop.chance[monsterGrade];
+        System.err.println("Monster grade = " + monsterGrade);
+        System.err.println("Chance lenght = " + drop.chance.length);
+        this.finalChance = getFinalChance(drop, monsterGrade);
         this.unique = drop.unique;
         this.meat = drop.meat;
         this.maps = drop.maps;
         this.jobLevel = drop.jobLevel;
     }
 
+    private double getFinalChance(Drop drop, byte monsterGrade) {
+        if (drop.chance.length == 0)
+            return 0;
+
+        return (drop.chance.length < monsterGrade - 1) ? drop.chance[drop.chance.length - 1] : drop.chance[monsterGrade - 1];
+    }
+
     public boolean validate(Player player, short totalProspection) {
-        if (ceil > totalProspection || alreadyDropped)
+        if (ceil > totalProspection)
             return false;
 
         //todo : job

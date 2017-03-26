@@ -11,7 +11,7 @@ import org.graviton.network.game.protocol.MessageFormatter;
  */
 public class AstrubTransportation implements Action {
     @Override
-    public void apply(GameClient client, String data) {
+    public void apply(GameClient client, Object data) {
         client.getBaseHandler().getDialogHandler().leaveDialog();
 
         client.send(GamePacketFormatter.astrubAnimationMessage(client.getPlayer().getId()));
@@ -19,6 +19,11 @@ public class AstrubTransportation implements Action {
 
         AbstractBreed breed = client.getPlayer().getBreed();
         client.getPlayer().changeMap(breed.astrubMap(), breed.astrubCell());
-        client.getPlayer().setSavedLocation(client.getPlayer().getLocation());
+        client.getPlayer().setSavedLocation(client.getPlayer().getLocation().copy());
+    }
+
+    @Override
+    public void finish() {
+
     }
 }

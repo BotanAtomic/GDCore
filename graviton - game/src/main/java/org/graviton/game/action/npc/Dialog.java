@@ -9,8 +9,14 @@ import org.graviton.network.game.GameClient;
 public class Dialog implements Action {
 
     @Override
-    public void apply(GameClient client, String data) {
-        client.getBaseHandler().getDialogHandler().createQuestion(data);
+    public void apply(GameClient client, Object data) {
+        String argument = (String) data;
+        client.getBaseHandler().getDialogHandler().createQuestion(argument);
+    }
+
+    @Override
+    public void finish() {
+
     }
 
 }

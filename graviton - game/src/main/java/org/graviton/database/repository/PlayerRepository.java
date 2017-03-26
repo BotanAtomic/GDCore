@@ -144,10 +144,19 @@ public class PlayerRepository extends Repository<Integer, Player> {
                 .set(PLAYERS.INTELLIGENCE, player.getStatistics().get(CharacteristicType.Intelligence).base())
                 .set(PLAYERS.CHANCE, player.getStatistics().get(CharacteristicType.Chance).base())
                 .set(PLAYERS.AGILITY, player.getStatistics().get(CharacteristicType.Agility).base())
+                .set(PLAYERS.LIFE, player.getLife().getPercent())
+                .set(PLAYERS.ENERGY, player.getStatistics().getEnergy())
+                .set(PLAYERS.GUILD, player.getGuild() == null ? 0 : player.getGuild().getId())
+                .set(PLAYERS.WAYPOINTS, Utils.parseZaaps(player.getZaaps()))
 
                 .set(PLAYERS.EXPERIENCE, player.getExperience())
                 .set(PLAYERS.LEVEL, player.getLevel())
                 .set(PLAYERS.KAMAS, player.getInventory().getKamas())
+
+                .set(PLAYERS.ALIGNMENT, player.getAlignment().getId())
+                .set(PLAYERS.HONOR, player.getAlignment().getHonor())
+                .set(PLAYERS.DISHONNOR, player.getAlignment().getDishonor())
+                .set(PLAYERS.PVP_ENABLED, (byte) (player.getAlignment().isEnabled() ? 1 : 0))
 
                 .set(PLAYERS.SIZE, player.getSize())
                 .set(PLAYERS.TITLE, player.getTitle())
@@ -170,10 +179,14 @@ public class PlayerRepository extends Repository<Integer, Player> {
     }
 
     private void saveItems(Player player) {
-        player.getInventory().values().forEach(item -> database.update(ITEMS)
+        player.getInventory().values().forEach(this::saveItem);
+    }
+
+    public void saveItem(Item item) {
+        database.update(ITEMS)
                 .set(ITEMS.POSITION, item.getPosition().value())
                 .set(ITEMS.QUANTITY, item.getQuantity())
-                .set(ITEMS.STATISTICS, item.parseEffects()).where(ITEMS.ID.equal(item.getId())).execute());
+                .set(ITEMS.STATISTICS, item.parseEffects()).where(ITEMS.ID.equal(item.getId())).execute();
     }
 
     public void save(Account account) {

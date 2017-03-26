@@ -4,6 +4,7 @@ import lombok.Data;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.fight.common.FightState;
+import org.graviton.game.fight.type.AggressionFight;
 import org.graviton.game.fight.type.DuelFight;
 import org.graviton.game.fight.type.MonsterFight;
 import org.graviton.game.maps.GameMap;
@@ -37,6 +38,10 @@ public class FightFactory {
 
     public void newMonsterFight(Player first, MonsterGroup second) {
         add(new MonsterFight(scheduledExecutorService, identityGenerator.incrementAndGet(), first, second, gameMap));
+    }
+
+    public void newAggressionFight(Player aggressor, Player attacked) {
+        add(new AggressionFight(scheduledExecutorService, identityGenerator.incrementAndGet(), aggressor, attacked, gameMap));
     }
 
     private void add(Fight fight) {

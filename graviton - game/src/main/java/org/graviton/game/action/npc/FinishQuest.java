@@ -9,9 +9,14 @@ import org.graviton.network.game.GameClient;
 public class FinishQuest implements Action {
 
     @Override
-    public void apply(GameClient client, String data) {
+    public void apply(GameClient client, Object data) {
         System.err.println("Finish quest"); //TODO : quest
         client.getBaseHandler().getDialogHandler().leaveDialog();
+    }
+
+    @Override
+    public void finish() {
+
     }
 
 }

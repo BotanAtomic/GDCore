@@ -1,0 +1,921 @@
+<InteractiveObjects>
+    <InteractiveObject id="7519" name="Puits">
+        <time>120000</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7515" name="Orge">
+        <time>540000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7511" name="Blé">
+        <time>300000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7517" name="Avoine">
+        <time>600000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7512" name="Houblon">
+        <time>660000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7513" name="Lin">
+        <time>300000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7516" name="Seigle">
+        <time>780000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7550" name="Riz">
+        <time>900000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7518" name="Malt">
+        <time>1140000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7500" name="Frêne">
+        <time>300000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7536" name="Edelweiss">
+        <time>420000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7501" name="Châtaignier">
+        <time>600000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7502" name="Noyer">
+        <time>900000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7503" name="Chêne">
+        <time>1020000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7542" name="Oliviolet">
+        <time>2400000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7541" name="Bombu">
+        <time>2400000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7504" name="Erable">
+        <time>2400000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7553" name="Bambou">
+        <time>2400000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7505" name="If">
+        <time>2400000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7506" name="Merisier">
+        <time>2400000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7507" name="Ebène">
+        <time>3300000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7557" name="Kalyptus">
+        <time>1200000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7554" name="Bambou Sombre">
+        <time>1800000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7508" name="Charme">
+        <time>3600000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7509" name="Orme">
+        <time>7200000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7552" name="Bambou Sacré">
+        <time>10800000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7534" name="Menthe">
+        <time>240000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7535" name="Orchidée Freyesque">
+        <time>240000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7533" name="Trèfle a 5">
+        <time>240000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7551" name="Graine de Pandouille">
+        <time>240000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7530" name="Petits poissons mer">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7529" name="Petits possons rivi">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7531" name="Poisson mer">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7532" name="Poissons rivi">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7539" name="Géant poissons rivi">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7538" name="gros poisson mer">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7540" name="Géant poissons mer">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7537" name="Gros poisson rivière">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7555" name="Dolomite">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7544" name="Pichon">
+        <time>10000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7524" name="Manganèse">
+        <time>1080000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7522" name="Pierre Cuivrée">
+        <time>780000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7526" name="Argent">
+        <time>1800000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7523" name="Bronze">
+        <time>900000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7528" name="Pierre de Bauxite">
+        <time>2100000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7556" name="Silicate">
+        <time>1500000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7520" name="Fer">
+        <time>420000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7543" name="Ombre étrange">
+        <time>180000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7521" name="Etain">
+        <time>1200000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6766" name="Enclos">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6767" name="Enclos">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6763" name="Enclos">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6772" name="Enclos">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7000" name="Zaap">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7007" name="Machine : Paysan">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7026" name="Zaap">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7029" name="Zaap">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="4287" name="Zaap">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7024" name="Machine : Pêcheur">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7025" name="Machine : Boucher">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7022" name="Machine : Poissonier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7023" name="Machine : Chasseur">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7352" name="Poubelle">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7002" name="Moule">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7003" name="Machine : Bucheron">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7019" name="Machine : Alchi">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7012" name="Machine : Forgeron">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7039" name="Machine : Bricoleur">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7001" name="Machine : Boulanger">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7013" name="Machine : Sculteur">
+        <time>10000</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7009" name="Atelier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7008" name="Atelier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7010" name="Atelier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7015" name="Machine : Tailleur">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7014" name="Machine : Tailleur">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7016" name="Machine : Tailleur">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7011" name="Machine : Cordonier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7020" name="FM : CaC">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7006" name="Table a patate">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7549" name="Pêcher Canard (Foire)">
+        <time>10000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7037" name="Table Magique">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7027" name="Machine : Bouclier ">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7031" name="Zaapi">
+        <time>10000</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7030" name="Zaapi">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6700" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6701" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6702" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6703" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6704" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6705" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6706" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6707" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6708" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6709" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6710" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6711" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6712" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6713" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6714" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6715" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6716" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6717" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6718" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6719" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6720" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6721" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6722" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6723" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6724" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6725" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6726" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6729" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6730" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6731" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6732" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6733" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6734" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6735" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6736" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6737" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6738" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6739" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6740" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6741" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6742" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6743" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6744" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6745" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6746" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6747" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6748" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6754" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6756" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6757" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6758" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6759" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6760" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6761" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6762" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6764" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6765" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6768" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6769" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6770" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6771" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6773" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6774" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6775" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="6776" name="Porte">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7350" name="Coffre">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7351" name="Coffre">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7353" name="Coffre">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7038" name="Atelier Magique">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7017" name="Marmite">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7035" name="Liste artisans">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7036" name="Machine à Coudre Magique">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7021" name="Concasseur Munster">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7041" name="Levier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7042" name="Levier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7043" name="Levier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7044" name="Levier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7045" name="Levier">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1853" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1854" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1855" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1856" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1857" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1858" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1859" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1860" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1861" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1862" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="1845" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="2319" name="Statue de classe">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7004" name="Source de jouvence">
+        <time>10000</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7510" name="Tas de patates">
+        <time>600000</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7005" name="Meule">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7028" name="Etabli Pyrotechnique">
+        <time>-1</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7546" name="Machine de force (Foire)">
+        <time>1000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7547" name="Machine de force (Foire)">
+        <time>1000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7514" name="Chanvre">
+        <time>420000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7527" name="Or">
+        <time>2100000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="7525" name="Pierre de kobalt">
+        <time>1080000</time>
+        <duration>-1</duration>
+    </InteractiveObject>
+
+    <InteractiveObject id="3000" name="">
+        <time>86400000</time>
+        <duration>1500</duration>
+    </InteractiveObject>
+</InteractiveObjects>

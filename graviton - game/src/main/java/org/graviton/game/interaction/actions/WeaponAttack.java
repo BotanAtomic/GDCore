@@ -47,7 +47,7 @@ public class WeaponAttack implements AbstractGameAction {
 
             if (Utils.random(1, player.getRate(template.getFailureRate(), false)) == 1) {  // Critical failure !
                 fight.send(FightPacketFormatter.actionMessage(FightAction.WEAPON_CRITICAL_FAILURE, player.getId(), item.getId()));
-                player.getTurn().end();
+                player.getTurn().end(true);
             } else {
                 AtomicInteger criticalBonus = new AtomicInteger(0);
 

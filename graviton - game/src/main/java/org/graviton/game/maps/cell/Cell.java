@@ -1,6 +1,7 @@
 package org.graviton.game.maps.cell;
 
 import lombok.Data;
+import org.graviton.game.maps.object.InteractiveObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +17,8 @@ public class Cell {
     private MovementType movementType;
     private int groundLevel;
     private int groundSlope;
+
+    private InteractiveObject interactiveObject;
 
     private Collection<Integer> creatures = new ArrayList<>();
 

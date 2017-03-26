@@ -47,6 +47,10 @@ public abstract class Characteristic {
         return context;
     }
 
+    public short safeTotal() {
+        return (short) (base + equipment + gift);
+    }
+
     public abstract int total();
 
     void clearBuff() {

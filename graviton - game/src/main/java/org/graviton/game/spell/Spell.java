@@ -5,6 +5,7 @@ import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
 import org.graviton.game.maps.cell.Cell;
+import org.graviton.game.spell.zone.Zone;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.utils.Utils;
 
@@ -54,9 +55,12 @@ public class Spell {
         if (Utils.random(1, fighter.getRate(failureRate, false)) == 1) {  // Critical failure !
             fight.send(FightPacketFormatter.actionMessage(FightAction.CRITICAL_FAILURE, fighter.getId(), String.valueOf(template.getId())));
             if (endsTurnOnFailure)
-                fighter.getTurn().end();
+                fighter.getTurn().end(true);
         } else {
             fighter.addLaunchedSpell(this.template.getId());
+            if(turns > 0)
+                fighter.getSpellTime().put(template.getId(), turns);
+
             fight.send(FightPacketFormatter.actionMessage(FightAction.USE_SPELL, fighter.getId(), buildData(target.getId())));
             effects = this.effects;
 
@@ -68,12 +72,9 @@ public class Spell {
 
         if (effects != null) {
             Collection<SpellEffect> randomEffects;
-            if ((randomEffects = effects.stream().filter(effect -> effect.getChance() > 0).collect(Collectors.toList())).size() > 0) {
+            if (!(randomEffects = effects.stream().filter(effect -> effect.getChance() > 0).collect(Collectors.toList())).isEmpty()) {
                 Optional<SpellEffect> optionalEffect = randomEffects.stream().filter(effect -> Utils.random(1, 100) <= effect.getChance()).findFirst();
                 SpellEffect randomEffect = optionalEffect.isPresent() ? optionalEffect.get() : Utils.getRandomObject(randomEffects);
-
-                System.err.println(randomEffect.getType().name());
-
                 randomEffect.getType().apply(fighter, randomEffect.getZone().getTargets(target, fighter), target, randomEffect);
             }
 
@@ -82,6 +83,9 @@ public class Spell {
 
         fighter.setCurrentActionPoint((byte) (fighter.getCurrentActionPoint() - this.actionPointCost));
         fight.send(FightPacketFormatter.actionPointEventMessage(fighter.getId(), (byte) (this.actionPointCost * -1)));
+
+        fighter.getToExecute().forEach(Runnable::run);
+        fighter.getToExecute().clear();
     }
 
 
@@ -89,4 +93,28 @@ public class Spell {
         return template.getId() + "," + cell + "," + template.getSprite() + "," + level + "," + template.getSpriteInformation();
     }
 
+    boolean isGlyphEffect() {
+        return this.template.getType() == 4;
+    }
+
+    boolean isBuffEffect() {
+        return this.template.getType() == 1;
+    }
+
+    boolean isInvocationEffect() {
+        return this.effects.stream().filter(spellEffect -> spellEffect.getType().isInvocation()).count() > 0;
+    }
+
+    public boolean isPushEffect() {
+        return this.effects.stream().filter(spellEffect -> spellEffect.getType().isPush()).count() > 0;
+    }
+
+    public boolean isMultipleZone() {
+        return this.effects.stream().filter(effect -> !"Pa".equals(effect.getZone().getValue())).count() > 0;
+    }
+
+    public Zone zone() {
+        Optional<Zone> zone = this.effects.stream().filter(effect -> effect.getZone() != null).map(SpellEffect::getZone).findAny();
+        return zone.isPresent() ? zone.get() : null;
+    }
 }

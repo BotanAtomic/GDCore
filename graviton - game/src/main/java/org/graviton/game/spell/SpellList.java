@@ -1,9 +1,11 @@
 package org.graviton.game.spell;
 
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * Created by Botan on 28/12/2016. 20:59
@@ -26,6 +28,10 @@ public class SpellList extends TreeMap<Short, SpellView> {
     public SpellView get(byte position) {
         Optional<SpellView> result = values().stream().filter(viewer -> viewer.getPosition() == position).findFirst();
         return result.isPresent() ? result.get() : null;
+    }
+
+    public List<Spell> getSpells() {
+        return this.values().stream().map(SpellView::getSpell).collect(Collectors.toList());
     }
 
 }

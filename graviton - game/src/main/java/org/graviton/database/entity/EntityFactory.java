@@ -9,9 +9,8 @@ import org.graviton.core.Program;
 import org.graviton.core.loader.FastLoader;
 import org.graviton.database.AbstractDatabase;
 import org.graviton.database.GameDatabase;
-import org.graviton.database.repository.CommandRepository;
-import org.graviton.database.repository.GameMapRepository;
-import org.graviton.database.repository.PlayerRepository;
+import org.graviton.database.repository.*;
+import org.graviton.game.action.fight.AbstractFightAction;
 import org.graviton.game.action.item.ItemAction;
 import org.graviton.game.area.Area;
 import org.graviton.game.area.SubArea;
@@ -23,9 +22,12 @@ import org.graviton.game.creature.npc.NpcQuestion;
 import org.graviton.game.creature.npc.NpcTemplate;
 import org.graviton.game.drop.Drop;
 import org.graviton.game.experience.Experience;
+import org.graviton.game.house.House;
+import org.graviton.game.house.HouseTemplate;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.maps.GameMap;
+import org.graviton.game.maps.object.InteractiveObjectTemplate;
 import org.graviton.game.spell.SpellTemplate;
 import org.graviton.utils.Utils;
 import org.graviton.xml.Performer;
@@ -34,6 +36,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -45,6 +50,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 import static org.graviton.constant.XMLPath.*;
+import static org.graviton.database.jooq.game.tables.HousesData.HOUSES_DATA;
 import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 
 
@@ -54,7 +60,7 @@ import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 @Slf4j
 @Data
 public class EntityFactory extends EntityData implements Manageable {
-    private final ScheduledThreadPoolExecutor scheduler = new ScheduledThreadPoolExecutor(1);
+    private final ScheduledThreadPoolExecutor scheduler = new ScheduledThreadPoolExecutor(Integer.MAX_VALUE);
     private final ExecutorService worker = Executors.newCachedThreadPool();
 
     private AtomicInteger itemIdentityGenerator;
@@ -67,12 +73,32 @@ public class EntityFactory extends EntityData implements Manageable {
     private PlayerRepository playerRepository;
 
     @Inject
+    private AccountRepository accountRepository;
+
+    @Inject
     private CommandRepository commandRepository;
+
+    @Inject
+    private GuildRepository guildRepository;
 
     @Inject
     public EntityFactory(Program program, @Named("database.game") AbstractDatabase database) {
         program.register(this);
         this.database = (GameDatabase) database;
+    }
+
+    private void loadFightActions() {
+        apply(get(FIGHT_ACTION).getElementsByTagName("fightAction"), element -> this.fightAction.put(element.getAttribute("map").toInt(), new AbstractFightAction(element)));
+        log.debug("Successfully load {} fight action", this.fightAction.size());
+    }
+
+    private void loadHouses() {
+        apply(get(HOUSES).getElementsByTagName("house"), element -> this.houses.put(element.getAttribute("id").toShort(), new HouseTemplate(element)));
+        log.debug("Successfully load {} houses", this.houses.size());
+    }
+
+    private void loadGuilds() {
+        log.debug("Successfully load {} guilds", guildRepository.load());
     }
 
     private void loadCommands() {
@@ -82,9 +108,14 @@ public class EntityFactory extends EntityData implements Manageable {
     private void loadSpells() {
         apply(get(SPELLS).getElementsByTagName("spell"), element -> this.spells.put(element.getAttribute("id").toShort(), new SpellTemplate(element)));
         log.debug("Successfully load {} spells", this.spells.size());
+
+        loadGuilds();
     }
 
     private void loadGameMaps() {
+        apply(get(INTERACTIVE_OBJECT).getElementsByTagName("InteractiveObject"), (element -> this.interactiveObjects.put(element.getAttribute("id").toInt(), new InteractiveObjectTemplate(element))));
+        log.debug("Successfully load {} interactive object", this.interactiveObjects.size());
+
         apply(get(AREA).getElementsByTagName("Area"), (element -> this.area.put(element.getAttribute("id").toShort(), new Area(element))));
         log.debug("Successfully load {} area", this.area.size());
 
@@ -93,6 +124,8 @@ public class EntityFactory extends EntityData implements Manageable {
 
         log.debug("Successfully load {} game map", gameMapRepository.load(get(MAPS)));
         log.debug("Successfully register {} npc", gameMapRepository.loadNpc(get(NPCS)));
+        log.debug("Successfully register {} houses", gameMapRepository.loadHouses());
+        log.debug("Successfully register {} zaaps", gameMapRepository.loadZaaps(get(ZAAPS)));
 
         loadExtraMonsters();
     }
@@ -146,15 +179,17 @@ public class EntityFactory extends EntityData implements Manageable {
 
     private void loadNpcData() {
         log.debug("Successfully load {} npc answers", apply(get(NPC_ANSWER).getElementsByTagName("NpcAnswer"), element ->
-                this.npcAnswers.put(element.getAttribute("id").toShort(), new NpcAnswer(element))));
+                this.npcAnswers.add(new NpcAnswer(element))));
 
         log.debug("Successfully load {} npc questions", apply(get(NPC_QUESTION).getElementsByTagName("NpcQuestion"), element ->
                 this.npcQuestions.put(element.getAttribute("id").toShort(), new NpcQuestion(element, this.npcAnswers))));
     }
 
     private void loadMonsterTemplates() {
+        loadSpells();
+
         log.debug("Successfully load {} monster templates", apply(get(MONSTER_TEMPLATE).getElementsByTagName("MonsterTemplate"),
-                element -> this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element))));
+                element -> this.monsterTemplates.put(element.getAttribute("id").toInt(), new MonsterTemplate(element, this))));
 
         AtomicInteger appliquedDrop = new AtomicInteger(0);
         short drops = (short) apply(get(DROPS).getElementsByTagName("Drop"), element -> {
@@ -169,6 +204,7 @@ public class EntityFactory extends EntityData implements Manageable {
         log.debug("Successfully load {} drops", drops);
         log.debug("Successfully appliqued {} drops", appliquedDrop);
         log.debug("Successfully add {} free drops", drops - appliquedDrop.intValue());
+        log.debug("Successfully register {} monsters groups", gameMapRepository.loadMonsterGroups(get(MONSTER_GROUP)));
     }
 
     private void loadItemTemplates() {
@@ -219,8 +255,31 @@ public class EntityFactory extends EntityData implements Manageable {
 
     @Override
     public void start() {
+      /** StringBuilder builder = new StringBuilder();
+
+        database.getResult(Zaapi.ZAAPI).forEach(record -> {
+            builder.append("<zaapi map=\"" + record.get(Zaapi.ZAAPI.MAPID) + "\" alignment=\"" + record.get((Zaapi.ZAAPI.ALIGN)  + "\" /> \n"));
+        });
+
+        FileWriter fw= null;
+        File file =null;
+        try {
+            file=new File("WriteFile.txt");
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            fw = new FileWriter(file);
+            fw.write(builder.toString());
+            fw.flush();
+            fw.close();
+            System.out.println("File written Succesfully");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } **/
+
         this.itemIdentityGenerator = new AtomicInteger(database.getNextId(ITEMS, ITEMS.ID));
-        new FastLoader(this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadSpells, this::loadGameMaps,
+        log.debug("Successfully initialize item identity generator [{}]", itemIdentityGenerator.get());
+        new FastLoader(this::loadFightActions,this::loadHouses, this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadGameMaps,
                 this::loadCommands).launch();
         startScheduledAction();
     }
@@ -256,5 +315,10 @@ public class EntityFactory extends EntityData implements Manageable {
 
     public AbstractCommand getCommand(String name) {
         return commandRepository.get(name);
+    }
+
+    public void updateHouse(House house) {
+        database.update(HOUSES_DATA).set(HOUSES_DATA.OWNER, house.getOwner()).set(HOUSES_DATA.SALE, house.getPrice()).set(HOUSES_DATA.KEY, house.getKey())
+                .where(HOUSES_DATA.ID.equal(house.getTemplate().getId())).execute();
     }
 }

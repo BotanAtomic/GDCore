@@ -3,17 +3,22 @@ package org.graviton.game.creature.monster;
 import lombok.Data;
 import org.graviton.api.Creature;
 import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.alignment.Alignment;
+import org.graviton.game.creature.monster.extra.Double;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.intelligence.ArtificialIntelligence;
 import org.graviton.game.intelligence.common.IntelligenceType;
 import org.graviton.game.look.AbstractLook;
 import org.graviton.game.position.Location;
+import org.graviton.game.spell.Spell;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.common.Statistics;
 import org.graviton.game.statistics.type.MonsterStatistics;
 import org.graviton.network.game.protocol.MonsterPacketFormatter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,13 +33,15 @@ public class Monster extends Fighter implements Creature {
     private final int baseExperience;
     private int id;
     private Location location;
+    private List<Spell> spells;
 
-    public Monster(MonsterTemplate template, byte grade, short level, int baseExperience, String resistance, String life, String statistics, Map<CharacteristicType, Characteristic> characteristics) {
+    public Monster(MonsterTemplate template, byte grade, short level, int baseExperience, String resistance, String life, String statistics, Map<CharacteristicType, Characteristic> characteristics, List<Spell> spells) {
         this.template = template;
         this.size = (byte) (100 + (2 * (grade - 1)));
         this.grade = grade;
-        this.baseExperience = baseExperience != 0 ? baseExperience : 10;
+        this.baseExperience = baseExperience;
         this.statistics = new MonsterStatistics(level, life, resistance.split("@")[1].split(";"), statistics.split(","), characteristics);
+        this.spells = spells;
     }
 
     private Monster(Monster monster) {
@@ -43,6 +50,7 @@ public class Monster extends Fighter implements Creature {
         this.grade = monster.getGrade();
         this.baseExperience = monster.getBaseExperience();
         this.statistics = (MonsterStatistics) monster.getStatistics().copy();
+        this.spells = new ArrayList<>(monster.getSpells());
     }
 
     @Override
@@ -105,8 +113,23 @@ public class Monster extends Fighter implements Creature {
     }
 
     @Override
+    public String doubleGm(Double clone) {
+        return MonsterPacketFormatter.fighterCloneGmMessage(this, clone);
+    }
+
+    @Override
     public ArtificialIntelligence artificialIntelligence() {
         return IntelligenceType.get(template.getArtificialIntelligence()).create(this);
+    }
+
+    @Override
+    public List<Spell> getSpells() {
+        return this.spells;
+    }
+
+    @Override
+    public Alignment getAlignment() {
+        return template.getAlignment();
     }
 
     public Monster copy() {

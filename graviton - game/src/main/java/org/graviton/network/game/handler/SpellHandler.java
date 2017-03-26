@@ -19,18 +19,18 @@ public class SpellHandler {
         this.client = client;
     }
 
-    public void handle(String data, byte subHeader) { // 'S'
+    public void handle(String data, char subHeader) {
         switch (subHeader) {
-            case 66:
+            case 'B':
                 boostSpell(Short.parseShort(data));
                 break;
 
-            case 77: // 'M'
+            case 'M':
                 moveSpell(data.split("\\|"));
                 break;
 
             default:
-                log.error("not implemented spell packet '{}'", (char) subHeader);
+                log.error("not implemented spell packet '{}'", subHeader);
         }
     }
 

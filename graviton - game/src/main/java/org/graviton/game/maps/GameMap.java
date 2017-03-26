@@ -4,22 +4,29 @@ import javafx.util.Pair;
 import lombok.Data;
 import org.graviton.api.Creature;
 import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.alignment.Alignment;
 import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.FightFactory;
+import org.graviton.game.house.House;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
 import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.maps.utils.CellLoader;
+import org.graviton.game.zaap.Zaap;
 import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.utils.Cells;
 import org.graviton.utils.Utils;
 import org.graviton.xml.XMLElement;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -57,6 +64,10 @@ public class GameMap implements AbstractMap {
     private boolean initialized = false;
     private String monsters, triggersData;
 
+    private Map<Short, House> houses;
+
+    private Zaap zaap;
+
     public GameMap(int id, XMLElement element, EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
         this.id = id;
@@ -82,11 +93,19 @@ public class GameMap implements AbstractMap {
         this.monsters = element.getElementByTagName("monsters").toString();
     }
 
+    public short getX() {
+        return Short.parseShort(position.split(",")[0]);
+    }
+
+    public short getY() {
+        return Short.parseShort(position.split(",")[1]);
+    }
+
     public synchronized GameMap initialize() {
         if (initialized)
             return this;
 
-        this.cells = CellLoader.parse(this.data);
+        this.cells = CellLoader.parse(this, this.data, this.entityFactory, false);
         this.triggers = (CellLoader.parseTrigger(triggersData));
         this.toRegister.forEach(creature -> register(creature, false));
 
@@ -115,13 +134,22 @@ public class GameMap implements AbstractMap {
         IntStream.range(0, numberOfGroup).forEach(i -> register(randomMonsterGroup(), send));
     }
 
+    public Collection<MonsterGroup> monsters() {
+        return getCreatures().values().stream().filter(creature -> creature instanceof MonsterGroup).map(creature -> (MonsterGroup) creature).collect(Collectors.toList());
+    }
+
+    public MonsterGroup searchMonsterGroupByPath(Alignment alignment, short currentCell) {
+        Optional<MonsterGroup> monsterGroupOptional = monsters().stream().filter(monsterGroup -> monsterGroup.aggressionDistance(alignment.getId()) > 0).filter(monsterGroup -> Cells.distanceBetween(this.width, monsterGroup.getLocation().getCell().getId(), currentCell) < monsterGroup.aggressionDistance(alignment.getId())).findFirst();
+        return monsterGroupOptional.isPresent() ? monsterGroupOptional.get() : null;
+    }
+
     public MonsterGroup randomMonsterGroup() {
         Random random = new Random();
         Collection<Monster> monsters = new ArrayList<>();
         byte groupSize = fixedGroupSize > 0 ? fixedGroupSize : (byte) random(minimumGroupSize, maximumGroupSize);
 
         IntStream.range(0, groupSize).forEach(inc -> {
-            if (this.extraMonster != null) {
+            if (this.extraMonster != null && this.extraMonster.getTemplate() != null) {
                 monsters.add(this.extraMonster.getTemplate().getRandom());
                 this.extraMonster = null;
             } else {
@@ -138,10 +166,18 @@ public class GameMap implements AbstractMap {
         return new MonsterGroup(getNextId(), this, getRandomCell(), monsters);
     }
 
+    public String interactiveObjectData() {
+        StringBuilder builder = new StringBuilder();
+        this.cells.values().stream().filter(cell -> Objects.nonNull(cell.getInteractiveObject())).forEach(cell ->
+                builder.append(cell.getInteractiveObject().getData())
+                        .append("#"));
+        return builder.toString();
+    }
+
     @Override
     public String buildData() {
         StringBuilder packet = new StringBuilder();
-        creatures.values().forEach(creature -> packet.append(GamePacketFormatter.showCreatureMessage(creature.getGm())).append("\n"));
+        creatures.values().forEach(creature -> packet.append(GamePacketFormatter.showCreatureMessage(creature.getGm())).append('\n'));
         return packet.toString();
     }
 
@@ -220,6 +256,16 @@ public class GameMap implements AbstractMap {
 
     public FightMap createFightMap(Fight fight) {
         return new FightMap(this, fight);
+    }
+
+    public boolean canPlaceCollector() {
+        return this.creatures.values().stream().filter(creature -> creature instanceof Collector).count() == 0;
+    }
+
+    public void addHouse(House house) {
+        if (this.houses == null)
+            this.houses = new ConcurrentHashMap<>();
+        this.houses.put(house.getTemplate().getGameCell(), house);
     }
 
 }

@@ -73,9 +73,13 @@ public abstract class Fight {
     }
 
     public Fighter getFighter(int targetId) {
-        final Fighter[] target = {null};
-        Arrays.asList(firstTeam, secondTeam).forEach(team -> team.stream().filter(fighter -> fighter.getId() == targetId).findFirst().ifPresent(fighter -> target[0] = fighter));
-        return target[0];
+        Optional<Fighter> fighterOptional = fighters().stream().filter(fighter -> fighter.getId() == targetId).findFirst();
+        return fighterOptional.isPresent() ? fighterOptional.get() : null;
+    }
+
+    public Fighter getAliveFighter(int targetId) {
+        Fighter fighter = getFighter(targetId);
+        return fighter != null && !fighter.isDead() ? fighter : null;
     }
 
     void generateFlag() {
@@ -159,6 +163,9 @@ public abstract class Fight {
     }
 
     public void hit(Fighter fighter, Fighter target, int damage) {
+        if(state == FightState.FINISHED)
+            return;
+
         if (target.isDodgeAttack() && Path.getAroundFighters(fightMap, fighter, fighter.getFightCell().getId()).contains(target))
             PushBackEffect.apply(fighter, target, null, (short) 1);
         else {
@@ -201,6 +208,7 @@ public abstract class Fight {
         send(FightPacketFormatter.fighterDieMessage(fighter.getId()));
         this.toWait += 1600;
         fighter.getTeam().setLastDead(fighter);
+        fighter.getFightCell().getCreatures().clear();
         fighter.setFightCell(null);
         fighter.setDead(true);
         this.turnList.remove(fighter, fighter.getMaster() != null);
@@ -262,12 +270,12 @@ public abstract class Fight {
         if (!team.isLocked()) {
             fighter.send(FightPacketFormatter.newFightMessage(state, canQuit(), true, false, scheduledTime(), getType()));
             team.addFighter(fighter);
-            team.actualizeMap(getGameMap(), getFightMap(), fighter);
-            fighter.send(FightPacketFormatter.startCellsMessage(getGameMap().getPlaces(), team.getSide()));
+            team.actualizeMap(this.gameMap, this.fightMap, fighter);
+            fighter.send(FightPacketFormatter.startCellsMessage(this.gameMap.getPlaces(), team.getSide()));
             fighter.setFight(this);
             team.placeFighter(fighter);
             send(FightPacketFormatter.showFighter(fighter), fighter);
-            fighter.send(getFightMap().buildData());
+            fighter.send(this.fightMap.buildData());
             generateFlag();
         } else
             fighter.send(FightPacketFormatter.cannotJoinMessage(fighter.getId(), 'f'));
@@ -295,24 +303,29 @@ public abstract class Fight {
         if (state == FightState.ACTIVE)
             return;
 
+        onStart();
+
         this.state = FightState.ACTIVE;
         this.turnList = new FightTurnList(this);
 
         Collection<Fighter> fighters = fighters();
 
-        getGameMap().send(FightPacketFormatter.removeFlagMessage(getId()));
-        this.getFlagData().clear();
+        gameMap.send(FightPacketFormatter.removeFlagMessage(this.id));
+        this.flagData.clear();
 
         send(FightPacketFormatter.fightersPlacementMessage(fighters));
         send(FightPacketFormatter.fightStartMessage());
         send(FightPacketFormatter.turnListMessage(this.turnList.getTurns()));
 
+        turnList.getCurrent().getFighter().initializeFighterPoints();
         schedule(() -> this.turnList.getCurrent().begin(), 500);
 
-        getGameMap().send(GamePacketFormatter.fightCountMessage(getGameMap().getFightFactory().getFightSize()));
+        this.gameMap.send(GamePacketFormatter.fightCountMessage(this.gameMap.getFightFactory().getFightSize()));
     }
 
     protected abstract void destroyFight(Fighter looser);
+    
+    protected abstract void onStart();
 
     public void switchSpectator(Fighter fighter) {
         fighter.getTeam().setAllowSpectator(!fighter.getTeam().isAllowSpectator());
@@ -343,6 +356,6 @@ public abstract class Fight {
     }
 
     public FightTeam otherTeam(FightTeam fightTeam) {
-        return fightTeam == firstTeam ? secondTeam : fightTeam;
+        return fightTeam.getId() == firstTeam.getId() ? secondTeam : firstTeam;
     }
 }

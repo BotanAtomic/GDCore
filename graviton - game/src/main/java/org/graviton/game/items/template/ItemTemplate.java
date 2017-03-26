@@ -38,6 +38,7 @@ public class ItemTemplate {
     private boolean twoHands;
 
     private TreeMap<ItemEffect, Bonus> effects = new TreeMap<>();
+    private String baseEffects;
 
     private Collection<WeaponEffect> weaponEffects;
 
@@ -49,6 +50,7 @@ public class ItemTemplate {
         this.level = element.getAttribute("level").toShort();
         this.pods = element.getAttribute("weight").toShort();
         this.price = element.getAttribute("price").toInt();
+        this.baseEffects = element.getAttribute("stats").toString();
 
         this.conditionList = new ConditionList(element.getElementByTagName("conditions").toString());
 
@@ -123,5 +125,9 @@ public class ItemTemplate {
             }
         }
         return effects;
+    }
+
+    public String parse() {
+        return this.id + this.baseEffects + ";" + this.price;
     }
 }

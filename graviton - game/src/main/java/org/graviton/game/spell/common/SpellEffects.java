@@ -2,6 +2,7 @@ package org.graviton.game.spell.common;
 
 
 import org.graviton.game.effect.Effect;
+import org.graviton.game.effect.buff.Buff;
 import org.graviton.game.effect.enums.DamageType;
 import org.graviton.game.effect.type.buff.*;
 import org.graviton.game.effect.type.damage.*;
@@ -85,7 +86,6 @@ public enum SpellEffects {
     AddInvocationMax(182, new SimpleStatisticEffect(CharacteristicType.Summons, true)),
     AddMP(128, new SimpleStatisticEffect(CharacteristicType.MovementPoints, true)),
     AddPO(117, new SimpleStatisticEffect(CharacteristicType.RangePoints, true)),
-    AddPods(158), //useless ?
     AddProspection(176, new SimpleStatisticEffect(CharacteristicType.Prospection, true)),
     AddWisdom(124, new SimpleStatisticEffect(CharacteristicType.Wisdom, true)),
     AddCarePoints(178, new SimpleStatisticEffect(CharacteristicType.HealPoints, true)),
@@ -95,8 +95,8 @@ public enum SpellEffects {
     SubChance(152, new SimpleStatisticEffect(CharacteristicType.Chance, false)),
     SubDamage(164, new SimpleStatisticEffect(CharacteristicType.Damage, false)),
     SubDamageCritic(171, new SimpleStatisticEffect(CharacteristicType.CriticalHit, false)),
-    SubDamageMagic(172),
-    SubDamagePhysic(173),
+    SubDamageMagic(172, new SimpleStatisticEffect(CharacteristicType.DamageMagic, false)),
+    SubDamagePhysic(173, new SimpleStatisticEffect(CharacteristicType.DamagePhysic, false)),
     SubDodgeAP(162, new SimpleStatisticEffect(CharacteristicType.DodgeActionPoints, false)),
     SubDodgeMP(163, new SimpleStatisticEffect(CharacteristicType.DodgeMovementPoints, false)),
     SubStrength(157, new SimpleStatisticEffect(CharacteristicType.Strength, false)),
@@ -107,7 +107,6 @@ public enum SpellEffects {
     SubAP(168, new SimpleStatisticEffect(CharacteristicType.ActionPoints, false)),
     SubMP(169, new SimpleStatisticEffect(CharacteristicType.MovementPoints, false)),
     SubPO(116, new SimpleStatisticEffect(CharacteristicType.RangePoints, false)),
-    SubPods(159), //useless ?
     SubProspection(177, new SimpleStatisticEffect(CharacteristicType.Prospection, false)),
     SubWisdom(156, new SimpleStatisticEffect(CharacteristicType.Wisdom, false)),
     SubCarePoints(179, new SimpleStatisticEffect(CharacteristicType.HealPoints, false)),
@@ -123,33 +122,18 @@ public enum SpellEffects {
     AddReduceDamagePercentWind(212, new SimpleStatisticEffect(CharacteristicType.ResistancePercentWind, true)),
     AddReduceDamagePercentFire(213, new SimpleStatisticEffect(CharacteristicType.ResistancePercentFire, true)),
     AddReduceDamagePercentNeutral(214, new SimpleStatisticEffect(CharacteristicType.ResistancePercentNeutral, true)),
-    AddReduceDamagePercentPvPWater(251),
-    AddReduceDamagePercentPvPEarth(250),
-    AddReduceDamagePercentPvAPir(252),
-    AddReduceDamagePercentPvPFire(253),
-    AddReduceDamagePercentPvpNeutral(254),
 
     AddReduceDamageWater(241, new SimpleStatisticEffect(CharacteristicType.ResistanceWater, true)),
     AddReduceDamageEarth(240, new SimpleStatisticEffect(CharacteristicType.ResistanceEarth, true)),
     AddReduceDamageWind(242, new SimpleStatisticEffect(CharacteristicType.ResistanceWind, true)),
     AddReduceDamageFire(243, new SimpleStatisticEffect(CharacteristicType.ResistanceFire, true)),
     AddReduceDamageNeutral(244, new SimpleStatisticEffect(CharacteristicType.ResistanceNeutral, true)),
-    AddReduceDamagePvPWater(261),
-    AddReduceDamagePvPEarth(260),
-    AddReduceDamagePvAPir(262),
-    AddReduceDamagePvPFire(263),
-    AddReduceDamagePvPNeutral(264),
 
     SubReduceDamagePercentWater(216, new SimpleStatisticEffect(CharacteristicType.ResistancePercentWater, false)),
     SubReduceDamagePercentEarth(215, new SimpleStatisticEffect(CharacteristicType.ResistancePercentEarth, false)),
     SubReduceDamagePercentWind(217, new SimpleStatisticEffect(CharacteristicType.ResistancePercentWind, false)),
     SubReduceDamagePercentFire(218, new SimpleStatisticEffect(CharacteristicType.ResistancePercentFire, false)),
     SubReduceDamagePercentNeutral(219, new SimpleStatisticEffect(CharacteristicType.ResistancePercentNeutral, false)),
-    SubReduceDamagePercentPvPWater(255),
-    SubReduceDamagePercentPvPEarth(256),
-    SubReduceDamagePercentPvAPir(257),
-    SubReduceDamagePercentPvPFire(258),
-    SubReduceDamagePercentPvpNeutral(259),
 
     SubReduceDamageWater(246, new SimpleStatisticEffect(CharacteristicType.ResistanceWater, false)),
     SubReduceDamageEarth(245, new SimpleStatisticEffect(CharacteristicType.ResistanceEarth, false)),
@@ -173,27 +157,6 @@ public enum SpellEffects {
 
     ClearBuffs(132, new ClearBuffEffect()),
 
-    AddSpell(604),
-
-    AddCharacteristicStrength(607),
-    AddCharacteristicWisdom(678),
-    AddCharacteristicChance(608),
-    AddCharacteristicAgility(609),
-    AddCharacteristicVitality(610),
-    AddCharacteristicIntelligence(611),
-    AddCharacteristicPoint(612),
-
-    AddSpellPoint(613),
-    LastEat(808),
-    MountOwner(995),
-    LivingGfxId(970),
-    LivingMood(971),
-    LivingSkin(972),
-    LivingType(973),
-    LivingXp(974),
-    CanBeExchange(983),
-    Incarnation(669),
-
     StealStrength(271, new StealStatisticEffect(CharacteristicType.Strength)),
 
     PassTurn(140, new PassTurnEffect()),
@@ -206,7 +169,7 @@ public enum SpellEffects {
 
     Unknown_130(130),
 
-    Unknown_180(180),
+    Double(180, new DoubleEffect()),
 
     StealPO(320, new StealRangeEffect()),
 
@@ -300,7 +263,7 @@ public enum SpellEffects {
 
     Unknown_minus87(-87);
 
-    private final static Map<Integer, SpellEffects> values = new HashMap<>();
+    private static final Map<Integer, SpellEffects> values = new HashMap<>();
 
     static {
         for (SpellEffects effect : values())
@@ -330,6 +293,14 @@ public enum SpellEffects {
 
     public int value() {
         return value;
+    }
+
+    public boolean isInvocation() {
+        return this == Invocation || this == Static_Invocation;
+    }
+
+    public boolean isPush() {
+        return this == Teleport || this == PushFront;
     }
 
 }

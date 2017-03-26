@@ -41,8 +41,7 @@ public class SimpleStatisticBuff extends Buff {
             fighter.getLife().add(value);
         }
 
-        fighter.refreshStatistics();
-
+        fighter.getToExecute().add(() -> fighter.refreshStatistics());
     }
 
     @Override

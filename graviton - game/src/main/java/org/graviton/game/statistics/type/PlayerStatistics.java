@@ -4,6 +4,7 @@ package org.graviton.game.statistics.type;
 import javafx.util.Pair;
 import lombok.Data;
 import org.graviton.collection.CollectionQuery;
+import org.graviton.constant.Dofus;
 import org.graviton.converter.Converters;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.items.Item;
@@ -14,6 +15,8 @@ import org.graviton.game.statistics.*;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.common.Statistics;
 import org.graviton.network.game.protocol.ItemPacketFormatter;
+import org.graviton.network.game.protocol.MessageFormatter;
+import org.graviton.utils.Utils;
 import org.jooq.Record;
 
 import java.util.ArrayList;
@@ -40,6 +43,14 @@ public class PlayerStatistics extends Statistics {
     private short statisticPoints, spellPoints, energy, level;
     private long experience;
 
+    public PlayerStatistics(Player model) {
+        this.player = null;
+        super.initialize();
+
+        this.level = model.getLevel();
+        this.life = new Life(this, model.getLife().getSafeMaximum(), model.getLife().getSafeMaximum(), false);
+    }
+
     public PlayerStatistics(Player player, Record record, byte prospection) {
         this.player = player;
         this.statisticPoints = record.get(PLAYERS.STAT_POINTS);
@@ -47,12 +58,11 @@ public class PlayerStatistics extends Statistics {
         this.energy = record.get(PLAYERS.ENERGY);
         this.level = record.get(PLAYERS.LEVEL);
         this.experience = record.get(PLAYERS.EXPERIENCE);
-        this.life = new Life(this, 55 + ((level - 1) * 5), 55 + ((level - 1) * 5));
 
         super.initialize();
 
         short vitality = record.get(PLAYERS.VITALITY);
-        life.add(vitality);
+
 
         put(CharacteristicType.Vitality, new BaseCharacteristic(vitality));
         put(CharacteristicType.Wisdom, new BaseCharacteristic(record.get(PLAYERS.WISDOM)));
@@ -73,6 +83,9 @@ public class PlayerStatistics extends Statistics {
         applyPanoplyEffect();
 
         refreshPods();
+
+        this.life = new Life(this, record.get(PLAYERS.LIFE), 55 + ((level - 1) * 5), false, Utils.parseDate("yyyy~MM~dd~HH~mm", player.getAccount().getLastConnection()));
+        life.add(vitality);
     }
 
     public PlayerStatistics(Player player, byte prospection) {
@@ -82,7 +95,7 @@ public class PlayerStatistics extends Statistics {
         this.energy = 10000;
         this.level = 1;
         this.experience = 0;
-        this.life = new Life(this, 55, 55);
+        this.life = new Life(this, 55, 55, false);
         this.pods = new short[]{0, 1000};
 
         super.initialize();
@@ -121,10 +134,10 @@ public class PlayerStatistics extends Statistics {
 
     private void applyPanoplyEffect() {
         player.getInventory().getEquippedItems().stream().filter(item -> item.getTemplate().getPanoply() != null).
-                collect(Collectors.toList()).forEach(item -> applyPanoplyEffect(item.getTemplate().getPanoply(), true));
+                collect(Collectors.toList()).forEach(item -> applyPanoplyEffect(item.getTemplate().getPanoply(), true, false));
     }
 
-    public void applyPanoplyEffect(Panoply panoply, boolean equippedItem) {
+    public void applyPanoplyEffect(Panoply panoply, boolean equippedItem, boolean send) {
         Collection<Item> equippedItems = player.getInventory().getEquippedItems();
 
         byte equipped = panoply.getEquippedObject(player.getInventory().getEquippedItems().stream().filter(item -> item.getTemplate().getPanoply() != null).collect(Collectors.toList()));
@@ -140,7 +153,8 @@ public class PlayerStatistics extends Statistics {
             }));
         }
 
-        player.send(ItemPacketFormatter.panoplyMessage(panoply, effects, equipped, CollectionQuery.from(equippedItems).transform(Converters.ITEM_TO_ID).computeList(new ArrayList<>())));
+        if (send)
+            player.send(ItemPacketFormatter.panoplyMessage(panoply, effects, equipped, CollectionQuery.from(equippedItems).transform(Converters.ITEM_TO_ID).computeList(new ArrayList<>())));
     }
 
     private void clearPanoplyEffect(Panoply panoply, byte equipped) {
@@ -155,10 +169,8 @@ public class PlayerStatistics extends Statistics {
         return (short) (get(CharacteristicType.Prospection).total() + get(CharacteristicType.Chance).total() / 10);
     }
 
-    public void refreshPods() {
-        AtomicInteger value = new AtomicInteger(0);
-        this.player.getInventory().values().stream().filter(item -> !item.getPosition().equipped()).forEach(item -> value.addAndGet(item.getTemplate().getPods()));
-        this.pods = new short[]{(short) value.get(), getMaxPods()};
+    public short[] refreshPods() {
+        return this.pods = new short[]{(short) this.player.getInventory().values().stream().mapToInt(item -> item.getQuantity() * item.getTemplate().getPods()).sum(), getMaxPods()};
     }
 
     private short getMaxPods() {
@@ -181,8 +193,19 @@ public class PlayerStatistics extends Statistics {
     public void addExperience(long experience) {
         this.experience += experience;
 
-        while (this.experience > player.getEntityFactory().getExperience(this.level).getNext().getPlayer())
-            player.upLevel();
+        while (this.level < Dofus.MAX_LEVEL && this.experience > player.getEntityFactory().getExperience(this.level).getNext().getPlayer())
+            player.upLevel(true);
+    }
+
+    public void addEnergy(short energy) {
+        if (energy < 0)
+            player.send(MessageFormatter.looseEnergyMessage((short) (energy * -1)));
+
+        this.energy = (short) Utils.limit(this.energy + energy, Dofus.MAX_ENERGY);
+
+        if (this.energy == 0) {
+            //fantome etc etc
+        }
     }
 
     @Override

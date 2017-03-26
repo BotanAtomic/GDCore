@@ -1,6 +1,7 @@
 package org.graviton.game.statistics.type;
 
 import lombok.Data;
+import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.statistics.*;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
@@ -16,9 +17,14 @@ public class MonsterStatistics extends Statistics {
     private final short level;
     private Life life;
 
+    public MonsterStatistics(Monster model) {
+        this.level = model.getLevel();
+        this.life = new Life(this, model.getLife().getSafeMaximum(), model.getLife().getSafeMaximum(), true);
+    }
+
     public MonsterStatistics(short level, String life, String[] resistance, String[] statistics, Map<CharacteristicType, Characteristic> characteristics) {
         this.level = level;
-        this.life = new Life(this, Integer.parseInt(life), Integer.parseInt(life));
+        this.life = new Life(this, Integer.parseInt(life), Integer.parseInt(life), true);
 
         super.initialize();
 
@@ -47,7 +53,7 @@ public class MonsterStatistics extends Statistics {
 
     private MonsterStatistics(MonsterStatistics monsterStatistics) {
         this.level = monsterStatistics.getLevel();
-        this.life = new Life(this, monsterStatistics.getLife().getCurrent(), monsterStatistics.getLife().getCurrent());
+        this.life = new Life(this, monsterStatistics.getLife().getCurrent(), monsterStatistics.getLife().getCurrent(), true);
         putAll(monsterStatistics);
     }
 

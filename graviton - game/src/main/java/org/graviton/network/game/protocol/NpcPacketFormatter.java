@@ -2,6 +2,9 @@ package org.graviton.network.game.protocol;
 
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.creature.npc.NpcTemplate;
+import org.graviton.game.items.template.ItemTemplate;
+
+import java.util.List;
 
 import static org.graviton.utils.Utils.toHex;
 
@@ -28,7 +31,7 @@ public class NpcPacketFormatter {
         builder.append(toHex(template.getColors()[1])).append(';');
         builder.append(toHex(template.getColors()[2])).append(';');
         builder.append(template.getAccessories());
-        builder.append(',');
+        builder.append(';');
         builder.append(template.getExtraClip()).append(';');
         builder.append(template.getCustomArtWork());
         return builder.toString();
@@ -44,6 +47,16 @@ public class NpcPacketFormatter {
 
     public static String questionMessage(String data) {
         return "DQ" + data;
+    }
+
+    public static String buyRequestMessage(int npcId) {
+        return "ECK0|" + npcId;
+    }
+
+    public static String itemListMessage(List<ItemTemplate> itemTemplates) {
+        StringBuilder builder = new StringBuilder("EL");
+        itemTemplates.forEach(itemTemplate -> builder.append(itemTemplate.parse()).append('|'));
+        return builder.substring(0,builder.length() -1);
     }
 
 }

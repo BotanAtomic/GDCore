@@ -1,8 +1,14 @@
 package org.graviton.game.creature.npc;
 
 import lombok.Data;
+import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.look.NpcLook;
 import org.graviton.xml.XMLElement;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -16,6 +22,7 @@ public class NpcTemplate {
     private final String sales, exchanges, initialQuestion;
     private final NpcLook look;
 
+    private List<ItemTemplate> items;
 
     public NpcTemplate(XMLElement element) {
         this.id = element.getAttribute("id").toInt();
@@ -56,4 +63,23 @@ public class NpcTemplate {
     public short getCustomArtWork() {
         return this.look.getCustomArtWork();
     }
+
+    public List<ItemTemplate> getItems(EntityFactory entityFactory) {
+        return (this.items == null ? (this.items = compileItems(entityFactory)) : this.items);
+    }
+
+    private List<ItemTemplate> compileItems(EntityFactory entityFactory) {
+        List<ItemTemplate> itemTemplates = new ArrayList<>();
+        for(String item : sales.split(",")) {
+            if(!item.isEmpty())
+                itemTemplates.add(entityFactory.getItemTemplate(Short.parseShort(item)));
+        }
+        return itemTemplates;
+    }
+
+    public ItemTemplate getItemTemplate(int id) {
+        Optional<ItemTemplate> itemTemplate = this.items.stream().filter(template -> template.getId() == id).findAny();
+        return itemTemplate.isPresent() ? itemTemplate.get() : null;
+    }
+
 }

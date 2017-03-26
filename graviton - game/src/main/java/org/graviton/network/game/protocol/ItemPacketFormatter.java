@@ -17,7 +17,7 @@ public class ItemPacketFormatter {
         return "OQ" + item + '|' + quantity;
     }
 
-    public static String formatItems(Collection<Item> items) {
+    static String formatItems(Collection<Item> items) {
         StringBuilder builder = new StringBuilder();
         items.forEach(object -> builder.append(object.parse()));
         return builder.toString();
@@ -41,10 +41,8 @@ public class ItemPacketFormatter {
         if (equipped <= 0)
             return builder.append('-').append(panoply.getId()).toString();
 
-        else {
-            builder.append('+').append(panoply.getId()).append('|');
-            panoply.getTemplates().keySet().stream().filter(equippedItems::contains).forEach(id -> builder.append(id).append(';'));
-        }
+        builder.append('+').append(panoply.getId()).append('|');
+        panoply.getTemplates().keySet().stream().filter(equippedItems::contains).forEach(id -> builder.append(id).append(';'));
 
         return builder.substring(0, builder.length() - 1).concat("|").concat(panoply.effectToString(effects));
 

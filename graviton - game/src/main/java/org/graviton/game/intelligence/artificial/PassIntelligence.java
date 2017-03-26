@@ -14,6 +14,6 @@ public class PassIntelligence extends ArtificialIntelligence {
 
     @Override
     public void run() {
-        this.fightTurn.end();
+        this.fightTurn.end(true);
     }
 }

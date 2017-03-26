@@ -21,12 +21,12 @@ public class SendCommand implements AbstractCommand {
     }
 
     @Override
-    public void apply(Player player, String data) {
-        if (data.split(" ").length < 2) {
+    public void apply(Player player, String[] data) {
+        if (data.length < 1) {
             player.send(MessageFormatter.redConsoleMessage("Invalid argument data, please follow the syntax"));
             return;
         }
-        player.send(data.split(" ")[1]);
-        player.send(MessageFormatter.greenConsoleMessage("Successfully send '" + data.split(" ")[1] + "' to client"));
+        player.send(data[1]);
+        player.send(MessageFormatter.greenConsoleMessage("Successfully send '" + data[1] + "' to client"));
     }
 }

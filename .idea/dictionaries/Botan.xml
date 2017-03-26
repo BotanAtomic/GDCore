@@ -23,7 +23,11 @@
       <w>teleport</w>
       <w>unfollow</w>
       <w>unwalkable</w>
+      <w>waypoint</w>
       <w>xelor</w>
+      <w>zaap</w>
+      <w>zaapi</w>
+      <w>zaaps</w>
     </words>
   </dictionary>
 </component>

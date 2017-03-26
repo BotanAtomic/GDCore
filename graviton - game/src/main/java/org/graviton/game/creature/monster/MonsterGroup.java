@@ -17,6 +17,9 @@ import org.joda.time.Interval;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.graviton.game.alignment.type.AlignmentType.NEUTRE;
+
+
 /**
  * Created by Botan on 02/12/2016. 23:20
  */
@@ -27,10 +30,24 @@ public class MonsterGroup implements Creature {
     private Date creation = new Date();
     private Location location;
 
+    private final long respawnTime;
+
+    private GameMap gameMap;
+    private short cell;
+
     public MonsterGroup(int id, GameMap gameMap, short cell, Collection<Monster> monsters) {
         this.id = id;
-        this.location = new Location(gameMap, cell, OrientationEnum.random());
+        this.location = new Location(gameMap, cell, OrientationEnum.SOUTH_WEST);
         this.monsters = monsters;
+        this.respawnTime = 0;
+    }
+
+    public MonsterGroup(int id, GameMap gameMap, short cell, Collection<Monster> monsters, long respawnTime) {
+        this.id = id;
+        this.gameMap = gameMap;
+        this.cell = cell;
+        this.monsters = monsters;
+        this.respawnTime = respawnTime;
     }
 
     @Override
@@ -50,7 +67,7 @@ public class MonsterGroup implements Creature {
 
     @Override
     public Location getLocation() {
-        return this.location;
+        return this.location == null ? (this.location = new Location(gameMap, cell, OrientationEnum.SOUTH_WEST)) : this.location;
     }
 
     @Override
@@ -82,11 +99,11 @@ public class MonsterGroup implements Creature {
     }
 
     public short getStarsPercent() {
-        return (short) (getStars() / Dofus.STARS_TIME);
+        return (short) (getStars() * 20);
     }
 
     public short getStars() {
-        return (short) (new Interval(this.creation.getTime(), new Date().getTime()).toDuration().getStandardMinutes() * 20);
+        return (short) (new Interval(this.creation.getTime(), new Date().getTime()).toDuration().getStandardMinutes() / Dofus.STARS_TIME);
     }
 
     public long getBaseExperience() {
@@ -107,6 +124,23 @@ public class MonsterGroup implements Creature {
         List<Drop> drops = new ArrayList<>(entityFactory.getDrops());
         monsters.forEach(monster -> drops.addAll(monster.getTemplate().getDrops().stream().map(drop -> drop.copy(monster.getGrade())).collect(Collectors.toList())));
         return CollectionQuery.from(drops).orderBy(Comparator.comparingDouble(Drop::getFinalChance)).reverse();
+    }
+
+    public MonsterGroup copy() {
+        return new MonsterGroup(gameMap.getId(), getGameMap(), this.location.getCell().getId(), this.monsters.stream().map(Monster::copy).collect(Collectors.toList()), respawnTime);
+    }
+
+    public short aggressionDistance(byte playerAlignment) {
+        return (short) monsters.stream().mapToInt(monster -> {
+            byte distance = monster.getTemplate().getAggressionDistance();
+            if (monster.getTemplate().getAlignment().getType() != NEUTRE && playerAlignment != monster.getAlignment().getId())
+                return distance + 13;
+            return distance;
+        }).sum();
+    }
+
+    public byte alignment() {
+        return this.monsters.stream().findAny().get().getAlignment().getId();
     }
 
 }

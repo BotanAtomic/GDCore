@@ -19,7 +19,7 @@ public class HelpCommand implements AbstractCommand {
     }
 
     @Override
-    public void apply(Player player, String data) {
+    public void apply(Player player, String[] data) {
         StringBuilder builder = new StringBuilder("List of all commands : \n");
         player.getEntityFactory().getCommandRepository().stream().forEach(command -> builder.append(command.description()).append("\n"));
         player.send(MessageFormatter.whiteConsoleMessage(builder.toString()));

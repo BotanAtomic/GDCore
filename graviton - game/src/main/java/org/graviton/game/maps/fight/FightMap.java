@@ -31,7 +31,7 @@ public class FightMap implements AbstractMap {
     public FightMap(GameMap gameMap, Fight fight) {
         this.model = gameMap;
         this.id = gameMap.getId();
-        this.cells = CellLoader.parse(gameMap.getData());
+        this.cells = CellLoader.parse(null, gameMap.getData(), null, true);
         this.fight = fight;
     }
 

@@ -23,4 +23,8 @@ public class Experience {
         this.alignment = element.getAttribute("alignment").toShort();
     }
 
+    public Experience next() {
+        return next == null ? this : next;
+    }
+
 }

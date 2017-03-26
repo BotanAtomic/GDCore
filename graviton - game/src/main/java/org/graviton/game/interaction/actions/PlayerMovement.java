@@ -1,10 +1,10 @@
 package org.graviton.game.interaction.actions;
 
 
-import org.graviton.api.Creature;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.interaction.AbstractGameAction;
+import org.graviton.game.interaction.Status;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
@@ -26,13 +26,16 @@ public class PlayerMovement extends Path implements AbstractGameAction {
     private Cell newCell;
 
     public PlayerMovement(Player player, String path) {
-        super(path, player.getMap(), player.getCell().getId());
+        super(path, player.getGameMap(), player.getCell().getId(), player);
+        System.err.println("New player movement");
         this.player = player;
         this.gameMap = player.getGameMap();
     }
 
     @Override
     public boolean begin() {
+        System.err.println("New player [begin] movement");
+
         if (player.getPods()[0] >= player.getPods()[1]) {
             player.send(MessageFormatter.maxPodsReached());
             return false;
@@ -45,6 +48,8 @@ public class PlayerMovement extends Path implements AbstractGameAction {
         if (!valid)
             return false;
 
+        player.setStatus(Status.WALKING);
+
         initialize();
 
         newCell = gameMap.getCells().get(getCell());
@@ -53,29 +58,41 @@ public class PlayerMovement extends Path implements AbstractGameAction {
 
     @Override
     public void cancel(String data) {
+        System.err.println("New player [cancel] movement");
+
         player.getLocation().setCell(gameMap.getCells().get(Short.parseShort(data.substring(2))));
         player.getLocation().setOrientation(getOrientation());
     }
 
     @Override
     public void finish(String data) {
+        System.err.println("New player [finish] movement");
+
+        player.setStatus(Status.DEFAULT);
+
         player.getLocation().setOrientation(getOrientation());
 
-        Optional<Creature> groupOptional = gameMap.getCreatures().values().stream()
-                .filter(creature -> creature instanceof MonsterGroup)
-                .filter(creature -> Cells.distanceBetween(gameMap.getWidth(), creature.getLocation().getCell().getId(), newCell.getId()) < 3).findFirst();
+        if(tasks.isEmpty()) {
+            Optional<MonsterGroup> groupOptional = gameMap.monsters().stream()
+                    .filter(creature -> Cells.distanceBetween(gameMap.getWidth(), creature.getLocation().getCell().getId(), newCell.getId()) < 2).findFirst();
 
-        if (groupOptional.isPresent()) {
-            gameMap.getFightFactory().newMonsterFight(player, (MonsterGroup) groupOptional.get());
-            return;
-        }
+            if (groupOptional.isPresent()) {
 
-        Trigger trigger = gameMap.getTriggers().get(newCell.getId());
+                byte alignment = groupOptional.get().alignment();
+                if(alignment != 0 && player.getAlignment().getId() == alignment)
+                    return;
 
-        if (trigger != null)
-            player.changeMap(trigger.getNextMap(), trigger.getNextCell());
-        else
+                gameMap.getFightFactory().newMonsterFight(player, groupOptional.get());
+                return;
+            }
+
             player.getLocation().setCell(newCell);
+            Trigger trigger = gameMap.getTriggers().get(newCell.getId());
+
+            if (trigger != null)
+                player.changeMap(trigger.getNextMap(), trigger.getNextCell());
+        } else
+            tasks.forEach(Runnable::run);
     }
 
 }

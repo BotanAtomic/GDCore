@@ -20,7 +20,7 @@ public class TeleportCommand implements AbstractCommand {
     }
 
     @Override
-    public void apply(Player player, String data) {
-
+    public void apply(Player player, String[] data) {
+        player.changeMap(Integer.parseInt(data[1]), (short) 0);
     }
 }

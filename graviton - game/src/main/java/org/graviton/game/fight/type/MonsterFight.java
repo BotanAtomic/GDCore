@@ -1,11 +1,12 @@
 package org.graviton.game.fight.type;
 
+import org.graviton.game.action.fight.AbstractFightAction;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.bonus.DropBonus;
-import org.graviton.game.fight.bonus.FightBonus;
+import org.graviton.game.fight.bonus.MonsterFightBonus;
 import org.graviton.game.fight.common.FightSide;
 import org.graviton.game.fight.common.FightState;
 import org.graviton.game.fight.common.FightType;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static org.graviton.collection.CollectionQuery.from;
 
@@ -29,6 +31,9 @@ public class MonsterFight extends Fight {
 
     public MonsterFight(ScheduledExecutorService executorService, int id, Fighter player, MonsterGroup monsterGroup, GameMap gameMap) {
         super(executorService, id, new PlayerTeam(player, FightSide.BLUE), new MonsterTeam(monsterGroup, FightSide.RED), gameMap);
+
+        if (monsterGroup.getRespawnTime() != 0)
+            schedule(() -> gameMap.register(monsterGroup.copy(), true), monsterGroup.getRespawnTime());
     }
 
     @Override
@@ -48,7 +53,11 @@ public class MonsterFight extends Fight {
 
     @Override
     public void quit(Fighter fighter) {
-        if (state != FightState.FINISHED)
+        if (state == FightState.PLACE) {
+            if (fighter.getTeam().getLeader().getId() == fighter.getId())
+                fighter.getTeam().setOtherLeader(fighter);
+            fighter.left(false);
+        } else if (state != FightState.FINISHED)
             if (fighter.getTeam().realSize() == 1)
                 destroyFight(fighter);
             else
@@ -57,13 +66,22 @@ public class MonsterFight extends Fight {
 
     @Override
     protected void destroyFight(Fighter looser) {
+        if (state == FightState.FINISHED)
+            return;
+
         state = FightState.FINISHED;
         if (looser.getTeam() instanceof PlayerTeam)
             onFighterLoose();
         else
             onFighterWin();
 
-        schedule(() -> getGameMap().register(getGameMap().randomMonsterGroup(), true), TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES));
+        if (((MonsterTeam) getSecondTeam()).getMonsterGroup().getRespawnTime() == 0)
+            schedule(() -> getGameMap().register(getGameMap().randomMonsterGroup(), true), TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES));
+    }
+
+    @Override
+    protected void onStart() {
+
     }
 
     private void onFighterLoose() {
@@ -71,6 +89,7 @@ public class MonsterFight extends Fight {
         schedule(() -> {
             List<Player> players = from(getFirstTeam()).filter(fighter -> !fighter.isInvocation()).transform(fighter -> (Player) fighter).computeList(new ArrayList<>());
             players.forEach(player -> {
+                player.getStatistics().addEnergy((short) (player.getLevel() * -5));
                 player.getStatistics().getLife().set(0);
                 player.left(true);
             });
@@ -82,17 +101,23 @@ public class MonsterFight extends Fight {
 
     private void onFighterWin() {
         final DropBonus dropBonus = new DropBonus((PlayerTeam) getFirstTeam(), (MonsterTeam) getSecondTeam());
-        getFirstTeam().stream().filter(fighter -> !fighter.isInvocation()).forEach(fighter -> fighter.setFightBonus(new FightBonus(this, (Player) fighter, dropBonus)));
+        getFirstTeam().stream().filter(fighter -> !fighter.isInvocation()).forEach(fighter -> fighter.setFightBonus(new MonsterFightBonus(this, (Player) fighter, dropBonus)));
         send(endMessage(true));
         schedule(() -> {
-            new ArrayList<>(getFirstTeam()).stream().filter(fighter -> !fighter.isInvocation()).forEach(fighter -> fighter.left(true));
+            List<Fighter> winners = new ArrayList<>(getFirstTeam()).stream().filter(fighter -> !fighter.isInvocation()).collect(Collectors.toList());
+            winners.forEach(fighter -> fighter.left(true));
+
+            AbstractFightAction abstractFightAction = getFirstTeam().getLeader().getCreature().entityFactory().getFightAction(getGameMap().getId());
+            if (abstractFightAction != null)
+                schedule(() -> winners.stream().map(fighter -> (Player) fighter).forEach(abstractFightAction::apply), 300);
+
             super.destroy();
         }, 1800 + getToWait());
     }
 
     private String endMessage(boolean playerWin) {
         FightTeam winner = playerWin ? getFirstTeam() : getSecondTeam();
-        return FightPacketFormatter.monsterFightEndMessage(getDuration(), winner.getLeader().getId(), winner, !playerWin ? getFirstTeam() : getSecondTeam());
+        return FightPacketFormatter.fightEndMessage(getDuration(), winner.getLeader().getId(), winner, !playerWin ? getFirstTeam() : getSecondTeam());
     }
 
     @Override
@@ -101,6 +126,9 @@ public class MonsterFight extends Fight {
     }
 
     private void abandon(Fighter fighter) {
+        if (fighter.getTeam().getLeader() == fighter)
+            fighter.getTeam().setOtherLeader(fighter);
+
         fighter.getStatistics().getLife().set(0);
         kill(fighter);
         fighter.left(true);

@@ -1,12 +1,14 @@
 package org.graviton.network.game.protocol;
 
+import org.graviton.game.creature.collector.Collector;
 import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
+import org.graviton.game.fight.Fighter;
 
 /**
  * Created by Botan on 03/12/2016. 10:35
  */
-public class MonsterPacketFormatter {
+public class  MonsterPacketFormatter {
 
     public static String gmMessage(MonsterGroup monsterGroup) {
         StringBuilder identity = new StringBuilder();
@@ -22,9 +24,9 @@ public class MonsterPacketFormatter {
 
 
         monsterGroup.getMonsters().forEach(monster -> {
-            identity.append(monster.getTemplate().getId()).append(",");
-            skins.append(monster.getTemplate().getSkin()).append(",");
-            levels.append(monster.getLevel()).append(",");
+            identity.append(monster.getTemplate().getId()).append(',');
+            skins.append(monster.getTemplate().getSkin()).append('^').append(monster.getSize()).append(',');
+            levels.append(monster.getLevel()).append(',');
             colors.append(monster.getTemplate().getColors()).append(";0,0,0,0;");
         });
 
@@ -51,6 +53,33 @@ public class MonsterPacketFormatter {
         builder.append(monster.getCurrentActionPoint()).append(';');
         builder.append(monster.getCurrentMovementPoint()).append(';');
         builder.append(monster.getTeam().getSide().ordinal()).append(";\n");
+        return builder.toString();
+    }
+
+    public static String fighterCloneGmMessage(Monster monster, Fighter clone) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("-2;").append(monster.getTemplate().getSkin()).append('^').append(monster.getSize()).append(';');
+        builder.append(monster.getGrade()).append(';');
+        builder.append(monster.getTemplate().getColors().replace(",", ";")).append(';');
+        builder.append("0,0,0,0;");
+        builder.append(clone.getLife().getMaximum()).append(';');
+        builder.append(clone.getCurrentActionPoint()).append(';');
+        builder.append(clone.getCurrentMovementPoint()).append(';');
+        builder.append(monster.getTeam().getSide().ordinal()).append(";\n");
+        return builder.toString();
+    }
+
+    public static String collectorGmMessage(Collector collector) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(collector.getLocation().getCell().getId()).append(';');
+        builder.append(collector.getLocation().getOrientation().ordinal()).append(';');
+        builder.append(0).append(';');
+        builder.append(collector.getId()).append(';');
+        builder.append(Integer.toString(collector.getNames()[0], 36)).append(",").append(Integer.toString(collector.getNames()[1], 36)).append(';');
+        builder.append("-6").append(';');
+        builder.append("6000^100;");
+        builder.append(collector.getGuild().getLevel()).append(';');
+        builder.append(collector.getGuild().getName()).append(';').append(collector.getGuild().getEmblem());
         return builder.toString();
     }
 

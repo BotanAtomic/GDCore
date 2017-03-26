@@ -18,38 +18,38 @@ public class PartyHandler {
         this.client = client;
     }
 
-    public void handle(String data, byte subHeader) { // 'P'
+    public void handle(String data, char subHeader) {
         switch (subHeader) {
-            case 65: // 'A'
+            case 'A':
                 accept();
                 break;
 
-            case 70: // 'F'
+            case 'F':
                 client.getPlayer().getGroup().follow(client.getPlayer(), client.getPlayerRepository().find(Integer.parseInt(data.substring(1))), data.charAt(0) == '+', false);
                 break;
 
-            case 71: // 'G'
+            case 'G':
                 client.getPlayer().getGroup().followAll(client.getPlayerRepository().find(Integer.parseInt(data.substring(1))), data.charAt(0) == '+');
                 break;
 
-            case 73: // 'I'
+            case 'I':
                 partyInvite(data);
                 break;
 
-            case 82: // 'R'
+            case 'R':
                 refuse();
                 break;
 
-            case 86: // 'V'
+            case 'V':
                 kick(data);
                 break;
 
-            case 87: // 'W'
+            case 'W':
                 client.getPlayer().getGroup().locateMember(client.getPlayer());
                 break;
 
             default:
-                log.error("not implemented party packet '{}'", (char) subHeader);
+                log.error("not implemented party packet '{}'", subHeader);
         }
     }
 

@@ -7,12 +7,15 @@ import org.graviton.game.experience.Experience;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.common.ItemPosition;
+import org.graviton.game.maps.GameMap;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.type.PlayerStatistics;
+import org.graviton.utils.Cells;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.graviton.utils.Utils.toHex;
 
@@ -72,7 +75,7 @@ public class PlayerPacketFormatter {
 
         builder.append(player.getExperience()).append(',');
         builder.append(experience.getPlayer()).append(',');
-        builder.append(experience.getNext().getPlayer()).append('|');
+        builder.append(experience.getNext() == null ? experience.getPlayer() : experience.getNext().getPlayer()).append('|');
 
         builder.append(player.getInventory().getKamas()).append('|');
         builder.append(player.getStatistics().getStatisticPoints()).append('|');
@@ -126,7 +129,13 @@ public class PlayerPacketFormatter {
         builder.append(toHex(player.getColor((byte) 3))).append(";");
         builder.append(gmsMessage(player)).append(";");
         builder.append(player.getLevel() > 99 ? (player.getLevel() > 199 ? (2) : (1)) : (0)).append(";;;");
-        builder.append(";;0;;;"); //TODO : guild
+
+        if (player.getGuild() != null)
+            builder.append(player.getGuild().getName()).append(";").append(player.getGuild().getEmblem()).append(";");
+        else
+            builder.append(";;");
+
+        builder.append("0;;;");
         return builder.toString();
     }
 
@@ -161,8 +170,34 @@ public class PlayerPacketFormatter {
         return builder.toString();
     }
 
-    public static String alignmentMessage(byte id) {
-        return "ZL" + id;
+    public static String fightCloneGmMessage(Fighter fighter, Fighter clone) {
+        Player player = (Player) fighter.getCreature();
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(player.getBreed().id()).append(';').append(player.getSkin()).append('^').append(player.getSize()).append(';');
+        builder.append(player.getSex()).append(';');
+        builder.append(player.getLevel()).append(';');
+        builder.append(player.getAlignment().getId()).append(",0,");
+        builder.append(player.getAlignment().isEnabled() ? player.getAlignment().getGrade() : 0).append(',').append(clone.getId()).append(';');
+        builder.append(toHex(player.getCreature().getColor((byte) 1))).append(";");
+        builder.append(toHex(player.getCreature().getColor((byte) 2))).append(";");
+        builder.append(toHex(player.getCreature().getColor((byte) 3))).append(";");
+
+        builder.append(gmsMessage(player)).append(";");
+
+        builder.append(clone.getStatistics().getLife().getCurrent()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.ActionPoints).total()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.MovementPoints).total()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.ResistancePercentNeutral).total()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.ResistancePercentEarth).total()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.ResistancePercentFire).total()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.ResistancePercentWater).total()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.ResistancePercentWind).total()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.DodgeActionPoints).total()).append(';');
+        builder.append(clone.getStatistics().get(CharacteristicType.DodgeMovementPoints).total()).append(';');
+        builder.append(clone.getSide().ordinal()).append(';');
+        builder.append(";\n"); // todo mounts
+        return builder.toString();
     }
 
     public static String restrictionMessage() {
@@ -176,5 +211,33 @@ public class PlayerPacketFormatter {
     public static String nextLevelMessage(short level) {
         return "AN" + level;
     }
+
+    public static String alignmentMessage(byte alignment) {
+        return "ZS" + alignment;
+    }
+
+    public static String disableAlignmentMessage(short looseHonor) {
+        return "GIP" + looseHonor;
+    }
+
+    public static String newAlignmentMessage(byte alignment) {
+        return "ZC" + alignment;
+    }
+
+    public static String dishonorMessage() {
+        return MessageFormatter.customMessage("084;1");
+    }
+
+
+    public static String zaapListMessage(List<Integer> zaaps, GameMap currentGameMap) {
+        StringBuilder builder = new StringBuilder("WC");
+        zaaps.forEach(i -> builder.append("|").append(i).append(";").append(i == currentGameMap.getId() ? 0 : Cells.getZaapCost(currentGameMap, currentGameMap.getEntityFactory().getMap(i))));
+        return builder.toString();
+    }
+
+    public static String quitZaapMenuMessage() {
+        return "WV";
+    }
+
 
 }

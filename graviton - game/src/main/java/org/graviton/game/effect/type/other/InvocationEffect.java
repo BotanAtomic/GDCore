@@ -1,6 +1,7 @@
 package org.graviton.game.effect.type.other;
 
 import org.graviton.game.creature.monster.Monster;
+import org.graviton.game.creature.monster.extra.Double;
 import org.graviton.game.effect.Effect;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
@@ -21,6 +22,27 @@ import static org.graviton.network.game.protocol.FightPacketFormatter.turnListMe
  */
 public class InvocationEffect implements Effect {
     private final boolean isStatic;
+
+    public static void invokeDouble(Fighter master, Double clone, Cell selectedCell) {
+        clone.setFight(master.getFight());
+
+        master.getTeam().addFighter(clone);
+
+        clone.setMaster(master);
+
+        clone.setLocation(new Location(master.getLocation().getMap(), selectedCell.getId(), master.getLocation().getOrientation()));
+        clone.setFightCell(selectedCell);
+        clone.initializeFighterPoints();
+        master.getFight().send(FightPacketFormatter.actionMessage(FightAction.INVOCATION, master.getId(), showFighter(clone).substring(3)));
+
+        FightTurnList turnList = master.getFight().getTurnList();
+        turnList.getTurns().add(turnList.getTurns().indexOf(master.getTurn()) + 1, new FightTurn(master.getFight(), clone));
+        master.getFight().send(FightPacketFormatter.actionMessage((short) 999, master.getId(), turnListMessage(turnList.getTurns())));
+
+        master.getInvocations().add(clone);
+
+        master.getFight().getTrap(selectedCell.getId()).forEach(trap -> trap.onTrapped(clone));
+    }
 
     public InvocationEffect(boolean isStatic) {
         this.isStatic = isStatic;

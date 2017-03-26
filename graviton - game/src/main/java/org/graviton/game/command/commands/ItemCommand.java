@@ -3,6 +3,7 @@ package org.graviton.game.command.commands;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.command.api.AbstractCommand;
 import org.graviton.game.command.api.Command;
+import org.graviton.game.items.template.ItemTemplate;
 
 
 /**
@@ -21,7 +22,8 @@ public class ItemCommand implements AbstractCommand {
     }
 
     @Override
-    public void apply(Player player, String data) {
-
+    public void apply(Player player, String[] data) {
+        ItemTemplate itemTemplate = player.getEntityFactory().getItemTemplate(Short.parseShort(data[1]));
+        player.getInventory().addItem(itemTemplate.createMax(player.entityFactory().getNextItemId()), true);
     }
 }

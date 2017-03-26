@@ -10,6 +10,6 @@ public enum AlignmentType {
     MERCENAIRE;
 
     public static AlignmentType get(byte id) {
-        return values()[id];
+        return values()[id == -1 ? 0 : id];
     }
 }

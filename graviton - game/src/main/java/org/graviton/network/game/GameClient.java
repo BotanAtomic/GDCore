@@ -4,15 +4,18 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import lombok.Data;
 import org.apache.mina.core.session.IoSession;
-import org.graviton.api.Language;
+import org.graviton.lang.Language;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.guild.GuildMember;
 import org.graviton.game.interaction.InteractionManager;
 import org.graviton.network.game.handler.base.MessageHandler;
 import org.graviton.network.game.protocol.GamePacketFormatter;
+
+import java.util.Date;
 
 /**
  * Created by Botan on 04/11/2016 : 22:50
@@ -47,10 +50,26 @@ public class GameClient {
         session.write(data);
     }
 
-    void disconnect() {
-        if (player != null)
-            this.player.getMap().out(player);
+    public void sendFormat(String data, String regex) {
+        for (String packet : data.split(regex))
+            session.write(packet);
+    }
 
+
+    void disconnect() {
+        if (player != null) {
+            if (this.player.getFight() != null)
+                this.player.getFight().quit(player);
+
+            if (this.player.getGuild() != null) {
+                GuildMember guildMember = player.getGuild().getMember(player.getId());
+                guildMember.setLastConnection(new Date());
+                guildMember.setPlayer(null);
+                entityFactory.getGuildRepository().updateGuildMember(guildMember);
+            }
+
+            this.player.getMap().out(player);
+        }
         this.playerRepository.save(account);
         this.accountRepository.unload(account.getId());
         this.session.closeNow();

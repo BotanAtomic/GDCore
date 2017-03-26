@@ -1,5 +1,7 @@
 package org.graviton.game.interaction;
 
+import lombok.Getter;
+
 /**
  * Created by Botan on 16/11/2016 : 19:22
  */
@@ -14,8 +16,10 @@ public enum InteractionType {
     ACCEPT_DEFY((short) 901),
     CANCEL_DEFY((short) 902),
     JOIN_FIGHT((short) 903),
+    AGGRESSION((short) 906),
     UNKNOWN((short) 0);
 
+    @Getter
     private final short id;
 
     InteractionType(short id) {

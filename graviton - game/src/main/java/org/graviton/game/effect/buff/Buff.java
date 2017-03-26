@@ -11,7 +11,7 @@ public abstract class Buff {
 
     public Buff(Fighter fighter, short remainingTurns) {
         this.fighter = fighter;
-        this.remainingTurns = remainingTurns == 1 ? 2 : remainingTurns;
+        this.remainingTurns = remainingTurns;
         fighter.addBuff(this);
     }
 

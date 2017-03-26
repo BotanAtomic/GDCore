@@ -7,6 +7,8 @@ import org.graviton.network.game.GameClient;
  */
 public interface Action {
 
-    void apply(GameClient client, String data);
+    void apply(GameClient client, Object data);
+
+    void finish();
 
 }
