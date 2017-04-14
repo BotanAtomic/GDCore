@@ -1,0 +1,50 @@
+<configuration>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover with gz compression for old log-files -->
+            <fileNamePattern>logs/game/%d/log.zip</fileNamePattern>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover with gz compression for old log-files -->
+            <fileNamePattern>logs/game/error/%d/log.zip</fileNamePattern>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss:SSS} [%thread] %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Console output -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+        <!-- Only log level INFO and above -->
+    </appender>
+
+    <!-- Enable FILE and STDOUT appenders for all log messages.
+  By default, only log at level INFO and above. -->
+    <logger name="org.graviton" level="ALL">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </logger>
+
+    <!-- For loggers in the these namespaces, log at all levels. -->
+    <logger name="user" level="ALL"/>
+    <!-- To log pedestal internals, enable this and change ThresholdFilter to DEBUG
+  <logger name="pedestal" level="ALL" />
+  -->
+
+</configuration>

@@ -20,6 +20,8 @@ import static java.lang.Short.parseShort;
  */
 @Data
 public class MonsterTemplate {
+    private final EntityFactory entityFactory;
+
     private final int id;
     private final String name;
     private final short skin;
@@ -35,6 +37,7 @@ public class MonsterTemplate {
     private final List<Drop> drops = new ArrayList<>();
 
     public MonsterTemplate(XMLElement element, EntityFactory entityFactory) {
+        this.entityFactory = entityFactory;
         this.id = element.getAttribute("id").toInt();
         this.name = element.getElementByTagName("name").toString();
         this.skin = element.getElementByTagName("skin").toShort();
@@ -60,12 +63,12 @@ public class MonsterTemplate {
         String[] statistics = element.getElementByTagName("statistics").toString().split("\\|");
         String[] spells = element.getElementByTagName("spells").toString().split("\\|");
 
-        Map<CharacteristicType, Characteristic> baseCharacteristics = new HashMap<CharacteristicType, Characteristic>() {{
-            put(CharacteristicType.Damage, new BaseCharacteristic(parseShort(optionalStatistics[0])));
-            put(CharacteristicType.DamagePer, new BaseCharacteristic(parseShort(optionalStatistics[1])));
-            put(CharacteristicType.HealPoints, new BaseCharacteristic(parseShort(optionalStatistics[2])));
-            put(CharacteristicType.Summons, new BaseCharacteristic(parseShort(optionalStatistics[3])));
-        }};
+        Map<CharacteristicType, Characteristic> baseCharacteristics = new HashMap<>();
+        baseCharacteristics.put(CharacteristicType.Damage, new BaseCharacteristic(parseShort(optionalStatistics[0])));
+        baseCharacteristics.put(CharacteristicType.DamagePer, new BaseCharacteristic(parseShort(optionalStatistics[1])));
+        baseCharacteristics.put(CharacteristicType.HealPoints, new BaseCharacteristic(parseShort(optionalStatistics[2])));
+        baseCharacteristics.put(CharacteristicType.Summons, new BaseCharacteristic(parseShort(optionalStatistics[3])));
+
 
         IntStream.range(0, grade.length).forEach(i -> {
             Map<CharacteristicType, Characteristic> characteristics = new HashMap<>();

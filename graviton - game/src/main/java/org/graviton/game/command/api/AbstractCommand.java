@@ -7,6 +7,8 @@ import org.graviton.game.client.player.Player;
  */
 public interface AbstractCommand {
 
+    String name();
+
     String description();
 
     void apply(Player player, String[] data);

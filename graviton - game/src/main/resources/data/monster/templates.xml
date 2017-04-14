@@ -142,7 +142,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0|0</experience>
-        <IA>7</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -156,7 +156,7 @@
         </grades>
         <colors>-1,-1,-1</colors>
         <statistics>0,0,0,0,10|0,0,0,0,15|0,0,0,0,20|0,0,0,0,25|0,0,0,0,30|0,0,0,0,40</statistics>
-        <statisticsInfo>0;0;0;1</statisticsInfo>
+        <statisticsInfo>0;0;0;4</statisticsInfo>
         <spells>266@1;919@1|266@2;919@2|266@3;919@3|266@4;919@4|266@5;919@5|266@6;919@6</spells>
         <life>20|40|60|80|100|120</life>
         <points>6;5|6;5|6;5|6;5|6;5|6;5</points>
@@ -294,7 +294,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="50" max="70"/>
         <experience>1000|1100|1200|1300|1400</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -613,7 +613,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="10" max="14"/>
         <experience>2622|2800|2982|3168|3358</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>2</aggression>
     </MonsterTemplate>
@@ -635,7 +635,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="50" max="70"/>
         <experience>3542|3928|4050|4408|4902</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>1</aggression>
     </MonsterTemplate>
@@ -1189,7 +1189,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="50" max="90"/>
         <experience>3168|3552|3952|4368|4800</experience>
-        <IA>7</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -1382,7 +1382,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0|0</experience>
-        <IA>4</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -1550,7 +1550,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="80" max="100"/>
         <experience>5022|5248|5478|5712|5950</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -2144,7 +2144,7 @@
         <initiative>10|20|30|40|50|60|70|80|90|100</initiative>
         <kamas min="0" max="0"/>
         <experience>572|2795|6669|12195|19372|28200|35000|40000|50000|100000</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>false</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -2425,7 +2425,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="50" max="70"/>
         <experience>2900|3025|3150|3275|3400</experience>
-        <IA>7</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -2505,7 +2505,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="50" max="70"/>
         <experience>10918|11550|12198|12862|13542</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>1</aggression>
     </MonsterTemplate>
@@ -2628,7 +2628,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="40" max="80"/>
         <experience>2800|3000|3200|3400|3600</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -2777,7 +2777,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="10" max="10"/>
         <experience>250000|310000|370000|440000|500000</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -3252,7 +3252,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>285715|285715|285715|285715|285715</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -3888,7 +3888,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="50" max="70"/>
         <experience>2000|2500|3000|3500|4000</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -4101,7 +4101,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="10" max="50"/>
         <experience>8000|8500|9000|9500|10000</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>1</aggression>
     </MonsterTemplate>
@@ -5146,7 +5146,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="10" max="50"/>
         <experience>11890|12568|13246|13924|14602</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -5168,7 +5168,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="10" max="50"/>
         <experience>10999|11500|12001|12502|13003</experience>
-        <IA>15</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -5191,7 +5191,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>240000|300000|360000|430000|489600</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -5426,9 +5426,9 @@
         <statistics>80,0,80,80,0|85,0,85,85,0|90,0,90,90,0|95,0,95,95,0|100,0,100,100,0|120,0,110,120,0</statistics>
         <statisticsInfo>0;0;0;1</statisticsInfo>
         <spells>
-            648@1;142@1;649@1;434@1|648@2;142@2;649@2;434@2|648@3;142@3;649@3;434@3|648@4;142@4;649@4;434@4|648@5;142@5;649@5;434@5|
+            648@1;142@1;649@1;434@1|648@2;142@2;649@2;434@2|648@3;142@3;649@3;434@3|648@4;142@4;649@4;434@4|648@5;142@5;649@5;434@5
         </spells>
-        <life>300|675|1050|1425|1800|1</life>
+        <life>300|675|1050|1425|1800|2400</life>
         <points>5;4|6;5|7;6|8;7|9;8|1;1</points>
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
@@ -5847,7 +5847,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>1</aggression>
     </MonsterTemplate>
@@ -6546,7 +6546,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="100" max="300"/>
         <experience>50000|55000|60000|65000|70000</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>3</aggression>
     </MonsterTemplate>
@@ -6567,7 +6567,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="12" max="16"/>
         <experience>1000|1200|1400|1600|1800</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -6988,7 +6988,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>1342|1488|1638|1792|1950</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -8466,7 +8466,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="50" max="70"/>
         <experience>39116|43296|47676|52256|57036</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -8531,7 +8531,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="30" max="50"/>
         <experience>10000|14000|18000|22000|26000</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -10983,7 +10983,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="100" max="120"/>
         <experience>6000|7500|9000|10000|12000</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -11113,7 +11113,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="100" max="120"/>
         <experience>6000|7500|9000|10000|12000</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13365,7 +13365,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>2800|3168|3552|3952|4368</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13453,7 +13453,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>14000|18000|21000|25000|28800</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13474,7 +13474,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>2000|2200|2400|2600|2800</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13514,7 +13514,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>2000|2200|2400|2600|2800</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13535,7 +13535,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>7200|7728|8272|8832|9408</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13556,7 +13556,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>2000|2200|2400|2600|2800</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13577,7 +13577,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>4800|5248|5712|6192|6688</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13598,7 +13598,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>35200|36288|37392|38512|39648</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -13619,7 +13619,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>14400|15456|16544|17664|18816</experience>
-        <IA>1</IA>
+        <IA>3</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -14249,7 +14249,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="50" max="70"/>
         <experience>1560|2130|2746|3409|4119</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -14378,7 +14378,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>18352|19968|21648|23392|25200</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -15592,7 +15592,7 @@
         <initiative>79|80|81|82|83</initiative>
         <kamas min="5" max="25"/>
         <experience>2800|3500|4200|4900|5600</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -15679,7 +15679,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="10" max="50"/>
         <experience>10999|11500|12001|12502|13003</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -16170,7 +16170,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0|0</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -16220,7 +16220,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0|0</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -16320,7 +16320,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0|0</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -16345,7 +16345,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0|0</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -16389,7 +16389,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="50" max="70"/>
         <experience>100|110|120|130|140</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -17032,7 +17032,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>8000|8400|8800|9200|9600</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -17053,7 +17053,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>7000|8400|9800|11200|12600</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -17074,7 +17074,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="9"/>
         <experience>7000|8400|9800|11200|12600</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -18565,7 +18565,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -18862,7 +18862,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -18883,7 +18883,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -20649,7 +20649,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="10" max="14"/>
         <experience>5244|5600|5964|6336|6716</experience>
-        <IA>1</IA>
+        <IA>32</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -27469,7 +27469,7 @@
         <statistics>0,0,100,0,0|0,0,110,0,0|0,0,120,0,0|0,0,140,0,0|0,0,160,0,0|0,0,200,0,0|</statistics>
         <statisticsInfo>0;0;0;1</statisticsInfo>
         <spells>
-            428@1;429@1;1675@1|428@2;429@2;1675@2|428@3;429@3;1675@3|428@4;429@4;1675@4|428@5;429@5;1675@5|428@6;429@6;1675@6|
+            1674@1;1675@1|1674@2;1675@2|1674@3;1675@3|1674@4;1675@4|1674@5;1675@5|1674@6;1675@6|
         </spells>
         <life>50|75|100|130|170|220</life>
         <points>8;0|8;0|8;0|8;0|8;0|8;0|</points>

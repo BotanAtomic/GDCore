@@ -79,6 +79,9 @@ public class EntityFactory extends EntityData implements Manageable {
     private CommandRepository commandRepository;
 
     @Inject
+    private ArtificialIntelligenceRepository intelligenceRepository;
+
+    @Inject
     private GuildRepository guildRepository;
 
     @Inject
@@ -103,6 +106,10 @@ public class EntityFactory extends EntityData implements Manageable {
 
     private void loadCommands() {
         log.debug("Successfully load {} commands", commandRepository.load());
+    }
+
+    private void loadIntelligence() {
+        log.debug("Successfully load {} artificial intelligence", intelligenceRepository.load());
     }
 
     private void loadSpells() {
@@ -280,7 +287,7 @@ public class EntityFactory extends EntityData implements Manageable {
         this.itemIdentityGenerator = new AtomicInteger(database.getNextId(ITEMS, ITEMS.ID));
         log.debug("Successfully initialize item identity generator [{}]", itemIdentityGenerator.get());
         new FastLoader(this::loadFightActions,this::loadHouses, this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadGameMaps,
-                this::loadCommands).launch();
+                this::loadCommands, this::loadIntelligence).launch();
         startScheduledAction();
     }
 

@@ -6,8 +6,7 @@ import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.creature.monster.extra.Double;
 import org.graviton.game.fight.Fighter;
-import org.graviton.game.intelligence.ArtificialIntelligence;
-import org.graviton.game.intelligence.common.IntelligenceType;
+import org.graviton.game.intelligence.api.ArtificialIntelligence;
 import org.graviton.game.look.AbstractLook;
 import org.graviton.game.position.Location;
 import org.graviton.game.spell.Spell;
@@ -65,7 +64,7 @@ public class Monster extends Fighter implements Creature {
 
     @Override
     public String getName() {
-        return String.valueOf(getTemplate().getId());
+        return String.valueOf(template.getId());
     }
 
     @Override
@@ -99,7 +98,7 @@ public class Monster extends Fighter implements Creature {
 
     @Override
     public EntityFactory entityFactory() {
-        return null;
+        return template.getEntityFactory();
     }
 
     @Override
@@ -119,7 +118,7 @@ public class Monster extends Fighter implements Creature {
 
     @Override
     public ArtificialIntelligence artificialIntelligence() {
-        return IntelligenceType.get(template.getArtificialIntelligence()).create(this);
+        return entityFactory().getIntelligenceRepository().create(template.getArtificialIntelligence(), this);
     }
 
     @Override

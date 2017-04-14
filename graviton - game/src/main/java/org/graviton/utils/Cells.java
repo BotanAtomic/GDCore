@@ -3,7 +3,6 @@ package org.graviton.utils;
 
 import com.google.common.collect.ImmutableMap;
 import org.graviton.constant.Dofus;
-import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.look.enums.OrientationEnum;
 import org.graviton.game.maps.AbstractMap;
@@ -241,6 +240,8 @@ public final class Cells {
         return false;
     }
 
+    static boolean send = false;
+
     public static boolean checkLineOfSide(AbstractMap map, short firstCell, short secondCell) {
         int distance = distanceBetween(map.getWidth(), firstCell, secondCell);
         List<Short> lineOfSide = new ArrayList<>();
@@ -249,21 +250,31 @@ public final class Cells {
             lineOfSide = getLineOfSide(firstCell, secondCell);
 
         if (lineOfSide != null && distance > 2) {
-            for (short value : lineOfSide)
-                if (value != firstCell && value != secondCell && map.getCells().get(value).isLineOfSight())
+            for (short value : lineOfSide) {
+                if (!send)
+                    map.send(FightPacketFormatter.showCellMessage(1, value));
+                if (value != firstCell && value != secondCell && !map.getCells().get(value).allowLineOfSide()) {
                     return false;
-
+                }
+            }
         }
+
         if (distance > 2) {
             short cell = getNearestCellAround(map, secondCell, firstCell);
-            if (cell != -1 && map.getCells().get(cell).isLineOfSight())
+            if (!send)
+                map.send(FightPacketFormatter.showCellMessage(1, cell));
+            if (cell != -1 && !map.getCells().get(cell).allowLineOfSide()) {
                 return false;
+            }
+
         }
+
+        send = true;
 
         return true;
     }
 
-    private static List<Short> getLineOfSide(short cell1, short cell2) {
+    private static List<Short> getLineOfSide(short cell1, short cell2) { //TODO : clean(ex)
         ArrayList<Short> lineOfSides = new ArrayList<>();
         short cell;
         boolean next;

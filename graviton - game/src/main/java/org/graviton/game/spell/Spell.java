@@ -5,6 +5,7 @@ import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
 import org.graviton.game.maps.cell.Cell;
+import org.graviton.game.spell.common.SpellEffects;
 import org.graviton.game.spell.zone.Zone;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.utils.Utils;
@@ -57,9 +58,11 @@ public class Spell {
             if (endsTurnOnFailure)
                 fighter.getTurn().end(true);
         } else {
-            fighter.addLaunchedSpell(this.template.getId());
-            if(turns > 0)
-                fighter.getSpellTime().put(template.getId(), turns);
+            Fighter fighterTarget = fight.getFighter(target.getFirstCreature());
+            fighter.getSpellCounter().addLaunchedSpell(this.template.getId(), (fighterTarget == null ? -1 : fighterTarget.getId()));
+
+            if (turns > 0)
+                fighter.getSpellCounter().getSpellTime().put(template.getId(), turns);
 
             fight.send(FightPacketFormatter.actionMessage(FightAction.USE_SPELL, fighter.getId(), buildData(target.getId())));
             effects = this.effects;
@@ -111,6 +114,14 @@ public class Spell {
 
     public boolean isMultipleZone() {
         return this.effects.stream().filter(effect -> !"Pa".equals(effect.getZone().getValue())).count() > 0;
+    }
+
+    public boolean canCauseDamage() {
+        return effects.stream().filter(effect -> Utils.range(effect.getType().value(), 85, 100)).count() > 0;
+    }
+
+    public boolean canHeal() {
+        return effects.stream().filter(effect -> effect.getType() == SpellEffects.Heal).count() > 0;
     }
 
     public Zone zone() {

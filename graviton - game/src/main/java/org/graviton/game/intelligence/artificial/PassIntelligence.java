@@ -1,11 +1,13 @@
 package org.graviton.game.intelligence.artificial;
 
 import org.graviton.game.fight.Fighter;
-import org.graviton.game.intelligence.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.Intelligence;
 
 /**
  * Created by Botan on 18/01/2017. 23:30
  */
+@Intelligence(value = 0,repetition = 1)
 public class PassIntelligence extends ArtificialIntelligence {
 
     public PassIntelligence(Fighter fighter) {
@@ -13,7 +15,8 @@ public class PassIntelligence extends ArtificialIntelligence {
     }
 
     @Override
-    public void run() {
+    public short run() {
         this.fightTurn.end(true);
+        return 0;
     }
 }

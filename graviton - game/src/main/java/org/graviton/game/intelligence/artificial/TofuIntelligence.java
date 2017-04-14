@@ -1,25 +1,26 @@
 package org.graviton.game.intelligence.artificial;
 
 import org.graviton.game.fight.Fighter;
-import org.graviton.game.intelligence.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.Intelligence;
 import org.graviton.utils.Cells;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by Botan on 18/03/2017. 23:32
  */
+
+@Intelligence(value = 7, repetition = 4)
 public class TofuIntelligence extends ArtificialIntelligence {
-    private boolean attack;
 
     public TofuIntelligence(Fighter fighter) {
         super(fighter);
     }
 
     @Override
-    public void run() {
-        AtomicReference<Short> time = new AtomicReference<>((short) 100);
+    public short run() {
+        AtomicInteger time = new AtomicInteger(100);
         AtomicInteger bestRange = new AtomicInteger(1);
         Fighter predicateTarget = getNearestEnemy(fighter.getFight(), fighter);
 
@@ -31,11 +32,8 @@ public class TofuIntelligence extends ArtificialIntelligence {
 
         Fighter target = getNearestEnemy(fighter.getFight(), fighter, (byte) 0, (byte) 3);
 
-        if (target != null && !target.isVisible())
-            target = null;
-
         if (movementPoint > 0 && target == null && actionPoint > 0) {
-            time.set((short) (time.get() + tryToMove(fighter.getFight(), fighter, predicateTarget, true)));
+            time.set((short) (time.get() + tryToMove(fighter.getFight(), fighter, predicateTarget, true, (byte) 0)));
             if (time.get() != 100) {
                 target = getNearestEnemy(fighter.getFight(), fighter, (byte) 0, (byte) 3);
                 onAction = true;
@@ -53,14 +51,9 @@ public class TofuIntelligence extends ArtificialIntelligence {
             }
         }
 
-        if (movementPoint > 0 && this.attack && !onAction) {
-            time.set((short) (time.get() + move(fighter, Cells.moreFarCell(fighter))));
-        }
-        this.count++;
+        if (movementPoint > 0 && this.attack && !onAction)
+            time.set((short) (time.get() + move(fighter, Cells.moreFarCell(fighter), (byte) 0)));
 
-        if (fighter.getCurrentMovementPoint() == 0 && fighter.getCurrentActionPoint() == 0 || count == 4)
-            fighter.getFight().schedule(() -> fighter.getTurn().end(true), time.get());
-        else
-            fighter.getFight().schedule(this::run, time.get());
+        return time.shortValue();
     }
 }

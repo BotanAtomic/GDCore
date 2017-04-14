@@ -21,15 +21,14 @@ allprojects  {
         compile group: 'joda-time', name: 'joda-time', version: '+'
         compile group: 'com.google.inject', name: 'guice', version: '+'
         compile group: 'com.google.guava', name: 'guava', version: '20.0'
-        compile group: 'org.slf4j', name: 'slf4j-api', version: '+'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
         compile group: 'org.jooq', name: 'jooq', version: '+'
         compile group: 'org.reflections', name: 'reflections', version: '+'
-        compile group: 'commons-cli', name: 'commons-cli', version: '+'
-        compile 'org.codehaus.groovy:groovy-all:+'
+        compile group: 'org.mozilla', name: 'rhino', version: '+'
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: '+'
 
         compile 'org.jooq:jooq-meta:+'
         compile 'org.jooq:jooq-codegen:+'
-        compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
         compileOnly "org.projectlombok:lombok:+"
         compile group: 'mysql', name: 'mysql-connector-java', version: '+'
     }

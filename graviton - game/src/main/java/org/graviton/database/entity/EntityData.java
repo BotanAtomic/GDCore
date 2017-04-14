@@ -74,10 +74,6 @@ class EntityData {
         return this.itemTemplates.get(id);
     }
 
-    public Area getArea(short id) {
-        return this.area.get(id);
-    }
-
     public SubArea getSubArea(short id) {
         return this.subArea.get(id);
     }
@@ -92,10 +88,6 @@ class EntityData {
 
     public InteractiveObjectTemplate getInteractiveObject(int id) {
         return this.interactiveObjects.get(id);
-    }
-
-    public HouseTemplate getHouseTemplate(short id) {
-        return this.houses.get(id);
     }
 
     public AbstractFightAction getFightAction(int map) {

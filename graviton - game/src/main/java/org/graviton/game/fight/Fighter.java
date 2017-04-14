@@ -14,8 +14,9 @@ import org.graviton.game.fight.common.FightAction;
 import org.graviton.game.fight.common.FightSide;
 import org.graviton.game.fight.team.FightTeam;
 import org.graviton.game.fight.turn.FightTurn;
-import org.graviton.game.intelligence.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.ArtificialIntelligence;
 import org.graviton.game.maps.fight.FightMap;
+import org.graviton.game.spell.SpellCounter;
 import org.graviton.game.spell.SpellFilter;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
@@ -25,6 +26,7 @@ import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.common.Statistics;
 import org.graviton.network.game.protocol.FightPacketFormatter;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
+import org.graviton.utils.Cells;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,6 +50,8 @@ public abstract class Fighter {
     private Fighter holding;
     private Fighter master;
 
+    private SpellCounter spellCounter = new SpellCounter();
+
     private boolean ready = false;
     private boolean dead = false;
     private boolean onAction = false;
@@ -62,9 +66,6 @@ public abstract class Fighter {
 
     private List<Buff> buffs = new ArrayList<>();
     private List<State> states = new ArrayList<>();
-    private Map<Short, Short> spellBoost = new HashMap<>();
-    private Map<Short, Byte> spellTime = new HashMap<>();
-    private Map<Short, Byte> launchedSpells = new HashMap<>();
 
     private List<Fighter> invocations = new ArrayList<>();
 
@@ -77,6 +78,11 @@ public abstract class Fighter {
     public static Comparator<Fighter> compareByInitiative() {
         return Comparator.comparingInt(Fighter::getInitiative);
     }
+
+    public static Comparator<Fighter> compareByDistance(byte width, short startCell) {
+        return Comparator.comparingInt(fighter -> Cells.distanceBetween(width, startCell, fighter.getFightCell().getId()));
+    }
+
 
     public static Comparator<Fighter> compareByProspection() {
         return Comparator.comparingInt(Fighter::getProspection);
@@ -112,36 +118,8 @@ public abstract class Fighter {
         return this.states.contains(State.Rooted) || isStatic;
     }
 
-    public void addLaunchedSpell(short spell) {
-        this.launchedSpells.put(spell, (byte) (this.launchedSpells.getOrDefault(spell, (byte) 0) + 1));
-    }
-
-    public void clearLaunchedSpell() {
-        this.launchedSpells.clear();
-    }
-
-    public boolean hasLaunchedSpell(short spell) {
-        return this.launchedSpells.containsKey(spell);
-    }
-
-    public byte countOfLaunchedSpell(short spell) {
-        return this.launchedSpells.getOrDefault(spell, (byte) 0);
-    }
-
     public void addBuff(Buff buff) {
         this.buffs.add(buff);
-    }
-
-    public void removeSpellBoost(short spellTemplate) {
-        this.spellBoost.remove(spellTemplate);
-    }
-
-    public void addSpellBoost(short spellTemplate, short boost) {
-        this.spellBoost.put(spellTemplate, (short) (boost + this.spellBoost.getOrDefault(spellTemplate, (short) 0)));
-    }
-
-    public short getSpellBoost(short spellTemplate) {
-        return this.spellBoost.getOrDefault(spellTemplate, (short) 0);
     }
 
     public void removeBuff(Buff buff) {
@@ -149,8 +127,9 @@ public abstract class Fighter {
     }
 
     public void setVisible(boolean visible, short turns) {
+        System.err.println("Set visible " + visible);
         this.visible = visible;
-        getFight().send(FightPacketFormatter.actionMessage(FightAction.INVISIBLE_EVENT, getId(), getId(), turns));
+        fight.send(FightPacketFormatter.actionMessage(FightAction.INVISIBLE_EVENT, getId(), getId(), turns));
     }
 
     public void setVisibleAfterAttack() {
@@ -178,6 +157,10 @@ public abstract class Fighter {
 
     public Collection<Buff> getBuffs(Class<?> buffClass) {
         return this.buffs.stream().filter(buff -> buff.getClass().equals(buffClass)).collect(Collectors.toList());
+    }
+
+    public boolean hasState(State neededState) {
+        return this.states.stream().filter(state -> state.ordinal() == neededState.ordinal()).count() > 0;
     }
 
     public void addActionPoint(byte value) {
@@ -283,9 +266,7 @@ public abstract class Fighter {
         this.visible = true;
         this.master = null;
         this.buffs.clear();
-        this.spellBoost.clear();
-        this.launchedSpells.clear();
-        this.spellTime.clear();
+        spellCounter.reset();
         this.getStatistics().clearBuffs();
 
         getLife().blockRegeneration(false);
@@ -313,18 +294,6 @@ public abstract class Fighter {
         return false;
     }
 
-    public boolean canLaunchSpell(short spell) {
-        return !this.spellTime.containsKey(spell);
-    }
-
-    public void decrementSpellTime() {
-        new HashMap<>(this.spellTime).forEach((spell, time) -> {
-            if (time <= 1)
-                this.spellTime.remove(spell);
-            else
-                this.spellTime.replace(spell, (byte) (time - 1));
-        });
-    }
 
     @Override
     public int hashCode() {
@@ -341,4 +310,7 @@ public abstract class Fighter {
         return master != null && (this instanceof Monster || this instanceof Double);
     }
 
+    public boolean canLaunchSpell(short spell, byte maxPerTurn, int target, byte maxPerTarget) {
+        return spellCounter.canLaunchSpell(spell, maxPerTurn, target, maxPerTarget);
+    }
 }

@@ -213,24 +213,21 @@ public abstract class Fight {
         fighter.setDead(true);
         this.turnList.remove(fighter, fighter.getMaster() != null);
 
+        if (!fighter.getInvocations().isEmpty())
+            new ArrayList<>(fighter.getInvocations()).forEach(this::kill);
+
         if (fighter.getMaster() != null) {
             fighter.getMaster().getInvocations().remove(fighter);
             fighter.getTeam().remove(fighter);
         } else
-            check(fighter); //time for spell animation
+            check();
     }
 
-    private void check(Fighter fighter) {
-        if (getFirstTeam().stream().filter(current -> current.getMaster() == null && !current.isDead()).count() == 0) {
-            destroyFight(getFirstTeam().getLeader());
-            return;
-        } else if (getSecondTeam().stream().filter(current -> current.getMaster() == null && !current.isDead()).count() == 0) {
-            destroyFight(getSecondTeam().getLeader());
-            return;
-        }
-
-        if (!fighter.getInvocations().isEmpty())
-            new ArrayList<>(fighter.getInvocations()).forEach(this::kill);
+    private void check() {
+        if (this.firstTeam.stream().filter(current -> current.getMaster() == null && !current.isDead()).count() == 0)
+            destroyFight(this.firstTeam.getLeader());
+        else if (this.secondTeam.stream().filter(current -> current.getMaster() == null && !current.isDead()).count() == 0)
+            destroyFight(this.secondTeam.getLeader());
     }
 
     public Collection<AbstractTrap> getTrap(short cell) {

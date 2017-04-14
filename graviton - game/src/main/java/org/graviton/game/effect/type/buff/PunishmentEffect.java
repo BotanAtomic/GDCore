@@ -15,7 +15,6 @@ public class PunishmentEffect implements Effect {
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         new PunishmentBuff(fighter, effect);
-        System.err.println(fighter.getBuffs(PunishmentBuff.class).size() + " for " + effect.getTurns());
     }
 
     @Override

@@ -142,10 +142,10 @@ public class DamageEffect implements Effect {
             if (effect.getTurns() < 1) {
 
                 if (effect.getSpell() != null && target.canReturnSpell(effect.getSpell())) {
-                    fighter.getFight().hit(target, fighter, damage(effect, fighter, target, this.damageType, fighter.getSpellBoost(effect.getSpellId())));
+                    fighter.getFight().hit(target, fighter, damage(effect, fighter, target, this.damageType, fighter.getSpellCounter().getSpellBoostCount(effect.getSpellId())));
                     return;
                 }
-                fighter.getFight().hit(fighter, target, damage(effect, fighter, target, this.damageType, fighter.getSpellBoost(effect.getSpellId()) + effect.getThird()));
+                fighter.getFight().hit(fighter, target, damage(effect, fighter, target, this.damageType, fighter.getSpellCounter().getSpellBoostCount(effect.getSpellId()) + effect.getThird()));
             } else
                 new PoisonBuff(target, this.damageType, effect, effect.getTurns());
         });

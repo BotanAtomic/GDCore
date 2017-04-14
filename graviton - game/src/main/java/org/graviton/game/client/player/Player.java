@@ -14,7 +14,7 @@ import org.graviton.game.exchange.Exchange;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.group.Group;
 import org.graviton.game.guild.Guild;
-import org.graviton.game.intelligence.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.ArtificialIntelligence;
 import org.graviton.game.interaction.InteractionManager;
 import org.graviton.game.interaction.Status;
 import org.graviton.game.inventory.Inventory;
@@ -305,7 +305,7 @@ public class Player extends Fighter implements Creature {
         this.statistics.addExperience(experience);
     }
 
-    private void learnSpell(short spell) {
+    public void learnSpell(short spell) {
         if (spell == 0)
             return;
 

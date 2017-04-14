@@ -1,14 +1,16 @@
 package org.graviton.game.intelligence.artificial;
 
 import org.graviton.game.fight.Fighter;
-import org.graviton.game.intelligence.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.Intelligence;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by Botan on 03/03/2017. 21:04
  */
+
+@Intelligence(value = 1, repetition = 4)
 public class AttackIntelligence extends ArtificialIntelligence {
 
     public AttackIntelligence(Fighter fighter) {
@@ -16,8 +18,8 @@ public class AttackIntelligence extends ArtificialIntelligence {
     }
 
     @Override
-    public void run() {
-        AtomicReference<Short> time = new AtomicReference<>((short) 100);
+    public short run() {
+        AtomicInteger time = new AtomicInteger(100);
         boolean onAction = false;
 
         AtomicInteger bestRange = new AtomicInteger(1);
@@ -32,14 +34,8 @@ public class AttackIntelligence extends ArtificialIntelligence {
         if (bestRange.get() == 1)
             firstTarget = null;
 
-        if (firstTarget != null && !firstTarget.isVisible())
-            firstTarget = null;
-
-        if (secondTarget != null && !secondTarget.isVisible())
-            secondTarget = null;
-
-        if (fighter.getCurrentMovementPoint() > 0 && firstTarget == null && secondTarget == null) {
-            time.set((short) (time.get() + tryToMove(fighter.getFight(), fighter, predicateTarget, false)));
+        if (fighter.getCurrentMovementPoint() > 0 && firstTarget == null && secondTarget == null && predicateTarget != null) {
+            time.set((short) (time.get() + tryToMove(fighter.getFight(), fighter, predicateTarget, false, (byte) 0)));
             if (time.get() != 100) {
                 firstTarget = getNearestEnemy(fighter.getFight(), fighter, (byte) 1, (byte) (bestRange.get() + 1));
                 secondTarget = getNearestEnemy(fighter.getFight(), fighter, (byte) 0, (byte) 2);
@@ -51,7 +47,7 @@ public class AttackIntelligence extends ArtificialIntelligence {
         }
 
         if (!onAction && fighter.getCurrentActionPoint() > 0) {
-            if (tryToInvoke(fighter.getFight(), fighter, fighter.getSpellFilter().getInvocation())) {
+            if (tryToInvoke(fighter.getFight(), fighter, fighter.getSpellFilter().getInvocation(), false)) {
                 time.set((short) (time.get() + 2200));
             } else if (firstTarget != null && secondTarget == null) {
                 time.set((short) (200 + time.get() + tryToAttack(fighter.getFight(), fighter, fighter.getSpellFilter().getAttack())));
@@ -65,13 +61,8 @@ public class AttackIntelligence extends ArtificialIntelligence {
 
 
         if (fighter.getCurrentMovementPoint() > 0)
-            time.set((short) (time.get() + tryToMove(fighter.getFight(), fighter, firstTarget == null ? secondTarget == null ? predicateTarget : secondTarget : firstTarget, false)));
+            time.set((short) (time.get() + tryToMove(fighter.getFight(), fighter, firstTarget == null ? secondTarget == null ? predicateTarget : secondTarget : firstTarget, false, (byte) 0)));
 
-        this.count++;
-
-        if (fighter.getCurrentMovementPoint() == 0 && fighter.getCurrentActionPoint() == 0 || count == 4)
-            fighter.getFight().schedule(() -> fighter.getTurn().end(true), time.get());
-        else
-            fighter.getFight().schedule(this::run, time.get());
+        return time.shortValue();
     }
 }

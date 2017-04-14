@@ -23,6 +23,8 @@ public enum MapAction {
     ENCLOSURES_SELL((short) 177, null),
     ENCLOSURES_MODIFY((short) 178, null),
 
+    UNKNOWN((short) 179, null),
+
     HOME_LOCK((short) 81, LockHouseAction.class),
     HOME_ENTER((short) 84, EnterHouseAction.class),
     HOME_BUY((short) 97, BuyHouseAction.class),

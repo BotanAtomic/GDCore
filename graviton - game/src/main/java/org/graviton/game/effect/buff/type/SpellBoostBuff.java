@@ -26,8 +26,8 @@ public class SpellBoostBuff extends Buff {
 
     @Override
     public void destroy() {
-        if (!fighter.hasLaunchedSpell(spellTemplate.getId()))
-            fighter.removeSpellBoost(spellTemplate.getId());
+        if (!fighter.getSpellCounter().hasLaunchedSpell(spellTemplate.getId()))
+            fighter.getSpellCounter().removeSpellBoost(spellTemplate.getId());
     }
 
     @Override
@@ -38,8 +38,8 @@ public class SpellBoostBuff extends Buff {
     @Override
     public void check() {
         if (remainingTurns == 1) {
-            if (((fighter.getSpellBoost(this.spellTemplate.getId()) + spellEffect.getThird()) / MAXIMUM) < spellEffect.getThird())
-                fighter.addSpellBoost(spellTemplate.getId(), spellEffect.getThird());
+            if (((fighter.getSpellCounter().getSpellBoostCount(this.spellTemplate.getId()) + spellEffect.getThird()) / MAXIMUM) < spellEffect.getThird())
+                fighter.getSpellCounter().addSpellBoost(spellTemplate.getId(), spellEffect.getThird());
         }
     }
 }

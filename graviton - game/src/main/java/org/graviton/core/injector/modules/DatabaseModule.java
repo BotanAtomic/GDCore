@@ -22,6 +22,7 @@ public class DatabaseModule extends AbstractModule {
         bind(AccountRepository.class).asEagerSingleton();
         bind(GameMapRepository.class).asEagerSingleton();
         bind(CommandRepository.class).asEagerSingleton();
+        bind(ArtificialIntelligenceRepository.class).asEagerSingleton();
         bind(GuildRepository.class).asEagerSingleton();
 
         bind(EntityFactory.class).asEagerSingleton();

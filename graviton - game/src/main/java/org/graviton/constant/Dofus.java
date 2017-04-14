@@ -51,9 +51,9 @@ public class Dofus {
             return 110;
         if (Utils.range(level, 110, 140))
             return 140;
-        if (Utils.range(level, 140, 170))
+        if (Utils.range(level, 140, 200))
             return 170;
-        return 200;
+        return 170;
     }
 
     public static class Monster {

@@ -27,34 +27,34 @@ public enum SpellEffects {
     None(-1),
 
     Teleport(4, new TeleportEffect()),
-    PushBack(5, new PushBackEffect()),
-    PushFront(6, new PushFrontEffect()),
+    PushBack(5, (short) 500, new PushBackEffect()),
+    PushFront(6, (short) 500, new PushFrontEffect()),
     Transpose_ally(9, new TranspositionEffect(true, false)),
     Transpose(7, new TranspositionEffect(false, true)),
     Transpose_all(8, new TranspositionEffect(true, true)),
 
-    StealMP(77, new StealPointEffect(CharacteristicType.MovementPoints)),
+    StealMP(77, (short) 1500, new StealPointEffect(CharacteristicType.MovementPoints)),
     StealLife(82, new StealEffect(DamageType.NULL, false)),
     StealAllyLife(83, new StealEffect(DamageType.NULL, true)),
-    StealAP(84, new StealPointEffect(CharacteristicType.ActionPoints)),
+    StealAP(84, (short) 1500, new StealPointEffect(CharacteristicType.ActionPoints)),
 
     DamageLifeWater(85, new DamageLifeEffect(DamageType.WATER)),
     DamageLifeEarth(86, new DamageLifeEffect(DamageType.EARTH)),
     DamageLifeWind(87, new DamageLifeEffect(DamageType.WIND)),
     DamageLifeFire(88, new DamageLifeEffect(DamageType.FIRE)),
-    DamageLifeNeutral(89, new DamageLifeEffect(DamageType.NEUTRAL)),
+    DamageLifeNeutral(89, (short) 200, new DamageLifeEffect(DamageType.NEUTRAL)),
 
-    StealWater(91, new StealEffect(DamageType.WATER, false)),
-    StealEarth(92, new StealEffect(DamageType.EARTH, false)),
-    StealWind(93, new StealEffect(DamageType.WIND, false)),
-    StealFire(94, new StealEffect(DamageType.FIRE, false)),
-    StealNeutral(95, new StealEffect(DamageType.NULL, false)),
+    StealWater(91, (short) 150, new StealEffect(DamageType.WATER, false)),
+    StealEarth(92, (short) 150, new StealEffect(DamageType.EARTH, false)),
+    StealWind(93, (short) 150, new StealEffect(DamageType.WIND, false)),
+    StealFire(94, (short) 150, new StealEffect(DamageType.FIRE, false)),
+    StealNeutral(95, (short) 150, new StealEffect(DamageType.NULL, false)),
 
-    DamageWater(96, new DamageEffect(DamageType.WATER)),
-    DamageEarth(97, new DamageEffect(DamageType.EARTH)),
-    DamageWind(98, new DamageEffect(DamageType.WIND)),
-    DamageFire(99, new DamageEffect(DamageType.FIRE)),
-    DamageNeutral(100, new DamageEffect(DamageType.NEUTRAL)),
+    DamageWater(96, (short) 100, new DamageEffect(DamageType.WATER)),
+    DamageEarth(97, (short) 100, new DamageEffect(DamageType.EARTH)),
+    DamageWind(98, (short) 100, new DamageEffect(DamageType.WIND)),
+    DamageFire(99, (short) 100, new DamageEffect(DamageType.FIRE)),
+    DamageNeutral(100, (short) 100, new DamageEffect(DamageType.NEUTRAL)),
 
     AddArmor(105, new SimpleStatisticEffect(CharacteristicType.Armor, true)),
     ReturnSpell(106, new ReturnSpellEffect()),
@@ -64,7 +64,7 @@ public enum SpellEffects {
     Heal(108, new HealEffect()),
     DamageThrower(109),
     AddLife(110),
-    AddAP(111, new SimpleStatisticEffect(CharacteristicType.ActionPoints, true)),
+    AddAP(111, (short) 3000, new SimpleStatisticEffect(CharacteristicType.ActionPoints, true)),
     AddDamage(112, new SimpleStatisticEffect(CharacteristicType.Damage, true)),
     MultiplyDamage(114),
 
@@ -84,7 +84,7 @@ public enum SpellEffects {
     AddInitiative(174, new SimpleStatisticEffect(CharacteristicType.Initiative, true)),
     AddIntelligence(126, new SimpleStatisticEffect(CharacteristicType.Intelligence, true)),
     AddInvocationMax(182, new SimpleStatisticEffect(CharacteristicType.Summons, true)),
-    AddMP(128, new SimpleStatisticEffect(CharacteristicType.MovementPoints, true)),
+    AddMP(128, (short) -1000, new SimpleStatisticEffect(CharacteristicType.MovementPoints, true)),
     AddPO(117, new SimpleStatisticEffect(CharacteristicType.RangePoints, true)),
     AddProspection(176, new SimpleStatisticEffect(CharacteristicType.Prospection, true)),
     AddWisdom(124, new SimpleStatisticEffect(CharacteristicType.Wisdom, true)),
@@ -97,13 +97,13 @@ public enum SpellEffects {
     SubDamageCritic(171, new SimpleStatisticEffect(CharacteristicType.CriticalHit, false)),
     SubDamageMagic(172, new SimpleStatisticEffect(CharacteristicType.DamageMagic, false)),
     SubDamagePhysic(173, new SimpleStatisticEffect(CharacteristicType.DamagePhysic, false)),
-    SubDodgeAP(162, new SimpleStatisticEffect(CharacteristicType.DodgeActionPoints, false)),
-    SubDodgeMP(163, new SimpleStatisticEffect(CharacteristicType.DodgeMovementPoints, false)),
+    SubDodgeAP(162, (short) 2000, new SimpleStatisticEffect(CharacteristicType.DodgeActionPoints, false)),
+    SubDodgeMP(163, (short) 2000,new SimpleStatisticEffect(CharacteristicType.DodgeMovementPoints, false)),
     SubStrength(157, new SimpleStatisticEffect(CharacteristicType.Strength, false)),
     SubInitiative(175, new SimpleStatisticEffect(CharacteristicType.Initiative, false)),
     SubIntelligence(155, new SimpleStatisticEffect(CharacteristicType.Intelligence, false)),
-    SubAPDodge(101, new StatisticDodgeEffect(CharacteristicType.ActionPoints)),
-    SubMPDodge(127, new StatisticDodgeEffect(CharacteristicType.MovementPoints)),
+    SubAPDodge(101, (short) 2000, new StatisticDodgeEffect(CharacteristicType.ActionPoints)),
+    SubMPDodge(127, (short) 2000, new StatisticDodgeEffect(CharacteristicType.MovementPoints)),
     SubAP(168, new SimpleStatisticEffect(CharacteristicType.ActionPoints, false)),
     SubMP(169, new SimpleStatisticEffect(CharacteristicType.MovementPoints, false)),
     SubPO(116, new SimpleStatisticEffect(CharacteristicType.RangePoints, false)),
@@ -155,7 +155,7 @@ public enum SpellEffects {
     LostState(951, new StateEffect(true)),
     Invisible(150, new InvisibleEffect()),
 
-    ClearBuffs(132, new ClearBuffEffect()),
+    ClearBuffs(132, (short) 2000, new ClearBuffEffect()),
 
     StealStrength(271, new StealStatisticEffect(CharacteristicType.Strength)),
 
@@ -272,6 +272,7 @@ public enum SpellEffects {
 
     private int value;
     private Effect effect;
+    private short influence = 1;
 
     SpellEffects(int value) {
         this.value = value;
@@ -282,6 +283,12 @@ public enum SpellEffects {
         this.effect = effect;
     }
 
+    SpellEffects(int value, short influence, Effect effect) {
+        this.value = value;
+        this.effect = effect;
+        this.influence = influence;
+    }
+
     public static SpellEffects get(int value) {
         return values.get(value);
     }
@@ -289,6 +296,10 @@ public enum SpellEffects {
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell initialCell, SpellEffect spellEffect) {
         if (effect != null)
             effect.copy().apply(fighter, targets, initialCell, spellEffect);
+    }
+
+    public short getInfluence() {
+        return this.influence;
     }
 
     public int value() {

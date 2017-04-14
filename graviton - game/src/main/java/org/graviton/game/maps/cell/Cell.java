@@ -39,6 +39,10 @@ public class Cell {
         return value.isPresent() ? value.get() : 0;
     }
 
+    public boolean allowLineOfSide() {
+        return this.lineOfSight && this.creatures.isEmpty();
+    }
+
     @Override
     public int hashCode() {
         return this.id;

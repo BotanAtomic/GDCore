@@ -68,10 +68,7 @@ public class DialogHandler {
     }
 
     private void answerDialog(String data) {
-        entityFactory.getNpcAnswer(Short.parseShort(data.split("\\|")[1])).forEach(answer -> {
-            System.err.println(answer.getNpcAction().name());
-            answer.getNpcAction().apply(client, answer.getData());
-        });
+        entityFactory.getNpcAnswer(Short.parseShort(data.split("\\|")[1])).forEach(answer -> answer.getNpcAction().apply(client, answer.getData()));
     }
 
     public void leaveDialog() {

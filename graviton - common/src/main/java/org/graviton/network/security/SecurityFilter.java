@@ -41,9 +41,9 @@ public class SecurityFilter extends IoFilterAdapter {
             return false;
         }
 
-        try {
-            locker.lock();
+        locker.lock();
 
+        try {
             if ((System.currentTimeMillis() - instance.setAndGetLastConnection(System.currentTimeMillis())) < 1000) {
                 if (instance.getConnections().incrementAndGet() > this.maxConnection) {
                     instance.addWarning();
@@ -124,8 +124,7 @@ public class SecurityFilter extends IoFilterAdapter {
         }
 
         public void addWarning() {
-            if (warning++ >= 2)
-                banned = true;
+            banned = (warning++ >= 2);
         }
 
         public long setAndGetLastConnection(long newValue) {

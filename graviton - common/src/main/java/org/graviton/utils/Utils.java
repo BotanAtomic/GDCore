@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -41,6 +42,13 @@ public class Utils {
             if (HASH[a] == c)
                 return a;
         return -1;
+    }
+
+    public static List<Integer> arraysToList(String data, String regex, boolean sync) {
+        List<Integer> result = sync ? new CopyOnWriteArrayList<>() : new ArrayList<>();
+        for(String part : data.split(regex))
+            result.add(Integer.parseInt(part));
+        return result;
     }
 
 

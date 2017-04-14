@@ -7,7 +7,7 @@ import org.graviton.game.alignment.Alignment;
 import org.graviton.game.creature.monster.extra.Double;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.guild.Guild;
-import org.graviton.game.intelligence.ArtificialIntelligence;
+import org.graviton.game.intelligence.api.ArtificialIntelligence;
 import org.graviton.game.inventory.CollectorInventory;
 import org.graviton.game.look.AbstractLook;
 import org.graviton.game.position.Location;
@@ -26,7 +26,7 @@ import static org.graviton.network.game.protocol.MonsterPacketFormatter.collecto
  */
 
 @Data
-public class Collector extends Fighter implements Creature{
+public class Collector extends Fighter implements Creature {
     private final int id;
     private final Guild guild;
     private final Date placeTime;
@@ -46,7 +46,7 @@ public class Collector extends Fighter implements Creature{
         this.guild = guild;
         this.location = location;
         this.inventory = new CollectorInventory(this);
-        this.names = new int[]{Utils.random(1,129), Utils.random(1,227)};
+        this.names = new int[]{Utils.random(1, 129), Utils.random(1, 227)};
         this.placer = placer;
         this.placeTime = new Date();
     }

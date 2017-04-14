@@ -51,10 +51,10 @@ public class FightTurn {
     private void startTurn() {
         fight.checkGlyph(fighter);
         fighter.getBuffs().forEach(Buff::check);
-        fighter.decrementSpellTime();
+        fighter.getSpellCounter().decrementSpellTime();
 
         if (fighter.artificialIntelligence() != null)
-            fighter.artificialIntelligence().run();
+            fighter.artificialIntelligence().start();
 
         fighter.setOnAction(false);
         scheduleTurn();
@@ -79,7 +79,7 @@ public class FightTurn {
             fighter.setOnAction(false);
             new ArrayList<>(fighter.getBuffs()).forEach(Buff::decrement);
             fighter.initializeFighterPoints();
-            fighter.clearLaunchedSpell();
+            fighter.getSpellCounter().resetPerTurn();
             fight.getTurnList().next().begin();
 
             if (timer != null)
