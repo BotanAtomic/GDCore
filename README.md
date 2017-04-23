@@ -2,11 +2,11 @@
 
 ![Build Status](https://img.shields.io/badge/Jooq-3.9.2-green.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/MySql-6.0.6-green.svg?style=flat)
-![Build Status](https://img.shields.io/badge/Slf4j-1.7.25-blue.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/Guice-4.1.0-green.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/Hikari-2.6.1-green.svg?style=flat)
+![Build Status](https://img.shields.io/badge/Rhino-1.7.7-green.svg?style=flat)
+![Build Status](https://img.shields.io/badge/Slf4j-1.7.25-blue.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/Mina-2.0.15-red.svg?style=flat)
-![Build Status](https://img.shields.io/badge/Rhino-1.7.7-red.svg?style=flat)
 
 
 
