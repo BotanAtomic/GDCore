@@ -1,4 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/edd99da1c16a45fd8ebe97caf9d72133)](https://www.codacy.com/app/BotanKurd/GDCore?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BotanKurd/GDCore&amp;utm_campaign=Badge_Grade)
+Certificate : [![Codacy Badge](https://api.codacy.com/project/badge/Grade/edd99da1c16a45fd8ebe97caf9d72133)](https://www.codacy.com/app/BotanKurd/GDCore?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BotanKurd/GDCore&amp;utm_campaign=Badge_Grade)
 
 
 <p align="center"><IMG SRC="https://i.gyazo.com/760ac25569c32430a3d1817a77e0fd6e.png"></p>
