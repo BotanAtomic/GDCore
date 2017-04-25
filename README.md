@@ -1,3 +1,6 @@
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/edd99da1c16a45fd8ebe97caf9d72133)](https://www.codacy.com/app/BotanKurd/GDCore?utm_source=github.com&utm_medium=referral&utm_content=BotanKurd/GDCore&utm_campaign=badger)
+
 <p align="center"><IMG SRC="https://i.gyazo.com/760ac25569c32430a3d1817a77e0fd6e.png"></p>
 
 ![Build Status](https://img.shields.io/badge/Jooq-3.9.2-green.svg?style=flat)
