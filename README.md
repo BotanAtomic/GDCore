@@ -11,8 +11,9 @@ Certificate : [![Codacy Badge](https://api.codacy.com/project/badge/Grade/edd99d
 ![Build Status](https://img.shields.io/badge/Slf4j-1.7.25-blue.svg?style=flat)
 ![Build Status](https://img.shields.io/badge/Mina-2.0.15-red.svg?style=flat)
 
-
-
+[Features completed](https://github.com/BotanKurd/GDCore/milestone/1?closed=1) -
+[Features in progress](https://github.com/BotanKurd/GDCore/labels/in%20progress) -
+[Upcoming features](https://github.com/BotanKurd/GDCore/labels/todo)
 
 <h1>What is it ?</h1>
 
