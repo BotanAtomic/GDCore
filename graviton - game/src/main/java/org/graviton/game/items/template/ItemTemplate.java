@@ -1,8 +1,9 @@
 package org.graviton.game.items.template;
 
+import javafx.util.Pair;
 import lombok.Data;
 import org.graviton.database.entity.EntityFactory;
-import org.graviton.game.action.item.ItemAction;
+import org.graviton.game.action.Action;
 import org.graviton.game.filter.ConditionList;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.Panoply;
@@ -14,10 +15,7 @@ import org.graviton.game.items.weapon.WeaponEffect;
 import org.graviton.network.game.GameClient;
 import org.graviton.xml.XMLElement;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by Botan on 03/12/2016. 20:23
@@ -31,7 +29,7 @@ public class ItemTemplate {
     private final short pods;
     private final int price;
     private final ConditionList conditionList;
-    private final Map<ItemAction, String> actions = new TreeMap<>();
+    private final List<Pair<Action,String>> actions = new LinkedList<>();
     private byte actionPointCost;
     private byte[] scopeRange;
     private short criticalRate, criticalBonus, failureRate;
@@ -78,12 +76,12 @@ public class ItemTemplate {
         return weaponEffects;
     }
 
-    public void addAction(ItemAction itemAction, String parameter) {
-        this.actions.put(itemAction, parameter);
+    public void addAction(Action itemAction, String parameter) {
+        this.actions.add(new Pair<>(itemAction, parameter));
     }
 
     public void applyAction(GameClient client) {
-        this.actions.forEach((itemAction, parameter) -> itemAction.apply(client, parameter));
+        this.actions.forEach(pair -> pair.getKey().apply(client, pair.getValue()));
     }
 
     public Item createRandom(EntityFactory entityFactory) {

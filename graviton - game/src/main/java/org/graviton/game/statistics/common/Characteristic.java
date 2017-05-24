@@ -11,6 +11,10 @@ public abstract class Characteristic {
         this.base = base;
     }
 
+    public void resetBase() {
+        this.base = 0;
+    }
+
     public void addBase(short value) {
         this.base += value;
     }

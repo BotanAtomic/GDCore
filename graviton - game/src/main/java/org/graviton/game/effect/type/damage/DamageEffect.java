@@ -81,10 +81,10 @@ public class DamageEffect implements Effect {
 
         damage.set(Utils.limit(damage.get(), target.getLife().getCurrent()));
 
-        target.getBuffs(PunishmentBuff.class).forEach(buff -> ((PunishmentBuff) buff).add((short) (damage.get() / (fighter.getCreature() instanceof Player ? 2 : 1))));
+        target.getBuffManager().getBuffs(PunishmentBuff.class).forEach(buff -> ((PunishmentBuff) buff).add((short) (damage.get() / (fighter.getCreature() instanceof Player ? 2 : 1))));
 
         RandomAttackResultBuff randomAttackResultBuff;
-        if ((randomAttackResultBuff = (RandomAttackResultBuff) target.getBuff(RandomAttackResultBuff.class)) != null) {
+        if ((randomAttackResultBuff = (RandomAttackResultBuff) target.getBuffManager().getBuff(RandomAttackResultBuff.class)) != null) {
             if (new Random().nextBoolean())
                 damage.set(damage.get() * randomAttackResultBuff.getRateDamage());
             else

@@ -1,6 +1,7 @@
 package org.graviton.xml;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
@@ -23,6 +24,11 @@ public class XMLElement {
 
     public Attribute getElementByTagName(String tag) {
         return new Attribute(element.getElementsByTagName(tag).item(0).getTextContent());
+    }
+
+    public Attribute getSecureElementByTag(String tag) {
+        Node node = element.getElementsByTagName(tag).item(0);
+        return node == null ? null : getElementByTagName(tag);
     }
 
     public Attribute getElementByTagName(String tag, String subTag) {

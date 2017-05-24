@@ -8,6 +8,8 @@ import org.graviton.game.creature.npc.NpcAnswer;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.NpcPacketFormatter;
 
+import java.util.List;
+
 /**
  * Created by Botan on 07/12/2016. 20:27
  */
@@ -68,7 +70,15 @@ public class DialogHandler {
     }
 
     private void answerDialog(String data) {
-        entityFactory.getNpcAnswer(Short.parseShort(data.split("\\|")[1])).forEach(answer -> answer.getNpcAction().apply(client, answer.getData()));
+        List<NpcAnswer> answers = entityFactory.getNpcAnswer(Short.parseShort(data.split("\\|")[1]));
+
+        answers.forEach(answer -> {
+            if(answer.getNpcAction() == null) {
+                System.err.println("NULL :D" + answer.TEST);
+            }
+
+            answer.getNpcAction().apply(client, answer.getData());
+        });
     }
 
     public void leaveDialog() {

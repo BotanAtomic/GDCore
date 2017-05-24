@@ -12,7 +12,7 @@ public abstract class Buff {
     public Buff(Fighter fighter, short remainingTurns) {
         this.fighter = fighter;
         this.remainingTurns = remainingTurns;
-        fighter.addBuff(this);
+        fighter.getBuffManager().addBuff(this);
     }
 
     public abstract void destroy();
@@ -25,7 +25,7 @@ public abstract class Buff {
         remainingTurns--;
         if (remainingTurns <= 0) {
             destroy();
-            fighter.removeBuff(this);
+            fighter.getBuffManager().removeBuff(this);
         }
     }
 }

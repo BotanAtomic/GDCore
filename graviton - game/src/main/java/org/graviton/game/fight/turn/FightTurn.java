@@ -1,5 +1,6 @@
 package org.graviton.game.fight.turn;
 
+import javafx.util.Pair;
 import lombok.Data;
 import org.graviton.constant.Dofus;
 import org.graviton.game.client.player.Player;
@@ -33,6 +34,15 @@ public class FightTurn {
     }
 
     public void begin() {
+        if (!fighter.isConnected()) {
+            Pair<Player, Byte> result = fight.getDisconnectedPlayers().get(fighter.getId());
+
+            if (result.getValue() <= 0)
+                fight.quit(fighter);
+            else
+                fight.getDisconnectedPlayers().put(fighter.getId(), new Pair<>(result.getKey(), (byte) (result.getValue() - 1)));
+        }
+
         if (fighter.isDead() || fighter.isPassTurn()) {
             fighter.setPassTurn(false);
             end(true);
@@ -50,7 +60,7 @@ public class FightTurn {
 
     private void startTurn() {
         fight.checkGlyph(fighter);
-        fighter.getBuffs().forEach(Buff::check);
+        fighter.getBuffManager().checkBuffs();
         fighter.getSpellCounter().decrementSpellTime();
 
         if (fighter.artificialIntelligence() != null)
@@ -77,7 +87,7 @@ public class FightTurn {
                 while (fighter.isOnAction() && (System.currentTimeMillis() - time) < 1100) ;
             fight.send(FightPacketFormatter.turnEndMessage(this.fighter.getId()));
             fighter.setOnAction(false);
-            new ArrayList<>(fighter.getBuffs()).forEach(Buff::decrement);
+            fighter.getBuffManager().decrementBuffs();
             fighter.initializeFighterPoints();
             fighter.getSpellCounter().resetPerTurn();
             fight.getTurnList().next().begin();

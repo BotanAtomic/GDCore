@@ -6,6 +6,8 @@ import org.graviton.network.game.GameClient;
 /**
  * Created by Botan on 08/12/2016. 17:48
  */
+
+@GameAction(id=0)
 public class Transportation implements Action {
 
     @Override

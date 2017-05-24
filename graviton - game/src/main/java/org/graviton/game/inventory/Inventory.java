@@ -50,23 +50,18 @@ public class Inventory extends ConcurrentHashMap<Integer, Item> {
         return super.get(item);
     }
 
-    private Item same(Item item) {
-        Optional<Item> same = values().stream().filter(item1 -> item1.getTemplate().getId() == item.getTemplate().getId()).
-                filter(item1 -> item1.getStatistics().equals(item.getStatistics()) &&
-                        item.getPosition() == item1.getPosition()).findFirst();
-        return same.isPresent() ? same.get() : null;
+    public Item same(Item item) {
+        return values().stream().filter(other -> other.isSame(item) && ItemPosition.isSamePosition(other.getPosition(), item.getPosition())).findAny().orElse(null);
     }
 
+
     public Item same(Item item, ItemPosition position) {
-        Optional<Item> same = values().stream().filter(item1 -> item1.getTemplate().getId() == item.getTemplate().getId()).
-                filter(item1 -> item1.getStatistics().equals(item.getStatistics()) &&
-                        item1.getPosition() == position).findFirst();
-        return same.isPresent() ? same.get() : null;
+        return values().stream().filter(other -> item.isSame(other) && position == other.getPosition()).findAny().orElse(null);
     }
 
     public Item getByPosition(ItemPosition position) {
         Optional<Item> same = values().stream().filter(item -> item.getPosition() == position).findFirst();
-        return same.isPresent() ? same.get() : null;
+        return same.orElse(null);
     }
 
     public Collection<Item> getEquippedItems() {
@@ -79,6 +74,6 @@ public class Inventory extends ConcurrentHashMap<Integer, Item> {
 
     public Item haveItem(int template) {
         Optional<Item> same = values().stream().filter(item -> item.getTemplate().getId() == template).findFirst();
-        return same.isPresent() ? same.get() : null;
+        return same.orElse(null);
     }
 }

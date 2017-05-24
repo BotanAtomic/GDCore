@@ -12,13 +12,12 @@ import org.graviton.script.ScriptProcessor;
 
 @Slf4j
 public class CommandRepository extends Repository<String, AbstractCommand> {
-    @Inject
-    private ScriptProcessor scriptProcessor;
+    @Inject private ScriptProcessor scriptProcessor;
 
     public int load() {
         scriptProcessor.importElement(this, "commandRepository");
         scriptProcessor.loadPath("scripts/commands");
-        return super.objects.size();
+        return super.size();
     }
 
     public void register(AbstractCommand abstractCommand) {
@@ -26,7 +25,7 @@ public class CommandRepository extends Repository<String, AbstractCommand> {
     }
 
     public void clear() {
-        super.objects.clear();
+        super.clear();
     }
 
 

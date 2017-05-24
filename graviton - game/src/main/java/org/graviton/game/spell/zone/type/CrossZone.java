@@ -1,7 +1,7 @@
 package org.graviton.game.spell.zone.type;
 
 import org.graviton.game.fight.Fighter;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
@@ -26,7 +26,7 @@ public class CrossZone extends Zone {
 
         List<Cell> cells = new CopyOnWriteArrayList<>();
 
-        for (OrientationEnum orientation : OrientationEnum.ADJACENT)
+        for (Orientation orientation : Orientation.ADJACENT)
             calculateLine(super.getLength(), initialCell, cells, map, orientation);
 
         cells.add(initialCell);

@@ -17,13 +17,13 @@ public class StateBuff extends Buff {
         super(fighter, remainingTurns);
         this.effect = spellEffect;
         this.state = State.get((byte) effect.getThird());
-        fighter.getStates().add(state);
+        fighter.getBuffManager().addState(state);
     }
 
     @Override
     public void destroy() {
         fighter.getFight().send(FightPacketFormatter.actionMessage((short) effect.getType().value(), fighter.getId(), fighter.getId(), effect.getThird(), 0));
-        fighter.getStates().remove(state);
+        fighter.getBuffManager().removeState(state);
     }
 
     @Override

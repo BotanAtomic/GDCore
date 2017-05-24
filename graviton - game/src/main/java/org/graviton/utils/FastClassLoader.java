@@ -3,6 +3,8 @@ package org.graviton.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -13,8 +15,8 @@ import java.util.Set;
 @Slf4j
 public class FastClassLoader {
 
-    public static <V> Set<Class<? extends V>> getClasses(String packageName, Class<V> type) {
-        return new Reflections(packageName).getSubTypesOf(type);
+    public static <V> List<Class<? extends V>> getClasses(String packageName, Class<V> type) {
+        return new ArrayList<>(new Reflections(packageName).getSubTypesOf(type));
     }
 
 }

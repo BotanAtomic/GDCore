@@ -1,6 +1,7 @@
 package org.graviton.game.action.map;
 
 import org.graviton.game.action.Action;
+import org.graviton.game.action.common.GameAction;
 import org.graviton.game.house.House;
 import org.graviton.game.interaction.InteractionType;
 import org.graviton.game.maps.cell.Cell;
@@ -11,6 +12,8 @@ import org.graviton.network.game.protocol.HousePacketFormatter;
 /**
  * Created by Botan on 25/03/2017. 12:44
  */
+
+@GameAction(id=97)
 public class BuyHouseAction implements Action {
 
     @Override

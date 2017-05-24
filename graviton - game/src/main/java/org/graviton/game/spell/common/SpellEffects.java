@@ -271,7 +271,7 @@ public enum SpellEffects {
     }
 
     private int value;
-    private Effect effect;
+    public Effect effect;
     private short influence = 1;
 
     SpellEffects(int value) {

@@ -1,6 +1,5 @@
 package org.graviton.game.interaction.actions;
 
-import org.graviton.game.action.map.MapAction;
 import org.graviton.game.interaction.AbstractGameAction;
 import org.graviton.network.game.GameClient;
 
@@ -10,7 +9,7 @@ import org.graviton.network.game.GameClient;
 public class HouseAction implements AbstractGameAction {
 
     public HouseAction(GameClient client, short action) {
-        MapAction.get(action).apply(client ,null);
+        client.getEntityFactory().getActionRepository().create(action).apply(client, null);
     }
 
     @Override

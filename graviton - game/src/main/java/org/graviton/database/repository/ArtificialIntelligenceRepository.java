@@ -21,10 +21,8 @@ import static org.graviton.utils.FastClassLoader.getClasses;
 public class ArtificialIntelligenceRepository extends Repository<Pair<Byte, Byte>, Class<? extends ArtificialIntelligence>> {
 
     public int load() {
-        for (Class<? extends ArtificialIntelligence> clazz : getClasses("org.graviton.game.intelligence.artificial", ArtificialIntelligence.class))
-            add(clazz);
-
-        return super.objects.size();
+        getClasses("org.graviton.game.intelligence.artificial", ArtificialIntelligence.class).forEach(this::add);
+        return super.size();
     }
 
     private void add(Class<? extends ArtificialIntelligence> intelligence) {
@@ -34,7 +32,7 @@ public class ArtificialIntelligenceRepository extends Repository<Pair<Byte, Byte
 
     public ArtificialIntelligence create(byte intelligence, Fighter fighter) {
         try {
-            Optional<Pair<Byte, Byte>> result = super.objects.keySet().stream().filter(intelligenceData -> intelligenceData.getKey() == intelligence).findAny();
+            Optional<Pair<Byte, Byte>> result = super.keySet().stream().filter(intelligenceData -> intelligenceData.getKey() == intelligence).findAny();
 
             if (result.isPresent())
                 return get(result.get()).getDeclaredConstructor(Fighter.class).newInstance(fighter).setRepetition(result.get().getValue());

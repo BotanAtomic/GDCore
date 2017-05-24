@@ -1,7 +1,7 @@
 package org.graviton.game.client.player;
 
 import lombok.Data;
-import org.graviton.api.Creature;
+import org.graviton.game.creature.Creature;
 import org.graviton.converter.Converters;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
@@ -18,10 +18,12 @@ import org.graviton.game.intelligence.api.ArtificialIntelligence;
 import org.graviton.game.interaction.InteractionManager;
 import org.graviton.game.interaction.Status;
 import org.graviton.game.inventory.Inventory;
+import org.graviton.game.inventory.PlayerStore;
 import org.graviton.game.items.Item;
+import org.graviton.game.items.StoreItem;
 import org.graviton.game.look.AbstractLook;
 import org.graviton.game.look.PlayerLook;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
@@ -32,6 +34,7 @@ import org.graviton.game.spell.SpellView;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.type.PlayerStatistics;
 import org.graviton.game.zaap.Zaap;
+import org.graviton.game.zaap.Zaapi;
 import org.graviton.network.game.protocol.*;
 import org.graviton.utils.Utils;
 import org.jooq.Record;
@@ -59,6 +62,7 @@ public class Player extends Fighter implements Creature {
     private final Alignment alignment;
     private final Inventory inventory;
     private final SpellList spellList;
+    private final PlayerStore store;
 
     private boolean online;
     private Location location;
@@ -72,7 +76,7 @@ public class Player extends Fighter implements Creature {
 
     private List<Integer> zaaps;
 
-    public Player(Record record, Account account, Map<Integer, Item> items, Map<Short, SpellView> spells, EntityFactory entityFactory) {
+    public Player(Record record, Account account, Map<Integer, Item> items, List<StoreItem> store, Map<Short, SpellView> spells, EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
         this.account = account;
         this.id = record.get(PLAYERS.ID);
@@ -81,10 +85,11 @@ public class Player extends Fighter implements Creature {
         this.inventory = new Inventory(this, record.get(PLAYERS.KAMAS), items);
         this.look = new PlayerLook(record);
         this.statistics = new PlayerStatistics(this, record, (byte) (getBreed() instanceof Enutrof ? 120 : 100));
-        this.alignment = new Alignment(record.get(PLAYERS.ALIGNMENT),record.get(PLAYERS.HONOR), record.get(PLAYERS.DISHONNOR), record.get(PLAYERS.PVP_ENABLED) == 1, entityFactory); //TODO : pvp
+        this.alignment = new Alignment(record.get(PLAYERS.ALIGNMENT), record.get(PLAYERS.HONOR), record.get(PLAYERS.DISHONNOR), record.get(PLAYERS.PVP_ENABLED) == 1, entityFactory); //TODO : pvp
         this.location = new Location(entityFactory.getMap(record.get(PLAYERS.MAP)), record.get(PLAYERS.CELL), record.get(PLAYERS.ORIENTATION));
         this.savedLocation = new Location(record.get(PLAYERS.SAVEDLOCATION), entityFactory);
         this.spellList = new SpellList(spells);
+        this.store = new PlayerStore(this, store);
 
         this.guild = entityFactory.getGuildRepository().find(record.get(PLAYERS.GUILD));
 
@@ -108,6 +113,7 @@ public class Player extends Fighter implements Creature {
         this.location = new Location(entityFactory.getMap(getBreed().incarnamMap()), getBreed().incarnamCell(), (byte) 1);
         this.savedLocation = this.location.copy();
 
+        this.store = new PlayerStore(this, new ArrayList<>());
         this.inventory = new Inventory(this);
 
         this.spellList = new SpellList(new TreeMap<>());
@@ -162,12 +168,21 @@ public class Player extends Fighter implements Creature {
         return this.look.getSex();
     }
 
-    public OrientationEnum getOrientation() {
+    public Orientation getOrientation() {
         return this.location.getOrientation();
     }
 
     public String compileSavedLocation() {
         return savedLocation.getMap().getId() + ";" + savedLocation.getCell().getId();
+    }
+
+    public String compileStore() {
+        if(store.isEmpty())
+            return "";
+
+        StringBuilder builder = new StringBuilder();
+        store.forEach(item -> builder.append(item.getId()).append(":").append(item.getPrice()).append(";"));
+        return builder.substring(0, builder.length() - 1);
     }
 
     public long getExperience() {
@@ -233,12 +248,16 @@ public class Player extends Fighter implements Creature {
         changeMap(zaap.getGameMap(), zaap.getCell());
     }
 
+    public void changeMap(Zaapi zaapi) {
+        changeMap(zaapi.getGameMap(), zaapi.getCell());
+    }
+
     public void changeMap(int newGameMapId, short newCell) {
         changeMap(entityFactory.getMap(newGameMapId), newCell);
     }
 
     public void changeMap(GameMap newGameMap, short cell) {
-        if(newGameMap == null)
+        if (newGameMap == null)
             return;
 
         cell = cell == 0 ? newGameMap.getRandomCell() : cell;
@@ -247,7 +266,7 @@ public class Player extends Fighter implements Creature {
             this.location.setCell(newGameMap.getCells().get(cell));
             getMap().refreshCreature(this);
         } else {
-            if(newGameMap.getZaap() != null && !this.zaaps.contains(newGameMap.getZaap().getGameMap()))
+            if (newGameMap.getZaap() != null && !this.zaaps.contains(newGameMap.getZaap().getGameMap()))
                 addZaap(newGameMap.getZaap());
 
             getMap().out(this);
@@ -297,7 +316,7 @@ public class Player extends Fighter implements Creature {
         entityFactory.getPlayerRepository().save(this);
         send(PlayerPacketFormatter.nextLevelMessage(this.statistics.getLevel()));
 
-        if(guild != null)
+        if (guild != null)
             guild.getMember(this.id).setLevel(getLevel());
     }
 
@@ -363,12 +382,12 @@ public class Player extends Fighter implements Creature {
     }
 
     public void switchAlignmentEnabled(char data) {
-        if(data == '+') {
+        if (data == '+') {
             this.alignment.setEnabled(true);
-        } else if(data == '*') {
+        } else if (data == '*') {
             send(PlayerPacketFormatter.disableAlignmentMessage((short) (this.alignment.getHonor() * 5 / 100)));
             return;
-        } else if(data == '-') {
+        } else if (data == '-') {
             this.alignment.setEnabled(false);
             this.alignment.addHonor(this.alignment.getHonor() * -5 / 100);
         }

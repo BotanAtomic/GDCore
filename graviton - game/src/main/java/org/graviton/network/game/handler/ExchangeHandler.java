@@ -1,14 +1,20 @@
 package org.graviton.network.game.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.graviton.constant.Dofus;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.creature.merchant.Merchant;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.exchange.Exchange;
+import org.graviton.game.exchange.type.MerchantExchange;
+import org.graviton.game.exchange.type.MyStoreExchange;
 import org.graviton.game.exchange.type.NpcExchange;
 import org.graviton.game.exchange.type.PlayerExchange;
 import org.graviton.game.items.Item;
+import org.graviton.lang.LanguageSentence;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.ExchangePacketFormatter;
+import org.graviton.network.game.protocol.MessageFormatter;
 import org.graviton.network.game.protocol.NpcPacketFormatter;
 
 /**
@@ -41,6 +47,10 @@ public class ExchangeHandler {
                 doExchangeAction(data);
                 break;
 
+            case 'Q':
+                activeMerchantMode();
+                break;
+
             case 'R':
                 request(data);
                 break;
@@ -51,6 +61,10 @@ public class ExchangeHandler {
 
             case 'V':
                 client.getPlayer().getExchange().cancel();
+                break;
+
+            case 'q':
+                requestMerchantMode();
                 break;
 
             default:
@@ -72,6 +86,26 @@ public class ExchangeHandler {
                 requestPlayerExchange(Integer.parseInt(data[1]));
                 break;
             case 2: //npc exchange
+                break;
+
+            case 4://merchant
+                Merchant merchant = (Merchant) client.getPlayer().getGameMap().getCreature(Integer.parseInt(data[1]));
+
+                if (merchant != null) {
+                    if(merchant.isBusy()) {
+                        client.send(MessageFormatter.customStaticMessage(client.getAccount().getClient().getLanguage().getSentence(LanguageSentence.MERCHANT_BUSY)));
+                        return;
+                    }
+                    client.send(ExchangePacketFormatter.startMerchantMessage((byte) 4, merchant.getId()));
+                    client.send(ExchangePacketFormatter.personalStoreMessage(merchant.getStore()));
+                    client.getPlayer().setExchange(new MerchantExchange(merchant, client.getPlayer()));
+                }
+                break;
+
+            case 6: //personal store
+                client.send(ExchangePacketFormatter.startMessage((byte) 6));
+                client.send(ExchangePacketFormatter.personalStoreMessage(client.getPlayer().getStore()));
+                client.getPlayer().setExchange(new MyStoreExchange(client.getPlayer()));
                 break;
         }
     }
@@ -97,27 +131,73 @@ public class ExchangeHandler {
                     short quantity = Short.parseShort(information[1]);
                     short quantityInExchange = exchange.getItemQuantity(client.getPlayer().getId(), id);
 
-                    Item object = client.getPlayer().getInventory().get(id);
+                    Item item = client.getPlayer().getInventory().get(id);
 
-                    if (object == null || (quantity <= 0))
+                    if (exchange instanceof MyStoreExchange && quantity == 0 && item == null) {
+                        client.getPlayer().getStore().changePrice(id, Long.parseLong(information[2]));
+                        return;
+                    }
+
+                    if (item == null || (quantity <= 0))
                         return;
 
-                    if (quantity > object.getQuantity() - quantityInExchange)
-                        quantity = (short) (object.getQuantity() - quantityInExchange);
+                    if (quantity > item.getQuantity() - quantityInExchange)
+                        quantity = (short) (item.getQuantity() - quantityInExchange);
 
-                    exchange.addItem(id, quantity, client.getPlayer().getId());
+                    if (exchange instanceof MyStoreExchange)
+                        client.getPlayer().getStore().add(item, quantity, Long.parseLong(information[2]));
+                    else
+                        exchange.addItem(id, quantity, client.getPlayer().getId());
                 } else
                     exchange.removeItem(Integer.parseInt(information[0]), Short.parseShort(information[1]), client.getPlayer().getId());
 
                 break;
             case 'G':// Kamas
-                exchange.editKamas(Integer.parseInt(packet.substring(1)), client.getPlayer().getId());
+                exchange.editKamas(Long.parseLong(packet.substring(1)), client.getPlayer().getId());
                 break;
             case 'R':// Repeat (for job only)
                 break;
             case 'r': //stop craft
                 break;
         }
+    }
+
+    private void requestMerchantMode() {
+        Player player = client.getPlayer();
+
+        if (player.getStore().isEmpty()) {
+            player.send(MessageFormatter.noStoreItemMessage());
+            return;
+        }
+
+        player.send(ExchangePacketFormatter.merchantMessage(player.getStore().getTax()));
+    }
+
+    private void activeMerchantMode() {
+        Player player = client.getPlayer();
+
+        if (player.getGameMap().restrictMerchant()) {
+            player.send(MessageFormatter.noMerchantPermitMessage());
+            return;
+        }
+
+        if(player.getGameMap().merchantCount() > Dofus.MAX_STORE_PER_MAP) {
+            player.send(MessageFormatter.noMerchantPlaceAvailableMessage(Dofus.MAX_STORE_PER_MAP));
+            return;
+        }
+
+        if(player.getStore().getTax() > player.getInventory().getKamas()) {
+            player.send(MessageFormatter.merchantTaxErrorMessage());
+            return;
+        } else player.getInventory().addKamas(-player.getStore().getTax());
+
+
+        player.getEntityFactory().getPlayerRepository().addMerchant(player);
+
+        player.getAccount().getClient().disconnect();
+
+        player.getGameMap().enter(new Merchant(player.getStore()));
+
     }
 
 }

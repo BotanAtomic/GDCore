@@ -135,7 +135,40 @@ public class MessageFormatter {
         return customMessage("024");
     }
 
-    public static String cannotUseZaapMessage() {
+    public static String notPermittedDishonorMessage() {
         return customMessage("183");
     }
+
+    public static String regainStatisticPointsMessage(short statistics) {
+        return customMessage("023;" + statistics);
+    }
+
+    public static String bankAccessMessage(int cost) {
+        return customMessage("020;" + cost);
+    }
+
+    public static String needMorForTrunkMessage(int cost) {
+        return "M110|" + cost;
+    }
+
+    public static String noMerchantPermitMessage() {
+        return customMessage("113");
+    }
+
+    public static String noMerchantPlaceAvailableMessage(byte maxPlace) {
+        return customMessage("125;" + maxPlace);
+    }
+
+    public static String noStoreItemMessage() {
+        return customMessage("123");
+    }
+
+    public static String merchantTaxErrorMessage() {
+        return customMessage("176");
+    }
+
+    public static String trunkInUseMessage() {
+        return customMessage("120");
+    }
+
 }

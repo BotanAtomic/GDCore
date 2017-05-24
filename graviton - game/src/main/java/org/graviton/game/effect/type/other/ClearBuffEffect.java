@@ -16,7 +16,7 @@ public class ClearBuffEffect implements Effect {
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         targets.forEach(target -> {
-            target.clearBuffs();
+            target.getBuffManager().clearBuffs();
             target.getFight().send(FightPacketFormatter.actionMessage((short) effect.getType().value(), fighter.getId(), target.getId()));
         });
     }

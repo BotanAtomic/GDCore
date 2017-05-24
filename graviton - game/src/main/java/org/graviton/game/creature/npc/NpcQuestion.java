@@ -48,7 +48,7 @@ public class NpcQuestion {
     }
 
     private String convertParameter(Player player) {
-        return parameter.isEmpty() ? "" : ";" + parameter.replace("[name]", player.getName()).replace("[bankCost]", "0"); //TODO : bank cost
+        return parameter.isEmpty() ? "" : ";" + parameter.replace("[name]", player.getName()).replace("[bankCost]", String.valueOf(player.getAccount().getBank().getCost()));
     }
 
 

@@ -25,19 +25,15 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class LoginServer implements IoHandler, Manageable {
-    @InjectSetting("client.version")
-    public static String DOFUS_VERSION;
-    @InjectSetting("word.forbidden")
-    public static String FORBIDDEN_WORD;
+    @InjectSetting("client.version") public static String DOFUS_VERSION;
+    @InjectSetting("word.forbidden") public static String FORBIDDEN_WORD;
 
     private final NioSocketAcceptor socketAcceptor;
-    @Inject
-    private Injector injector;
-    @InjectSetting("server.port")
-    private int port;
 
-    @Inject
-    public LoginServer(Program program) throws IOException {
+    @Inject private Injector injector;
+    @InjectSetting("server.port") private int port;
+
+    @Inject public LoginServer(Program program) {
         program.register(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
@@ -96,7 +92,7 @@ public class LoginServer implements IoHandler, Manageable {
     public void start() {
         try {
             this.socketAcceptor.bind(new InetSocketAddress(port));
-            log.debug("Login server was successfully bind on port {}", port);
+            log.debug("listening on port {}", port);
         } catch (IOException e) {
             log.error("Unable to bind the port {} [cause : {}]", port, e.getMessage());
         }
@@ -105,7 +101,11 @@ public class LoginServer implements IoHandler, Manageable {
     @Override
     public void stop() {
         this.socketAcceptor.unbind();
-        log.debug("Login server was successfully unbind on port {} ", port);
+        log.debug("unbind on port {} ", port);
+    }
+
+    @Override public byte index() {
+        return 1;
     }
 
     public Collection<LoginClient> getClients() {

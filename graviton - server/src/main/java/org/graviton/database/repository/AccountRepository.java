@@ -2,7 +2,8 @@ package org.graviton.database.repository;
 
 import com.google.inject.Inject;
 import lombok.Getter;
-import org.graviton.database.LoginDatabase;
+import org.graviton.database.Database;
+import org.graviton.database.api.LoginDatabase;
 import org.graviton.database.models.Account;
 import org.graviton.database.models.Player;
 import org.graviton.network.exchange.protocol.ExchangeProtocol;
@@ -26,16 +27,16 @@ import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
  */
 
 public class AccountRepository {
-    @Getter
-    private final Map<Integer, Byte> connectedClients;
+    @Getter private final Map<Integer, Byte> connectedClients;
 
     private final Map<Integer, Account> accounts;
-    @Inject
-    private LoginDatabase database;
 
-    public AccountRepository() {
+    private Database database;
+
+    @Inject public AccountRepository(@LoginDatabase  Database database) {
         this.accounts = new ConcurrentHashMap<>();
         this.connectedClients = new HashMap<>();
+        this.database = database;
     }
 
     public Account load(String name, LoginClient client) {

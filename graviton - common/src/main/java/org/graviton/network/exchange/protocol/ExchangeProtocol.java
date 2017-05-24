@@ -8,9 +8,6 @@ public class ExchangeProtocol {
     /**
      * region #ASK
      **/
-    public static String needInformations() {
-        return "?";
-    }
 
     public static String allowGameServer() {
         return "SA";

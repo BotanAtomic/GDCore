@@ -8,11 +8,11 @@ import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.turn.FightTurn;
 import org.graviton.game.interaction.AbstractGameAction;
 import org.graviton.game.interaction.actions.FightMovement;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.fight.FightMap;
-import org.graviton.game.paths.MonsterPath;
+import org.graviton.game.paths.PathMaker;
 import org.graviton.game.spell.Spell;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.network.game.protocol.GamePacketFormatter;
@@ -60,17 +60,19 @@ public abstract class ArtificialIntelligence {
         List<Fighter> fighters = new ArrayList<>();
         AbstractMap abstractMap = fighter.getFight().getFightMap();
         fighter.getFight().fighters().stream().filter(target -> target.getTeam().getSide().ordinal() != fighter.getTeam().getSide().ordinal()).filter(target ->
-                target.isAlive() && target.isVisible() && Cells.inSameLine(abstractMap.getWidth(), fighter.getFightCell().getId(), target.getFightCell().getId(), (short) 70)
+                target.isAlive() && target.isVisible() && Cells.inSameLine(abstractMap.getWidth(), fighter.getFightCell().getId(), target.getFightCell().getId())
                         && Cells.distanceBetween(abstractMap.getWidth(), fighter.getFightCell().getId(), target.getFightCell().getId()) > 1).forEach(fighters::add);
         return fighters;
     }
 
-    protected static Fighter getNearestSoulInlineEnemy(Fight fight, Fighter fighter) {
+    protected static Fighter getNearestSoulInlineAlly(Fight fight, Fighter fighter) {
         AtomicInteger distanceRequired = new AtomicInteger(1000);
         AtomicReference<Fighter> current = new AtomicReference<>();
-        fight.fighters().stream().filter(target -> target.getTeam().getSide().ordinal() != fighter.getTeam().getSide().ordinal()).filter(target ->
-                target.isAlive() && target.isVisible() && Cells.inSameLine(fight.getFightMap().getWidth(), fighter.getFightCell().getId(), target.getFightCell().getId(), (short) 70)
-        && target.hasState(State.Drunk)).forEach(target -> {
+
+        fight.fighters().stream().filter(target -> target.getTeam().getSide().ordinal() == fighter.getTeam().getSide().ordinal()).filter(target ->
+                target.isAlive() && target.isVisible() &&
+                        Cells.inSameLine(fight.getFightMap().getWidth(), fighter.getFightCell().getId(), target.getFightCell().getId())
+                        && target.getBuffManager().hasState(State.Drunk) && Cells.distanceBetween(fight.getFightMap().getWidth(), fighter.getFightCell().getId(), target.getFightCell().getId()) > 1).forEach(target -> {
             int distance = Cells.distanceBetween(fight.getFightMap().getWidth(), fighter.getFightCell().getId(), target.getFightCell().getId());
             if (distance < distanceRequired.get()) {
                 distanceRequired.set(distance);
@@ -141,13 +143,40 @@ public abstract class ArtificialIntelligence {
             });
         }
 
-        System.err.println("Found cell = " + foundCell.get());
+        System.err.println("Cell = " + foundCell.get());
+
+        if (!Cells.checkLineOfSide(map, foundCell.get(), targetCell.getId(), true)) {
+            System.err.println("Ca c bon !");
+            return tryToMoveToAttack(fight, fighter, initialTarget);
+        }
+
+
         return move(fighter, foundCell.get(), movementLimit);
+    }
+
+    protected static short tryToMoveToAttack(Fight fight, Fighter fighter, Fighter initialTarget) {
+        if (initialTarget == null)
+            return 0;
+
+        Cell cell = fighter.getFightCell();
+        Cell targetCell = initialTarget.getFightCell();
+
+        if (Cells.isNextTo(cell.getId(), targetCell.getId()))
+            return 0;
+
+        short foundCell = Cells.getBestDiagonalCell(fighter.getFightCell().getId(), initialTarget.getFightCell().getId(), fight.getFightMap());
+
+        System.err.println("Found cell for try to MA = " + foundCell);
+
+        if (foundCell == -1)
+            return tryToMove(fight, fighter, initialTarget, false, (byte) 0);
+
+        return move(fighter, foundCell, (byte) 0);
     }
 
     protected static short move(Fighter fighter, short destination, byte limit) {
         Cell cell = fighter.getFightCell();
-        List<Cell> path = new MonsterPath(fighter.getFight().getFightMap(), cell.getId(), destination).getShortestPath();
+        List<Cell> path = new PathMaker(fighter.getFight().getFightMap(), cell.getId(), destination).getShortestPath();
 
         if (path == null || path.isEmpty())
             return 0;
@@ -161,7 +190,7 @@ public abstract class ArtificialIntelligence {
             finalPath.add(path.get(a));
         }
 
-        Pair<String, Byte> compiledPath = MonsterPath.compilePath(finalPath, cell.getId(), fighter.getFight().getFightMap());
+        Pair<String, Byte> compiledPath = PathMaker.compilePath(finalPath, cell.getId(), fighter.getFight().getFightMap());
 
         AbstractGameAction fightMovement = new FightMovement(fighter, compiledPath.getKey());
 
@@ -276,11 +305,11 @@ public abstract class ArtificialIntelligence {
         AtomicInteger bestInfluence = new AtomicInteger();
 
         fighter.getSpells().stream().filter(Spell::canHeal).forEach(spell -> {
-            if (bestSpell.get() == null && canCastSpell1(fighter, spell, fighter.getFightCell(), fighter.getFightCell().getId())) {
+            if (bestSpell.get() == null && canCastSpell(fighter, spell, fighter.getFightCell(), fighter.getFightCell().getId())) {
                 bestSpell.set(spell);
             } else {
                 short currentInfluence = getInfluence(spell);
-                if (currentInfluence > bestInfluence.get() && canCastSpell1(fighter, spell, fighter.getFightCell(), fighter.getFightCell().getId())) {
+                if (currentInfluence > bestInfluence.get() && canCastSpell(fighter, spell, fighter.getFightCell(), fighter.getFightCell().getId())) {
                     bestInfluence.set(currentInfluence);
                     bestSpell.set(spell);
                 }
@@ -290,16 +319,42 @@ public abstract class ArtificialIntelligence {
         return bestSpell.get();
     }
 
+    protected short tryToJump(Fighter fighter, Fighter target) {
+        Spell spell = fighter.getSpells().stream().filter(Spell::canJump).findAny().orElse(null);
+
+        AtomicInteger bestDistance = new AtomicInteger(100);
+        AtomicReference<Cell> bestCell = new AtomicReference<>(null);
+
+        byte width = fighter.getFight().getFightMap().getWidth();
+
+        if (spell != null) {
+            fighter.getFight().getFightMap().getCellStream().
+                    filter(cell -> Cells.distanceBetween(width, fighter.getFightCell().getId(), cell.getId()) <= spell.getMaximumRange()).forEach(cell -> {
+                int distance = Cells.distanceBetween(width, target.getFightCell().getId(), cell.getId());
+
+                if (canCastSpell(fighter, spell, fighter.getFightCell(), cell.getId()) && distance < bestDistance.get()) {
+                    bestDistance.set(distance);
+                    bestCell.set(cell);
+                }
+            });
+        }
+
+        if (bestCell.get() != null && spell != null) {
+            spell.applyToFight(fighter, bestCell.get());
+            return spell.getTemplate().getDuration();
+        } else
+            return 0;
+    }
+
 
     protected boolean tryToBuff(Fighter fighter, Fighter target) {
-        System.err.println("Try to buff");
         List<Spell> spells = fighter.getSpellFilter().getBuffs();
         AtomicReference<Spell> bestBuff = new AtomicReference<>();
         AtomicInteger bestInfluence = new AtomicInteger(-1);
 
         spells.forEach(spell -> {
             short influence = getInfluence(spell);
-            if (influence > bestInfluence.get() && canCastSpell1(fighter, spell, fighter.getFightCell(), target.getFightCell().getId())) {
+            if (influence > bestInfluence.get() && canCastSpell(fighter, spell, fighter.getFightCell(), target.getFightCell().getId())) {
                 bestInfluence.set(influence);
                 bestBuff.set(spell);
             }
@@ -326,7 +381,7 @@ public abstract class ArtificialIntelligence {
 
             byte[] usedActionPoint = {0, 0};
 
-            if (canCastSpell1(fighter, spell, target.getFightCell(), cell)) {
+            if (canCastSpell(fighter, spell, target.getFightCell(), cell)) {
                 currentInfluence.set(getInfluence(spell));
 
                 System.err.println("Spell " + spell.getTemplate().getId() + " inf = " + currentInfluence.get());
@@ -342,7 +397,7 @@ public abstract class ArtificialIntelligence {
                     if ((actionPoint - usedActionPoint[0]) >= secondSpell.getActionPointCost())
                         return;
 
-                    if (!canCastSpell1(fighter, secondSpell, target.getFightCell(), cell))
+                    if (!canCastSpell(fighter, secondSpell, target.getFightCell(), cell))
                         return;
 
                     firstInfluence.set(getInfluence(secondSpell));
@@ -358,7 +413,7 @@ public abstract class ArtificialIntelligence {
                         if ((actionPoint - usedActionPoint[0] - usedActionPoint[1]) < thirdSpell.getActionPointCost())
                             return;
 
-                        if (!canCastSpell1(fighter, thirdSpell, target.getFightCell(), cell))
+                        if (!canCastSpell(fighter, thirdSpell, target.getFightCell(), cell))
                             return;
 
                         currentInfluence.set(getInfluence(thirdSpell));
@@ -386,7 +441,7 @@ public abstract class ArtificialIntelligence {
         return influence.get();
     }
 
-    private static boolean canCastSpell1(Fighter caster, Spell spell, Cell cell, short targetCell) {
+    protected static boolean canCastSpell(Fighter caster, Spell spell, Cell cell, short targetCell) {
         if (!caster.isVisible() && spell.canCauseDamage())
             return false;
 
@@ -418,24 +473,26 @@ public abstract class ArtificialIntelligence {
             return false;
         }
 
-        if (spell.isInline() && !Cells.inSameLine(caster.getLocation().getMap().getWidth(), casterCell, cell.getId(), (short) 70)) {
+        if (spell.isInline() && !Cells.inSameLine(caster.getLocation().getMap().getWidth(), casterCell, cell.getId())) {
             caster.send(MessageFormatter.notInlineMessage());
             return false;
         }
 
-        OrientationEnum orientation = Cells.getOrientationByCells(casterCell, cell.getId(), caster.getLocation().getMap());
+        Orientation orientation = Cells.getOrientationByCells(casterCell, cell.getId(), caster.getLocation().getMap());
+
+        if (orientation == null)
+            return false;
 
         if (spell.isPushEffect()) {
-            if (!Cells.checkLineOfSide(caster.getLocation().getMap(), Cells.getCellIdByOrientation(casterCell, orientation, caster.getLocation().getMap().getWidth()), cell.getId())) {
+            if (!Cells.checkLineOfSide(caster.getLocation().getMap(), Cells.getCellIdByOrientation(casterCell, orientation, caster.getLocation().getMap().getWidth()), cell.getId(), true)) {
                 caster.send(MessageFormatter.obstacleOnLineMessage());
                 return false;
             }
         }
 
-        if (spell.isInline() && !Cells.checkLineOfSide(caster.getLocation().getMap(), casterCell, cell.getId())) {
+        if (spell.isLos() && !Cells.checkLineOfSide(caster.getLocation().getMap(), casterCell, cell.getId(), true)) {
             caster.send(MessageFormatter.obstacleOnLineMessage());
             return false;
-
         }
 
 
@@ -477,7 +534,7 @@ public abstract class ArtificialIntelligence {
         final AtomicReference<Cell> selectedCell = new AtomicReference<>();
 
         targetCells.forEach(cell -> {
-            if (canCastSpell1(fighter, spell, cell, launchCell)) {
+            if (canCastSpell(fighter, spell, cell, launchCell)) {
                 AtomicInteger currentTargetCount = new AtomicInteger();
 
                 List<Cell> cells = new ArrayList<>(spell.zone().getCells(fighter.getLocation().getMap().getCells().get(cell.getId()), fighter));

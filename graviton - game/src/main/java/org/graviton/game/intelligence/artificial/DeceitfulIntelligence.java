@@ -20,7 +20,6 @@ public class DeceitfulIntelligence extends ArtificialIntelligence {
 
     @Override
     public short run() {
-        System.err.println("Run IA 9");
         AtomicInteger time = new AtomicInteger(100);
 
         AtomicInteger bestRange = new AtomicInteger(1);

@@ -3,7 +3,8 @@ package org.graviton.database.repository;
 import com.google.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.graviton.database.LoginDatabase;
+import org.graviton.database.api.LoginDatabase;
+import org.graviton.database.Database;
 import org.graviton.database.models.GameServer;
 import org.graviton.network.exchange.ExchangeClient;
 import org.graviton.network.exchange.protocol.ExchangeProtocol;
@@ -20,13 +21,13 @@ import static org.graviton.database.jooq.login.tables.Servers.SERVERS;
 
 @Slf4j
 public class GameServerRepository {
-    @Getter
-    private final Map<Byte, GameServer> gameServers;
-    @Inject
-    private LoginDatabase database;
+    @Getter private final Map<Byte, GameServer> gameServers;
 
-    public GameServerRepository() {
+    private Database database;
+
+    @Inject public GameServerRepository(@LoginDatabase Database database) {
         this.gameServers = new ConcurrentHashMap<>();
+        this.database = database;
     }
 
     private void register(GameServer gameServer) {
@@ -41,22 +42,26 @@ public class GameServerRepository {
      * @param data   Receive data form : I#key;#address;#port
      * @param client Exchange client of GameServer
      */
-    public void setGameServerInformations(String data, ExchangeClient client) {
-        String[] informations = data.split(";");
-        GameServer gameServer = this.gameServers.get(Byte.parseByte(informations[0]));
+    public void setGameServerInformation(String data, ExchangeClient client) {
+        String[] information = data.split(";");
+        GameServer gameServer = this.gameServers.get(Byte.parseByte(information[0]));
 
-        if (gameServer != null && gameServer.getKey().equals(informations[1])) {
-            gameServer.setAddress(informations[2]);
-            gameServer.setPort(Integer.parseInt(informations[3]));
+        if (gameServer != null && gameServer.getKey().equals(information[1])) {
+            gameServer.setAddress(information[2]);
+            gameServer.setPort(Integer.parseInt(information[3]));
             client.setGameServer(gameServer);
             gameServer.setExchangeClient(client);
             client.send(ExchangeProtocol.allowGameServer());
             client.setState(State.ONLINE);
-            log.debug("Game server [{}] is successfully connected");
+            log.debug("Game server [{}] is successfully connected", gameServer.getKey());
         } else {
             client.send(ExchangeProtocol.refuseGameServer());
-            log.debug("Game server [{}] is refused");
+            log.debug("Game server [{}] is refused", information[0]);
         }
+    }
+
+    public Database getDatabase() {
+        return this.database;
     }
 
 }

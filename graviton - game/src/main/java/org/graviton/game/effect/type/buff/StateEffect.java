@@ -26,10 +26,8 @@ public class StateEffect implements Effect {
         targets.forEach(target -> {
             fighter.getFight().send(FightPacketFormatter.actionMessage(FightAction.STATE_EVENT, fighter.getId(), target.getId(), effect.getThird(), remove ? 0 : 1));
 
-            if (!remove)
-                new StateBuff(target, effect, effect.getTurns());
-            else
-                target.getStates().remove(State.get((byte) effect.getThird()));
+            if (remove) target.getBuffManager().removeState(State.get((byte) effect.getThird()));
+            else new StateBuff(target, effect, effect.getTurns());
         });
     }
 

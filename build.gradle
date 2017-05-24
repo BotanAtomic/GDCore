@@ -2,8 +2,6 @@ allprojects  {
     apply plugin: 'java'
     apply plugin: 'idea'
 
-
-
     sourceCompatibility = 1.8
 
     configurations {
@@ -20,7 +18,7 @@ allprojects  {
         compile group: 'com.zaxxer', name: 'HikariCP', version: '+'
         compile group: 'joda-time', name: 'joda-time', version: '+'
         compile group: 'com.google.inject', name: 'guice', version: '+'
-        compile group: 'com.google.guava', name: 'guava', version: '20.0'
+        compile group: 'com.google.guava', name: 'guava', version: '+'
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
         compile group: 'org.jooq', name: 'jooq', version: '+'
         compile group: 'org.reflections', name: 'reflections', version: '+'

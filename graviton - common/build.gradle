@@ -4,6 +4,7 @@ import org.jooq.util.GenerationTool
 import javax.xml.bind.JAXB
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 
 buildscript {
     repositories {
@@ -25,6 +26,7 @@ repositories {
 dependencies {
     compile 'mysql:mysql-connector-java:+'
     compile 'org.jooq:jooq:+'
+
 }
 
 
@@ -35,7 +37,7 @@ task generateLogin {
         def writer = new StringWriter()
         //noinspection GroovyUnusedAssignment
         def xml = new MarkupBuilder(writer)
-                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd') {
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.9.2.xsd') {
             jdbc() {
                 driver('com.mysql.cj.jdbc.Driver')
                 url('jdbc:mysql://localhost/login?serverTimezone=UTC')
@@ -79,12 +81,11 @@ task generateLogin {
 
 task generateGame {
     doLast {
-        // Use your favourite XML builder to construct the code generation configuration file
-        // ----------------------------------------------------------------------------------
+
         def writer = new StringWriter()
         //noinspection GroovyUnusedAssignment
         def xml = new MarkupBuilder(writer)
-                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd') {
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.9.2.xsd') {
             jdbc() {
                 driver('com.mysql.cj.jdbc.Driver')
                 url('jdbc:mysql://localhost/game?serverTimezone=UTC')

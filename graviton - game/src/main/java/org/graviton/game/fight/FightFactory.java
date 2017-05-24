@@ -10,6 +10,7 @@ import org.graviton.game.fight.type.MonsterFight;
 import org.graviton.game.maps.GameMap;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -58,6 +59,11 @@ public class FightFactory {
 
     public Fight get(int fight) {
         return this.fights.get(fight);
+    }
+
+    public Player searchDisconnectedPlayer(int id) {
+        Optional<Fight> result = this.fights.values().stream().filter(fight -> fight.getDisconnectedPlayers().get(id) != null).findAny();
+        return result.isPresent() ? result.get().getDisconnectedPlayers().get(id).getKey() : null;
     }
 
 

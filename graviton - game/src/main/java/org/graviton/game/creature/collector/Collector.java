@@ -1,7 +1,7 @@
 package org.graviton.game.creature.collector;
 
 import lombok.Data;
-import org.graviton.api.Creature;
+import org.graviton.game.creature.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.creature.monster.extra.Double;

@@ -29,13 +29,11 @@ import java.util.concurrent.locks.ReentrantLock;
 @Slf4j
 public class GameServer implements IoHandler, Manageable {
     private final NioSocketAcceptor socketAcceptor;
-    @Inject
-    private Injector injector;
-    @InjectSetting("server.port")
-    private int port;
 
-    @Inject
-    public GameServer(Program program) {
+    @Inject private Injector injector;
+    @InjectSetting("server.port") private int port;
+
+    @Inject public GameServer(Program program) {
         program.register(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
@@ -105,7 +103,7 @@ public class GameServer implements IoHandler, Manageable {
     public void start() {
         try {
             this.socketAcceptor.bind(new InetSocketAddress(port));
-            log.debug("Game server was successfully bind on port {}", port);
+            log.debug("Game server listen on port {}", port);
         } catch (IOException e) {
             log.error("Unable to bind the port {} [cause : {}]", port, e.getMessage());
         }
@@ -115,5 +113,9 @@ public class GameServer implements IoHandler, Manageable {
     public void stop() {
         this.socketAcceptor.unbind();
         log.debug("Game server was successfully unbind on port {} ", port);
+    }
+
+    @Override public byte index() {
+        return 4;
     }
 }

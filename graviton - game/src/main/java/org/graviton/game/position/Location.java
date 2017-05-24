@@ -2,7 +2,7 @@ package org.graviton.game.position;
 
 import lombok.Data;
 import org.graviton.database.entity.EntityFactory;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 
@@ -13,15 +13,15 @@ import org.graviton.game.maps.cell.Cell;
 public class Location {
     private AbstractMap map;
     private Cell cell;
-    private OrientationEnum orientation;
+    private Orientation orientation;
 
     public Location(AbstractMap gameMap, short cell, byte orientation) {
         this.map = gameMap;
         this.cell = gameMap.getCells().get(cell);
-        this.orientation = OrientationEnum.valueOf(orientation);
+        this.orientation = Orientation.valueOf(orientation);
     }
 
-    public Location(AbstractMap gameMap, short cell, OrientationEnum orientation) {
+    public Location(AbstractMap gameMap, short cell, Orientation orientation) {
         this.map = gameMap;
         this.cell = gameMap.getCells().get(cell);
         this.orientation = orientation;
@@ -31,7 +31,7 @@ public class Location {
         String[] location = savedLocation.split(";");
         this.map = entityFactory.getMap(Integer.parseInt(location[0]));
         this.cell = map.getCells().get(Short.parseShort(location[1]));
-        this.orientation = OrientationEnum.random();
+        this.orientation = Orientation.random();
     }
 
     private Location() {

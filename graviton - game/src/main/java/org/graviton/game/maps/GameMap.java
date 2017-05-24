@@ -2,9 +2,11 @@ package org.graviton.game.maps;
 
 import javafx.util.Pair;
 import lombok.Data;
-import org.graviton.api.Creature;
+import org.graviton.game.alignment.type.AlignmentType;
+import org.graviton.game.creature.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
+import org.graviton.game.creature.merchant.Merchant;
 import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.monster.MonsterTemplate;
@@ -16,15 +18,18 @@ import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
 import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.maps.utils.CellLoader;
+import org.graviton.game.mountpark.MountPark;
+import org.graviton.game.trunk.type.Trunk;
 import org.graviton.game.zaap.Zaap;
+import org.graviton.game.zaap.Zaapi;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.utils.Cells;
 import org.graviton.utils.Utils;
+import org.graviton.xml.Attribute;
 import org.graviton.xml.XMLElement;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -65,8 +70,14 @@ public class GameMap implements AbstractMap {
     private String monsters, triggersData;
 
     private Map<Short, House> houses;
+    private Map<Short, Trunk> trunks;
+
+    private MountPark mountPark;
 
     private Zaap zaap;
+    private Zaapi zaapi;
+
+    private byte[] restriction = {0, 0, 0, 0, 0, 0, 0};
 
     public GameMap(int id, XMLElement element, EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
@@ -91,7 +102,14 @@ public class GameMap implements AbstractMap {
 
         this.descriptionPacket = GamePacketFormatter.mapDataMessage(this.id, this.date, this.key);
         this.monsters = element.getElementByTagName("monsters").toString();
+
+        Attribute restriction = element.getSecureElementByTag("restriction");
+        if(restriction != null && !restriction.toString().isEmpty()) {
+            String[] data = restriction.toString().split(";");
+            IntStream.range(0,7).forEach(i -> this.restriction[i] = Byte.parseByte(data[i]));
+        }
     }
+
 
     public short getX() {
         return Short.parseShort(position.split(",")[0]);
@@ -114,6 +132,12 @@ public class GameMap implements AbstractMap {
 
         this.fightFactory = new FightFactory(this);
         this.initialized = true;
+
+        if (this.mountPark != null)
+            this.mountPark.initialize();
+
+        entityFactory.getPlayerRepository().loadMerchant(this.id).forEach(merchant -> register(merchant, false));
+
         return this;
     }
 
@@ -135,12 +159,12 @@ public class GameMap implements AbstractMap {
     }
 
     public Collection<MonsterGroup> monsters() {
-        return getCreatures().values().stream().filter(creature -> creature instanceof MonsterGroup).map(creature -> (MonsterGroup) creature).collect(Collectors.toList());
+        return this.creatures.values().stream().filter(creature -> creature instanceof MonsterGroup).map(creature -> (MonsterGroup) creature).collect(Collectors.toList());
     }
 
     public MonsterGroup searchMonsterGroupByPath(Alignment alignment, short currentCell) {
-        Optional<MonsterGroup> monsterGroupOptional = monsters().stream().filter(monsterGroup -> monsterGroup.aggressionDistance(alignment.getId()) > 0).filter(monsterGroup -> Cells.distanceBetween(this.width, monsterGroup.getLocation().getCell().getId(), currentCell) < monsterGroup.aggressionDistance(alignment.getId())).findFirst();
-        return monsterGroupOptional.isPresent() ? monsterGroupOptional.get() : null;
+        return monsters().stream().filter(monsterGroup -> monsterGroup.aggressionDistance(alignment.getId()) > 0).
+                filter(monsterGroup -> Cells.distanceBetween(this.width, monsterGroup.getLocation().getCell().getId(), currentCell) < monsterGroup.aggressionDistance(alignment.getId())).findFirst().orElse(null);
     }
 
     public MonsterGroup randomMonsterGroup() {
@@ -205,6 +229,9 @@ public class GameMap implements AbstractMap {
     }
 
     public void enter(Creature creature) {
+        if(this.creatures.containsKey(creature.getId()))
+            out(this.creatures.get(creature.getId()));
+
         send(GamePacketFormatter.showCreatureMessage(creature.getGm()));
         this.creatures.put(creature.getId(), creature);
     }
@@ -266,6 +293,44 @@ public class GameMap implements AbstractMap {
         if (this.houses == null)
             this.houses = new ConcurrentHashMap<>();
         this.houses.put(house.getTemplate().getGameCell(), house);
+    }
+
+    public void addTrunk(Trunk trunk, short cell) {
+        if (this.trunks == null)
+            this.trunks = new ConcurrentHashMap<>();
+        this.trunks.put(cell, trunk);
+    }
+
+    public boolean restrictMerchant() {
+        return restriction[0] == 1;
+    }
+
+    public boolean restrictCollector() {
+        return restriction[1] == 1;
+    }
+
+    public boolean restrictPrism() {
+        return restriction[2] == 1;
+    }
+
+    public boolean restrictTeleportation() {
+        return restriction[3] == 1;
+    }
+
+    public boolean restrictDefy() {
+        return restriction[4] == 1;
+    }
+
+    public boolean restrictAggression() {
+        return restriction[5] == 1;
+    }
+
+    public boolean restrictCanal() {
+        return restriction[6] == 1;
+    }
+
+    public int merchantCount() {
+        return (int) this.creatures.values().stream().filter(creature -> creature instanceof Merchant).count();
     }
 
 }

@@ -208,6 +208,10 @@ public class PlayerStatistics extends Statistics {
         }
     }
 
+    public void addSpellPoints(short spellPoints) {
+        this.spellPoints += spellPoints;
+    }
+
     @Override
     public Statistics copy() {
         return null;

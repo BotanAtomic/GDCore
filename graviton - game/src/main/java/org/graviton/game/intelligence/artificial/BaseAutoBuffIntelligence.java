@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Intelligence(value = 32, repetition = 4)
 public class BaseAutoBuffIntelligence extends ArtificialIntelligence {
+    private boolean moved;
 
     public BaseAutoBuffIntelligence(Fighter fighter) {
         super(fighter);
@@ -27,6 +28,8 @@ public class BaseAutoBuffIntelligence extends ArtificialIntelligence {
         Fighter predicateTarget = getNearestEnemy(fighter.getFight(), fighter);
 
         fighter.getSpells().forEach(spell -> bestRange.set(spell.getMaximumRange() > bestRange.get() ? spell.getMaximumRange() : bestRange.get()));
+
+        boolean needLineOfSide = fighter.getSpellFilter().getAttack().stream().filter(spell -> !spell.isLos()).count() == 0;
 
         Fighter longestEnemy = getNearestEnemy(fighter.getFight(), this.fighter, (byte) 0, (byte) (bestRange.get() + 1));
 
@@ -52,15 +55,18 @@ public class BaseAutoBuffIntelligence extends ArtificialIntelligence {
         }
 
 
-        if (fighter.getCurrentMovementPoint() > 0 && longestEnemy == null && !this.attack && !onAction) {
-            time.set(tryToMove(fighter.getFight(), fighter, predicateTarget, true, movementLimit));
+        if (fighter.getCurrentMovementPoint() > 0 && !this.attack && !onAction && !moved) {
+            if (longestEnemy == null) {
+                time.set(tryToMove(fighter.getFight(), fighter, predicateTarget, true, movementLimit));
+            } else if (!Cells.checkLineOfSide(fighter.getFight().getFightMap(), longestEnemy.getFightCell().getId(), fighter.getFightCell().getId(), false) && needLineOfSide)
+                time.set(tryToMoveToAttack(fighter.getFight(), fighter, predicateTarget));
 
             if (time.get() != 0) {
                 onAction = true;
+                moved = true;
                 longestEnemy = getNearestEnemy(fighter.getFight(), this.fighter, (byte) 0, (byte) (bestRange.get() + 1));
             }
         }
-
 
         if (!onAction && fighter.getCurrentActionPoint() > 0) {
             if (tryToBuff(fighter, fighter)) {
@@ -82,7 +88,6 @@ public class BaseAutoBuffIntelligence extends ArtificialIntelligence {
         if (fighter.getCurrentMovementPoint() > 0 && this.attack && !onAction)
             time.set((short) (time.get() + move(fighter, Cells.moreFarCell(fighter), (byte) 0)));
 
-        System.err.println("BAB break");
         return time.shortValue();
     }
 

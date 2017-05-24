@@ -28,6 +28,7 @@ public class FastLoader {
 
     public void launch() {
         CompletableFuture.allOf(tasks.stream().map(this::runAsync).toArray(CompletableFuture[]::new)).join();
+        executorService.shutdownNow();
     }
 
     private CompletableFuture<Void> runAsync(Runnable runnable) {

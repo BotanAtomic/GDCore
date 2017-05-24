@@ -37,7 +37,7 @@ public class LaunchEffect implements Effect {
     }
 
     private void removeState(Fighter fighter, State state) {
-        fighter.getStates().remove(state);
+        fighter.getBuffManager().removeState(state);
         fighter.getFight().send(FightPacketFormatter.actionMessage(FightAction.STATE_EVENT, fighter.getId(), fighter.getId(), state.getValue(), 0));
     }
 

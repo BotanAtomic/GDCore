@@ -27,15 +27,12 @@ public class PlayerMovement extends Path implements AbstractGameAction {
 
     public PlayerMovement(Player player, String path) {
         super(path, player.getGameMap(), player.getCell().getId(), player);
-        System.err.println("New player movement");
         this.player = player;
         this.gameMap = player.getGameMap();
     }
 
     @Override
     public boolean begin() {
-        System.err.println("New player [begin] movement");
-
         if (player.getPods()[0] >= player.getPods()[1]) {
             player.send(MessageFormatter.maxPodsReached());
             return false;
@@ -58,16 +55,12 @@ public class PlayerMovement extends Path implements AbstractGameAction {
 
     @Override
     public void cancel(String data) {
-        System.err.println("New player [cancel] movement");
-
         player.getLocation().setCell(gameMap.getCells().get(Short.parseShort(data.substring(2))));
         player.getLocation().setOrientation(getOrientation());
     }
 
     @Override
     public void finish(String data) {
-        System.err.println("New player [finish] movement");
-
         player.setStatus(Status.DEFAULT);
 
         player.getLocation().setOrientation(getOrientation());

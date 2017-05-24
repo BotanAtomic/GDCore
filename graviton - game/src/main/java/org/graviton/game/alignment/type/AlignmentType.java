@@ -9,7 +9,12 @@ public enum AlignmentType {
     BRAKMARIEN,
     MERCENAIRE;
 
+    public static boolean isOpposit(AlignmentType first, AlignmentType second) {
+        return first == BONTARIEN && second == BRAKMARIEN || second == BONTARIEN && first == BRAKMARIEN;
+    }
+
     public static AlignmentType get(byte id) {
         return values()[id == -1 ? 0 : id];
     }
+
 }

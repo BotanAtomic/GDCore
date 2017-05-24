@@ -69,9 +69,7 @@ public enum ConditionType {
     }
 
     public boolean check(Player player, FilterType filterType, String data) {
-        if (filter == null)
-            return true;
-        return filter.check(player, filterType, data);
+        return filter == null || filter.check(player, filterType, data);
     }
 
 

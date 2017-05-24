@@ -24,7 +24,9 @@ public class XMLPath {
 
     public final static String MAPS = "map/gameMaps.xml";
     public final static String INTERACTIVE_OBJECT = "map/interactiveObject.xml";
+
     public final static String ZAAPS = "map/zaap.xml";
+    public final static String ZAAPIS = "map/zaapi.xml";
 
     public static final String SPELLS = "spell/spells.xml";
 

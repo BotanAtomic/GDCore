@@ -5,7 +5,8 @@ import com.google.inject.Injector;
 import lombok.Data;
 import org.apache.mina.core.session.IoSession;
 import org.graviton.api.AbstractHandler;
-import org.graviton.database.LoginDatabase;
+import org.graviton.database.api.LoginDatabase;
+import org.graviton.database.Database;
 import org.graviton.database.models.Account;
 import org.graviton.database.repository.AccountRepository;
 import org.graviton.database.repository.GameServerRepository;
@@ -21,21 +22,23 @@ import org.graviton.utils.Utils;
 public class LoginClient {
     private final IoSession session;
     private final String key;
-    @Inject
-    private LoginDatabase database;
+
+    @Inject @LoginDatabase
+    private Database database;
+
     @Inject
     private AccountRepository accountRepository;
     @Inject
     private GameServerRepository gameServerRepository;
-    private AbstractHandler handler;
 
+    private AbstractHandler handler;
     private Account account;
 
     public LoginClient(IoSession session, Injector injector) {
         injector.injectMembers(this);
         this.session = session;
         this.session.write(LoginProtocol.helloConnect(this.key = Utils.generateKey()));
-        this.handler = new VersionHandler();
+        this.handler = new VersionHandler(this);
     }
 
     public void attachAccount(Account account) {
@@ -47,11 +50,11 @@ public class LoginClient {
         this.session.write(data);
     }
 
-    public void handle(String data) {
-        this.handler.handle(data, this);
+    void handle(String data) {
+        this.handler.handle(data);
     }
 
-    public void disconnect() {
+    void disconnect() {
         this.session.closeNow();
     }
 

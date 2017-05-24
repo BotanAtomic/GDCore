@@ -32,7 +32,7 @@ public class ExchangeServer implements IoHandler, Manageable {
     private int port;
 
     @Inject
-    public ExchangeServer(Program program) throws IOException {
+    public ExchangeServer(Program program) {
         program.register(this);
         this.socketAcceptor = new NioSocketAcceptor();
         this.socketAcceptor.setReuseAddress(true);
@@ -85,10 +85,13 @@ public class ExchangeServer implements IoHandler, Manageable {
 
     @Override
     public void start() {
+        long instant = System.currentTimeMillis();
+        while(gameServerRepository.getDatabase().getDslContext() == null && (System.currentTimeMillis() - instant) < 5000);
+
         gameServerRepository.loadGameServers();
         try {
             this.socketAcceptor.bind(new InetSocketAddress(port));
-            log.debug("Exchange server was successfully bind on port {}", port);
+            log.debug("listening on port {}", port);
         } catch (IOException e) {
             log.error("Unable to bind the port {} [cause : {}]", port, e.getMessage());
         }
@@ -97,7 +100,11 @@ public class ExchangeServer implements IoHandler, Manageable {
     @Override
     public void stop() {
         this.socketAcceptor.unbind();
-        log.debug("Exchange server was successfully unbind on port {} ", port);
+        log.debug("unbind on port {} ", port);
+    }
+
+    @Override public byte index() {
+        return 2;
     }
 }
 

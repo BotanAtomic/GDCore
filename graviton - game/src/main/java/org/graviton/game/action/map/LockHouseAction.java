@@ -1,6 +1,7 @@
 package org.graviton.game.action.map;
 
 import org.graviton.game.action.Action;
+import org.graviton.game.action.common.GameAction;
 import org.graviton.game.interaction.InteractionType;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.network.game.GameClient;
@@ -10,6 +11,8 @@ import org.graviton.network.game.protocol.HousePacketFormatter;
 /**
  * Created by Botan on 25/03/2017. 21:04
  */
+
+@GameAction(id=81)
 public class LockHouseAction implements Action {
 
     @Override

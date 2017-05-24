@@ -1,11 +1,13 @@
 package org.graviton.game.action.npc;
 
 import org.graviton.game.action.Action;
+import org.graviton.game.action.common.GameAction;
 import org.graviton.network.game.GameClient;
 
 /**
  * Created by Botan on 08/12/2016. 17:42
  */
+@GameAction(id=1)
 public class Dialog implements Action {
 
     @Override

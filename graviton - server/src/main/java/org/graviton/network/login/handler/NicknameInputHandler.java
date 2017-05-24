@@ -5,6 +5,8 @@ import org.graviton.network.login.LoginClient;
 import org.graviton.network.login.LoginServer;
 import org.graviton.network.login.protocol.LoginProtocol;
 
+import java.util.Arrays;
+
 
 /**
  * Created by Botan on 30/10/2016 : 01:46
@@ -12,11 +14,12 @@ import org.graviton.network.login.protocol.LoginProtocol;
 public class NicknameInputHandler extends AbstractHandler {
 
     public NicknameInputHandler(LoginClient client) {
+        super(client);
         client.send(LoginProtocol.emptyNickname());
     }
 
     @Override
-    public void handle(String data, LoginClient client) {
+    public void handle(String data) {
         if (data.equals("Af")) return;
 
         if (containsForbiddenString(data) || !client.getAccountRepository().isAvailableNickname(data))
@@ -28,11 +31,8 @@ public class NicknameInputHandler extends AbstractHandler {
         }
     }
 
-    private boolean containsForbiddenString(String data) {
-        for (String word : LoginServer.FORBIDDEN_WORD.split(","))
-            if (data.contains(word))
-                return true;
-        return false;
+    private static boolean containsForbiddenString(String data) {
+        return Arrays.stream(LoginServer.FORBIDDEN_WORD.split(",")).filter(data::contains).count() > 0;
     }
 
 }

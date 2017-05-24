@@ -107,6 +107,8 @@ public class AccountHandler {
         client.send(PlayerPacketFormatter.restrictionMessage());
         client.send(PlayerPacketFormatter.podsMessage(player.getPods()));
 
+        player.getEntityFactory().getPlayerRepository().removeMerchant(player.getId());
+
         player.getMap().load(player);
 
         String currentAddress = ((InetSocketAddress) this.client.getSession().getRemoteAddress()).getAddress().getHostAddress();

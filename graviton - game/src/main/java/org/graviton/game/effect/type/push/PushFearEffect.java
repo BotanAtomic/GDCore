@@ -3,7 +3,7 @@ package org.graviton.game.effect.type.push;
 import org.graviton.game.effect.Effect;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
@@ -21,7 +21,7 @@ public class PushFearEffect implements Effect {
     @Override
     public void apply(Fighter fighter, Collection<Fighter> targets, Cell selectedCell, SpellEffect effect) {
         AbstractMap map = fighter.getFight().getFightMap();
-        OrientationEnum orientation = Cells.getOrientationByCells(fighter.getFightCell().getId(), selectedCell.getId(), map);
+        Orientation orientation = Cells.getOrientationByCells(fighter.getFightCell().getId(), selectedCell.getId(), map);
 
         short fighterCell = Cells.getCellIdByOrientation(fighter.getFightCell().getId(), orientation, map.getWidth());
 

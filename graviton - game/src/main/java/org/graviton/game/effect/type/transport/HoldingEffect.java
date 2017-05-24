@@ -35,7 +35,7 @@ public class HoldingEffect implements Effect {
     }
 
     private void addState(Fighter fighter, State state) {
-        fighter.getStates().add(state);
+        fighter.getBuffManager().addState(state);
         fighter.getFight().send(FightPacketFormatter.actionMessage(FightAction.STATE_EVENT, fighter.getId(), fighter.getId(), state.getValue(), 1));
     }
 

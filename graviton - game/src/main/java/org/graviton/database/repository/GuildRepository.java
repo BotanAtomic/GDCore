@@ -1,17 +1,15 @@
 package org.graviton.database.repository;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
-import org.graviton.database.AbstractDatabase;
-import org.graviton.database.GameDatabase;
+import org.graviton.database.Database;
 import org.graviton.database.Repository;
+import org.graviton.database.api.GameDatabase;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.guild.Guild;
 import org.graviton.game.guild.GuildMember;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static org.graviton.database.jooq.game.tables.GuildMembers.GUILD_MEMBERS;
@@ -21,14 +19,13 @@ import static org.graviton.database.jooq.game.tables.Guilds.GUILDS;
  * Created by Botan on 05/03/2017. 15:25
  */
 public class GuildRepository extends Repository<Integer, Guild> {
-    private GameDatabase database;
+    private Database database;
+
+    @Inject private EntityFactory entityFactory;
 
     @Inject
-    private EntityFactory entityFactory;
-
-    @Inject
-    public GuildRepository(@Named("database.game") AbstractDatabase database) {
-        this.database = (GameDatabase) database;
+    public GuildRepository(@GameDatabase Database database) {
+        this.database = database;
     }
 
     public void createGuild(Guild guild) {

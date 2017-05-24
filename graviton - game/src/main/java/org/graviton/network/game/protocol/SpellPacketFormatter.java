@@ -29,4 +29,12 @@ public class SpellPacketFormatter {
     public static String boostSpellSuccessMessage(short spellId, byte spellLevel) {
         return "SUK" + spellId + "~" + spellLevel;
     }
+
+    public static String openForgetSpellWindowsMessage() {
+        return "SF+";
+    }
+
+    public static String regainSpellPointsMessage(short spellPoints) {
+        return MessageFormatter.customMessage("016;" + spellPoints);
+    }
 }

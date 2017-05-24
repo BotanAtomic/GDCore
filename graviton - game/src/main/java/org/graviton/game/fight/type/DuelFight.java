@@ -33,6 +33,11 @@ public class DuelFight extends Fight {
     }
 
     @Override
+    public boolean allowDisconnection() {
+        return false;
+    }
+
+    @Override
     protected FightType getType() {
         return FightType.DUEL;
     }

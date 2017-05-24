@@ -46,6 +46,11 @@ public class AggressionFight extends Fight {
     }
 
     @Override
+    public boolean allowDisconnection() {
+        return true;
+    }
+
+    @Override
     protected FightType getType() {
         return FightType.AGGRESSION;
     }

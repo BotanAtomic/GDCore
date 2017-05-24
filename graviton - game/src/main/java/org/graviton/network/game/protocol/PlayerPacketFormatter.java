@@ -3,6 +3,7 @@ package org.graviton.network.game.protocol;
 import org.graviton.constant.Dofus;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.creature.merchant.Merchant;
 import org.graviton.game.experience.Experience;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.items.Item;
@@ -11,6 +12,7 @@ import org.graviton.game.maps.GameMap;
 import org.graviton.game.statistics.common.Characteristic;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.game.statistics.type.PlayerStatistics;
+import org.graviton.game.zaap.Zaapi;
 import org.graviton.utils.Cells;
 
 import java.util.Arrays;
@@ -200,6 +202,29 @@ public class PlayerPacketFormatter {
         return builder.toString();
     }
 
+    public static String merchantGmMessage(Merchant merchant) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(merchant.getLocation().getCell().getId()).append(";");
+        builder.append(merchant.getLocation().getOrientation().ordinal()).append(";");
+        builder.append("0").append(";");
+        builder.append(merchant.getId()).append(";");
+        builder.append(merchant.getName()).append(";");
+        builder.append("-5").append(";");
+        builder.append(merchant.getSkin()).append("^").append(merchant.getSize()).append(";");
+        builder.append(toHex(merchant.getColor((byte) 1))).append(";");
+        builder.append(toHex(merchant.getColor((byte) 2))).append(";");
+        builder.append(toHex(merchant.getColor((byte) 3))).append(";");
+
+        builder.append(gmsMessage(merchant.getPlayer())).append(";");
+        if (merchant.getPlayer().getGuild() != null)
+            builder.append(merchant.getPlayer().getGuild().getName()).append(";").append(merchant.getPlayer().getGuild().getEmblem()).append(";");
+        else
+            builder.append(";;");
+
+        builder.append("0;");
+        return builder.toString();
+    }
+
     public static String restrictionMessage() {
         return "AR6bk";
     }
@@ -235,9 +260,20 @@ public class PlayerPacketFormatter {
         return builder.toString();
     }
 
+    public static String zaapiListMessage(List<Zaapi> zaapis, byte cost, int currentGameMap) {
+        StringBuilder builder = new StringBuilder("Wc").append(currentGameMap);
+        if (zaapis == null) return builder.toString();
+
+        zaapis.forEach(zaapi -> builder.append(zaapi.getGameMap()).append(';').append(cost).append('|'));
+        return builder.substring(0, builder.length() - 1);
+    }
+
     public static String quitZaapMenuMessage() {
         return "WV";
     }
 
+    public static String quitZaapiMenuMessage() {
+        return "Wv";
+    }
 
 }

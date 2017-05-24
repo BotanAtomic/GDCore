@@ -3,6 +3,7 @@ package org.graviton.game.client.account;
 import lombok.Data;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.trunk.type.Bank;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
 import org.jooq.Record;
@@ -34,6 +35,8 @@ public class Account {
     private GameClient client;
 
     private String cachedPlayerPacket;
+
+    private Bank bank;
 
     public Account(Record record, PlayerRepository playerRepository) {
         this.id = record.get(ACCOUNTS.ID);

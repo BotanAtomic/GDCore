@@ -27,24 +27,17 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     private final NioSocketConnector socketConnector;
 
-    @Inject
-    private AccountRepository accountRepository;
+    @Inject private AccountRepository accountRepository;
 
     private IoSession session;
 
-    @InjectSetting("exchange.ip")
-    private String exchangeAddress;
-    @InjectSetting("exchange.port")
-    private int exchangePort;
-    @InjectSetting("server.ip")
-    private String address;
-    @InjectSetting("server.port")
-    private int port;
-    @InjectSetting("server.key")
-    private String serverKey;
+    @InjectSetting("exchange.ip") private String exchangeAddress;
+    @InjectSetting("exchange.port") private int exchangePort;
+    @InjectSetting("server.ip") private String address;
+    @InjectSetting("server.port") private int port;
+    @InjectSetting("server.key") private String serverKey;
 
-    @Inject
-    public ExchangeConnector(Program program) {
+    @Inject public ExchangeConnector(Program program) {
         program.register(this);
         this.socketConnector = new NioSocketConnector();
         this.socketConnector.setHandler(this);
@@ -52,7 +45,6 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     @Override
     public void sessionCreated(IoSession session) throws Exception {
-
     }
 
     @Override
@@ -62,7 +54,7 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     @Override
     public void sessionClosed(IoSession session) throws Exception {
-        log.debug("[WARNING] Exchange server was disconnected");
+        log.debug("Exchange server was disconnected");
     }
 
     @Override
@@ -91,26 +83,23 @@ public class ExchangeConnector implements IoHandler, Manageable {
 
     private void send(String data) {
         session.write(Utils.stringToBuffer(data));
-        log.debug("[Exchange connector] send > {}", data);
+        log.debug("send > {}", data);
     }
 
     private void handle(String data) {
-        log.debug("[Exchange connector] receive < {}", data);
+        log.debug("receive < {}", data);
         switch (data.charAt(0)) {
-            case '?':
-                send(ExchangeProtocol.informationMessage((byte) serverId, this.serverKey, this.address, this.port));
-                break;
             case 'S':
                 if (data.charAt(1) == 'A')
-                    log.debug("Exchange server successfully accepted the connection");
+                    log.debug("Login server : connection accepted");
                 else {
-                    log.debug("Exchange server refused the connection");
+                    log.debug("Login server : connection refused");
                     System.exit(0);
                 }
                 break;
             case '-':
                 Account account = this.accountRepository.get(Integer.parseInt(data.substring(1)));
-                if (account != null)
+                if (account != null && account.getClient() != null)
                     account.getClient().send("AlEa");
 
                 break;
@@ -126,9 +115,10 @@ public class ExchangeConnector implements IoHandler, Manageable {
         future.awaitUninterruptibly();
         this.session = future.getSession();
 
-        if (this.session != null)
-            log.info("Successfully connected to the exchange server {{}/{}}", exchangeAddress, exchangePort);
-        else
+        if (this.session != null) {
+            log.info("Connected to the exchange server {{}/{}}", exchangeAddress, exchangePort);
+            send(ExchangeProtocol.informationMessage((byte) serverId, this.serverKey, this.address, this.port));
+         } else
             log.info("Unable to connect to the exchange server {{}/{}}", exchangeAddress, exchangePort);
 
     }
@@ -138,5 +128,9 @@ public class ExchangeConnector implements IoHandler, Manageable {
         session.closeNow();
         socketConnector.dispose();
         log.debug("Exchange connector was successfully disconnected ");
+    }
+
+    @Override public byte index() {
+        return 3;
     }
 }

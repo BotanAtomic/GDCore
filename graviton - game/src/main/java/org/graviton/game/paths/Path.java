@@ -4,7 +4,7 @@ import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.effect.state.State;
 import org.graviton.game.fight.Fighter;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
@@ -27,7 +27,7 @@ public class Path extends ArrayList<Short> {
     protected List<Runnable> tasks = new ArrayList<>();
     private String newPath = "";
     private short finalCell;
-    private OrientationEnum finalOrientation;
+    private Orientation finalOrientation;
 
     protected Path(String path, GameMap map, short cell, Player player) {
         this.startCell = cell;
@@ -38,8 +38,13 @@ public class Path extends ArrayList<Short> {
             String stepPath = path.substring(i, i + 3);
             short stepCell = Cells.decode(stepPath.substring(1));
 
-            while (lastCell != stepCell && map.getCells().containsKey(lastCell) && map.getCells().get(lastCell).isWalkable() && size-- > 0) {
-                add(lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth()));
+            while (lastCell != stepCell && map.getCells().containsKey(lastCell) && size-- > 0) {
+                lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth());
+
+                if(!map.getCell(lastCell).isWalkable())
+                    return;
+
+                add(lastCell);
 
                 MonsterGroup monsterGroup = map.searchMonsterGroupByPath(player.getAlignment(), lastCell);
 
@@ -85,11 +90,11 @@ public class Path extends ArrayList<Short> {
                 }
 
                 if (fighter.getHoldingBy() != null) {
-                    fighter.getHoldingBy().getStates().remove(State.Carrier);
+                    fighter.getHoldingBy().getBuffManager().removeState(State.Carrier);
                     fighter.getHoldingBy().setHolding(null);
 
                     fighter.setHoldingBy(null);
-                    fighter.getStates().remove(State.Carried);
+                    fighter.getHoldingBy().getBuffManager().removeState(State.Carried);
                     return;
                 }
 
@@ -104,7 +109,7 @@ public class Path extends ArrayList<Short> {
     public static Collection<Fighter> getAroundFighters(AbstractMap map, Fighter fighter, short cellId) {
         Collection<Fighter> fighters = new ArrayList<>();
 
-        for (OrientationEnum orientation : OrientationEnum.ADJACENT) {
+        for (Orientation orientation : Orientation.ADJACENT) {
             Cell cell = map.getCells().get(Cells.getCellIdByOrientation(cellId, orientation, map.getWidth()));
 
             if(cell == null)
@@ -126,14 +131,14 @@ public class Path extends ArrayList<Short> {
 
     protected void initialize() {
         this.finalCell = Cells.decode(newPath.substring(newPath.length() - 2));
-        this.finalOrientation = OrientationEnum.valueOf(Utils.parseBase64Char(newPath.charAt(newPath.length() - 3)));
+        this.finalOrientation = Orientation.valueOf(Utils.parseBase64Char(newPath.charAt(newPath.length() - 3)));
     }
 
     protected short getCell() {
         return finalCell;
     }
 
-    protected OrientationEnum getOrientation() {
+    protected Orientation getOrientation() {
         return finalOrientation;
     }
 

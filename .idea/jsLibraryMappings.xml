@@ -2,5 +2,6 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$/graviton - game/src/main/resources/scripts/commands/item.js" libraries="{ECMAScript 6}" />
+    <file url="file://$PROJECT_DIR$/graviton - game/src/main/resources/scripts/commands/teleport.js" libraries="{ECMAScript 6}" />
   </component>
 </project>

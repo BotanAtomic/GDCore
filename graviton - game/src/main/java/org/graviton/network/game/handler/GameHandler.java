@@ -7,10 +7,7 @@ import org.graviton.game.house.House;
 import org.graviton.game.interaction.InteractionManager;
 import org.graviton.game.maps.GameMap;
 import org.graviton.network.game.GameClient;
-import org.graviton.network.game.protocol.FightPacketFormatter;
-import org.graviton.network.game.protocol.GamePacketFormatter;
-import org.graviton.network.game.protocol.HousePacketFormatter;
-import org.graviton.network.game.protocol.PlayerPacketFormatter;
+import org.graviton.network.game.protocol.*;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -107,9 +104,8 @@ public class GameHandler {
         client.send(GamePacketFormatter.regenTimerMessage((short) 2000));
 
 
-        if (!endFight) {
-            player.getMap().enter(player);
-        } else {
+        if (!endFight) player.getMap().enter(player);
+        else {
             ((GameMap) player.getMap()).enterAfterFight(player);
             endFight = false;
         }
@@ -117,6 +113,12 @@ public class GameHandler {
 
     private void sendGameInformation(Player player) {
         client.send(player.getGameMap().buildData());
+
+        if (player.getFight() != null) {
+            client.send(GamePacketFormatter.mapLoadedSuccessfullyMessage());
+            player.getFight().reconnect(player);
+            return;
+        }
 
         if (player.getGameMap().getHouses() != null) {
             client.sendFormat(HousePacketFormatter.loadMessage(player.getGameMap().getHouses().values(), client.getEntityFactory()), "#");
@@ -126,6 +128,9 @@ public class GameHandler {
                 client.sendFormat(HousePacketFormatter.loadPersonalHouse(personalHouse, true), "#");
         }
 
+        if (player.getGameMap().getMountPark() != null)
+            client.send(MountPacketFormatter.showMountParkMessage(player.getGameMap().getMountPark(), client.getEntityFactory()));
+
 
         client.sendFormat(player.getGameMap().interactiveObjectData(), "#");
         client.send(GamePacketFormatter.fightCountMessage(((GameMap) player.getMap()).getFightFactory().getFightSize()));
@@ -133,7 +138,6 @@ public class GameHandler {
     }
 
     private void createAction(short id, String arguments) {
-        System.err.println("Create template action id = " + id);
         this.interactionManager.create(id, arguments);
     }
 

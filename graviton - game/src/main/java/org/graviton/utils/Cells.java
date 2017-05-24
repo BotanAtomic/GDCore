@@ -2,12 +2,12 @@ package org.graviton.utils;
 
 
 import com.google.common.collect.ImmutableMap;
-import org.graviton.constant.Dofus;
 import org.graviton.game.fight.Fighter;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
+import org.graviton.game.paths.PathMaker;
 import org.graviton.maths.Point;
 import org.graviton.maths.Vector;
 import org.graviton.network.game.protocol.FightPacketFormatter;
@@ -15,23 +15,22 @@ import org.graviton.network.game.protocol.FightPacketFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.graviton.constant.Dofus.LOS_DIRECTION;
 
 /**
  * Created by Botan on 19/11/2016 : 11:01
  */
 public final class Cells {
 
-    private static final Map<OrientationEnum, Vector> VECTORS =
-            ImmutableMap.<OrientationEnum, Vector>builder()
-                    .put(OrientationEnum.EAST, Vector.create(1, -1))
-                    .put(OrientationEnum.SOUTH_EAST, Vector.create(1, 0))
-                    .put(OrientationEnum.SOUTH, Vector.create(1, 1))
-                    .put(OrientationEnum.SOUTH_WEST, Vector.create(0, 1))
-                    .put(OrientationEnum.WEST, Vector.create(-1, 1))
-                    .put(OrientationEnum.NORTH_WEST, Vector.create(-1, 0))
-                    .put(OrientationEnum.NORTH, Vector.create(-1, -1))
-                    .put(OrientationEnum.NORTH_EAST, Vector.create(0, -1))
+    private static final Map<Orientation, Vector> VECTORS =
+            ImmutableMap.<Orientation, Vector>builder()
+                    .put(Orientation.EAST, Vector.create(1, -1))
+                    .put(Orientation.SOUTH_EAST, Vector.create(1, 0))
+                    .put(Orientation.SOUTH, Vector.create(1, 1))
+                    .put(Orientation.SOUTH_WEST, Vector.create(0, 1))
+                    .put(Orientation.WEST, Vector.create(-1, 1))
+                    .put(Orientation.NORTH_WEST, Vector.create(-1, 0))
+                    .put(Orientation.NORTH, Vector.create(-1, -1))
+                    .put(Orientation.NORTH_EAST, Vector.create(0, -1))
                     .build();
 
     public static Point position(short cellId, int mapWidth) {
@@ -53,20 +52,20 @@ public final class Cells {
     }
 
     public static short getCellIdByOrientation(short cellId, char orientation, byte mapWidth) {
-        return getCellIdByOrientation(cellId, OrientationEnum.valueOf((byte) Utils.EXTENDED_ALPHABET.indexOf(orientation)), mapWidth);
+        return getCellIdByOrientation(cellId, Orientation.valueOf((byte) Utils.EXTENDED_ALPHABET.indexOf(orientation)), mapWidth);
     }
 
-    private static OrientationEnum getOrientationByPoints(Point a, Point b) {
+    private static Orientation getOrientationByPoints(Point a, Point b) {
         Vector vector = Vector.fromPoints(a, b);
-        Optional<OrientationEnum> optional = VECTORS.keySet().stream().filter(orientationEnum -> VECTORS.get(orientationEnum).hasSameDirectionOf(vector)).findFirst();
-        return optional.isPresent() ? optional.get() : null;
+        Optional<Orientation> optional = VECTORS.keySet().stream().filter(orientationEnum -> VECTORS.get(orientationEnum).hasSameDirectionOf(vector)).findFirst();
+        return optional.orElse(null);
     }
 
-    public static OrientationEnum getOrientationByCells(Cell firstCell, Cell secondCell, int mapWidth) {
+    public static Orientation getOrientationByCells(Cell firstCell, Cell secondCell, int mapWidth) {
         return getOrientationByPoints(position(firstCell.getId(), mapWidth), position(secondCell.getId(), mapWidth));
     }
 
-    public static short getCellIdByOrientation(short cellId, OrientationEnum orientation, byte mapWidth) {
+    public static short getCellIdByOrientation(short cellId, Orientation orientation, byte mapWidth) {
         switch (orientation) {
             case EAST:
                 return (short) (cellId + 1);
@@ -90,8 +89,8 @@ public final class Cells {
         }
     }
 
-    public static OrientationEnum getOrientationByCells(short firstCell, short secondCell, AbstractMap map) {
-        for (OrientationEnum orientation : OrientationEnum.ADJACENT) {
+    public static Orientation getOrientationByCells(short firstCell, short secondCell, AbstractMap map) {
+        for (Orientation orientation : Orientation.ADJACENT) {
             short cell = firstCell;
             for (int i = 0; i <= 64; i++) {
                 if (getCellIdByOrientation(cell, orientation, map.getWidth()) == secondCell)
@@ -102,8 +101,8 @@ public final class Cells {
         return null;
     }
 
-    public static int distanceBetween(byte width, short firstCell, short secondCell) {
-        return (Math.abs(getXCoordinates(width, firstCell) - getXCoordinates(width, secondCell)) + Math.abs(getYCoordinates(width, firstCell) - getYCoordinates(width, secondCell)));
+    public static short distanceBetween(byte width, short firstCell, short secondCell) {
+        return (short) (Math.abs(getXCoordinates(width, firstCell) - getXCoordinates(width, secondCell)) + Math.abs(getYCoordinates(width, firstCell) - getYCoordinates(width, secondCell)));
     }
 
     private static int getXCoordinates(byte width, short cell) {
@@ -111,8 +110,8 @@ public final class Cells {
     }
 
     private static int getYCoordinates(byte width, short cell) {
-        int loc5 = (cell / ((width * 2) - 1));
-        int loc6 = cell - loc5 * ((width * 2) - 1);
+        int loc5 = (cell / ((width << 1) - 1));
+        int loc6 = cell - loc5 * ((width << 1) - 1);
         int loc7 = loc6 % width;
         return (loc5 - loc7);
     }
@@ -125,7 +124,7 @@ public final class Cells {
         int requiredDistance = 1000;
         short resultCell = startCell;
 
-        for (OrientationEnum orientation : OrientationEnum.ADJACENT) {
+        for (Orientation orientation : Orientation.ADJACENT) {
             Cell newCell = map.getCells().get(getCellIdByOrientation(startCell, orientation, map.getWidth()));
 
             if (newCell == null)
@@ -146,27 +145,27 @@ public final class Cells {
         int requiredDistance = 1000;
         short resultCell = startCell;
 
-        for (OrientationEnum orientationEnum : OrientationEnum.ADJACENT) {
-            Cell cell = map.getCells().get(getCellIdByOrientation(endCell, orientationEnum, map.getWidth()));
+        for (Orientation orientation : Orientation.ADJACENT) {
+            Cell cell = map.getCells().get(getCellIdByOrientation(endCell, orientation, map.getWidth()));
 
             if (cell != null) {
-                OrientationEnum[] orientationEnums = null;
-                switch (orientationEnum) {
+                Orientation[] orientations = null;
+                switch (orientation) {
                     case SOUTH_EAST:
-                        orientationEnums = new OrientationEnum[]{OrientationEnum.SOUTH_EAST, OrientationEnum.NORTH_EAST, OrientationEnum.SOUTH_WEST};
+                        orientations = new Orientation[]{Orientation.SOUTH_EAST, Orientation.NORTH_EAST, Orientation.SOUTH_WEST};
                         break;
                     case NORTH_WEST:
-                        orientationEnums = new OrientationEnum[]{OrientationEnum.SOUTH_WEST, OrientationEnum.NORTH_EAST, OrientationEnum.SOUTH_WEST};
+                        orientations = new Orientation[]{Orientation.SOUTH_WEST, Orientation.NORTH_EAST, Orientation.SOUTH_WEST};
                         break;
                     case SOUTH_WEST:
-                        orientationEnums = new OrientationEnum[]{OrientationEnum.SOUTH_WEST};
+                        orientations = new Orientation[]{Orientation.SOUTH_WEST};
                         break;
                     case NORTH_EAST:
-                        orientationEnums = new OrientationEnum[]{OrientationEnum.NORTH_EAST};
+                        orientations = new Orientation[]{Orientation.NORTH_EAST};
                         break;
                 }
 
-                for (OrientationEnum secondOrientation : orientationEnums) {
+                for (Orientation secondOrientation : orientations) {
                     Cell secondCell = map.getCells().get(getCellIdByOrientation(cell.getId(), secondOrientation, map.getWidth()));
                     if (secondCell != null) {
                         int distance = distanceBetween(map.getWidth(), startCell, secondCell.getId());
@@ -207,11 +206,11 @@ public final class Cells {
     }
 
     public static boolean cellAroundIsOccupied(AbstractMap map, short cell) {
-        return Arrays.stream(OrientationEnum.ADJACENT).filter(orientation -> map.getCells().get(getCellIdByOrientation(cell, orientation, map.getWidth())).getCreatures().isEmpty()).count() != 4;
+        return Arrays.stream(Orientation.ADJACENT).filter(orientation -> map.getCells().get(getCellIdByOrientation(cell, orientation, map.getWidth())).getCreatures().isEmpty()).count() != 4;
     }
 
     public static short getCellBetweenEnemy(short cellId, AbstractMap map) {
-        for (OrientationEnum orientation : OrientationEnum.ADJACENT) {
+        for (Orientation orientation : Orientation.ADJACENT) {
 
             Cell cell = map.getCells().get(getCellIdByOrientation(cellId, orientation, map.getWidth()));
 
@@ -224,79 +223,37 @@ public final class Cells {
         return 0;
     }
 
-    public static boolean inSameLine(byte width, short firstCell, short secondCell, short limit) {
-        if (firstCell == secondCell)
-            return true;
+    public static short getBestDiagonalCell(short fighterCell, short targetCell, AbstractMap map) {
+        AtomicInteger bestCell = new AtomicInteger(-1);
+        AtomicInteger bestDistance = new AtomicInteger(60);
 
-        for (OrientationEnum orientation : OrientationEnum.ADJACENT) {
-            int cell = firstCell;
-            for (int a = 0; a < limit; a++) {
-                short targetCell = getCellIdByOrientation((short) cell, orientation, width);
-                if (targetCell == secondCell)
-                    return true;
-                cell = targetCell;
+        map.getCells().values().stream().filter(cell -> checkLineOfSide(map, targetCell, cell.getId(), false)).forEach(cell -> {
+            short distance = distanceBetween(map.getWidth(), cell.getId(), fighterCell);
+            if (distance < bestDistance.get() && cell.isFree() && cell.isWalkable()) {
+                bestCell.set(cell.getId());
+                bestDistance.set(distance);
             }
-        }
-        return false;
+
+        });
+        return bestCell.shortValue();
     }
 
-    static boolean send = false;
-
-    public static boolean checkLineOfSide(AbstractMap map, short firstCell, short secondCell) {
-        int distance = distanceBetween(map.getWidth(), firstCell, secondCell);
-        List<Short> lineOfSide = new ArrayList<>();
-
-        if (distance > 2)
-            lineOfSide = getLineOfSide(firstCell, secondCell);
-
-        if (lineOfSide != null && distance > 2) {
-            for (short value : lineOfSide) {
-                if (!send)
-                    map.send(FightPacketFormatter.showCellMessage(1, value));
-                if (value != firstCell && value != secondCell && !map.getCells().get(value).allowLineOfSide()) {
-                    return false;
-                }
-            }
-        }
-
-        if (distance > 2) {
-            short cell = getNearestCellAround(map, secondCell, firstCell);
-            if (!send)
-                map.send(FightPacketFormatter.showCellMessage(1, cell));
-            if (cell != -1 && !map.getCells().get(cell).allowLineOfSide()) {
-                return false;
-            }
-
-        }
-
-        send = true;
-
-        return true;
+    public static void showArroundCell(AbstractMap map, short cell, int limit) {
+        map.getCells().values().stream().filter(targetCell -> distanceBetween(map.getWidth(), cell, targetCell.getId()) <= limit).forEach(found -> {
+            map.send(FightPacketFormatter.showCellMessage(1, found.getId()));
+        });
     }
 
-    private static List<Short> getLineOfSide(short cell1, short cell2) { //TODO : clean(ex)
-        ArrayList<Short> lineOfSides = new ArrayList<>();
-        short cell;
-        boolean next;
-
-
-        for (int i : LOS_DIRECTION) {
-            lineOfSides.clear();
-            cell = cell1;
-            lineOfSides.add(cell);
-            next = false;
-            while (!next) {
-                cell += i;
-                lineOfSides.add(cell);
-                if (Dofus.FIRST_BOARD.contains(cell) || Dofus.SECOND_BOARD.contains(cell) || cell <= 0 || cell >= 480)
-                    next = true;
-                if (cell == cell2) {
-                    return lineOfSides;
-                }
-            }
-        }
-        return null;
+    public static boolean inSameLine(byte width, short firstCell, short secondCell) {
+        return getXCoordinates(width, firstCell) == getXCoordinates(width, secondCell) || getYCoordinates(width, firstCell) == getYCoordinates(width, secondCell);
     }
+
+    public static boolean checkLineOfSide(AbstractMap map, short firstCell, short secondCell, boolean checkDistance) {
+        return distanceBetween(map.getWidth(), firstCell, secondCell) <= 2 && checkDistance ||
+                new PathMaker(map, firstCell, secondCell).getDirectPath().stream().filter(cell -> !cell.allowLineOfSide()).count() < 2 &&
+                        new PathMaker(map, secondCell, firstCell).getDirectPath().stream().filter(cell -> !cell.allowLineOfSide()).count() < 2;
+    }
+
 
     public static short getZaapCost(GameMap first, GameMap second) {
         return (short) (10 * (Math.abs(second.getX() - first.getX()) + Math.abs(second.getY() - first.getY()) - 1));

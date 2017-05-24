@@ -1,6 +1,7 @@
 package org.graviton.game.action.map;
 
 import org.graviton.game.action.Action;
+import org.graviton.game.action.common.GameAction;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.interaction.InteractionType;
 import org.graviton.game.maps.cell.Cell;
@@ -13,6 +14,8 @@ import static org.graviton.constant.Dofus.WATER_OBJECT;
 /**
  * Created by Botan on 22/03/2017. 22:11
  */
+
+@GameAction(id=102)
 public class WaterAction implements Action {
     private Cell cell;
     private Player player;

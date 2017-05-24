@@ -11,8 +11,12 @@ import org.graviton.utils.Utils;
  */
 public class AuthenticationHandler extends AbstractHandler {
 
+    protected AuthenticationHandler(LoginClient client) {
+        super(client);
+    }
+
     @Override
-    public void handle(String data, LoginClient client) {
+    public void handle(String data) {
         Account account = client.getAccountRepository().load(data.split("\n")[0], client);
 
         if (account != null && Utils.encryptPassword(account.getPassword(), client.getKey()).equals(data.split("\n")[1])) {

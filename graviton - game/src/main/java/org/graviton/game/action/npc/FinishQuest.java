@@ -1,11 +1,14 @@
 package org.graviton.game.action.npc;
 
 import org.graviton.game.action.Action;
+import org.graviton.game.action.common.GameAction;
 import org.graviton.network.game.GameClient;
 
 /**
  * Created by Botan on 08/12/2016. 22:31
  */
+
+@GameAction(id=984)
 public class FinishQuest implements Action {
 
     @Override

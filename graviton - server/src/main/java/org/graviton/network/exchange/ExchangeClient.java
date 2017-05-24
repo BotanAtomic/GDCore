@@ -30,7 +30,6 @@ public class ExchangeClient {
     public ExchangeClient(IoSession session, Injector injector) {
         injector.injectMembers(this);
         this.session = session;
-        send(ExchangeProtocol.needInformations());
     }
 
 
@@ -40,7 +39,7 @@ public class ExchangeClient {
     public void handle(String packet) {
         switch (packet.substring(0, 1)) {
             case "I":
-                gameServerRepository.setGameServerInformations(packet.substring(1), this);
+                gameServerRepository.setGameServerInformation(packet.substring(1), this);
                 break;
             case "S":
                 setState(State.get(Byte.parseByte(packet.substring(1))));
@@ -59,7 +58,7 @@ public class ExchangeClient {
             return;
 
         gameServer.setState(state);
-        String serversData = LoginProtocol.serversInformationsMessage(gameServerRepository.getGameServers().values());
+        String serversData = LoginProtocol.serversInformationMessage(gameServerRepository.getGameServers().values());
         loginServer.getClients().forEach(client -> client.send(serversData));
     }
 

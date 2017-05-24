@@ -1,12 +1,15 @@
 package org.graviton.core.injector.modules;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.name.Names;
 import lombok.extern.slf4j.Slf4j;
+import org.graviton.database.api.GameDatabaseProperties;
+import org.graviton.database.api.LoginDatabaseProperties;
 import org.graviton.injector.PropertiesBinder;
 
 import java.io.IOException;
 import java.util.Properties;
+
+import static org.graviton.utils.Utils.parseComplexDatabaseProperties;
 
 /**
  * Created by Botan on 04/11/2016 : 22:27
@@ -22,20 +25,13 @@ public class ConfigurationModule extends AbstractModule {
 
             PropertiesBinder.bind(binder(), properties);
 
-            bind(Properties.class).annotatedWith(Names.named("database.game.properties")).toInstance(createDatabaseProperties(properties, "game"));
-            bind(Properties.class).annotatedWith(Names.named("database.login.properties")).toInstance(createDatabaseProperties(properties, "login"));
+            bind(Properties.class).annotatedWith(GameDatabaseProperties.class).toInstance(parseComplexDatabaseProperties(properties, "game"));
+            bind(Properties.class).annotatedWith(LoginDatabaseProperties.class).toInstance(parseComplexDatabaseProperties(properties, "login"));
 
-            log.debug("Configuration file successfully loaded");
+            log.debug("Configuration file loaded");
         } catch (IOException e) {
             super.addError(e);
         }
     }
 
-    private Properties createDatabaseProperties(Properties properties, String database) {
-        return new Properties() {{
-            properties.keySet().stream().filter(key -> key.toString().startsWith(database.concat(".dataSource"))).forEach(selectedKey ->
-                    put(String.valueOf(selectedKey).split(database.concat("."))[1], properties.get(selectedKey))
-            );
-        }};
-    }
 }

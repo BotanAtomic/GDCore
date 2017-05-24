@@ -1,9 +1,10 @@
 package org.graviton.game.maps;
 
-import org.graviton.api.Creature;
+import org.graviton.game.creature.Creature;
 import org.graviton.game.maps.cell.Cell;
 
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Created by Botan on 14/12/2016. 16:15
@@ -30,4 +31,12 @@ public interface AbstractMap {
     byte getWidth();
 
     String getPosition();
+
+    default Cell getCell(short id) {
+        return getCells().get(id);
+    }
+
+    default Stream<Cell> getCellStream()    {
+        return getCells().values().stream();
+    }
 }

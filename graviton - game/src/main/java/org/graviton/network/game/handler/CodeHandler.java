@@ -2,6 +2,7 @@ package org.graviton.network.game.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.house.House;
+import org.graviton.game.trunk.type.Trunk;
 import org.graviton.network.game.GameClient;
 
 import static org.graviton.network.game.protocol.HousePacketFormatter.quitHouseCodeMessage;
@@ -36,16 +37,26 @@ public class CodeHandler {
 
     private void receiveCode(String data) {
         switch (data.charAt(0)) {
-            case '0' :
-                if(client.getInteractionManager().getHouseInteraction() != null)
+            case '0':
+                if (client.getInteractionManager().getTrunkInteraction() != null)
+                    client.getInteractionManager().getTrunkInteraction().open(client.getPlayer(), data.substring(2));
+                else if (client.getInteractionManager().getHouseInteraction() != null)
                     client.getInteractionManager().getHouseInteraction().open(client.getPlayer(), data.substring(2));
                 break;
 
             case '1':
-                House house = client.getInteractionManager().getHouseInteraction();
-                if(house != null && house.getOwner() == client.getAccount().getId()) {
-                    house.setKey(data.substring(2));
-                    client.getEntityFactory().updateHouse(house);
+                if (client.getInteractionManager().getTrunkInteraction() != null) {
+                    Trunk trunk = client.getInteractionManager().getTrunkInteraction();
+                    if (trunk.getOwner() == client.getAccount().getId()) {
+                        trunk.setKey(data.substring(2));
+                        client.getEntityFactory().getGameMapRepository().updateTrunk(trunk);
+                    }
+                } else if (client.getInteractionManager().getHouseInteraction() != null) {
+                    House house = client.getInteractionManager().getHouseInteraction();
+                    if (house != null && house.getOwner() == client.getAccount().getId()) {
+                        house.setKey(data.substring(2));
+                        client.getEntityFactory().updateHouse(house);
+                    }
                 }
                 break;
         }

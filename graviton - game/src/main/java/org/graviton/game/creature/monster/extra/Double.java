@@ -1,14 +1,14 @@
 package org.graviton.game.creature.monster.extra;
 
 import lombok.Data;
-import org.graviton.api.Creature;
+import org.graviton.game.creature.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.intelligence.api.ArtificialIntelligence;
-import org.graviton.game.intelligence.artificial.PassIntelligence;
+import org.graviton.game.intelligence.artificial.BlockIntelligence;
 import org.graviton.game.look.AbstractLook;
 import org.graviton.game.position.Location;
 import org.graviton.game.spell.Spell;
@@ -104,7 +104,7 @@ public class Double extends Fighter implements Creature {
 
     @Override
     public ArtificialIntelligence artificialIntelligence() {
-        return new PassIntelligence(this);
+        return new BlockIntelligence(this);
     }
 
     @Override

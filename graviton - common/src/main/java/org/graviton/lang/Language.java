@@ -8,8 +8,8 @@ import java.util.HashMap;
 public abstract class Language extends HashMap<LanguageSentence, String> {
 
 
-    public String getSentence(LanguageSentence boughtHouse, String... argument) {
-        String firstValue = super.get(boughtHouse);
+    public String getSentence(LanguageSentence sentence, String... argument) {
+        String firstValue = super.get(sentence);
 
         if (argument != null)
             for (int i = 0; i < argument.length; i++)

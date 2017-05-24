@@ -25,7 +25,7 @@ public class GameServer {
         this.id = id;
         this.key = key;
         this.state = State.OFFLINE;
-        log.debug("Game server [{}] loaded successfully", key);
+        log.debug("game server [{}] : loaded", key);
     }
 
 }

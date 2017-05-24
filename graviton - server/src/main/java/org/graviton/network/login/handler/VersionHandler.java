@@ -10,10 +10,14 @@ import org.graviton.network.login.protocol.LoginProtocol;
  */
 public class VersionHandler extends AbstractHandler {
 
+    public VersionHandler(LoginClient client) {
+        super(client);
+    }
+
     @Override
-    public void handle(String data, LoginClient client) {
+    public void handle(String data) {
         if (data.equals(LoginServer.DOFUS_VERSION))
-            client.setHandler(new AuthenticationHandler());
+            client.setHandler(new AuthenticationHandler(client));
         else
             client.send(LoginProtocol.badClientVersion(LoginServer.DOFUS_VERSION));
     }

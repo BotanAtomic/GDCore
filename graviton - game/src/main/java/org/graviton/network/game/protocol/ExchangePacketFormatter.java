@@ -1,5 +1,10 @@
 package org.graviton.network.game.protocol;
 
+import org.graviton.game.inventory.PlayerStore;
+import org.graviton.game.items.Item;
+import org.graviton.game.trunk.AbstractTrunk;
+import org.graviton.game.trunk.type.Bank;
+
 /**
  * Created by Botan on 03/03/2017. 23:34
  */
@@ -15,6 +20,10 @@ public class ExchangePacketFormatter {
 
     public static String startMessage(byte exchangeId) {
         return "ECK" + exchangeId;
+    }
+
+    public static String startMerchantMessage(byte exchangeId, int seller) {
+        return "ECK" + exchangeId + "|" + seller;
     }
 
     public static String cancelMessage() {
@@ -63,5 +72,37 @@ public class ExchangePacketFormatter {
 
     public static String sellSuccessMessage() {
         return "ESK";
+    }
+
+    public static String trunkMessage(AbstractTrunk trunk) {
+        StringBuilder builder = new StringBuilder("EL");
+        trunk.forEach(item -> builder.append('O').append(item.parse()).append(';'));
+        if(trunk.getKamas() > 0)
+            builder.append('G').append(trunk.getKamas());
+        return builder.toString();
+    }
+
+    public static String personalStoreMessage(PlayerStore store) {
+        StringBuilder builder = new StringBuilder();
+        store.forEach(item -> builder.append(item.getId()).append(";").append(item.getItem().getQuantity()).append(";").append(item.getItem().getTemplate().getId())
+                .append(";").append(item.getItem().parseEffects()).append(";").append(item.getPrice()).append("|"));
+        return "EL" + (builder.length() == 0 ? builder.toString() : builder.substring(0, builder.length() - 1));
+
+    }
+
+    public static String addTrunkItemMessage(int itemId, short quantity, int itemTemplate, String effects) {
+        return "EsKO+" + itemId + "|" + quantity + "|" + itemTemplate + "|" + effects;
+    }
+
+    public static String simpleRemoveItemMessage(int id) {
+        return "EsKO-" + id;
+    }
+
+    public static String trunkKamasEditMessage(long kamas) {
+        return "EsKG" + kamas;
+    }
+
+    public static String merchantMessage(long tax) {
+        return "Eq1|1|" + tax;
     }
 }

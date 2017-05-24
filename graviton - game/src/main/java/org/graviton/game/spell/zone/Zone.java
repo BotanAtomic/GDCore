@@ -4,7 +4,7 @@ import lombok.Data;
 import org.graviton.collection.NoDuplicatesList;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
@@ -34,7 +34,7 @@ public abstract class Zone {
         this.length = (byte) Utils.EXTENDED_ALPHABET.indexOf(zone.charAt(1));
     }
 
-    protected static void calculateLine(short length, Cell firstCell, List<Cell> cells, AbstractMap map, OrientationEnum orientation) {
+    protected static void calculateLine(short length, Cell firstCell, List<Cell> cells, AbstractMap map, Orientation orientation) {
         AtomicReference<Cell> lastCell = new AtomicReference<>(firstCell);
 
         IntStream.range(0, length).forEach(i -> {

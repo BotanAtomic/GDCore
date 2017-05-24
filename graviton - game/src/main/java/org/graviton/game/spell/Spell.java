@@ -47,6 +47,10 @@ public class Spell {
         return this.template.getLevel((byte) (level + 1));
     }
 
+    public Spell first() {
+        return this.template.getLevel((byte) (1));
+    }
+
     public void applyToFight(Fighter fighter, Cell target) {
         Fight fight = fighter.getFight();
         fight.setToWait(0);
@@ -122,6 +126,10 @@ public class Spell {
 
     public boolean canHeal() {
         return effects.stream().filter(effect -> effect.getType() == SpellEffects.Heal).count() > 0;
+    }
+
+    public boolean canJump() {
+        return effects.stream().filter(effect -> effect.getType() == SpellEffects.Teleport).count() > 0;
     }
 
     public Zone zone() {

@@ -7,4 +7,6 @@ public interface Manageable {
     void start();
 
     void stop();
+
+    byte index();
 }

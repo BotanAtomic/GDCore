@@ -37,19 +37,17 @@ public abstract class AbstractTrap {
 
         this.color = color;
 
-        show();
+        this.show();
     }
 
 
     public abstract void onTrapped(Fighter fighter);
-
 
     protected abstract void applyEffect(Fighter fighter);
 
     public boolean containCell(short cellId) {
         return cells.stream().filter(cell -> cell.getId() == cellId).count() != 0;
     }
-
 
     abstract void show();
 

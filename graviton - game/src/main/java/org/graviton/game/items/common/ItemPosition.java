@@ -43,7 +43,10 @@ public enum ItemPosition {
     ItemBar20((byte) 54),
     ItemBar21((byte) 55),
     ItemBar22((byte) 56),
-    ItemBar23((byte) 57);
+    ItemBar23((byte) 57),
+
+    Bank(Byte.MAX_VALUE),
+    Store(Byte.MIN_VALUE);
 
     private byte value;
     private boolean needUpdate = false;
@@ -76,8 +79,16 @@ public enum ItemPosition {
         return this != NotEquipped;
     }
 
+    public boolean notEquipped() {
+        return !equippedWithoutBar() || this == Bank || this == Store;
+    }
+
     public boolean needUpdate() {
         return needUpdate;
+    }
+
+    public static boolean isSamePosition(ItemPosition first, ItemPosition second) {
+        return first.notEquipped() && second.notEquipped() || first == second;
     }
 
 }

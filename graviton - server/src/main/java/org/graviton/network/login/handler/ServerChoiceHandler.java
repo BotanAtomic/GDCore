@@ -12,23 +12,25 @@ import org.graviton.network.login.protocol.LoginProtocol;
  */
 public class ServerChoiceHandler extends AbstractHandler {
 
-    public ServerChoiceHandler(LoginClient client) {
+
+    ServerChoiceHandler(LoginClient client) {
+        super(client);
         client.send(LoginProtocol.nicknameInformationMessage(client.getAccount().getNickname()));
         client.send(LoginProtocol.communityInformationMessage());
-        client.send(LoginProtocol.serversInformationsMessage(client.getGameServerRepository().getGameServers().values()));
+        client.send(LoginProtocol.serversInformationMessage(client.getGameServerRepository().getGameServers().values()));
         client.send(LoginProtocol.identificationSuccessMessage(client.getAccount().getRights() > 0));
         client.send(LoginProtocol.accountQuestionInformationMessage(client.getAccount().getSecretQuestion()));
         client.getAccount().setPlayers(client.getAccountRepository().load(client.getAccount().getId()));
     }
 
     @Override
-    public void handle(String data, LoginClient client) {
+    public void handle(String data) {
         switch (data.charAt(1)) {
             case 'F':
                 client.send(LoginProtocol.searchPlayerMessage(client.getAccountRepository().getPlayers(data.substring(2)), client));
                 break;
             case 'X':
-                selectServer(client, Byte.parseByte(data.substring(2)));
+                selectServer(Byte.parseByte(data.substring(2)));
                 break;
             case 'x':
                 client.send(LoginProtocol.playersListMessage(client.getAccount().getPlayers(), client.getGameServerRepository().getGameServers().values()));
@@ -36,7 +38,7 @@ public class ServerChoiceHandler extends AbstractHandler {
         }
     }
 
-    private void selectServer(LoginClient client, byte gameServerId) {
+    private void selectServer(byte gameServerId) {
         GameServer gameServer = client.getGameServerRepository().getGameServers().get(gameServerId);
 
         if (gameServer.getState() != State.ONLINE || gameServer.getExchangeClient() == null) {

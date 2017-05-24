@@ -15,8 +15,10 @@ import org.graviton.game.house.HouseTemplate;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.maps.object.InteractiveObjectTemplate;
+import org.graviton.game.mountpark.MountPark;
 import org.graviton.game.spell.SpellTemplate;
-import org.graviton.game.zaap.Zaap;
+import org.graviton.game.trunk.type.Trunk;
+import org.graviton.game.zaap.Zaapi;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
@@ -33,22 +35,32 @@ import java.util.stream.Collectors;
 @Data
 class EntityData {
     final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+
     final Map<Short, Experience> experiences = new ConcurrentHashMap<>();
+
     final Map<Integer, NpcTemplate> npcTemplates = new ConcurrentHashMap<>();
     final Map<Short, NpcQuestion> npcQuestions = new ConcurrentHashMap<>();
     final List<NpcAnswer> npcAnswers = Collections.synchronizedList(new ArrayList<>());
+
     final Map<Integer, MonsterTemplate> monsterTemplates = new ConcurrentHashMap<>();
     final Map<Integer, ExtraMonster> extraMonsters = new ConcurrentHashMap<>();
+
     final Map<Short, ItemTemplate> itemTemplates = new ConcurrentHashMap<>();
     final Map<Short, Panoply> panoply = new ConcurrentHashMap<>();
-    final Map<Short, Area> area = new ConcurrentHashMap<>();
-    final Map<Short, SubArea> subArea = new ConcurrentHashMap<>();
-    final Map<Short, SpellTemplate> spells = new ConcurrentHashMap<>();
     final Map<Integer, InteractiveObjectTemplate> interactiveObjects = new ConcurrentHashMap<>();
     final List<Drop> drops = Collections.synchronizedList(new ArrayList<>());
+
+    final Map<Short, Area> area = new ConcurrentHashMap<>();
+    final Map<Short, SubArea> subArea = new ConcurrentHashMap<>();
+    final Map<Integer, Zaapi> zaapis = new ConcurrentHashMap<>();
+    final Map<Integer, MountPark> mountParks = new ConcurrentHashMap<>();
     final Map<Short, HouseTemplate> houses = new ConcurrentHashMap<>();
+    final Map<Short, List<Trunk>> trunks = new ConcurrentHashMap<>();
+
+    final Map<Short, SpellTemplate> spells = new ConcurrentHashMap<>();
+
     final Map<Integer, AbstractFightAction> fightAction = new ConcurrentHashMap<>();
-    final Map<Integer, Zaap> zaaps = new ConcurrentHashMap<>();
+
 
     public NpcTemplate getNpcTemplate(int id) {
         return this.npcTemplates.get(id);
@@ -92,6 +104,14 @@ class EntityData {
 
     public AbstractFightAction getFightAction(int map) {
         return this.fightAction.get(map);
+    }
+
+    public void registerMountPark(MountPark mountPark) {
+        this.mountParks.put(mountPark.getGameMap().getId(), mountPark);
+    }
+
+    public List<Zaapi> getZaapis(Zaapi base) {
+        return this.zaapis.values().stream().filter(zaapi -> zaapi.getAlignment().ordinal() == base.getAlignment().ordinal() && !zaapi.equals(base)).collect(Collectors.toList());
     }
 
 }

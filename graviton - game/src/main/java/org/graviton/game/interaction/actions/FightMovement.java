@@ -52,7 +52,6 @@ public class FightMovement extends Path implements AbstractGameAction {
 
     @Override
     public boolean begin() {
-
         boolean valid = super.isValid() && fighter.getCurrentMovementPoint() >= super.size();
 
 

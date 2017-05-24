@@ -1,13 +1,13 @@
 package org.graviton.game.creature.monster;
 
 import lombok.Data;
-import org.graviton.api.Creature;
+import org.graviton.game.creature.Creature;
 import org.graviton.collection.CollectionQuery;
 import org.graviton.constant.Dofus;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.drop.Drop;
 import org.graviton.game.look.AbstractLook;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.position.Location;
 import org.graviton.game.statistics.common.Statistics;
@@ -37,7 +37,7 @@ public class MonsterGroup implements Creature {
 
     public MonsterGroup(int id, GameMap gameMap, short cell, Collection<Monster> monsters) {
         this.id = id;
-        this.location = new Location(gameMap, cell, OrientationEnum.SOUTH_WEST);
+        this.location = new Location(gameMap, cell, Orientation.SOUTH_WEST);
         this.monsters = monsters;
         this.respawnTime = 0;
     }
@@ -67,7 +67,7 @@ public class MonsterGroup implements Creature {
 
     @Override
     public Location getLocation() {
-        return this.location == null ? (this.location = new Location(gameMap, cell, OrientationEnum.SOUTH_WEST)) : this.location;
+        return this.location == null ? (this.location = new Location(gameMap, cell, Orientation.SOUTH_WEST)) : this.location;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class MonsterGroup implements Creature {
         return this.location.getCell().getId();
     }
 
-    public OrientationEnum getOrientation() {
+    public Orientation getOrientation() {
         return this.location.getOrientation();
     }
 
@@ -133,7 +133,7 @@ public class MonsterGroup implements Creature {
     public short aggressionDistance(byte playerAlignment) {
         return (short) monsters.stream().mapToInt(monster -> {
             byte distance = monster.getTemplate().getAggressionDistance();
-            if (monster.getTemplate().getAlignment().getType() != NEUTRE && playerAlignment != monster.getAlignment().getId())
+            if (monster.getTemplate().getAlignment().getType() != NEUTRE && playerAlignment > 0  && playerAlignment != monster.getAlignment().getId())
                 return distance + 13;
             return distance;
         }).sum();

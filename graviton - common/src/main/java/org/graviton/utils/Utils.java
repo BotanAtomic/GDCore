@@ -4,6 +4,7 @@ import org.apache.mina.core.buffer.IoBuffer;
 
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
+import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -21,7 +22,7 @@ public class Utils {
     public static final char[] HASH = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'};
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-    private static final AtomicReference<Random> RANDOM = new AtomicReference<>(new Random(System.nanoTime()));
+    private static final AtomicReference<Random> RANDOM = new AtomicReference<>(new SecureRandom());
 
     public static String randomPseudo() {
         return NameGenerator.generateName();
@@ -35,6 +36,20 @@ public class Utils {
         StringBuilder builder = new StringBuilder(32);
         IntStream.range(0, 32).forEach(value -> builder.append(random()));
         return builder.toString();
+    }
+
+    public static Properties parseDatabaseProperties(Properties baseProperties, String data) {
+        return new Properties() {{
+            baseProperties.keySet().stream().filter(key -> key.toString().contains(data)).forEach(selectedKey -> put(selectedKey, baseProperties.get(selectedKey)));
+        }};
+    }
+
+    public static Properties parseComplexDatabaseProperties(Properties properties, String data) {
+        return new Properties() {{
+            properties.keySet().stream().filter(key -> key.toString().startsWith(data.concat(".dataSource"))).forEach(selectedKey ->
+                    put(String.valueOf(selectedKey).split(data.concat("."))[1], properties.get(selectedKey))
+            );
+        }};
     }
 
     public static byte parseBase64Char(char c) {

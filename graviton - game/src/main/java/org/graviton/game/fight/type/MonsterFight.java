@@ -47,6 +47,11 @@ public class MonsterFight extends Fight {
     }
 
     @Override
+    public boolean allowDisconnection() {
+        return true;
+    }
+
+    @Override
     protected FightType getType() {
         return FightType.MONSTER;
     }

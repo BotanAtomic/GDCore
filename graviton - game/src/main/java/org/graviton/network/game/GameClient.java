@@ -31,12 +31,11 @@ public class GameClient {
     private Player player;
     private Language language;
 
-    @Inject
-    private AccountRepository accountRepository;
-    @Inject
-    private PlayerRepository playerRepository;
-    @Inject
-    private EntityFactory entityFactory;
+    @Inject private AccountRepository accountRepository;
+    @Inject private PlayerRepository playerRepository;
+    @Inject private EntityFactory entityFactory;
+
+    private boolean disconnected = false;
 
 
     public GameClient(IoSession session, Injector injector) {
@@ -56,10 +55,18 @@ public class GameClient {
     }
 
 
-    void disconnect() {
+    public void disconnect() {
+        if(disconnected)
+            return;
+
+        System.err.println("Disconnect :)");
         if (player != null) {
-            if (this.player.getFight() != null)
-                this.player.getFight().quit(player);
+            if (this.player.getFight() != null) {
+                if (player.getFight().allowDisconnection())
+                    this.player.getFight().disconnect(player);
+                else
+                    this.player.getFight().quit(player);
+            }
 
             if (this.player.getGuild() != null) {
                 GuildMember guildMember = player.getGuild().getMember(player.getId());
@@ -68,18 +75,23 @@ public class GameClient {
                 entityFactory.getGuildRepository().updateGuildMember(guildMember);
             }
 
-            this.player.getMap().out(player);
+            if(player.getExchange() != null)
+                player.getExchange().cancel();
+
+            if (player.getFight() == null || player.getFight() != null && !player.getFight().allowDisconnection())
+                this.player.getMap().out(player);
         }
         this.playerRepository.save(account);
         this.accountRepository.unload(account.getId());
         this.session.closeNow();
+        disconnected = true;
     }
 
     public void setLanguage(String language) {
         this.language = Language.get(language);
     }
 
-    public final MessageHandler getBaseHandler() {
+    public MessageHandler getBaseHandler() {
         return ((MessageHandler) session.getAttribute((byte) 1));
     }
 

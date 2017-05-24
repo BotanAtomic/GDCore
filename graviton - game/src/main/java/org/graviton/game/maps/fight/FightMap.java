@@ -1,7 +1,7 @@
 package org.graviton.game.maps.fight;
 
 import lombok.Data;
-import org.graviton.api.Creature;
+import org.graviton.game.creature.Creature;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.GameMap;

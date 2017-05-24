@@ -65,8 +65,6 @@ public class CellLoader {
             InteractiveObjectTemplate interactiveObjectTemplate = entityFactory.getInteractiveObject(interactiveObject);
             if (interactiveObjectTemplate != null)
                 cell.setInteractiveObject(entityFactory.getInteractiveObject(interactiveObject).newInteractiveObject(gameMap, cell.getId(), entityFactory.getScheduler()));
-            else
-                System.err.println("Undefined interactive object " + interactiveObject);
         }
 
         cell.setLineOfSight(los);

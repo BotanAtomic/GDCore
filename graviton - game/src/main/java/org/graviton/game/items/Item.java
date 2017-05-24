@@ -47,7 +47,8 @@ public class Item {
 
     public String parse() {
         StringBuilder builder = new StringBuilder();
-        String position = !this.position.equippedWithoutBar() ? "-1" : Integer.toHexString(this.position.value());
+        String position = this.position.notEquipped() ? "-1" : Integer.toHexString(this.position.value());
+
         builder.append(Integer.toHexString(id)).append('~').append(Integer.toHexString(template.getId())).append('~').
                 append(Integer.toHexString(quantity)).append('~').append(position).append('~').
                 append(this.parseEffects()).append(';');
@@ -74,5 +75,12 @@ public class Item {
 
     public void changeQuantity(short quantity) {
         this.quantity += quantity;
+    }
+
+    public boolean isSame(Item other) {
+        System.err.println("Template : "+ other.template.getId() + "/" + this.template.getId());
+        System.err.println("Stats : "+ other.statistics + "/" + this.statistics);
+
+        return other.template.getId() == this.template.getId() && other.statistics.equals(this.statistics);
     }
 }

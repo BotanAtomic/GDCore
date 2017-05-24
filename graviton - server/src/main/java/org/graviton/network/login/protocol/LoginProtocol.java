@@ -48,7 +48,7 @@ public class LoginProtocol {
         return "Ac0";
     }
 
-    public static String serversInformationsMessage(Collection<GameServer> servers) {
+    public static String serversInformationMessage(Collection<GameServer> servers) {
         StringBuilder messageBuilder = new StringBuilder("AH");
         servers.forEach((server) -> messageBuilder.append(server.getId()).append(";").append(server.getState().value()).append(";110;1|"));
         return messageBuilder.toString();

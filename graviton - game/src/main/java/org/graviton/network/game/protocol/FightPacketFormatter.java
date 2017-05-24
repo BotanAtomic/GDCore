@@ -380,4 +380,11 @@ public class FightPacketFormatter {
         return MessageFormatter.customMessage("036;" + name);
     }
 
+    public static String disconnectedPlayerMessage(String name, byte remainingTurn) {
+        return MessageFormatter.customMessage("1182;" + name + "~" + remainingTurn);
+    }
+
+    public static String reconnectedPlayerMessage(String name) {
+        return MessageFormatter.customMessage("1183;" + name);
+    }
 }

@@ -37,7 +37,7 @@ public class Attribute {
     }
 
     public String toString() {
-        return data == null ? "" : data;
+        return data;
     }
 
 }

@@ -3,7 +3,7 @@ package org.graviton.game.effect.type.push;
 import org.graviton.game.effect.Effect;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
@@ -27,7 +27,7 @@ public class PushFrontEffect implements Effect {
                 return;
 
             AbstractMap map = fighter.getFight().getFightMap();
-            OrientationEnum orientation = Cells.getOrientationByCells(target.getFightCell(), fighter.getFightCell(), map.getWidth());
+            Orientation orientation = Cells.getOrientationByCells(target.getFightCell(), fighter.getFightCell(), map.getWidth());
 
             Collection<AbstractTrap> traps = null;
             Cell lastCell = target.getFightCell();

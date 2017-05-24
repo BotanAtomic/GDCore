@@ -1,40 +1,44 @@
 package org.graviton.database.repository;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
-import org.graviton.database.AbstractDatabase;
-import org.graviton.database.LoginDatabase;
+import org.graviton.database.Database;
 import org.graviton.database.Repository;
+import org.graviton.database.api.LoginDatabase;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.creature.merchant.Merchant;
 import org.graviton.game.items.Item;
+import org.graviton.game.items.StoreItem;
+import org.graviton.game.maps.GameMap;
 import org.graviton.game.spell.SpellView;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.network.exchange.ExchangeConnector;
 import org.graviton.utils.Utils;
+import org.jooq.Record;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 import static org.graviton.database.jooq.game.tables.Spells.SPELLS;
 import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
+import static org.graviton.database.jooq.game.tables.Merchant.MERCHANT;
 
 
 /**
  * Created by Botan on 06/11/2016 : 12:51
  */
 public class PlayerRepository extends Repository<Integer, Player> {
-    private final LoginDatabase database;
-    @Inject
-    private EntityFactory entityFactory;
+    private Database database;
 
-    @Inject
-    public PlayerRepository(@Named("database.login") AbstractDatabase database) {
-        this.database = (LoginDatabase) database;
+    @Inject private EntityFactory entityFactory;
+
+    @Inject public PlayerRepository(@LoginDatabase Database database) {
+        this.database = database;
     }
 
     private static <T> BinaryOperator<T> throwingMerger() {
@@ -90,14 +94,38 @@ public class PlayerRepository extends Repository<Integer, Player> {
 
     public Collection<Player> getPlayers(Account account) {
         return Collections.synchronizedList(database.getResult(PLAYERS, PLAYERS.OWNER.equal(account.getId())).stream().map(record -> {
-            Player player = new Player(record, account, loadItems(record.get(PLAYERS.ID)), loadSpells(record.get(PLAYERS.ID)), entityFactory);
+            GameMap gameMap = entityFactory.getMap(record.get(PLAYERS.MAP));
+            Player player = gameMap.getFightFactory().searchDisconnectedPlayer(record.get(PLAYERS.ID));
+
+            if (player == null)
+                player = new Player(record, account, loadItems(record.get(PLAYERS.ID)), loadStore(record), loadSpells(record.get(PLAYERS.ID)), entityFactory);
+
             super.add(player.getId(), player);
             return player;
         }).collect(Collectors.toList()));
     }
 
+
     private Map<Integer, Item> loadItems(int playerId) {
-        return database.getResult(ITEMS, ITEMS.OWNER.equal(playerId)).stream().map(record -> new Item(record, entityFactory.getItemTemplate(record.get(ITEMS.TEMPLATE)))).collect(Collectors.toMap(Item::getId, p -> p, throwingMerger(), ConcurrentHashMap::new));
+        return database.getResult(ITEMS, ITEMS.OWNER.equal(playerId), ITEMS.POSITION.notEqual(Byte.MAX_VALUE),
+                ITEMS.POSITION.notEqual(Byte.MIN_VALUE)).stream().map(record -> new Item(record, entityFactory.getItemTemplate(record.get(ITEMS.TEMPLATE)))).collect(Collectors.toMap(Item::getId, p -> p, throwingMerger(), ConcurrentHashMap::new));
+    }
+
+    private List<StoreItem> loadStore(Record record) {
+        String data = record.get(PLAYERS.STORE);
+
+        if (data.isEmpty())
+            return new ArrayList<>();
+
+        return Stream.of(data.split(";")).map(entry -> {
+            String[] argument = entry.split(":");
+            return new StoreItem(loadItem(Integer.parseInt(argument[0])), Long.parseLong(argument[1]));
+        }).collect(Collectors.toList());
+    }
+
+    public Item loadItem(int itemId) {
+        Record record = database.getRecord(ITEMS, ITEMS.ID.equal(itemId));
+        return new Item(record, entityFactory.getItemTemplate(record.get(ITEMS.TEMPLATE)));
     }
 
     private Map<Short, SpellView> loadSpells(int playerId) {
@@ -105,8 +133,6 @@ public class PlayerRepository extends Repository<Integer, Player> {
                 new SpellView(record.get(SPELLS.ID), this.entityFactory.getSpellTemplate(record.get(SPELLS.SPELL))
                         .getLevel(record.get(SPELLS.LEVEL)), record.get(SPELLS.POSITION))
         ).collect(Collectors.toMap(SpellView::getPlace, s -> s, throwingMerger(), TreeMap::new));
-
-
     }
 
     public void saveSpellView(SpellView spellView, Player player) {
@@ -116,6 +142,21 @@ public class PlayerRepository extends Repository<Integer, Player> {
 
     private void removeSpellView(Player player) {
         database.getDslContext().delete(SPELLS).where(SPELLS.OWNER.equal(player.getId())).execute();
+    }
+
+    public List<Merchant> loadMerchant(int gameMap) {
+        return database.getResult(MERCHANT, MERCHANT.MAP.equal(gameMap)).map(record -> {
+            entityFactory.getAccountRepository().load(record.get(MERCHANT.ID));
+            return new Merchant(get(record.get(MERCHANT.ID)).getStore());
+        });
+    }
+
+    public void addMerchant(Player player) {
+        database.getDslContext().insertInto(MERCHANT, MERCHANT.ID, MERCHANT.MAP).values(player.getId(), player.getMap().getId()).execute();
+    }
+
+    public void removeMerchant(int player) {
+        database.getDslContext().delete(MERCHANT).where(MERCHANT.ID.equal(player)).execute();
     }
 
     void unload(int player) {
@@ -158,6 +199,8 @@ public class PlayerRepository extends Repository<Integer, Player> {
                 .set(PLAYERS.DISHONNOR, player.getAlignment().getDishonor())
                 .set(PLAYERS.PVP_ENABLED, (byte) (player.getAlignment().isEnabled() ? 1 : 0))
 
+                .set(PLAYERS.STORE, player.compileStore())
+
                 .set(PLAYERS.SIZE, player.getSize())
                 .set(PLAYERS.TITLE, player.getTitle())
                 .set(PLAYERS.SPELL_POINTS, player.getStatistics().getSpellPoints())
@@ -179,11 +222,12 @@ public class PlayerRepository extends Repository<Integer, Player> {
     }
 
     private void saveItems(Player player) {
-        player.getInventory().values().forEach(this::saveItem);
+        player.getInventory().values().forEach(item -> saveItem(item, player.getId()));
     }
 
-    public void saveItem(Item item) {
+    public void saveItem(Item item, int owner) {
         database.update(ITEMS)
+                .set(ITEMS.OWNER, owner)
                 .set(ITEMS.POSITION, item.getPosition().value())
                 .set(ITEMS.QUANTITY, item.getQuantity())
                 .set(ITEMS.STATISTICS, item.parseEffects()).where(ITEMS.ID.equal(item.getId())).execute();

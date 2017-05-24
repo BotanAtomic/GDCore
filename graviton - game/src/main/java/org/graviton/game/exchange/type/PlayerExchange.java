@@ -75,7 +75,7 @@ public class PlayerExchange implements Exchange {
     }
 
     @Override
-    public void editKamas(int quantity, int exchangerId) {
+    public void editKamas(long quantity, int exchangerId) {
         cancelReady();
         Exchanger exchanger = getExchanger(exchangerId);
         exchanger.setKamas(quantity);
@@ -163,7 +163,7 @@ public class PlayerExchange implements Exchange {
                 other.send(ItemPacketFormatter.deleteMessage(baseItem.getId()));
             } else {
                 other.send(ItemPacketFormatter.quantityMessage(baseItem.getId(), baseItem.getQuantity()));
-                other.getPlayer().getEntityFactory().getPlayerRepository().saveItem(baseItem);
+                other.getPlayer().getEntityFactory().getPlayerRepository().saveItem(baseItem, other.getPlayer().getId());
             }
 
             Item same = exchanger.getPlayer().getInventory().addItem(item, true);
@@ -171,7 +171,7 @@ public class PlayerExchange implements Exchange {
                 exchanger.send(ItemPacketFormatter.addItemMessage(item));
             else {
                 exchanger.send(ItemPacketFormatter.quantityMessage(same.getId(), same.getQuantity()));
-                exchanger.getPlayer().getEntityFactory().getPlayerRepository().saveItem(same);
+                exchanger.getPlayer().getEntityFactory().getPlayerRepository().saveItem(same, exchanger.getPlayer().getId());
             }
         });
     }

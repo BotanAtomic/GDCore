@@ -1,7 +1,8 @@
 package org.graviton.game.creature.npc;
 
 import lombok.Data;
-import org.graviton.game.action.npc.NpcAction;
+import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.action.Action;
 import org.graviton.xml.XMLElement;
 
 /**
@@ -11,12 +12,15 @@ import org.graviton.xml.XMLElement;
 @Data
 public class NpcAnswer {
     private final short id;
-    private final NpcAction npcAction;
+    private final Action npcAction;
     private final String data;
 
-    public NpcAnswer(XMLElement element) {
+    public int TEST; //TODO : REMOVE
+
+    public NpcAnswer(XMLElement element, EntityFactory entityFactory) {
         this.id = element.getAttribute("id").toShort();
-        this.npcAction = NpcAction.get(element.getElementByTagName("type").toShort());
+        TEST = element.getElementByTagName("type").toShort();
+        this.npcAction = entityFactory.getActionRepository().create(element.getElementByTagName("type").toShort());
         this.data = element.getElementByTagName("arguments").toString();
     }
 

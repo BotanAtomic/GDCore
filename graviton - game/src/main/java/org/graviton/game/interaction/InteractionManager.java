@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.house.House;
 import org.graviton.game.interaction.actions.*;
+import org.graviton.game.trunk.type.Trunk;
 import org.graviton.network.game.GameClient;
 
 import java.util.ArrayDeque;
@@ -20,9 +21,9 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
 
     private int interactionCreature;
 
-    @Getter
-    @Setter
-    private House houseInteraction;
+    @Getter @Setter private House houseInteraction;
+
+    @Getter @Setter private Trunk trunkInteraction;
 
     private Status status = Status.DEFAULT;
 
@@ -97,7 +98,6 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
     private void addAction(AbstractGameAction gameAction) {
         super.add(gameAction);
 
-        System.err.println("Super size = " + super.size());
         if (super.size() == 1)
             if (!gameAction.begin())
                 super.pollFirst();

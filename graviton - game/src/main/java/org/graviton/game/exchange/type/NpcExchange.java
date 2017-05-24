@@ -52,7 +52,7 @@ public class NpcExchange implements Exchange {
     }
 
     @Override
-    public void editKamas(int quantity, int exchangerId) {
+    public void editKamas(long quantity, int exchangerId) {
 
     }
 

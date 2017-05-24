@@ -1,6 +1,7 @@
 package org.graviton.game.action.npc;
 
 import org.graviton.game.action.Action;
+import org.graviton.game.action.common.GameAction;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.items.Item;
 import org.graviton.network.game.GameClient;
@@ -12,6 +13,8 @@ import static org.graviton.lang.LanguageSentence.NEED_DUNGEON_KEY;
 /**
  * Created by Botan on 26/03/2017. 13:08
  */
+
+@GameAction(id=15)
 public class DungeonAction implements Action {
     @Override
     public void apply(GameClient client, Object data) {

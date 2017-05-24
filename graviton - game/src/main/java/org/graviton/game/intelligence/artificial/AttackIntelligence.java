@@ -17,6 +17,13 @@ public class AttackIntelligence extends ArtificialIntelligence {
         super(fighter);
     }
 
+    /**
+     * - var predicateTarget = search nearest enemy
+     * - var targets = search nearest enemy with best range limit
+     * - #condition(targets are null) move to predicateTarget
+     * - #else try to invoke/buff or attack (if possible)
+     * - #condition(action count = 0) try to move
+     */
     @Override
     public short run() {
         AtomicInteger time = new AtomicInteger(100);
@@ -36,19 +43,15 @@ public class AttackIntelligence extends ArtificialIntelligence {
 
         if (fighter.getCurrentMovementPoint() > 0 && firstTarget == null && secondTarget == null && predicateTarget != null) {
             time.set((short) (time.get() + tryToMove(fighter.getFight(), fighter, predicateTarget, false, (byte) 0)));
-            if (time.get() != 100) {
-                firstTarget = getNearestEnemy(fighter.getFight(), fighter, (byte) 1, (byte) (bestRange.get() + 1));
-                secondTarget = getNearestEnemy(fighter.getFight(), fighter, (byte) 0, (byte) 2);
+            if (time.get() != 100)
                 onAction = true;
-
-                if (bestRange.get() == 1)
-                    firstTarget = null;
-            }
         }
 
         if (!onAction && fighter.getCurrentActionPoint() > 0) {
             if (tryToInvoke(fighter.getFight(), fighter, fighter.getSpellFilter().getInvocation(), false)) {
                 time.set((short) (time.get() + 2200));
+            } else if(tryToBuff(fighter, fighter)) {
+                time.set((short) (time.get() + 1000));
             } else if (firstTarget != null && secondTarget == null) {
                 time.set((short) (200 + time.get() + tryToAttack(fighter.getFight(), fighter, fighter.getSpellFilter().getAttack())));
             } else if (secondTarget != null) {
@@ -60,9 +63,9 @@ public class AttackIntelligence extends ArtificialIntelligence {
         }
 
 
-        if (fighter.getCurrentMovementPoint() > 0)
+        if (fighter.getCurrentMovementPoint() > 0) {
             time.set((short) (time.get() + tryToMove(fighter.getFight(), fighter, firstTarget == null ? secondTarget == null ? predicateTarget : secondTarget : firstTarget, false, (byte) 0)));
-
+        }
         return time.shortValue();
     }
 }

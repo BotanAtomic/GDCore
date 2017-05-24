@@ -15,7 +15,7 @@ public interface Exchange {
 
     void removeItem(int itemId, short quantity, int exchangerId);
 
-    void editKamas(int quantity, int exchangerId);
+    void editKamas(long quantity, int exchangerId);
 
     void toggle(int exchangerId);
 

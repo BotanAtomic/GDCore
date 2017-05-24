@@ -23,7 +23,7 @@ import static org.graviton.network.game.protocol.FightPacketFormatter.turnListMe
 public class InvocationEffect implements Effect {
     private final boolean isStatic;
 
-    public static void invokeDouble(Fighter master, Double clone, Cell selectedCell) {
+    static void invokeDouble(Fighter master, Double clone, Cell selectedCell) {
         clone.setFight(master.getFight());
 
         master.getTeam().addFighter(clone);

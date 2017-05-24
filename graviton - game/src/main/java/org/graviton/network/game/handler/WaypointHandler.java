@@ -23,22 +23,31 @@ public class WaypointHandler {
 
     public void handle(String data, char subHeader) {
         switch (subHeader) {
+            case 'u':
+                useZaapi(Integer.parseInt(data));
+                break;
+
             case 'U':
-                use(Integer.parseInt(data));
+                useZaap(Integer.parseInt(data));
+                break;
+
+            case 'v':
+                client.send(PlayerPacketFormatter.quitZaapiMenuMessage());
                 break;
 
             case 'V':
                 client.send(PlayerPacketFormatter.quitZaapMenuMessage());
                 break;
 
+
             default:
                 log.error("not implemented waypoint packet '{}'", subHeader);
         }
     }
 
-    private void use(int gameMap) {
+    private void useZaap(int gameMap) {
         Player player = client.getPlayer();
-        GameMap newGameMap =  player.getEntityFactory().getMap(gameMap);
+        GameMap newGameMap = player.getEntityFactory().getMap(gameMap);
         short cost = Cells.getZaapCost(player.getGameMap(), newGameMap);
         player.getInventory().addKamas(cost * -1);
 
@@ -47,7 +56,24 @@ public class WaypointHandler {
         client.send(MessageFormatter.kamasCostMessage(cost));
         client.send(PlayerPacketFormatter.asMessage(player));
         client.send(PlayerPacketFormatter.quitZaapMenuMessage());
+    }
 
+    private void useZaapi(int gameMap) {
+        Player player = client.getPlayer();
+
+        if (player.getAlignment().getDishonor() > 1)
+            player.send(MessageFormatter.notPermittedDishonorMessage());
+        else {
+            GameMap newGameMap = player.getEntityFactory().getMap(gameMap);
+            short cost = (short) (newGameMap.getZaapi().getAlignment().equals(player.getAlignment()) ? 10 : 20);
+            player.getInventory().addKamas(cost * -1);
+
+            player.changeMap(newGameMap.getZaapi());
+
+            client.send(MessageFormatter.kamasCostMessage(cost));
+            client.send(PlayerPacketFormatter.asMessage(player));
+            client.send(PlayerPacketFormatter.quitZaapiMenuMessage());
+        }
     }
 
 }

@@ -71,26 +71,28 @@ public enum CharacteristicType {
     ResistancePvpFire,
     ResistancePercentPvpFire;
 
-    public static ImmutableList<CharacteristicType> asBuild = ImmutableList.of(CharacteristicType.Strength, CharacteristicType.Vitality,
-            CharacteristicType.Wisdom, CharacteristicType.Chance,
-            CharacteristicType.Agility, CharacteristicType.Intelligence,
-            CharacteristicType.RangePoints, CharacteristicType.Summons,
-            CharacteristicType.Damage, CharacteristicType.PhysicalDamage,
-            CharacteristicType.WeaponControl, CharacteristicType.DamagePer,
-            CharacteristicType.HealPoints, CharacteristicType.TrapDamage,
-            CharacteristicType.TrapDamagePer, CharacteristicType.DamageReturn,
-            CharacteristicType.CriticalHit, CharacteristicType.CriticalFailure,
-            CharacteristicType.DodgeActionPoints, CharacteristicType.DodgeMovementPoints,
-            CharacteristicType.ResistanceNeutral, CharacteristicType.ResistancePercentNeutral,
-            CharacteristicType.ResistancePvpNeutral, CharacteristicType.ResistancePercentPvpNeutral,
-            CharacteristicType.ResistanceEarth, CharacteristicType.ResistancePercentEarth,
-            CharacteristicType.ResistancePvpEarth, CharacteristicType.ResistancePercentPvpEarth,
-            CharacteristicType.ResistanceWater, CharacteristicType.ResistancePercentWater,
-            CharacteristicType.ResistancePvpWater, CharacteristicType.ResistancePercentPvpWater,
-            CharacteristicType.ResistanceWind, CharacteristicType.ResistancePercentWind,
-            CharacteristicType.ResistancePvpWind, CharacteristicType.ResistancePercentPvpWind,
-            CharacteristicType.ResistanceFire, CharacteristicType.ResistancePercentFire,
-            CharacteristicType.ResistancePvpFire, CharacteristicType.ResistancePercentPvpFire);
+    public static final ImmutableList<CharacteristicType> asBuild = ImmutableList.of(Strength, Vitality,
+            Wisdom, Chance,
+            Agility, Intelligence,
+            RangePoints, Summons,
+            Damage, PhysicalDamage,
+            WeaponControl, DamagePer,
+            HealPoints, TrapDamage,
+            TrapDamagePer, DamageReturn,
+            CriticalHit, CriticalFailure,
+            DodgeActionPoints, DodgeMovementPoints,
+            ResistanceNeutral, ResistancePercentNeutral,
+            ResistancePvpNeutral, ResistancePercentPvpNeutral,
+            ResistanceEarth, ResistancePercentEarth,
+            ResistancePvpEarth, ResistancePercentPvpEarth,
+            ResistanceWater, ResistancePercentWater,
+            ResistancePvpWater, ResistancePercentPvpWater,
+            ResistanceWind, ResistancePercentWind,
+            ResistancePvpWind, ResistancePercentPvpWind,
+            ResistanceFire, ResistancePercentFire,
+            ResistancePvpFire, ResistancePercentPvpFire);
+
+    public final static ImmutableList<CharacteristicType> base = ImmutableList.of(Strength, Vitality, Wisdom, Chance, Agility, Intelligence);
 
 
     public static CharacteristicType getBoost(byte characteristics) {

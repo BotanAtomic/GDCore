@@ -2968,7 +2968,7 @@
         <initiative>1|1|1|1|1|1</initiative>
         <kamas min="0" max="0"/>
         <experience>0|0|0|0|0|0</experience>
-        <IA>3</IA>
+        <IA>24</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>
@@ -17496,7 +17496,7 @@
         <initiative>1|1|1|1|1</initiative>
         <kamas min="5" max="25"/>
         <experience>600000|750000|900000|1000000|1200000</experience>
-        <IA>1</IA>
+        <IA>17</IA>
         <capture>true</capture>
         <aggression>0</aggression>
     </MonsterTemplate>

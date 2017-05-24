@@ -2,7 +2,7 @@ package org.graviton.network.game.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.client.player.Player;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 
@@ -32,6 +32,6 @@ public class EnvironmentHandler {
     private void changeOrientation(byte orientation) {
         Player player = client.getPlayer();
         player.getMap().send(GamePacketFormatter.changeOrientationMessage(player.getId(), orientation));
-        player.getLocation().setOrientation(OrientationEnum.valueOf(orientation));
+        player.getLocation().setOrientation(Orientation.valueOf(orientation));
     }
 }

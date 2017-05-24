@@ -2,10 +2,14 @@ package org.graviton.network.game.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.spell.Spell;
 import org.graviton.game.spell.SpellView;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
 import org.graviton.network.game.protocol.SpellPacketFormatter;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 /**
  * Created by Botan on 25/12/2016. 02:57
@@ -25,6 +29,10 @@ public class SpellHandler {
                 boostSpell(Short.parseShort(data));
                 break;
 
+            case 'F' :
+                forgetSpell(Short.parseShort(data));
+                break;
+
             case 'M':
                 moveSpell(data.split("\\|"));
                 break;
@@ -41,9 +49,9 @@ public class SpellHandler {
         byte cost = spellView.getSpell().getLevel();
 
         if (player.getStatistics().getSpellPoints() >= cost) {
-            player.getStatistics().setSpellPoints((short) (player.getStatistics().getSpellPoints() - cost));
+            player.getStatistics().addSpellPoints((short) -cost);
             spellView.setSpell(spellView.getSpell().next());
-            client.send(PlayerPacketFormatter.asMessage(player, client.getEntityFactory().getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
+            client.send(PlayerPacketFormatter.asMessage(player));
             client.send(SpellPacketFormatter.boostSpellSuccessMessage(spell, spellView.getSpell().getLevel()));
             client.getEntityFactory().getPlayerRepository().saveSpellView(spellView, client.getPlayer());
         } else
@@ -64,6 +72,26 @@ public class SpellHandler {
         spellView.setPosition(Byte.parseByte(data[1]));
 
         client.getEntityFactory().getPlayerRepository().saveSpellView(spellView, client.getPlayer());
+    }
+
+    private void forgetSpell(short spellId) {
+        SpellView spellView = client.getPlayer().getSpellView(spellId);
+
+        if(spellView != null) {
+            byte regainPoint = regainSpellPoint(spellView.getSpell().getLevel());
+            spellView.setSpell(spellView.getSpell().first());
+            client.getPlayer().getStatistics().addSpellPoints(regainPoint);
+            client.send(SpellPacketFormatter.regainSpellPointsMessage(regainPoint));
+            client.send(PlayerPacketFormatter.asMessage(client.getPlayer()));
+            client.send(SpellPacketFormatter.boostSpellSuccessMessage(spellId, spellView.getSpell().getLevel()));
+        }
+
+    }
+
+    private static byte regainSpellPoint(byte level) {
+        AtomicInteger regainPoint = new AtomicInteger();
+        IntStream.range(0, level).forEach(regainPoint::addAndGet);
+        return regainPoint.byteValue();
     }
 
 }

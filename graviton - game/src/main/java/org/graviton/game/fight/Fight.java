@@ -1,5 +1,6 @@
 package org.graviton.game.fight;
 
+import javafx.util.Pair;
 import lombok.Data;
 import org.graviton.constant.Dofus;
 import org.graviton.game.client.player.Player;
@@ -54,6 +55,8 @@ public abstract class Fight {
     private int toWait = 0;
 
     private List<Player> spectator = new ArrayList<>();
+
+    private final Map<Integer, Pair<Player, Byte>> disconnectedPlayers = new ConcurrentHashMap<>();
 
     protected Fight(ScheduledExecutorService executorService, int id, FightTeam firstTeam, FightTeam secondTeam, GameMap gameMap) {
         this.executorService = executorService;
@@ -163,7 +166,7 @@ public abstract class Fight {
     }
 
     public void hit(Fighter fighter, Fighter target, int damage) {
-        if(state == FightState.FINISHED)
+        if (state == FightState.FINISHED)
             return;
 
         if (target.isDodgeAttack() && Path.getAroundFighters(fightMap, fighter, fighter.getFightCell().getId()).contains(target))
@@ -254,6 +257,8 @@ public abstract class Fight {
 
     protected abstract boolean canQuit();
 
+    public abstract boolean allowDisconnection();
+
     protected abstract FightType getType();
 
     protected abstract String flagMessage();
@@ -321,7 +326,7 @@ public abstract class Fight {
     }
 
     protected abstract void destroyFight(Fighter looser);
-    
+
     protected abstract void onStart();
 
     public void switchSpectator(Fighter fighter) {
@@ -354,5 +359,20 @@ public abstract class Fight {
 
     public FightTeam otherTeam(FightTeam fightTeam) {
         return fightTeam.getId() == firstTeam.getId() ? secondTeam : firstTeam;
+    }
+
+    public void disconnect(Player player) {
+        if (this.state == FightState.ACTIVE) {
+            this.disconnectedPlayers.put(player.getId(), new Pair<>(player, Dofus.DISCONNECT_REMAINING_TURN));
+            player.setConnected(false);
+            send(FightPacketFormatter.disconnectedPlayerMessage(player.getName(), Dofus.DISCONNECT_REMAINING_TURN));
+        } else
+            quit(player);
+    }
+
+    public void reconnect(Player player) {
+        this.disconnectedPlayers.remove(player.getId());
+        player.setConnected(true);
+        send(FightPacketFormatter.reconnectedPlayerMessage(player.getName()));
     }
 }

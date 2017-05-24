@@ -4,12 +4,17 @@ import com.google.inject.Inject;
 import org.graviton.database.Repository;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.jooq.game.tables.HousesData;
+import org.graviton.database.jooq.game.tables.Trunks;
 import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.house.House;
 import org.graviton.game.maps.GameMap;
+import org.graviton.game.maps.cell.Cell;
+import org.graviton.game.mountpark.MountPark;
+import org.graviton.game.trunk.type.Trunk;
 import org.graviton.game.zaap.Zaap;
+import org.graviton.game.zaap.Zaapi;
 import org.graviton.xml.XMLElement;
 import org.jooq.Record;
 import org.w3c.dom.Document;
@@ -17,11 +22,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static org.graviton.database.jooq.game.tables.MountparkData.MOUNTPARK_DATA;
+import static org.graviton.database.jooq.game.tables.Trunks.TRUNKS;
 
 
 /**
@@ -29,17 +37,14 @@ import java.util.stream.IntStream;
  */
 public class GameMapRepository extends Repository<Integer, GameMap> {
 
-    @Inject
-    private EntityFactory entityFactory;
+    @Inject private EntityFactory entityFactory;
 
     public GameMap getByPosition(String position, boolean incarnam) {
-        if (incarnam) {
-            Optional<GameMap> record = entityFactory.getSubArea().values().stream().filter(subArea -> subArea.getArea().getId() == 45).flatMap(subArea -> subArea.getGameMaps().stream()).collect(Collectors.toList()).stream().filter(gameMap -> gameMap.getPosition().equals(position)).findFirst();
-            return record.isPresent() ? record.get().initialize() : null;
-        }
+        if (incarnam)
+            return entityFactory.getSubArea((short) 45).getGameMaps().stream().filter(gameMap -> gameMap.getPosition().equals(position)).findAny().map(GameMap::initialize).orElse(null);
 
-        Optional<GameMap> record = super.stream().filter(gameMap -> gameMap.getPosition().equals(position)).findFirst();
-        return record.isPresent() ? record.get().initialize() : null;
+
+        return super.stream().filter(gameMap -> gameMap.getPosition().equals(position)).findAny().map(GameMap::initialize).orElse(null);
     }
 
     public int loadNpc(Document file) {
@@ -67,12 +72,43 @@ public class GameMapRepository extends Repository<Integer, GameMap> {
         }).count();
     }
 
+    public int loadTrunks() {
+        return (int) this.entityFactory.getDatabase().getResult(TRUNKS).stream().map(record -> {
+            Trunk trunk = new Trunk(record, this.entityFactory);
+            if (trunk.getHouse() > 0)
+                entityFactory.getTrunks().computeIfAbsent(trunk.getHouse(), list -> new ArrayList<>()).add(trunk);
+
+            return trunk;
+        }).count();
+    }
+
+    public void updateTrunk(Trunk trunk) {
+        System.err.println("Update trunk id = " + trunk.getId());
+        this.entityFactory.getDatabase().update(TRUNKS).set(TRUNKS.ITEMS, trunk.compileItems()).set(TRUNKS.KAMAS, trunk.getKamas())
+                .set(TRUNKS.OWNER, trunk.getOwner()).set(TRUNKS.KEY, trunk.getKey()).where(TRUNKS.ID.equal(trunk.getId())).execute();
+    }
+
+    public int loadMountPark() {
+        entityFactory.getDatabase().getResult(MOUNTPARK_DATA).forEach(record -> entityFactory.registerMountPark(new MountPark(record, entityFactory)));
+        return entityFactory.getMountParks().size();
+    }
+
     public int loadZaaps(Document file) {
         return entityFactory.apply(file.getElementsByTagName("zaap"), element -> {
             GameMap gameMap = this.get(element.getAttribute("map").toInt());
             if (gameMap != null)
                 gameMap.setZaap(new Zaap(element));
         });
+    }
+
+    public int loadZaapis(Document file) {
+        return entityFactory.apply(file.getElementsByTagName("zaapi"), element -> {
+            Zaapi zaapi = new Zaapi(element);
+            GameMap gameMap = this.get(zaapi.getGameMap());
+            gameMap.setZaapi(zaapi);
+            entityFactory.getZaapis().put(zaapi.getGameMap(), zaapi);
+        });
+
     }
 
     public int loadMonsterGroups(Document file) {
@@ -104,15 +140,16 @@ public class GameMapRepository extends Repository<Integer, GameMap> {
             super.add(id, gameMap);
         });
 
-        return objects.size();
+        return size();
     }
 
     public Collection<GameMap> getInitialized() {
-        return super.stream().filter(GameMap::isInitialized).map(gameMap -> gameMap).collect(Collectors.toList());
+        return super.stream().filter(GameMap::isInitialized).collect(Collectors.toList());
     }
 
     @Override
     public GameMap find(Object value) {
-        return this.get((int) value).initialize();
+        GameMap gameMap = this.get((int) value);
+        return gameMap == null ? null : gameMap.initialize();
     }
 }

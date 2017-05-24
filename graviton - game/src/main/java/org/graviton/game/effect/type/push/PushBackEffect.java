@@ -6,7 +6,7 @@ import org.graviton.game.effect.Effect;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.fight.common.FightAction;
-import org.graviton.game.look.enums.OrientationEnum;
+import org.graviton.game.look.enums.Orientation;
 import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.spell.SpellEffect;
@@ -24,7 +24,7 @@ import java.util.Collection;
  */
 public class PushBackEffect implements Effect {
 
-    private static Pair<Cell, Collection<AbstractTrap>> result(Fighter fighter, short size, Cell initialCell, OrientationEnum orientation, AbstractMap map) {
+    private static Pair<Cell, Collection<AbstractTrap>> result(Fighter fighter, short size, Cell initialCell, Orientation orientation, AbstractMap map) {
         Cell lastCell = initialCell;
         Collection<AbstractTrap> traps = null;
 
@@ -60,7 +60,7 @@ public class PushBackEffect implements Effect {
         if (target.isStatic())
             return;
 
-        OrientationEnum orientation = Cells.getOrientationByCells(selectedCell, target.getFightCell(), fighter.getFight().getFightMap().getWidth());
+        Orientation orientation = Cells.getOrientationByCells(selectedCell, target.getFightCell(), fighter.getFight().getFightMap().getWidth());
 
         if (orientation == null)
             return;
@@ -82,7 +82,7 @@ public class PushBackEffect implements Effect {
             Fighter fighter = fight.getFighter(cellTarget.getFirstCreature());
 
             if (fighter != null) {
-                OrientationEnum orientation = Cells.getOrientationByCells(trap.getCenter().getId(), fighter.getFightCell().getId(), fighter.getFight().getFightMap());
+                Orientation orientation = Cells.getOrientationByCells(trap.getCenter().getId(), fighter.getFightCell().getId(), fighter.getFight().getFightMap());
 
                 if (orientation == null)
                     return;
