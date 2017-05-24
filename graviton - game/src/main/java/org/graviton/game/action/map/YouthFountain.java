@@ -14,7 +14,7 @@ import org.graviton.network.game.protocol.PlayerPacketFormatter;
  */
 
 @GameAction(id=62)
-public class YouthFountainAction implements Action {
+public class YouthFountain implements Action {
     private int winLife;
     private GameClient client;
 

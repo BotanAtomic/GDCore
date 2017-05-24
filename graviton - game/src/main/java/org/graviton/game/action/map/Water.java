@@ -16,7 +16,7 @@ import static org.graviton.constant.Dofus.WATER_OBJECT;
  */
 
 @GameAction(id=102)
-public class WaterAction implements Action {
+public class Water implements Action {
     private Cell cell;
     private Player player;
 

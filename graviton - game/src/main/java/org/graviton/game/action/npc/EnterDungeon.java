@@ -15,7 +15,7 @@ import static org.graviton.lang.LanguageSentence.NEED_DUNGEON_KEY;
  */
 
 @GameAction(id=15)
-public class DungeonAction implements Action {
+public class EnterDungeon implements Action {
     @Override
     public void apply(GameClient client, Object data) {
         Player player = client.getPlayer();

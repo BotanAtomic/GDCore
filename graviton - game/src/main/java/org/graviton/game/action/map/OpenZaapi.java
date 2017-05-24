@@ -14,7 +14,7 @@ import org.graviton.network.game.protocol.PlayerPacketFormatter;
  */
 
 @GameAction(id = 157)
-public class OpenZaapiAction implements Action {
+public class OpenZaapi implements Action {
 
     @Override
     public void apply(GameClient client, Object data) {

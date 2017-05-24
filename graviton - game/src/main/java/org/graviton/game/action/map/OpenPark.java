@@ -10,7 +10,7 @@ import org.graviton.network.game.protocol.MessageFormatter;
 /**
  * Created by Botan on 07/05/17. 23:47
  */
-public class OpenParkAction implements Action {
+public class OpenPark implements Action {
 
     @Override
     public void apply(GameClient client, Object data) {

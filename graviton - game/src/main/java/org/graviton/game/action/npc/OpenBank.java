@@ -14,7 +14,7 @@ import org.graviton.network.game.protocol.PlayerPacketFormatter;
  */
 
 @GameAction(id = -1)
-public class OpenBankAction implements Action {
+public class OpenBank implements Action {
 
     @Override
     public void apply(GameClient client, Object data) {
