@@ -2,13 +2,13 @@ package org.graviton.game.creature.npc;
 
 import lombok.Data;
 import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.creature.npc.exchange.ExchangeParser;
 import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.look.NpcLook;
 import org.graviton.xml.XMLElement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -19,8 +19,10 @@ public class NpcTemplate {
     private final int id;
     private final short size;
     private final byte sex;
-    private final String sales, exchanges, initialQuestion;
+    private final String sales, initialQuestion;
     private final NpcLook look;
+
+    private ExchangeParser exchangeParser;
 
     private List<ItemTemplate> items;
 
@@ -30,8 +32,11 @@ public class NpcTemplate {
         this.initialQuestion = element.getElementByTagName("initialQuestion").toString();
         this.sex = element.getElementByTagName("sex").toByte();
         this.sales = element.getElementByTagName("sales").toString();
-        this.exchanges = element.getElementByTagName("exchanges").toString();
         this.look = new NpcLook(element);
+
+        String exchange = element.getElementByTagName("exchanges").toString();
+        if (!exchange.isEmpty())
+            this.exchangeParser = new ExchangeParser(exchange);
     }
 
     public short getInitialQuestion(int gameMap) {
@@ -70,16 +75,15 @@ public class NpcTemplate {
 
     private List<ItemTemplate> compileItems(EntityFactory entityFactory) {
         List<ItemTemplate> itemTemplates = new ArrayList<>();
-        for(String item : sales.split(",")) {
-            if(!item.isEmpty())
+        for (String item : sales.split(",")) {
+            if (!item.isEmpty())
                 itemTemplates.add(entityFactory.getItemTemplate(Short.parseShort(item)));
         }
         return itemTemplates;
     }
 
     public ItemTemplate getItemTemplate(int id) {
-        Optional<ItemTemplate> itemTemplate = this.items.stream().filter(template -> template.getId() == id).findAny();
-        return itemTemplate.isPresent() ? itemTemplate.get() : null;
+        return this.items.stream().filter(template -> template.getId() == id).findAny().orElse(null);
     }
 
 }

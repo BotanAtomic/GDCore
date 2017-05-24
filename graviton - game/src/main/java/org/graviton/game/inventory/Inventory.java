@@ -73,7 +73,7 @@ public class Inventory extends ConcurrentHashMap<Integer, Item> {
     }
 
     public Item haveItem(int template) {
-        Optional<Item> same = values().stream().filter(item -> item.getTemplate().getId() == template).findFirst();
-        return same.orElse(null);
+        return values().stream().filter(item -> item.getTemplate().getId() == template).findFirst().orElse(null);
     }
+
 }

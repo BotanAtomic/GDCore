@@ -29,7 +29,7 @@ public class ItemTemplate {
     private final short pods;
     private final int price;
     private final ConditionList conditionList;
-    private final List<Pair<Action,String>> actions = new LinkedList<>();
+    private final List<Pair<Action, String>> actions = new LinkedList<>();
     private byte actionPointCost;
     private byte[] scopeRange;
     private short criticalRate, criticalBonus, failureRate;
@@ -127,5 +127,9 @@ public class ItemTemplate {
 
     public String parse() {
         return this.id + this.baseEffects + ";" + this.price;
+    }
+
+    public String parseStatistics() {
+        return this.id + ";" + this.baseEffects;
     }
 }

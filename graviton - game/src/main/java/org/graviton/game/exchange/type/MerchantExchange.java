@@ -84,11 +84,10 @@ public class MerchantExchange implements Exchange {
         long price = quantity * storedItem.getPrice();
 
         if (player.getInventory().getKamas() < price) return;
-        else {
-            player.getInventory().addKamas(-price);
-            merchant.getPlayer().getInventory().addKamas(price);
-            player.send(PlayerPacketFormatter.asMessage(player));
-        }
+
+        player.getInventory().addKamas(-price);
+        merchant.getPlayer().getInventory().addKamas(price);
+        player.send(PlayerPacketFormatter.asMessage(player));
 
         if (same != null) {
             if (newQuantity <= 0) {

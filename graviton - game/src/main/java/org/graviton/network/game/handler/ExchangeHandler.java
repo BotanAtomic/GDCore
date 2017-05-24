@@ -6,10 +6,7 @@ import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.merchant.Merchant;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.exchange.Exchange;
-import org.graviton.game.exchange.type.MerchantExchange;
-import org.graviton.game.exchange.type.MyStoreExchange;
-import org.graviton.game.exchange.type.NpcExchange;
-import org.graviton.game.exchange.type.PlayerExchange;
+import org.graviton.game.exchange.type.*;
 import org.graviton.game.items.Item;
 import org.graviton.lang.LanguageSentence;
 import org.graviton.network.game.GameClient;
@@ -86,8 +83,10 @@ public class ExchangeHandler {
                 requestPlayerExchange(Integer.parseInt(data[1]));
                 break;
             case 2: //npc exchange
+                Npc npcExchanger = (Npc) client.getPlayer().getGameMap().getCreature(Integer.parseInt(data[1]));
+                client.send(ExchangePacketFormatter.startMessage((byte) 2));
+                new NpcItemExchange(client.getPlayer(), npcExchanger);
                 break;
-
             case 4://merchant
                 Merchant merchant = (Merchant) client.getPlayer().getGameMap().getCreature(Integer.parseInt(data[1]));
 
@@ -101,7 +100,6 @@ public class ExchangeHandler {
                     client.getPlayer().setExchange(new MerchantExchange(merchant, client.getPlayer()));
                 }
                 break;
-
             case 6: //personal store
                 client.send(ExchangePacketFormatter.startMessage((byte) 6));
                 client.send(ExchangePacketFormatter.personalStoreMessage(client.getPlayer().getStore()));
