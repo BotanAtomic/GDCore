@@ -59,7 +59,6 @@ public class GameClient {
         if(disconnected)
             return;
 
-        System.err.println("Disconnect :)");
         if (player != null) {
             if (this.player.getFight() != null) {
                 if (player.getFight().allowDisconnection())

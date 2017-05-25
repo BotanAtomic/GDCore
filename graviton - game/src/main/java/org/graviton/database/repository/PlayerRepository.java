@@ -1,6 +1,7 @@
 package org.graviton.database.repository;
 
 import com.google.inject.Inject;
+import lombok.Getter;
 import org.graviton.database.Database;
 import org.graviton.database.Repository;
 import org.graviton.database.api.LoginDatabase;
@@ -35,7 +36,7 @@ import static org.graviton.database.jooq.game.tables.Merchant.MERCHANT;
 public class PlayerRepository extends Repository<Integer, Player> {
     private Database database;
 
-    @Inject private EntityFactory entityFactory;
+    @Getter @Inject private EntityFactory entityFactory;
 
     @Inject public PlayerRepository(@LoginDatabase Database database) {
         this.database = database;

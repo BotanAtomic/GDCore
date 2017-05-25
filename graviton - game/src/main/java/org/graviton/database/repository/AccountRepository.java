@@ -41,8 +41,9 @@ public class AccountRepository extends Repository<Integer, Account> {
         return account;
     }
 
-    private void updateInformation(Account account) {
-        this.database.update(ACCOUNTS).set(ACCOUNTS.LAST_CONNECTION, account.getLastConnection()).set(ACCOUNTS.LAST_ADDRESS, account.getLastAddress()).where(ACCOUNTS.ID.equal(account.getId())).execute();
+    public void updateInformation(Account account) {
+        this.database.update(ACCOUNTS).set(ACCOUNTS.LAST_CONNECTION, account.getLastConnection()).
+                set(ACCOUNTS.LAST_ADDRESS, account.getLastAddress()).set(ACCOUNTS.GIFTS, account.compileGifts()).where(ACCOUNTS.ID.equal(account.getId())).execute();
     }
 
     public void updateBank(Bank bank) {

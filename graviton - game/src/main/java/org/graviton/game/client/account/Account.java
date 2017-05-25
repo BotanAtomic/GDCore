@@ -1,16 +1,21 @@
 package org.graviton.game.client.account;
 
+import javafx.util.Pair;
 import lombok.Data;
 import org.graviton.database.repository.PlayerRepository;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.game.trunk.type.Bank;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.PlayerPacketFormatter;
+import org.graviton.utils.Utils;
 import org.jooq.Record;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.graviton.database.jooq.login.tables.Accounts.ACCOUNTS;
 
@@ -38,6 +43,8 @@ public class Account {
 
     private Bank bank;
 
+    private List<Pair<ItemTemplate, Short>> gifts;
+
     public Account(Record record, PlayerRepository playerRepository) {
         this.id = record.get(ACCOUNTS.ID);
         this.question = record.get(ACCOUNTS.QUESTION);
@@ -49,6 +56,14 @@ public class Account {
         this.lastAddress = record.get(ACCOUNTS.LAST_ADDRESS);
         this.friendNotification = record.get(ACCOUNTS.FRIEND_NOTIFICATION_LISTENER) > 0;
         this.cachedPlayerPacket = PlayerPacketFormatter.playersPacketMessage(this.players = playerRepository.getPlayers(this));
+
+        String gifts = record.get(ACCOUNTS.GIFTS);
+        if(!gifts.isEmpty()) {
+            this.gifts = Stream.of(gifts.split(";")).map(itemData -> {
+                short[] values = Utils.shortSplit(itemData, ",");
+                return new Pair<>(playerRepository.getEntityFactory().getItemTemplate(values[0]), values[1]);
+            }).collect(Collectors.toList());
+        }
     }
 
     public String getPlayerPacket(boolean useCache) {
@@ -60,6 +75,19 @@ public class Account {
     public Player getPlayer(int playerId) {
         Optional<Player> record;
         return (record = this.players.stream().filter(player -> player.getId() == playerId).findFirst()).isPresent() ? record.get() : null;
+    }
+
+    public Pair<ItemTemplate, Short> getGift(int itemTemplate) {
+        return gifts.stream().filter(pair -> pair.getKey().getId() == itemTemplate).findAny().orElse(null);
+    }
+
+    public String compileGifts() {
+        if(this.gifts == null || this.gifts.isEmpty())
+            return "";
+
+        StringBuilder builder = new StringBuilder();
+        this.gifts.forEach(pair -> builder.append(pair.getKey().getId()).append(",").append(pair.getValue()).append(";"));
+        return builder.substring(0, builder.length() - 1);
     }
 
 }

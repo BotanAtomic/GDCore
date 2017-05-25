@@ -176,6 +176,16 @@ public class Utils {
         return zaap.substring(0, zaap.length() - 1);
     }
 
+    public static short[] shortSplit(String data, String regex) {
+        int size = data.split(regex).length;
+        short[] shortArray = new short[size];
+
+        for(int i = 0; i < size; i++)
+            shortArray[i] = Short.parseShort(data.split(regex)[i]);
+
+        return shortArray;
+    }
+
     static class NameGenerator {
         private static String[] BEGINNING = {"Kr", "Ca", "Ra", "Mrok", "Cru",
                 "Ray", "Bre", "Zed", "Drak", "Mor", "Jag", "Mer", "Jar", "Mjol",

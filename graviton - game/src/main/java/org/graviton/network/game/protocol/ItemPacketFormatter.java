@@ -1,12 +1,18 @@
 package org.graviton.network.game.protocol;
 
+import javafx.util.Pair;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.common.ItemEffect;
 import org.graviton.game.items.common.ItemPosition;
+import org.graviton.game.items.template.ItemTemplate;
+import org.graviton.lang.Language;
+import org.graviton.lang.LanguageSentence;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Botan on 05/12/2016. 17:07
@@ -46,5 +52,21 @@ public class ItemPacketFormatter {
 
         return builder.substring(0, builder.length() - 1).concat("|").concat(panoply.effectToString(effects));
 
+    }
+
+    public static String giftMessage(List<Pair<ItemTemplate, Short>> values, Language language) {
+        StringBuilder builder = new StringBuilder();
+        AtomicInteger item = new AtomicInteger();
+        values.forEach(pair -> {
+            item.set(pair.getKey().getId());
+            builder.append("1~").append(Integer.toString(pair.getKey().getId(), 16)).append("~").append(Integer.toString(pair.getValue(), 16)).append("~~")
+                    .append(pair.getKey().parseStatistics()).append(";");
+        });
+
+        return "Ag1|" + item.get() + language.getSentence(LanguageSentence.GIFT) + (builder.length() > 0 ? builder.substring(0, builder.length() - 1) : builder.toString());
+    }
+
+    public static String giftAttributionSuccessMessage() {
+        return "AG";
     }
 }

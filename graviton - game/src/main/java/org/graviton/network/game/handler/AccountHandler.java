@@ -1,5 +1,6 @@
 package org.graviton.network.game.handler;
 
+import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.repository.AccountRepository;
@@ -8,12 +9,19 @@ import org.graviton.game.client.account.Account;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.guild.Guild;
 import org.graviton.game.house.House;
+import org.graviton.game.items.Item;
+import org.graviton.game.items.template.ItemTemplate;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.*;
+import org.graviton.utils.Utils;
 
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.graviton.utils.Utils.randomPseudo;
 
@@ -53,6 +61,10 @@ public class AccountHandler {
                 deletePlayer(data.split("\\|"));
                 break;
 
+            case 'G':
+                attributeGift(data.split("\\|"));
+                break;
+
             case 'L':
                 client.send(client.getAccount().getPlayerPacket(data.isEmpty()));
                 break;
@@ -79,6 +91,7 @@ public class AccountHandler {
 
             case 'g':
                 client.setLanguage(data);
+                applyGifts();
                 break;
 
             default:
@@ -121,7 +134,7 @@ public class AccountHandler {
         }
 
         Guild guild;
-        if((guild = player.getGuild()) != null)
+        if ((guild = player.getGuild()) != null)
             client.send(GuildPacketFormatter.gsMessage(guild.getMember(playerId).setPlayer(player)));
 
         account.setLastAddress(currentAddress);
@@ -149,4 +162,30 @@ public class AccountHandler {
             client.send(GamePacketFormatter.accountTicketErrorMessage());
         }
     }
+
+    private void applyGifts() {
+        if (client.getAccount().getGifts() != null)
+            client.send(ItemPacketFormatter.giftMessage(client.getAccount().getGifts(), client.getLanguage()));
+    }
+
+    private void attributeGift(String[] data) {
+        short template = Short.parseShort(data[0]);
+        int playerId = Integer.parseInt(data[1]);
+
+        Pair<ItemTemplate, Short> gift = client.getAccount().getGift(template);
+
+        Item item = gift.getKey().createMax(entityFactory.getNextItemId());
+        item.setQuantity(gift.getValue());
+
+        account.getPlayer(playerId).getInventory().addItem(item, true);
+        account.getGifts().remove(gift);
+
+        entityFactory.getAccountRepository().updateInformation(client.getAccount());
+
+        if (account.getGifts().isEmpty())
+            client.send(ItemPacketFormatter.giftAttributionSuccessMessage());
+        else
+            applyGifts();
+    }
+
 }
