@@ -1,0 +1,2200 @@
+<ExtraMonsters>
+    <ExtraMonster id="446">
+        <name>Aermyne 'Braco' Scalptaras</name>
+        <subarea>105,171,107,108,106,109</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="459">
+        <name>Padgref Demo</name>
+        <subarea>69</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="460">
+        <name>Frakacia Leukocytine</name>
+        <subarea>97</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="462">
+        <name>Ogivol Scalarcin</name>
+        <subarea>53</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="463">
+        <name>Fouduglen L'écureuil</name>
+        <subarea>95</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="464">
+        <name>Brumen Tinctorias</name>
+        <subarea>57</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="481">
+        <name>Qil Bil</name>
+        <subarea>61</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="550">
+        <name>Rok Gnorok</name>
+        <subarea>107</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="552">
+        <name>Musha L'Oni</name>
+        <subarea>106</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="554">
+        <name>Marzwel le Gobelin</name>
+        <subarea>108</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="555">
+        <name>Zatoïshwan</name>
+        <subarea>105,171,107,108,106,109</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2270">
+        <name>Piradain le Pingre</name>
+        <subarea>231</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2271">
+        <name>Pékeutar le Tireur</name>
+        <subarea>231</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2272">
+        <name>Pichakoté le Dégoutant</name>
+        <subarea>334,335</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2273">
+        <name>Ratlbol l'Aigri</name>
+        <subarea>7,488</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2275">
+        <name>Ratéhaifaim le Professeur</name>
+        <subarea>73,75</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2276">
+        <name>Ribibi le Cher</name>
+        <subarea>6,59</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2277">
+        <name>Rostensyl la Cuisinière</name>
+        <subarea>3</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2278">
+        <name>Soryonara le Poli</name>
+        <subarea>107</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2279">
+        <name>Sampi l'Eternel</name>
+        <subarea>56</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2280">
+        <name>Scapé l'Epée</name>
+        <subarea>170</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2281">
+        <name>Scarfayss le Balafré</name>
+        <subarea>170</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2282">
+        <name>Scarouarze l'Epopée</name>
+        <subarea>170</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2283">
+        <name>Scaramel le Fondant</name>
+        <subarea>170</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2285">
+        <name>Scorpitène l'Enflammé</name>
+        <subarea>57</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2286">
+        <name>Serpistol l'Illustre</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2287">
+        <name>Serpistule le Purulent</name>
+        <subarea>209,210</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2289">
+        <name>Susbewl l'Hypocrite</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2292">
+        <name>Tikosto le Mousse</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2293">
+        <name>Tiwalpé le Dévêtu</name>
+        <subarea>161</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2294">
+        <name>Tiwoflan le Lâche</name>
+        <subarea>161</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2295">
+        <name>Tortenssia la Fleurie</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2297">
+        <name>Tortorak le Cornu</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2298">
+        <name>Torthur la Lutte</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2299">
+        <name>Tronkoneuz la Tranchante</name>
+        <subarea>33,168,169</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2300">
+        <name>Trooyé l'Oxydé</name>
+        <subarea>69</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2301">
+        <name>Trukul le Lent</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2302">
+        <name>Vampunor le Glacial</name>
+        <subarea>6,230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2303">
+        <name>YokaiKoral le Duel</name>
+        <subarea>107</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2304">
+        <name>Wabbitud le Constant</name>
+        <subarea>161</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2305">
+        <name>Watdogue le Bien Nommé</name>
+        <subarea>161</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2306">
+        <name>Warkolad l'Etreinte</name>
+        <subarea>253,234,275</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2307">
+        <name>Wara l'Amer</name>
+        <subarea>275</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2308">
+        <name>Wokènrôl le Danseur</name>
+        <subarea>161</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2309">
+        <name>Abrakroc l'édenté</name>
+        <subarea>4,33,169,170</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2310">
+        <name>Arakule la Revancharde</name>
+        <subarea>169,88,119,101,173,92,4,33</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2311">
+        <name>Arabord la Cruche</name>
+        <subarea>168,37,11,72,75</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2312">
+        <name>Arachitik la Souffreteuse</name>
+        <subarea>99</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2313">
+        <name>Bandapar l'Exclus</name>
+        <subarea>97,492</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2314">
+        <name>Bandson le Tonitruant</name>
+        <subarea>103</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2315">
+        <name>Boudalf le Blanc</name>
+        <subarea>92,4,88,5,173</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2316">
+        <name>Boulgourvil le Lointain</name>
+        <subarea>92,4,88,5,173</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2317">
+        <name>Boufdégou le Refoulant</name>
+        <subarea>92,4,88,5,173</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2318">
+        <name>Boudur le Raide</name>
+        <subarea>72,103</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+    <ExtraMonster id="2319">
+        <name>Chafemal le Bagarreur</name>
+        <subarea>6,59,230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2320">
+        <name>Chafmarcel le Fêtard</name>
+        <subarea>59,230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2321">
+        <name>Chafalfer l'Optimiste</name>
+        <subarea>6,59,230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2322">
+        <name>Chalan le Commerçant</name>
+        <subarea>59,230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2323">
+        <name>Chamchie le Difficile</name>
+        <subarea>68,3,169,170,88,97,5,173,98</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2324">
+        <name>Bouflet le Puéril</name>
+        <subarea>88,5</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2325">
+        <name>Chonstip la Passagère</name>
+        <subarea>178,11</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2326">
+        <name>Craquetuss le Piquant</name>
+        <subarea>2,96</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2327">
+        <name>Craraboss le Féérique</name>
+        <subarea>334,335,27,1,490</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2328">
+        <name>Forboyar l'Enigmatique</name>
+        <subarea>103,492</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2329">
+        <name>Kitsoupierre le Récipient</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2331">
+        <name>Larvapstrè le Subjectif</name>
+        <subarea>3,4,33,168,2,169,170,101,173,98,93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2332">
+        <name>Larchimaide la Poussée</name>
+        <subarea>3,4,33,168,2,169,170,101,173,98</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2333">
+        <name>Milipatte la Griffe</name>
+        <subarea>69,4,33,97,482</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2334">
+        <name>Milipussien le Géant</name>
+        <subarea>99</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2335">
+        <name>Minsinistre l'Elu</name>
+        <subarea>72,103,492</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2336">
+        <name>Mosketère le Dévoué</name>
+        <subarea>3,4,2,169,105,170,88,119,97</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2337">
+        <name>Muloufok l'Hilarant</name>
+        <subarea>69</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2338">
+        <name>Pichdourse le Puissant</name>
+        <subarea>334,335</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2339">
+        <name>Picht le Brioché</name>
+        <subarea>334</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2340">
+        <name>Pichtoire l'Erudit</name>
+        <subarea>334,335</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2341">
+        <name>Pioustone le Problème</name>
+        <subarea>95,32,0,37</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2342">
+        <name>Pioulbrineur le Mercenaire</name>
+        <subarea>95,32,0,37</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2343">
+        <name>Pioufe la Maquillée</name>
+        <subarea>95,32,0,37</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2344">
+        <name>Pioulette la Coquine</name>
+        <subarea>95,32,0,37</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2345">
+        <name>Pioukas la Plante</name>
+        <subarea>95,32,0,37</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2346">
+        <name>Pichduitre le Totem</name>
+        <subarea>334,335</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2347">
+        <name>Pioussokrim le Délétère</name>
+        <subarea>95,32,0,37</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2348">
+        <name>Pissdane l'Insipide</name>
+        <subarea>68,3,56,169,88,173,98</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2349">
+        <name>Preskapwal le Tendancieux</name>
+        <subarea>4,169,97,482</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2350">
+        <name>Radoutable le Craint</name>
+        <subarea>99,488</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2351">
+        <name>Rauligo le Sale</name>
+        <subarea>334</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2352">
+        <name>Roz la Magicienne</name>
+        <subarea>68,3,56,169,88,5,173,98</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2353">
+        <name>Sangria le Fruité</name>
+        <subarea>4,97,482</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2354">
+        <name>Sourizoto le Collant</name>
+        <subarea>95,6</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2355">
+        <name>Tofuldebeu l'Explosif</name>
+        <subarea>92,88,101,173,98</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2356">
+        <name>Tofurapin le Pétri</name>
+        <subarea>99</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2357">
+        <name>Tofumanchou l'Empereur</name>
+        <subarea>6</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2358">
+        <name>Tour le Vice</name>
+        <subarea>68,3,56,169,88,173,98</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2359">
+        <name>Maître Onom le Régulier</name>
+        <subarea>68</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2360">
+        <name>Ecorfé la Vive</name>
+        <subarea>455</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2361">
+        <name>Tourbiket le Virevoletant</name>
+        <subarea>457</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2363">
+        <name>Bouliver le Géant</name>
+        <subarea>457</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2367">
+        <name>Dragstore le Généraliste</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2368">
+        <name>Dragtula l'Ancien</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2369">
+        <name>Dragstik le Frustre</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2370">
+        <name>Fansissla l'Âne</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2371">
+        <name>Geloliaine l'Aérien</name>
+        <subarea>12</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2372">
+        <name>Dragmoclaiss le Fataliste</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2373">
+        <name>Champoul l'Illuminé Champbis</name>
+        <subarea>495</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2374">
+        <name>Fanhopruno le Gourmet</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2376">
+        <name>Gelaviv le Glaçon</name>
+        <subarea>12</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2377">
+        <name>Dragstayr le Fonceur</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2378">
+        <name>Cromikay le Néophyte</name>
+        <subarea>72,57</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2379">
+        <name>Draglida la Disparue</name>
+        <subarea>170,235</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2381">
+        <name>Abrinos le Clair</name>
+        <subarea>464</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2382">
+        <name>Toutouf le Velu</name>
+        <subarea>464</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2383">
+        <name>Poolopo la Traditionnelle</name>
+        <subarea>464</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2384">
+        <name>Aboudbra le Porteur</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2385">
+        <name>Abrakadnuzar</name>
+        <subarea>33</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2386">
+        <name>Abraklette le Fondant</name>
+        <subarea>168</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2388">
+        <name>Abrakanette l'Encapsulé</name>
+        <subarea>168</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2389">
+        <name>Abrakildas le Vénérable</name>
+        <subarea>33,168</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2391">
+        <name>Ameur la Laide</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2392">
+        <name>Arakozette l'Intrépide</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2393">
+        <name>Araknay la Galopante</name>
+        <subarea>4,33,482,490</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2396">
+        <name>Bistou le Quêteur</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2397">
+        <name>Porfavor le Quémandeur</name>
+        <subarea>178,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2398">
+        <name>Bambono le Divin</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2399">
+        <name>Bilvoezé le Bonimenteur</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2400">
+        <name>Bi le Partageur</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2401">
+        <name>Bistou le Rieur</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2402">
+        <name>Tiwa'Missou le Gateux</name>
+        <subarea>161</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2403">
+        <name>Wagnagnah le Sanglant</name>
+        <subarea>161</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2404">
+        <name>Blorie l'Assourdissante</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2405">
+        <name>Blordur l'Infect</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2406">
+        <name>Bloporte le Veule</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2407">
+        <name>Blof l'Apathique</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2408">
+        <name>Boombata le Garde</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2411">
+        <name>Bulleur le Dormeur</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2412">
+        <name>Bramin le Bicéphale</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2413">
+        <name>Buldeflore le Pénétrant</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2414">
+        <name>Bulgig le Danseur</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2415">
+        <name>Bulsavon le Gonflé</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2416">
+        <name>Bworkasse le Dégoûtant</name>
+        <subarea>8,71,</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2417">
+        <name>Barchwork le Multicolore</name>
+        <subarea>8,71</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2418">
+        <name>Bwormage le Respectueux</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2419">
+        <name>Caboume l'Artilleur</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2420">
+        <name>Cavordemal le Sorcier</name>
+        <subarea>38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2421">
+        <name>Chaffoin le Sournois</name>
+        <subarea>6</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2422">
+        <name>Chafrit le Barbare</name>
+        <subarea>59,230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2423">
+        <name>Chamitant le Dilettante</name>
+        <subarea>73,75,488</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2424">
+        <name>Champayt l'Odorant</name>
+        <subarea>33,168,481</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2425">
+        <name>Chamflay le Ballonné</name>
+        <subarea>33,168,481</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2426">
+        <name>Chamdblé le Cultivé</name>
+        <subarea>33,168,481</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2427">
+        <name>Champayr le Disjoncté</name>
+        <subarea>33,168,481</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2428">
+        <name>Crok le Beau</name>
+        <subarea>31</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2429">
+        <name>Koamag'oel le Défiguré</name>
+        <subarea>230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2430">
+        <name>Chevaustine le Reconstruit</name>
+        <subarea>8,71,2</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2431">
+        <name>Citassaté le Service</name>
+        <subarea>9</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2432">
+        <name>Farlon l'Enfant</name>
+        <subarea>200</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2433">
+        <name>Codenlgaz le Problème</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2434">
+        <name>Cooligane le Névrosé</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2436">
+        <name>Crakmitaine le Faucheur</name>
+        <subarea>2</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2437">
+        <name>Corpat le Vampire</name>
+        <subarea>230,72,57,54,55,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2438">
+        <name>Cramikaz le Suicidaire</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2439">
+        <name>Crolnareff l'Exilé</name>
+        <subarea>31</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2440">
+        <name>Crognan le Barbare</name>
+        <subarea>72,57</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2442">
+        <name>Doktopuss le Maléfique</name>
+        <subarea>253,234,231</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2445">
+        <name>Dragoeth le Penseur</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2446">
+        <name>Dragma le Bouillant</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2447">
+        <name>Dragtonien le Malvoyant</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2448">
+        <name>Dragoo le Cramoisi</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2449">
+        <name>Dragnostik le Sceptique</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2450">
+        <name>Dragkouine la Déguisée</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2451">
+        <name>Dragsta le Détendu</name>
+        <subarea>23,314,316</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2452">
+        <name>Dragobert le Monarque</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2453">
+        <name>Dragtopaile l'Excavateur</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2454">
+        <name>Dragminster le Magicien</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2455">
+        <name>Dragalgan l'Effervescent</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2456">
+        <name>Dragtarus le Bellâtre</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2457">
+        <name>Dragybuss le Sucré</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2458">
+        <name>Draquetteur le Voleur</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2459">
+        <name>Dragioli le Succulent</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2460">
+        <name>Drageaufol la Joyeuse</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2461">
+        <name>Dragonienne l'Econome</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2462">
+        <name>Drakolage le Tentateur</name>
+        <subarea>253</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2464">
+        <name>Dragdikal le Décisif</name>
+        <subarea>314</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2465">
+        <name>Dragnoute l'Irascible</name>
+        <subarea>170,235</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2466">
+        <name>Fanlabiz le Véloce</name>
+        <subarea>230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2467">
+        <name>Fandanleuil le Précis</name>
+        <subarea>230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2468">
+        <name>Fantrask le Rêveur</name>
+        <subarea>230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2469">
+        <name>Fanstatik l'Etonnant</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+    19:44:50 [Thread-3] o.g.database.entity.EntityFactory - Successfully load 1313 monster templates
+
+    <ExtraMonster id="2470">
+        <name>Fansiss la Brêle</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2471">
+        <name>Fandouich l'Hautain</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2472">
+        <name>Fanlmyl l'Accuité</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2473">
+        <name>Fanhnatur le Simple</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2474">
+        <name>Fanfancisco le Cosmopolite</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2475">
+        <name>Fanjo le Pilote</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2476">
+        <name>Fanjipann le Sucré</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2477">
+        <name>Fanburn le Viril</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2482">
+        <name>Fossamoel le Juteux</name>
+        <subarea>230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2483">
+        <name>Fantassein le Soldat</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2484">
+        <name>Fourapin le Chaud</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2486">
+        <name>Garsim le Mort</name>
+        <subarea>102</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2487">
+        <name>Gelanal le Huileux</name>
+        <subarea>12</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2493">
+        <name>Ginsenk le Stimulant</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2494">
+        <name>Gobstiniais le Têtu</name>
+        <subarea>8,71</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2495">
+        <name>Gloubibou le Gars</name>
+        <subarea>165</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2497">
+        <name>Guerrite le Veilleur</name>
+        <subarea>275</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2498">
+        <name>Grandilok le Clameur</name>
+        <subarea>161</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2502">
+        <name>Kannibal le Lecteur</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2503">
+        <name>Kanasukr le Mielleux</name>
+        <subarea>54,38</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2505">
+        <name>Kannémik le Maigre</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2506">
+        <name>Kannisterik le Forcené</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2507">
+        <name>Kapota la Fraise</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2508">
+        <name>Kiroyal le Sirupeux</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2509">
+        <name>Koaskette la Chapelière</name>
+        <subarea>253</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2510">
+        <name>Kitsoudbra le Malodorant</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2511">
+        <name>Kitsoupopulère le Généreux</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2512">
+        <name>Kitsoufre l'Explosif</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2513">
+        <name>Koamaembair le Coulant</name>
+        <subarea>253</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2514">
+        <name>Koalaboi le Calorifère</name>
+        <subarea>275</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2515">
+        <name>Koasossyal le Psychopathe</name>
+        <subarea>234</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2516">
+        <name>Koakofrui le Confit</name>
+        <subarea>253</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2517">
+        <name>Koalastrof la Naturelle</name>
+        <subarea>234,231</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2518">
+        <name>Koarmit la Batracienne</name>
+        <subarea>253</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2519">
+        <name>Koalvissie le Chauve</name>
+        <subarea>275</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2520">
+        <name>Kolforthe l'Indécollable</name>
+        <subarea>57</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2521">
+        <name>Krapahut le Randonneur</name>
+        <subarea>209</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2522">
+        <name>Kwoanneur le Frimeur</name>
+        <subarea>102,6</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2524">
+        <name>Ouassébo l'Esthète</name>
+        <subarea>102</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2525">
+        <name>Let le Rond</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2526">
+        <name>Mahoku le Botté</name>
+        <subarea>107</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2527">
+        <name>Léopolnor le Barde</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2528">
+        <name>Mamakomou l'Âge</name>
+        <subarea>253</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2529">
+        <name>Mandalo l'Aqueuse</name>
+        <subarea>209</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2531">
+        <name>Maître Koantik le Théoricien</name>
+        <subarea>230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2532">
+        <name>Maître Amboat le Moqueur</name>
+        <subarea>6,230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2533">
+        <name>Minoskour le Sauveur</name>
+        <subarea>209</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2534">
+        <name>Momikonos la Bandelette</name>
+        <subarea>230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2538">
+        <name>Nakuneuye le Borgne</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2539">
+        <name>Nelvin le Boulet</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2540">
+        <name>Nipulnislip l'Exibitionniste</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2541">
+        <name>Nodkoku le Trahi</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2542">
+        <name>Neufedur le Flottant</name>
+        <subarea>9</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2543">
+        <name>Onihylis le Destructeur</name>
+        <subarea>9</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2544">
+        <name>Abrakine le Sombre</name>
+        <subarea>455</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2545">
+        <name>Barebourd le Comte</name>
+        <subarea>461</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2546">
+        <name>Bitoven le Musicien</name>
+        <subarea>455</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2547">
+        <name>Toufou le Benêt</name>
+        <subarea>454</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2548">
+        <name>Bambouské le Camouflé</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2549">
+        <name>Boostif l'Affamé</name>
+        <subarea>31,179</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2550">
+        <name>Brouste l'Humiliant</name>
+        <subarea>455</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2551">
+        <name>Champolyon le Polyglotte</name>
+        <subarea>495</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2552">
+        <name>Chamoute le Duveteux</name>
+        <subarea>495</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2553">
+        <name>Chamilero le Malchanceux</name>
+        <subarea>495</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2554">
+        <name>Chiendanlémin l'Illusionniste</name>
+        <subarea>455</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2555">
+        <name>Corboyard l'Enigmatique</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2556">
+        <name>Craquetou le Fissuré</name>
+        <subarea>454</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2557">
+        <name>Crustterus l'Organique</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2558">
+        <name>Crustensyl le Pragmatique</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2559">
+        <name>Cruskof le Rustre</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2560">
+        <name>Crusmeyer le Pervers</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2561">
+        <name>Crathdogue le Cruel</name>
+        <subarea>454</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2562">
+        <name>Diskord le Belliqueux</name>
+        <subarea>468</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2563">
+        <name>Fantoch le Pantin</name>
+        <subarea>230</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2564">
+        <name>Fanlagoel le Comique</name>
+        <subarea>152</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2565">
+        <name>Floanna la Blonde</name>
+        <subarea>455</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2566">
+        <name>Gastroth la Contagieuse</name>
+        <subarea>468</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2567">
+        <name>Faufoll la Joyeuse</name>
+        <subarea>275</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2568">
+        <name>Germinol l'Indigent</name>
+        <subarea>209</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2569">
+        <name>Guerumoth le Collant</name>
+        <subarea>468</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    19:44:51 [Thread-6] o.g.database.entity.EntityFactory - Successfully load 47 area
+    <ExtraMonster id="2570">
+        <name>Kaskapointhe la Couverte</name>
+        <subarea>464</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2571">
+        <name>Kido l'Âtre</name>
+        <subarea>454</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2572">
+        <name>Kilimanj'haro le Grimpeur</name>
+        <subarea>454</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2573">
+        <name>Koktèle le Secoué</name>
+        <subarea>93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2574">
+        <name>Larvonika l'Instrument</name>
+        <subarea>3,4,33,168,169,170,1,119,173,98,93</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2575">
+        <name>Ouashouash l'Exubérant</name>
+        <subarea>457</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2577">
+        <name>Meuroup le Prêtre</name>
+        <subarea>464</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2578">
+        <name>Don Kizoth l'Obstiné</name>
+        <subarea>468</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2579">
+        <name>Nerdeubeu le Flagellant</name>
+        <subarea>455</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2580">
+        <name>Mufguedin le Suprême</name>
+        <subarea>454</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2581">
+        <name>Palmbytch la Bronzée</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2582">
+        <name>Palmito le Menteur</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2583">
+        <name>Palmiche le Serein</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2584">
+        <name>Palmiflette le Convivial</name>
+        <subarea>453</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2585">
+        <name>Osuxion le Vampirique</name>
+        <subarea>62</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2587">
+        <name>Seripoth l'Ennemi</name>
+        <subarea>468</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2588">
+        <name>Sparoket le Lanceur</name>
+        <subarea>461</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2589">
+        <name>Ougaould le Parasite</name>
+        <subarea>57</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2590">
+        <name>Pandanlagl la Saoule</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2591">
+        <name>Pandouille le Titubant</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2592">
+        <name>Pandimaensh l'Animateur</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2593">
+        <name>Pandimy le Contagieux</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2597">
+        <name>Pandive le végétarien</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2598">
+        <name>Pangraive le Militant</name>
+        <subarea>105</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2601">
+        <name>Tromplamor le Survivant</name>
+        <subarea>495</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2614">
+        <name>Roy le Merlin</name>
+        <subarea>457</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2615">
+        <name>Scaratyn l'huitre</name>
+        <subarea>210</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="2616">
+        <name>Ouature la Mobile</name>
+        <subarea>102</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="546">
+        <name>Bambouto Sacré</name>
+        <subarea>105,106,108,109,171</subarea>
+        <chance>4</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="519">
+        <name>Bulbig</name>
+        <subarea>105,106,108,109,171</subarea>
+        <chance>4</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="588">
+        <name>Fantôme Tanukouï San</name>
+        <subarea>152</subarea>
+        <chance>5</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="597">
+        <name>Fantôme Pandore</name>
+        <subarea>152</subarea>
+        <chance>5</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="537">
+        <name>Pandore</name>
+        <subarea>105,108,109</subarea>
+        <chance>2</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="666">
+        <name>Dragodinde Dorée Sauvage</name>
+        <subarea>235</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="763">
+        <name>Drakoalak</name>
+        <subarea>253</subarea>
+        <chance>25</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="954">
+        <name>Moumoule</name>
+        <subarea>490</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="1057">
+        <name>Roissingue</name>
+        <subarea>457,471</subarea>
+        <chance>7</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="1078">
+        <name>Coffre Maudit du Flib</name>
+        <subarea>451</subarea>
+        <chance>7</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="422">
+        <name>Dopeul Dark Vlad</name>
+        <subarea>74</subarea>
+        <chance>2</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="467">
+        <name>Rose Obscure</name>
+        <subarea>3</subarea>
+        <chance>10</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="590">
+        <name>Fantôme Tanuki Chan</name>
+        <subarea>152</subarea>
+        <chance>10</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="594">
+        <name>Fantôme Tanuki Chan</name>
+        <subarea>152</subarea>
+        <chance>10</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="595">
+        <name>Fantôme Tanuki Chan</name>
+        <subarea>152</subarea>
+        <chance>10</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="596">
+        <name>Fantôme Tanuki Chan</name>
+        <subarea>152</subarea>
+        <chance>10</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="598">
+        <name>Fantôme Tanuki Chan</name>
+        <subarea>152</subarea>
+        <chance>10</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="926">
+        <name>Raul Mops</name>
+        <subarea>334</subarea>
+        <chance>4</chance>
+    </ExtraMonster>
+
+
+    <ExtraMonster id="499">
+        <name>Minotoboule de Nowel</name>
+        <subarea>3,4,5,10,22,320,479,481,482,483,484,485</subarea>
+        <chance>1</chance>
+    </ExtraMonster>
+
+</ExtraMonsters>

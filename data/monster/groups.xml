@@ -1,0 +1,2626 @@
+<Group>
+    <MonsterGroup map="534" cell="279">
+        <data>494,25,25</data>
+        <description>Kanojedo</description>
+        <hall>0</hall>
+        <regenTime>10000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2074" cell="267">
+        <data>149,2,5;149,2,5;149,2,5;134,2,5;134,2,5;134,2,5;134,2,5;149,2,5</data>
+        <description>Donjon bouftou</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2075" cell="211">
+        <data>149,2,5;134,2,5;134,2,5;149,2,5;101,3,6;101,6,9</data>
+        <description>Donjon bouftou</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2076" cell="282">
+        <data>134,2,5;134,2,5;134,2,5;149,2,5;149,2,5;101,6,9;101,9,12</data>
+        <description>Donjon bouftou</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2077" cell="270">
+        <data>149,2,5;149,2,5;134,2,5;134,2,5;101,6,9;101,9,12;101,6,9;101,9,12</data>
+        <description>Donjon bouftou</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2079" cell="183">
+        <data>149,2,5;134,2,5;101,6,9;101,9,12;101,6,9;101,9,12;101,9,12;101,9,12</data>
+        <description>Donjon bouftou</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2080" cell="183">
+        <data>101,6,9;101,9,12;101,9,12;101,9,12;101,6,9;101,9,12;101,9,12;101,9,12</data>
+        <description>Donjon bouftou</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2081" cell="296">
+        <data>101,6,9;101,6,9;101,9,12;101,9,12;101,9,12;101,9,12;148,15,17;148,15,17</data>
+        <description>Donjon bouftou</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2082" cell="268">
+        <data>101,6,9;101,6,9;101,9,12;101,9,12;148,15,17;148,15,17;148,19,21;148,19,21</data>
+        <description>Donjon bouftou</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2083" cell="269">
+        <data>101,6,9;101,6,9;101,9,12;101,12,15;148,15,17;148,15,17;148,19,21;147,35,43</data>
+        <description>Donjon bouftou</description>
+        <hall>10</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10156" cell="308">
+        <data>63,3,5;63,3,5;63,3,5;63,3,5;63,3,5;63,3,5</data>
+        <description>Donjon ensabl</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10157" cell="292">
+        <data>63,3,5;63,3,5;63,3,5;63,3,5;63,3,5;63,3,5;927,9,10;927,9,10</data>
+        <description>Donjon ensabl</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10158" cell="252">
+        <data>63,3,5;63,3,5;63,3,5;63,3,5;927,9,10;927,9,10;921,10,11;922,10,11</data>
+        <description>Donjon ensablé</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10159" cell="255">
+        <data>921,10,11;922,10,11;921,10,11;922,10,11;63,3,5;63,3,5</data>
+        <description>Donjon ensabl</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10160" cell="210">
+        <data>923,10,11;923,10,11;920,10,11;920,10,11;63,3,5</data>
+        <description>Donjon ensabl</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10161" cell="239">
+        <data>63,3,5;63,3,5;63,3,5;63,3,5;921,10,11;922,10,11;923,10,11</data>
+        <description>Donjon ensabl</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10162" cell="184">
+        <data>921,10,11;922,10,11;921,10,11;922,10,11;920,10,11;920,10,11;923,10,11;923,10,11</data>
+        <description>Donjon ensabl</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10163" cell="268">
+        <data>923,10,11;923,10,11;921,10,11;924,24,25</data>
+        <description>Donjon ensabl</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10164" cell="298">
+        <data>924,24,25;923,10,11;922,10,11;921,10,11;920,10,11;927,14,15;928,45,50;926,75,80</data>
+        <description>Donjon ensabl</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2073" cell="270">
+        <data>149,2,5;134,2,5;134,2,5;134,2,5;149,2,5</data>
+        <description>Donjon bouftou</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1771" cell="314">
+        <data>181,45,53;181,45,53;181,45,53;65,21,25;65,21,25;64,16,20;64,16,20</data>
+        <description>Chateau Wa</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1772" cell="240">
+        <data>181,45,53;181,45,53;181,45,53;97,39,43;97,39,43;65,21,25;65,21,25;64,16,20</data>
+        <description>Chateau Wa</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1773" cell="254">
+        <data>181,45,53;99,35,43;97,39,43;65,21,25;64,16,20;68,9,13;96,9,13;72,9,13</data>
+        <description>Chateau Wa</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="534" cell="195">
+        <data>494,100,100</data>
+        <description>Kanojedo</description>
+        <hall>0</hall>
+        <regenTime>40000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="534" cell="251">
+        <data>494,50,50</data>
+        <description>Kanojedo</description>
+        <hall>0</hall>
+        <regenTime>20000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="534" cell="223">
+        <data>494,75,75</data>
+        <description>Kanojedo</description>
+        <hall>0</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2163" cell="239">
+        <data>252,1,1</data>
+        <description>Forgeron</description>
+        <hall>Boss</hall>
+        <regenTime>10000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2110" cell="386">
+        <data>54,32,40;54,32,40;111,2,3</data>
+        <description>Donjon Squelette</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2111" cell="371">
+        <data>54,32,40;54,32,40;111,2,3;111,2,3;111,2,3</data>
+        <description>Donjon Squelette</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2112" cell="401">
+        <data>54,32,40;54,32,40;111,2,3;111,2,3;111,2,3;111,2,3</data>
+        <description>Donjon Squelette</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2113" cell="269">
+        <data>54,32,40;54,32,40;111,2,3;111,2,3;111,2,3;111,2,3</data>
+        <description>Donjon Squelette</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2114" cell="401">
+        <data>54,32,40;54,32,40;110,25,37;111,2,3;111,2,3;111,2,3;111,2,3;111,2,3</data>
+        <description>Donjon Squelette</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2115" cell="401">
+        <data>54,32,40;54,32,40;111,2,3;111,2,3;111,2,3;110,25,37;110,25,37;108,21,42</data>
+        <description>Donjon Squelette</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2116" cell="401">
+        <data>54,32,40;54,32,40;111,2,3;110,25,37;110,25,37;108,21,42;108,21,42;396,31,39</data>
+        <description>Donjon Squelette</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2117" cell="357">
+        <data>54,32,40;110,25,37;110,25,37;108,21,42;108,21,42;108,21,42;396,31,39</data>
+        <description>Donjon Squelette</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2118" cell="401">
+        <data>108,21,42;108,21,42;108,21,42;396,31,39;396,31,39</data>
+        <description>Donjon Squelette</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10360" cell="238">
+        <data>978,1,3;982,1,3;975,1,3;974,1,3</data>
+        <description>Incarnam</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10361" cell="256">
+        <data>981,7,9;998,3,5;979,2,3;971,2,3;970,1,2;980,3,4</data>
+        <description>Incarnam</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10362" cell="373">
+        <data>986,9,10;983,9,10;977,5,6;976,5,6;984,10,12;972,3,4</data>
+        <description>Incarnam</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10363" cell="213">
+        <data>971,3,4;996,9,10;1001,18,26;983,9,10;978,2,3;981,7,8;980,4,5</data>
+        <description>Incarnam</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9768" cell="199">
+        <data>59,1,3;61,1,3;79,1,3</data>
+        <description>Champs</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9769" cell="266">
+        <data>61,1,3;61,1,3;31,2,4;59,1,3</data>
+        <description>Champs</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9770" cell="241">
+        <data>31,1,3;31,3,5;34,4,5;59,5,6;59,4,5</data>
+        <description>Champs</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9771" cell="270">
+        <data>46,7,9;46,7,9;48,9,10;48,9,10</data>
+        <description>Champs</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9772" cell="179">
+        <data>59,6,8;59,6,8;59,6,8;48,10,11;48,9,10;78,7,8</data>
+        <description>Champs</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9773" cell="240">
+        <data>79,8,9;79,8,9;61,1,3;61,1,3;78,5,8;78,5,8</data>
+        <description>Champs</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9774" cell="215">
+        <data>78,5,9;48,10,15;79,3,7;799,40,50</data>
+        <description>Champs</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1768" cell="199">
+        <data>65,21,25;65,21,25;65,21,25;64,16,20;64,16,20;64,16,20;68,9,14;72,9,14</data>
+        <description>Chateau Wa</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1560" cell="174">
+        <data>157,2,2;157,2,2;52,3,3</data>
+        <description>maison arakné</description>
+        <hall>0</hall>
+        <regenTime>43200000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1770" cell="269">
+        <data>181,45,53;181,45,53;181,45,53;96,9,13;68,9,13;72,9,13</data>
+        <description>Chateau Wa</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1769" cell="226">
+        <data>99,35,43;99,35,43;65,21,25;65,21,25;64,16,20;64,16,20;97,39,43;97,39,43</data>
+        <description>Chateau Wa</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1687" cell="388">
+        <data>118,27,27</data>
+        <description>Mineur sombre</description>
+        <hall>-1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1443" cell="429">
+        <data>177,1,1</data>
+        <description>Coffre malveillant mineur sombre</description>
+        <hall>-1</hall>
+        <regenTime>43200000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9775" cell="212">
+        <data>241,28,30;241,28,30;198,28,30;198,28,30;240,28,30</data>
+        <description>Scara</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9778" cell="226">
+        <data>241,28,30;241,28,30;241,28,30;198,28,30;198,28,30;198,28,30</data>
+        <description>Scara</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9779" cell="225">
+        <data>240,28,30;240,28,30;240,28,30;240,28,30;194,28,30;194,28,30;194,28,30;194,28,30</data>
+        <description>Scara</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9780" cell="240">
+        <data>194,28,32;194,28,32;194,28,32;194,28,32;198,28,32;198,28,32;198,28,32;795,40,40</data>
+        <description>Scara</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9781" cell="194">
+        <data>241,28,32;241,28,32;241,28,32;241,28,32;198,28,32;198,28,32;198,28,32;198,44,44</data>
+        <description>Scara</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9782" cell="266">
+        <data>241,28,32;241,28,32;241,28,32;795,40,40;240,28,30;240,28,30;240,28,30</data>
+        <description>Scara</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9784" cell="330">
+        <data>240,28,30;198,28,32;194,28,32;241,28,32;795,40,40;797,70,78</data>
+        <description>Scara</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7323" cell="224">
+        <data>453,25,29</data>
+        <description>L'homme Ours</description>
+        <hall>-1</hall>
+        <regenTime>180000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8557" cell="387">
+        <data>54,32,40;110,25,37;291,40,46;291,40,46;290,40,46</data>
+        <description>Grotte du Chafer d'astrub</description>
+        <hall>-1</hall>
+        <regenTime>900000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2085" cell="169">
+        <data>153,5,5;155,8,8</data>
+        <description>Forgeron</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2102" cell="251">
+        <data>153,5,5;155,10,10;153,8,8</data>
+        <description>Forgeron</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2094" cell="225">
+        <data>155,10,10;153,8,8;155,10,10;153,8,8</data>
+        <description>Forgeron</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2086" cell="329">
+        <data>155,14,14;155,12,12;155,10,10;153,11,11;153,11,11;153,8,8</data>
+        <description>Forgeron</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2104" cell="284">
+        <data>155,12,12;155,12,12;155,12,12;153,14,14;153,11,11;153,8,8;118,16,16</data>
+        <description>Forgeron</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2087" cell="164">
+        <data>155,14,14;155,12,12;155,12,12;153,14,14;153,11,11;153,8,8;118,23,23;119,38,38</data>
+        <description>Forgeron</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2096" cell="199">
+        <data>155,14,14;155,14,14;155,14,14;155,16,16;153,14,14;118,27,27</data>
+        <description>Forgeron</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2089" cell="282">
+        <data>155,16,16;155,16,16;153,17,17;153,17,17;118,31,31;119,48,48;118,31,31;119,48,48</data>
+        <description>Forgeron</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2098" cell="181">
+        <data>118,31,31;118,31,31;118,31,31;118,31,31;118,31,31;118,31,31</data>
+        <description>Forgeron</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2090" cell="181">
+        <data>119,48,48;119,48,48;119,48,48;119,48,48;119,48,48;119,48,48</data>
+        <description>Forgeron</description>
+        <hall>10</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2099" cell="373">
+        <data>155,16,16;153,17,17;118,31,31;118,31,31;118,31,31;119,48,48;119,48,48;119,48,48</data>
+        <description>Forgeron</description>
+        <hall>11</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11879" cell="150">
+        <data>1183,40,45;1182,40,45;276,30,38;275,30,38</data>
+        <description>Blop</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11880" cell="415">
+        <data>1182,40,45;1182,40,45;1182,40,45;273,30,38;274,30,38</data>
+        <description>Blop</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11881" cell="393">
+        <data>273,30,38;274,30,38;275,30,38;1181,50,70;1182,40,60;1183,40,60</data>
+        <description>Blop</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11882" cell="417">
+        <data>1183,40,60;1183,40,60;1181,50,70;1181,50,70;1182,40,60;1182,40,60</data>
+        <description>Blop</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11883" cell="382">
+        <data>1181,50,70;273,30,38;276,30,38;1183,40,60;1183,40,60;1183,40,60;1183,40,60</data>
+        <description>Blop</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11884" cell="314">
+        <data>1181,50,70;1181,50,70;1181,50,70;1181,50,70;1182,40,60;1182,40,60;1183,40,60</data>
+        <description>Blop</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11885" cell="240">
+        <data>1181,50,70;1181,50,70;1181,50,70;1181,50,70;1183,40,60;1183,40,60;1183,40,60;1183,40,60</data>
+        <description>Blop</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11887" cell="163">
+        <data>1184,100,120;1182,40,40;1182,40,40;1182,40,40;1183,45,45;1183,45,45;1183,45,45</data>
+        <description>Blop</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11888" cell="403">
+        <data>1185,100,120;1182,40,60;1182,40,60;1182,40,60;1183,40,60;1183,40,60;1183,40,60</data>
+        <description>Blop</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11889" cell="308">
+        <data>1186,100,120;1182,40,60;1182,40,60;1182,40,60;1183,40,60;1183,40,60;1183,40,60</data>
+        <description>Blop</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11890" cell="400">
+        <data>1187,100,120;1182,40,60;1182,40,60;1182,40,60;1183,40,60;1183,40,60;1183,40,60</data>
+        <description>Blop</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11892" cell="184">
+        <data>1188,150,170;1184,100,120;1185,100,120;1186,100,120;1187,100,120;1183,40,60;1183,40,60;1182,40,60</data>
+        <description>Blop</description>
+        <hall>Multi</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9750" cell="154">
+        <data>876,22,42;876,22,42;74,18,31;74,18,31</data>
+        <description>Bwork</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9751" cell="164">
+        <data>876,22,42;876,22,42;876,22,42;876,22,42;876,22,42</data>
+        <description>Bwork</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9752" cell="342">
+        <data>74,18,31;74,18,31;74,18,31;74,18,31;74,18,31;74,18,31</data>
+        <description>Bwork</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9755" cell="353">
+        <data>876,22,42;876,22,42;876,22,42;876,22,42;74,18,31;74,18,31;74,18,31;74,18,31</data>
+        <description>Bwork</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9757" cell="253">
+        <data>876,22,42;876,22,42;74,18,31;74,18,31;53,15,35;53,15,35</data>
+        <description>Bwork</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9758" cell="314">
+        <data>53,15,35;53,15,35;53,15,35;53,15,35;53,15,35;53,15,35;53,15,35</data>
+        <description>Bwork</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9759" cell="328">
+        <data>876,22,42;876,22,42;53,15,35;53,15,35;74,18,31;74,18,31</data>
+        <description>Bwork</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9760" cell="381">
+        <data>876,22,42;876,22,42;74,18,31;74,18,31;53,15,35;53,15,35;53,15,35;792,90,98</data>
+        <description>Bwork</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="325" cell="184">
+        <data>107,120,140;291,40,48;291,40,48;54,32,40;54,32,40;110,25,37;110,25,37</data>
+        <description>labyrinthe DV</description>
+        <hall>Boss</hall>
+        <regenTime>21200000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8713" cell="254">
+        <data>47,39,39;652,10,18;653,20,28</data>
+        <description>Abraknyde</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8709" cell="225">
+        <data>47,39,39;47,39,39;256,25,46;256,25,46</data>
+        <description>Abraknyde</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8716" cell="311">
+        <data>917,1,100;47,1,100</data>
+        <description>Abraknyde</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8718" cell="181">
+        <data>917,1,100;652,1,100;653,1,100</data>
+        <description>Abraknyde</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8721" cell="198">
+        <data>47,39,39;47,39,39;47,39,39</data>
+        <description>Abraknyde</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8722" cell="210">
+        <data>650,30,32;650,30,32;650,30,32;47,39,39;47,39,39;47,39,39</data>
+        <description>Abraknyde</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8723" cell="210">
+        <data>47,39,39;47,39,39;650,30,32;650,30,32;652,10,18;652,10,18;652,10,18</data>
+        <description>Abraknyde</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8724" cell="284">
+        <data>650,30,32;650,30,32;47,39,39;47,39,39;47,39,39;917,40,48;917,40,48;917,40,48</data>
+        <description>Abraknyde</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8710" cell="281">
+        <data>256,25,45;253,72,84</data>
+        <description>Abraknyde</description>
+        <hall>10</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8711" cell="254">
+        <data>253,72,84;47,39,39;47,39,39;256,25,46;256,25,46</data>
+        <description>Abraknyde</description>
+        <hall>11</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10234" cell="252">
+        <data>256,25,46;256,25,46;256,25,46;256,25,46;173,200,240;650,33,33;650,33,33;650,33,33</data>
+        <description>Abraknyde</description>
+        <hall>12</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1783" cell="254">
+        <data>96,13,13;96,13,13;96,13,13;96,13,13;96,13,13;96,13,13;96,13,13;96,13,13</data>
+        <description>Donjon Wabbit</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1784" cell="338">
+        <data>68,13,13;68,13,13;68,13,13;68,13,13;68,13,13;68,13,13;68,13,13;68,13,13</data>
+        <description>Donjon Wabbit</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1785" cell="352">
+        <data>72,13,13;72,13,13;72,13,13;72,13,13;72,13,13;72,13,13;72,13,13;72,13,13</data>
+        <description>Donjon Wabbit</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1786" cell="324">
+        <data>64,20,20;64,20,20;64,20,20;64,20,20;64,20,20;64,20,20;64,20,20;64,20,20</data>
+        <description>Donjon Wabbit</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1787" cell="238">
+        <data>65,25,25;65,25,25;65,25,25;65,25,25;65,25,25;65,25,25;65,25,25;65,25,25</data>
+        <description>Donjon Wabbit</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1788" cell="338">
+        <data>97,39,39;97,39,39;97,39,39;97,39,39;97,39,39;97,39,39;97,39,39;97,39,39</data>
+        <description>Donjon Wabbit</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1789" cell="268">
+        <data>181,49,49;181,49,49;181,49,49;181,49,49;181,49,49;181,49,49;181,49,49;181,49,49</data>
+        <description>Donjon Wabbit</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1790" cell="352">
+        <data>99,43,43;99,43,43;99,43,43;99,43,43;99,43,43;99,43,43;99,43,43;99,43,43</data>
+        <description>Donjon Wabbit</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1836" cell="268">
+        <data>226,200,200</data>
+        <description>moon</description>
+        <hall>0</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8714" cell="253">
+        <data>260,110,110;992,80,92;992,80,92;992,80,92,72,84;991,72,84;991,72,84;991,72,84</data>
+        <description>CM</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9121" cell="111">
+        <data>992,80,92</data>
+        <description>CM</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9122" cell="183">
+        <data>991,72,84</data>
+        <description>CM</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9125" cell="224">
+        <data>260,110,110;258,130,130;258,130,130;991,72,84;991,72,84;991,72,84;992,80,92;992,80,92</data>
+        <description>CM</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10153" cell="106">
+        <data>260,110,110;258,130,130;257,920,920</data>
+        <description>CM</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8979" cell="126">
+        <data>626,1,1;626,1,1</data>
+        <description>famillier</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8980" cell="109">
+        <data>619,1,1;620,1,1;621,1,1;622,1,1</data>
+        <description>famillier</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8981" cell="250">
+        <data>624,1,1;618,1,1;623,1,1;616,1,1</data>
+        <description>famillier</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8982" cell="155">
+        <data>635,1,1;617,1,1;660,1,1;665,1,1</data>
+        <description>famillier</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8983" cell="169">
+        <data>620,1,1;624,1,1;631,1,1;663,1,1;631,1,1</data>
+        <description>famillier</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8984" cell="162">
+        <data>770,1,1;765,1,1;634,1,1;659,1,1</data>
+        <description>famillier</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8291" cell="98">
+        <data>520,35,35;518,34,34;515,18,18;548,15,15;112,15,15</data>
+        <description>Bulbes</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8295" cell="148">
+        <data>520,35,35;518,34,34;515,18,18;548,15,15;520,35,35;518,34,34;515,18,18;548,15,15</data>
+        <description>Bulbes</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8290" cell="297">
+        <data>520,35,35;520,35,35;520,35,35;518,34,34;515,18,18;548,15,15</data>
+        <description>Bulbes</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8293" cell="125">
+        <data>520,35,35;518,34,34;515,18,18;548,15,15;522,50,60</data>
+        <description>Bulbes</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8294" cell="331">
+        <data>522,50,60;518,34,34;518,34,34;515,18,18;548,15,15</data>
+        <description>Bulbes</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8296" cell="153">
+        <data>518,34,38;515,18,26;548,15,25;519,80,85</data>
+        <description>Bulbes</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8950" cell="168">
+        <data>747,40,40;747,40,40;748,40,40;748,40,40;748,40,40</data>
+        <description>Koulosse</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8952" cell="286">
+        <data>747,40,40;747,40,40;748,40,40;748,40,40;753,50,60;752,50,60</data>
+        <description>Koulosse</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8953" cell="155">
+        <data>752,50,60;747,40,40;747,40,40;753,50,60;746,80,100;746,80,100;746,80,100</data>
+        <description>Koulosse</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8954" cell="151">
+        <data>671,48,48;671,48,48;671,48,48;671,48,48;671,48,48;747,40,40;747,40,40;672,52,52</data>
+        <description>Koulosse</description>
+        <hall>caverne</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8955" cell="119">
+        <data>671,48,48;671,48,48;671,48,48;747,40,40;747,40,40</data>
+        <description>Koulosse</description>
+        <hall>caverne</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8958" cell="253">
+        <data>671,48,48;671,48,48;671,48,48;747,40,40;747,40,40;672,52,52</data>
+        <description>Koulosse</description>
+        <hall>caverne</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8957" cell="254">
+        <data>672,52,52;672,52,52;672,52,52;672,52,52;747,40,40</data>
+        <description>Koulosse</description>
+        <hall>caverne</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8962" cell="284">
+        <data>747,40,40;747,40,40;747,40,40;672,52,52;672,52,52</data>
+        <description>Koulosse</description>
+        <hall>caverne</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8963" cell="258">
+        <data>747,40,40;747,40,40;753,50,60;754,50,60;746,80,100;746,80,100;755,80,100;755,80,100</data>
+        <description>Koulosse</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8964" cell="126">
+        <data>747,40,40;747,40,40;747,40,40;746,80,100;746,80,100;763,115,115;763,115,115</data>
+        <description>Koulosse</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8965" cell="197">
+        <data>671,48,48;671,48,48;671,48,48;671,48,48;671,48,48;671,48,48;671,48,48;670,200,220</data>
+        <description>Koulosse</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6836" cell="183">
+        <data>58,50,58;430,200,280;86,150,170;85,100,120</data>
+        <description>GelÃ©e</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1837" cell="268">
+        <data>230,70,94;231,51,75;228,30,38;229,51,75;231,51,75;228,30,38;229,51,75</data>
+        <description>Le chouque</description>
+        <hall>Boss</hall>
+        <regenTime>3600000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6831" cell="183">
+        <data>58,50,58</data>
+        <description>GelÃ©e</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6832" cell="183">
+        <data>430,200,280</data>
+        <description>GelÃ©e</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6833" cell="183">
+        <data>86,150,170</data>
+        <description>GelÃ©e</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6834" cell="183">
+        <data>85,100,120</data>
+        <description>GelÃ©e</description>
+        <hall>Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9521" cell="214">
+        <data>43,2,2;43,2,2;43,2,2;43,2,2;43,2,2;43,2,2;43,2,2;43,2,2</data>
+        <description>Tofu</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9523" cell="268">
+        <data>43,2,4;43,2,4;43,2,4;43,2,4;43,2,4;43,2,4;796,16,16</data>
+        <description>Tofu</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9524" cell="268">
+        <data>43,2,4;43,2,4;43,2,4;43,2,4;43,2,4;43,2,4;43,2,4;806,30,30</data>
+        <description>Tofu</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9530" cell="245">
+        <data>43,2,4;43,2,4;43,2,4;43,2,4;43,2,4;806,30,30;806,30,30;806,30,30</data>
+        <description>Tofu</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9533" cell="381">
+        <data>806,30,30;806,30,30;806,30,30;806,30,30;796,16,16;796,16,16;796,16,16</data>
+        <description>Tofu</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9765" cell="183">
+        <data>43,2,4;43,2,4;43,2,4;43,2,4;43,2,4;43,2,4;804,40,70;804,40,70</data>
+        <description>Tofu</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9766" cell="326">
+        <data>43,2,4;804,30,70;796,16,50;796,16,50;796,16,50;806,30,100;800,68,100;808,50,100</data>
+        <description>Tofu</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11259" cell="207">
+        <data>1070,54,90;1026,40,52;1019,50,90</data>
+        <description>Rasboul</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11262" cell="269">
+        <data>1070,54,90;1068,62,62;1069,53,89;1069,53,89</data>
+        <description>Rasboul</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9650" cell="170">
+        <data>287,60,70;287,60,70;287,60,70;287,60,70</data>
+        <description>Donjon des Canidés</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9651" cell="239">
+        <data>299,15,21;299,15,21;299,15,21;299,15,21</data>
+        <description>Donjon des Canidés</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9653" cell="227">
+        <data>102,60,75;102,60,75;287,60,70;159,18,24;159,18,24</data>
+        <description>Donjon des Canidés</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9655" cell="272">
+        <data>287,60,70;287,60,70;287,60,70;102,60,75;301,47,55</data>
+        <description>Donjon des Canidés</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9654" cell="223">
+        <data>287,60,70;287,60,70;287,60,70;102,60,75;301,47,55</data>
+        <description>Donjon des Canidés</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10125" cell="213">
+        <data>102,60,75;102,60,75;287,60,70;159,18,24;159,18,24</data>
+        <description>Donjon des Canidés</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9656" cell="250">
+        <data>287,60,70;287,60,70;159,18,24;159,18,24;159,18,24;301,47,55</data>
+        <description>Donjon des Canidés</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9657" cell="197">
+        <data>102,75,80;102,75,80;102,75,80;301,54,57;301,54,57;301,54,57</data>
+        <description>Donjon des Canidés</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9658" cell="214">
+        <data>102,75,80;102,75,80;102,75,80;102,75,80;102,75,80;102,75,80;102,75,80</data>
+        <description>Donjon des Canidés</description>
+        <hall>10</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9659" cell="213">
+        <data>102,75,80;102,75,80;102,75,80;102,75,80;287,75,80;287,75,80</data>
+        <description>Donjon des Canidés</description>
+        <hall>11</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10211" cell="297">
+        <data>941,80,100;941,80,100;942,70,110;942,70,110;942,70,110;942,70,110;938,60,100;938,60,100</data>
+        <description>Rat bonta</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9647" cell="242">
+        <data>102,80,80;159,24,24;159,24,24;159,24,24;159,24,24;159,24,24</data>
+        <description>Donjon des Canidés</description>
+        <hall>13</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9648" cell="309">
+        <data>102,80,80;102,80,80;159,24,24;159,24,24;287,80,80;287,80,80;301,57,57;232,158,198</data>
+        <description>Donjon des Canidés</description>
+        <hall>14</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9652" cell="298">
+        <data>287,60,70;159,18,24;159,18,24;159,18,24</data>
+        <description>Donjon des Canidés</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10201" cell="267">
+        <data>942,70,110;942,70,110;442,42,58;442,42,58;447,40,48</data>
+        <description>Rat bonta</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10202" cell="178">
+        <data>447,40,48;442,42,58;442,42,58;442,42,58;442,42,58;442,42,58;442,42,58;442,42,58</data>
+        <description>Rat bonta</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10203" cell="238">
+        <data>442,42,58;447,40,48;447,40,48;447,40,48;447,40,48;447,40,48;447,40,48;447,40,48</data>
+        <description>Rat bonta</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10204" cell="295">
+        <data>447,40,48;442,42,58;442,42,58;942,70,110;942,70,110;942,70,110;942,70,110;942,70,110</data>
+        <description>Rat bonta</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10205" cell="297">
+        <data>941,80,100;942,70,110;942,70,110;938,60,100;938,60,100;447,40,48</data>
+        <description>Rat bonta</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10210" cell="340">
+        <data>941,80,100;941,80,100;941,80,100;941,80,100;941,80,100;442,42,58;442,42,58;442,42,58</data>
+        <description>Rat bonta</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9864" cell="151">
+        <data>826,39,51</data>
+        <description>Craqueleur</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9578" cell="162">
+        <data>106,25,37;106,25,37;106,25,37;106,25,37;483,20,28;483,20,28</data>
+        <description>Craqueleur</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9581" cell="162">
+        <data>483,20,28;483,20,28;483,20,28;483,20,28;483,20,28;106,25,37;106,25,37;106,25,37</data>
+        <description>Craqueleur</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9582" cell="181">
+        <data>106,25,37;106,25,37;106,25,37;106,25,37;483,20,28;483,20,28;483,20,28</data>
+        <description>Craqueleur</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9583" cell="270">
+        <data>293,39,51;293,39,51;293,39,51;106,25,37;106,25,37;106,25,37</data>
+        <description>Craqueleur</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9584" cell="195">
+        <data>483,20,28;483,20,28;483,20,28;483,20,28;483,20,28;483,20,28;483,20,28;483,20,28</data>
+        <description>Craqueleur</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9585" cell="80">
+        <data>293,39,51;483,20,28;483,20,28;483,20,28;483,20,28;483,20,28;483,20,28</data>
+        <description>Craqueleur</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9586" cell="254">
+        <data>293,39,51;293,39,51;483,20,28;483,20,28;483,20,28;483,20,28;483,20,28;483,20,28</data>
+        <description>Craqueleur</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9587" cell="270">
+        <data>293,39,51;293,39,51;293,39,51;106,25,37;106,25,37;106,25,37;106,25,37;106,25,37</data>
+        <description>Craqueleur</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9580" cell="170">
+        <data>669,120,140;293,39,51;293,39,51;293,39,51;293,39,51;483,20,28;483,20,28;483,20,28</data>
+        <description>Craqueleur</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8303" cell="267">
+        <data>523,29,29;530,79,79;530,79,79</data>
+        <description>Kitsoune</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8304" cell="221">
+        <data>523,29,29;523,29,29;530,79,79;530,79,79;531,57,57;531,57,57</data>
+        <description>Kitsoune</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8306" cell="181">
+        <data>523,29,29;531,57,57;530,79,79;532,109,109</data>
+        <description>Kitsoune</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8311" cell="311">
+        <data>523,29,29;531,57,57;530,79,79;532,109,109</data>
+        <description>Kitsoune</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8310" cell="268">
+        <data>523,29,29;531,57,57;530,79,79;532,109,109</data>
+        <description>Kitsoune</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8313" cell="183">
+        <data>523,23,23;523,23,23;530,75,75;532,109,109;531,57,57;531,57,57</data>
+        <description>Kitsoune</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8305" cell="237">
+        <data>523,21,21;523,21,21;530,73,73;530,73,73;532,103,103;532,103,103;531,53,53;531,53,53</data>
+        <description>Kitsoune</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8314" cell="269">
+        <data>568,120,140;523,23,23;531,61,61;530,75,75;532,103,103</data>
+        <description>Kitsoune</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7519" cell="223">
+        <data>74,18,31;74,18,31;74,18,31;53,15,35;53,15,35;876,22,43;876,22,43;876,22,43</data>
+        <description>Bworker</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7520" cell="268">
+        <data>479,90,98;74,18,31;53,15,35;53,15,35;53,15,35;876,22,43;876,22,43;876,22,43</data>
+        <description>Bworker</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7521" cell="269">
+        <data>479,90,98;479,90,98;74,18,31;74,18,31;74,18,31;74,18,31;53,15,35;53,15,35</data>
+        <description>Bworker</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7522" cell="268">
+        <data>479,90,98;479,90,98;484,125,133;487,125,133;74,18,31;53,15,35;876,22,43</data>
+        <description>Bworker</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7523" cell="268">
+        <data>484,125,133;485,125,133;486,125,133;487,125,133;479,90,98;876,22,43;74,18,31;53,15,35</data>
+        <description>Bworker</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7524" cell="343">
+        <data>484,125,133;485,125,133;486,125,133;487,125,133;487,125,133;485,125,133;479,90,98;479,90,98</data>
+        <description>Bworker</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7525" cell="178">
+        <data>488,165,185;488,165,185;479,90,98;479,90,98;484,125,133;485,125,133;486,125,133;487,125,133</data>
+        <description>Bworker</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="7526" cell="252">
+        <data>478,400,440;488,165,185;488,165,185;488,165,185;479,90,98;479,90,98;486,125,133;484,125,133</data>
+        <description>Bworker</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10212" cell="355">
+        <data>940,10,140;941,80,100;942,70,110;942,70,110;942,70,110;938,60,100;447,40,48;442,42,58</data>
+        <description>Rat bonta</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10200" cell="286">
+        <data>938,60,100;442,42,58;442,42,58;447,40,48</data>
+        <description>Rat bonta</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10176" cell="281">
+        <data>937,60,100;442,42,58;442,42,58;447,40,48</data>
+        <description>Rat Brâkmar</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10191" cell="70">
+        <data>935,70,110;935,70,110;442,42,58;442,42,58;447,40,48</data>
+        <description>Rat BrÃ¢kmar</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10192" cell="141">
+        <data>442,42,58;442,42,58;442,42,58;442,42,58;442,42,58;442,42,58;442,42,58;447,40,48</data>
+        <description>Rat BrÃ¢kmar</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10193" cell="97">
+        <data>442,42,58;447,40,48;447,40,48;447,40,48;447,40,48;447,40,48;447,40,48;447,40,48</data>
+        <description>Rat BrÃ¢kmar</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10194" cell="155">
+        <data>935,70,110;935,70,110;935,70,110;935,70,110;935,70,110;447,40,48;442,42,58</data>
+        <description>Rat BrÃ¢kmar</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10195" cell="185">
+        <data>936,80,100;935,70,110;935,70,110;937,60,100;937,60,100;447,40,48</data>
+        <description>Rat BrÃ¢kmar</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10196" cell="380">
+        <data>936,80,100;936,80,100;936,80,100;936,80,100;936,80,100;442,42,58;442,42,58;442,42,58</data>
+        <description>Rat BrÃ¢kmar</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10197" cell="296">
+        <data>936,80,100;936,80,100;935,70,110;935,70,110;935,70,110;935,70,110;937,60,100;937,60,100</data>
+        <description>Rat BrÃ¢kmar</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10198" cell="169">
+        <data>939,100,140;936,80,100;935,70,110;935,70,110;935,70,110;937,60,100;447,40,48;442,42,58</data>
+        <description>Rat BrÃ¢kmar</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10141" cell="254">
+        <data>938,60,100;937,60,100;447,40,48;447,40,48;465,30,42;465,30,42</data>
+        <description>Rat d amakna</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10142" cell="237">
+        <data>937,60,100;938,60,100;938,60,100;937,60,100;937,60,100;447,40,48;447,40,48;938,60,100</data>
+        <description>Rat d amakna</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10143" cell="284">
+        <data>935,70,110;935,70,110;942,70,110;942,70,110;447,40,48;447,40,48</data>
+        <description>Rat d amakna</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10144" cell="228">
+        <data>938,60,100;942,70,110;937,60,100;935,70,110;447,40,48;447,40,48</data>
+        <description>Rat d amakna</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10145" cell="298">
+        <data>938,60,100;938,60,100;938,60,100;937,60,100;937,60,100;937,60,100</data>
+        <description>Rat d amakna</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10146" cell="183">
+        <data>935,70,110;935,70,110;935,70,110;938,60,100;938,60,100;938,60,100</data>
+        <description>Rat d amakna</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10147" cell="183">
+        <data>941,80,100;941,80,100;936,80,100;936,80,100;465,30,42;465,30,42;465,30,42;447,40,48</data>
+        <description>Rat d amakna</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10148" cell="224">
+        <data>936,80,100;936,80,100;936,80,100;941,80,100;941,80,100;941,80,100;941,80,100</data>
+        <description>Rat d amakna</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10149" cell="409">
+        <data>943,400,440;940,100,140;939,100,140;942,70,110;941,80,100;936,80,100;937,60,100;935,70,110</data>
+        <description>Rat d amakna</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8282" cell="267">
+        <data>566,40,43;566,40,43;566,40,43;566,40,43;566,40,43</data>
+        <description>Pandikaze</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8321" cell="315">
+        <data>578,45,49;578,45,49;578,45,49;578,45,49</data>
+        <description>Pandikaze</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8322" cell="292">
+        <data>566,40,43;578,45,49;578,45,49;578,45,49;578,45,49;578,45,49;578,45,49</data>
+        <description>Pandikaze</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8326" cell="386">
+        <data>578,45,51;578,45,51;578,45,51;578,45,51;578,45,51;579,55,55</data>
+        <description>Pandikaze</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8327" cell="324">
+        <data>579,55,55;579,55,55;579,55,55;579,55,55;579,55,55;581,70,76</data>
+        <description>Pandikaze</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8328" cell="329">
+        <data>578,45,51;578,45,51;578,45,51;578,45,51;578,45,51;578,45,51;578,45,51;580,85,85</data>
+        <description>Pandikaze</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8329" cell="205">
+        <data>580,85,85;580,85,85;581,70,76;579,55,55;579,55,55;579,55,55;578,45,53;578,45,53</data>
+        <description>Pandikaze</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8330" cell="239">
+        <data>607,100,100;607,100,100;607,100,100;607,100,100</data>
+        <description>Pandikaze</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8331" cell="237">
+        <data>612,200,240;580,85,85;581,78,78;579,55,55;578,49,53;578,49,53</data>
+        <description>Pandikaze</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9528" cell="112">
+        <data>804,40,70;804,40,70</data>
+        <description>Tofu royal</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9529" cell="184">
+        <data>807,40,40;808,50,100</data>
+        <description>Tofu royal</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9531" cell="374">
+        <data>804,40,70;804,40,70;806,30,38;806,30,38;98,2,6;98,2,6;98,2,6;98,2,6</data>
+        <description>Tofu royal</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9532" cell="156">
+        <data>804,40,70;804,40,70;804,40,70;804,40,70;808,50,58;808,50,58;808,50,58;808,50,58</data>
+        <description>Tofu royal</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9534" cell="198">
+        <data>804,40,70;804,40,70;804,40,70;804,40,70;804,40,70;807,40,90;808,50,58;806,30,38</data>
+        <description>Tofu royal</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9535" cell="326">
+        <data>804,40,70;804,40,70;806,30,38;808,50,58;808,50,58;382,100,120;796,10,18;796,10,18</data>
+        <description>Tofu royal</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6691" cell="253">
+        <data>414,15,23;31,2,6;31,2,6;34,6,10;34,6,10;46,8,12;46,8,12</data>
+        <description>Larve</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6693" cell="212">
+        <data>412,15,19;412,15,19;412,15,19;46,8,12;46,8,12;34,6,10;34,6,10</data>
+        <description>Larve</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6709" cell="183">
+        <data>412,15,19;412,15,19;412,15,19;46,8,12;46,8,12;34,6,10;34,6,10</data>
+        <description>Larve</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6710" cell="198">
+        <data>413,35,43;414,15,23;414,15,23;412,15,19;412,15,19;46,8,12;34,6,10;31,2,6</data>
+        <description>Larve</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6721" cell="183">
+        <data>414,15,23;412,15,19;412,15,19;412,15,19;46,8,12;46,8,12;46,8,12;46,8,12</data>
+        <description>Larve</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6722" cell="183">
+        <data>414,15,23;412,15,19;412,15,19;412,15,19;46,8,12;46,8,12;46,8,12;46,8,12</data>
+        <description>Larve</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6902" cell="183">
+        <data>413,35,43;414,15,23;414,15,23;414,15,23;412,15,19</data>
+        <description>Larve</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6903" cell="183">
+        <data>413,35,43;414,15,23;414,15,23;414,15,23;412,15,19</data>
+        <description>Larve</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6723" cell="183">
+        <data>413,35,43;413,35,43;414,15,23;414,15,23;412,15,19;412,15,19;46,8,12;46,8,12</data>
+        <description>Larve</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="6811" cell="253">
+        <data>413,35,43;413,35,43;414,15,23;414,15,23;414,15,23;412,15,19;412,15,19;412,15,19</data>
+        <description>Larve</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8203" cell="253">
+        <data>457,60,68;414,15,23;413,35,43;411,15,23;412,15,19</data>
+        <description>Larve</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8694" cell="352">
+        <data>649,1,1</data>
+        <description>Coffre Sombre</description>
+        <hall>0</hall>
+        <regenTime>79200000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10330" cell="252">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Enutrof</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10326" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Crâ</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10305" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Ecaflip</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10322" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Eniripsa</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10331" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Féca</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10325" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Pandawa</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10321" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Sadida</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10328" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Sacrieur</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10324" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Sram</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10329" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Xélor</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10327" cell="308">
+        <data>999,1,1</data>
+        <description>Epouvantail d'Incarnam Iop</description>
+        <hall>0</hall>
+        <regenTime>5000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10025" cell="241">
+        <data>1180,13,13;1180,13,13;1180,13,13;1180,13,13;1179,35,43</data>
+        <description>nowel 1</description>
+        <hall>boss</hall>
+        <regenTime>10000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11961" cell="241">
+        <data>839,70,80;839,70,80;872,160,200</data>
+        <description>nowel 2</description>
+        <hall>boss</hall>
+        <regenTime>10000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11951" cell="241">
+        <data>851,43,43;851,43,43;851,43,43;851,43,43;851,43,43;839,80,80;839,80,80;1194,200,240</data>
+        <description>nowel 3</description>
+        <hall>boss</hall>
+        <regenTime>10000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8969" cell="85">
+        <data>754,60,68;754,60,68;754,60,68;754,60,68;744,85,97;744,85,97</data>
+        <description>Skeunk</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8968" cell="286">
+        <data>783,100,120;756,90,98;756,90,98;744,85,97;751,60,68;752,60,68;753,60,68</data>
+        <description>Skeunk</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11075" cell="240">
+        <data>1064,30,70;1065,28,60;1060,30,46;1061,30,46;1062,30,46;1063,30,46</data>
+        <description>Grotte Hesque</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2105" cell="226">
+        <data>155,8,16;155,8,16;155,8,16;155,8,16;155,8,16;155,8,16;155,8,16;155,8,16</data>
+        <description>Forgeron</description>
+        <hall>0</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2088" cell="338">
+        <data>153,5,17;153,5,17;153,5,17;153,5,17;153,5,17;153,5,17;153,5,17;153,5,17</data>
+        <description>Forgeron</description>
+        <hall>0</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2097" cell="241">
+        <data>119,28,48;118,16,31;153,5,17;153,5,17;153,5,17;155,8,16;155,8,16;155,8,16</data>
+        <description>Forgeron</description>
+        <hall>0</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10814" cell="282">
+        <data>1064,30,70;1060,30,46;1061,30,46;1062,30,46;1063,30,46</data>
+        <description>Grotte Hesque</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10815" cell="310">
+        <data>1022,48,60;1064,30,70;1065,28,60;1066,28,60;1067,28,60</data>
+        <description>Grotte Hesque</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11076" cell="156">
+        <data>1022,48,60;1022,48,60;1067,28,60;1066,28,60;1063,30,46;1062,30,46</data>
+        <description>Grotte Hesque</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11077" cell="222">
+        <data>1022,48,60;1022,48,60;1022,48,60;1064,30,70;1065,28,60;1066,28,60;1067,28,60</data>
+        <description>Grotte Hesque</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11078" cell="341">
+        <data>1022,48,60;1022,48,60;1022,48,60;1022,48,60;1022,48,60;1064,30,70;1060,30,46</data>
+        <description>Grotte Hesque</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11079" cell="338">
+        <data>1027,150,150;1022,48,48;1064,30,30;1066,28,28;1067,28,28;1060,30,30</data>
+        <description>Grotte Hesque</description>
+        <hall>7 Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11074" cell="166">
+        <data>1050,60,76;1049,52,80;231,51,51;231,51,51;1048,48,80</data>
+        <description>Arche Otomai</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11071" cell="283">
+        <data>1050,60,76;1050,60,76;1049,52,80;1049,52,80;1048,48,80;1048,48,80</data>
+        <description>Arche Otomai</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11072" cell="267">
+        <data>1050,60,76;1050,60,76;1050,60,76;1050,60,76;1048,48,80;1048,48,80</data>
+        <description>Arche Otomai</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11068" cell="267">
+        <data>1048,48,80;1048,48,80;229,51,75;1050,60,76;1050,60,76;1049,52,80;1049,52,80</data>
+        <description>Arche Otomai</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11235" cell="168">
+        <data>1048,48,80;1049,52,80;1049,52,80;1049,52,80;1050,60,76;1050,60,76;1048,48,80</data>
+        <description>Arche Otomai</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11073" cell="355">
+        <data>1051,160,190;1049,80,80;1049,80,80;1048,80,80;1080,1,100;1080,1,100;1080,1,100;1080,1,100</data>
+        <description>Arche Otomai</description>
+        <hall>7 Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11263" cell="314">
+        <data>1019,50,90;1019,50,90;1019,50,90;1019,50,90;1019,50,90</data>
+        <description>Rasboul</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11264" cell="296">
+        <data>1025,50,90;1025,50,90;1025,50,90;1025,50,90;1070,54,90;1019,50,90</data>
+        <description>Rasboul</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11265" cell="314">
+        <data>1069,53,89;1069,53,89;1068,62,62;1068,62,62;1070,54,90;1070,54,90;1070,54,90</data>
+        <description>Rasboul</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11266" cell="267">
+        <data>1019,50,90;1019,50,90;1069,53,89;1069,53,89;1070,54,90;1070,54,90;1068,62,62;1025,50,90</data>
+        <description>Rasboul</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11267" cell="240">
+        <data>1071,400,440;1019,50,90;1019,50,90;1068,62,62;1070,54,90;1069,53,89;1025,50,90;1080,20,20</data>
+        <description>Rasboul</description>
+        <hall>7 Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10807" cell="316">
+        <data>1041,69,113;1074,58,78;1074,58,78;1076,54,74;1076,54,74</data>
+        <description>Tynril</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10808" cell="311">
+        <data>1073,82,98;1029,73,109;1041,69,113;1041,69,113;1074,58,78</data>
+        <description>Tynril</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10809" cell="271">
+        <data>1075,81,101;1074,58,78;1074,58,78;1076,54,74;1029,73,109</data>
+        <description>Tynril</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10810" cell="300">
+        <data>1029,73,109;1041,69,113;1041,69,113;1041,69,113;1041,69,113;1075,81,101</data>
+        <description>Tynril</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10811" cell="369">
+        <data>1077,81,125;1077,81,125;1077,81,125;1029,73,109;1041,69,113;1041,69,113;1041,69,113</data>
+        <description>Tynril</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10812" cell="328">
+        <data>1072,200,240;1085,200,240;1086,200,240;1087,200,240</data>
+        <description>Tynril</description>
+        <hall>6 Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8541" cell="345">
+        <data>123,16,20;123,16,20;123,16,20;123,16,20;123,16,20</data>
+        <description>DC</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8542" cell="341">
+        <data>603,30,38;603,30,38;603,30,38;603,30,38;603,30,38</data>
+        <description>DC</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8543" cell="295">
+        <data>601,60,72;123,16,20;123,16,20;123,16,20;123,16,20;123,16,20</data>
+        <description>DC</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8544" cell="279">
+        <data>601,60,72;601,60,72;601,60,72;603,30,38;603,30,38;603,30,38</data>
+        <description>DC</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9880" cell="165">
+        <data>121,125,133;831,100,120;832,100,120;668,40,48;668,40,48;830,30,38;830,30,38;829,50,58</data>
+        <description>Minotoror</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8546" cell="426">
+        <data>601,60,72;601,60,72;601,60,72;603,30,38;123,16,20;123,16,20;123,16,20</data>
+        <description>DC</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8547" cell="297">
+        <data>600,60,68;600,60,68;123,16,20;123,16,20;123,16,20;123,16,20;123,16,20;123,16,20</data>
+        <description>DC</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8548" cell="200">
+        <data>600,60,68;600,60,68;600,60,68;601,60,72;603,30,38;603,30,38;603,30,38;123,16,20</data>
+        <description>DC</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8549" cell="241">
+        <data>113,100,120;600,60,68;600,60,68;601,60,72;601,60,72;123,16,20;603,30,38;603,30,38</data>
+        <description>DC</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8545" cell="164">
+        <data>123,16,20;123,16,20;123,16,20;603,30,38;603,30,38;603,30,38</data>
+        <description>DC</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10098" cell="113">
+        <data>848,50,58;848,50,58;886,50,58;886,50,58;884,50,58</data>
+        <description>Crocabulia</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10099" cell="153">
+        <data>855,70,78;855,70,78;855,70,78;855,70,78;848,50,58</data>
+        <description>Crocabulia</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10100" cell="199">
+        <data>862,80,96;862,80,96;862,80,96;848,50,58;886,50,58;885,50,58</data>
+        <description>Crocabulia</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10101" cell="270">
+        <data>853,80,96;853,80,96;853,80,96;886,50,58;886,50,58;885,50,58</data>
+        <description>Crocabulia</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10102" cell="297">
+        <data>853,80,96;853,80,96;853,80,96;855,70,78;855,70,78;862,80,96;862,80,96</data>
+        <description>Crocabulia</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10103" cell="184">
+        <data>905,100,108;905,100,108;905,100,108;91,70,78;885,50,58;884,50,58;886,50,58</data>
+        <description>Crocabulia</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10106" cell="127">
+        <data>905,100,108;905,100,108;905,100,108;905,100,108;878,100,108;878,100,108;858,100,108;879,100,108</data>
+        <description>Crocabulia</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10107" cell="339">
+        <data>879,100,108;878,100,108;855,70,78;855,70,78;855,70,78;862,80,96;862,80,96;862,80,96</data>
+        <description>Crocabulia</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10109" cell="111">
+        <data>854,400,480;905,100,108;879,100,108;878,100,108;858,100,108;855,70,78;862,80,96;862,80,96</data>
+        <description>Crocabulia</description>
+        <hall>9 Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11931" cell="382">
+        <data>1153,125,181;1156,152,224;1154,113,169;1157,144,204;1155,134,169</data>
+        <description>Fungus</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11932" cell="307">
+        <data>1155,134,169;1155,134,169;1157,144,204;1157,144,204;1158,149,201;1158,149,201</data>
+        <description>Fungus</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11933" cell="226">
+        <data>1153,125,181;1153,125,181;1153,125,181;1156,152,224;1156,152,224;1156,152,224;1154,113,169</data>
+        <description>Fungus</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11936" cell="255">
+        <data>1153,125,181;1156,152,224</data>
+        <description>Fungus</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11937" cell="257">
+        <data>1153,125,181;1156,152,224;1154,113,169</data>
+        <description>Fungus</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11938" cell="164">
+        <data>1153,125,181;1156,152,224;1154,113,169;1154,113,169;1155,134,169;1155,134,169;1157,144,204;1158,149,201</data>
+        <description>Fungus</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11939" cell="343">
+        <data>1153,167,181;1153,167,181;1159,900,940;1158,188,201;1157,189,204;1155,176,190;1154,155,169;1156,206,224</data>
+        <description>Fungus</description>
+        <hall>8 Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8967" cell="299">
+        <data>783,100,120;783,100,120;783,100,120;756,90,98;756,90,98;756,90,98;744,85,97</data>
+        <description>Skeunk</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8951" cell="75">
+        <data>681,100,120</data>
+        <description>Skeunk</description>
+        <hall>Diamantine</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8970" cell="156">
+        <data>673,100,120;674,40,48;674,40,48;674,40,48;674,40,48;674,40,48</data>
+        <description>Skeunk</description>
+        <hall>Emeraude</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8972" cell="385">
+        <data>675,100,120;676,1,5</data>
+        <description>Skeunk</description>
+        <hall>Saphira</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8971" cell="312">
+        <data>677,100,120</data>
+        <description>Skeunk</description>
+        <hall>Rubise</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8977" cell="227">
+        <data>780,200,240;673,100,120;675,100,120;677,100,120;681,100,120</data>
+        <description>Skeunk</description>
+        <hall>Skeunk</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1767" cell="212">
+        <data>72,12,14;72,12,14;72,12,14;68,12,14;68,12,14;68,12,14;96,12,14</data>
+        <description>Chateau Wa</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="1774" cell="225">
+        <data>181,53,55;181,53,55;180,160,200</data>
+        <description>Chateau Wa</description>
+        <hall>8 Boss</hall>
+        <regenTime>35000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8357" cell="183">
+        <data>605,800,850</data>
+        <description>peki peki</description>
+        <hall>boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11108" cell="181">
+        <data>1020,103,143</data>
+        <description>Kimbo</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11111" cell="293">
+        <data>1043,100,124;1044,104,132</data>
+        <description>Kimbo</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11113" cell="241">
+        <data>1043,100,124;1047,100,152;1020,103,143</data>
+        <description>Kimbo</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11115" cell="169">
+        <data>1046,80,92;1046,80,92;1044,104,132;1044,104,132</data>
+        <description>Kimbo</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11121" cell="287">
+        <data>1043,100,124;1043,100,124;1046,80,92;1020,103,143;1047,100,152</data>
+        <description>Kimbo</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11127" cell="298">
+        <data>1020,103,143;1020,103,143;1020,103,143;1020,103,143;1020,103,143;1020,103,143</data>
+        <description>Kimbo</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11128" cell="308">
+        <data>1020,103,143;1043,100,124;1046,80,92;1046,80,92;1044,104,132;1047,100,152</data>
+        <description>Kimbo</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11133" cell="240">
+        <data>1020,103,143;1020,103,143;1044,104,132;1044,104,132;1047,100,152;1045,950,990;1088,20,20;1088,20,20</data>
+        <description>Kimbo</description>
+        <hall>8 Boss</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9590" cell="166">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9594" cell="356">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9599" cell="310">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9591" cell="220">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9596" cell="313">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9600" cell="278">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9595" cell="266">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9603" cell="236">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9592" cell="196">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9597" cell="166">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>10</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9601" cell="196">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>11</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9723" cell="250">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>12</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9593" cell="166">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>13</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9598" cell="226">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>14</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9602" cell="269">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>15</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="4" cell="267">
+        <data>253,72,84;253,72,84;253,72,84;253,72,84;651,80,92;651,80,92;254,41,49;254,41,49</data>
+        <description>Foret des Abraknyde Mini Mine</description>
+        <hall>0</hall>
+        <regenTime>1200000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10256" cell="354">
+        <data>118,16,31;118,16,31</data>
+        <description>Exploitation miniere</description>
+        <hall>0</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="10256" cell="329">
+        <data>118,16,31;118,16,31</data>
+        <description>Exploitation miniere</description>
+        <hall>0</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="11067" cell="135">
+        <data>1049,52,80;1050,60,76;1048,48,80;228,30,38;229,51,75</data>
+        <description>Arche Otomai</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9724" cell="250">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;820,60,68;820,60,68;820,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>16</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9590" cell="169">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9594" cell="359">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>2</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9599" cell="313">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>3</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9591" cell="223">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>4</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9596" cell="310">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9600" cell="275">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>6</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9595" cell="263">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>7</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9603" cell="233">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>8</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9592" cell="193">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>9</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9597" cell="163">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>10</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9601" cell="193">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>11</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9723" cell="253">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>12</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9593" cell="163">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>13</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9598" cell="223">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>14</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9602" cell="266">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>15</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9724" cell="253">
+        <data>281,14,26;281,14,26;281,14,26;818,40,48;818,40,48;819,60,68;819,60,68;819,60,68</data>
+        <description>Maitre Corbac</description>
+        <hall>16</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="2038" cell="282">
+        <data>232,158,198</data>
+        <description>Grotte du Meulou</description>
+        <hall>0</hall>
+        <regenTime>79200000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="8545" cell="244">
+        <data>123,16,20;123,16,20;123,16,20;603,30,38;603,30,38;603,30,38</data>
+        <description>DC</description>
+        <hall>5</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+
+    <MonsterGroup map="9879" cell="228">
+        <data>827,400,440;121,125,133;831,100,120;832,100,120;668,40,48;668,40,48;830,30,38;830,30,38</data>
+        <description>Minotot</description>
+        <hall>1</hall>
+        <regenTime>30000</regenTime>
+    </MonsterGroup>
+</Group>
