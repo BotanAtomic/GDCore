@@ -78,9 +78,6 @@ public class Item {
     }
 
     public boolean isSame(Item other) {
-        System.err.println("Template : "+ other.template.getId() + "/" + this.template.getId());
-        System.err.println("Stats : "+ other.statistics + "/" + this.statistics);
-
         return other.template.getId() == this.template.getId() && other.statistics.equals(this.statistics);
     }
 }

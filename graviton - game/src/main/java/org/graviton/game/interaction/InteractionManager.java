@@ -1,10 +1,13 @@
 package org.graviton.game.interaction;
 
-import lombok.Getter;
-import lombok.Setter;
+import javafx.util.Pair;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.graviton.game.hdv.SellPoint;
 import org.graviton.game.house.House;
 import org.graviton.game.interaction.actions.*;
+import org.graviton.game.job.action.JobAction;
+import org.graviton.game.maps.object.InteractiveObject;
 import org.graviton.game.trunk.type.Trunk;
 import org.graviton.network.game.GameClient;
 
@@ -14,16 +17,20 @@ import java.util.ArrayDeque;
 /**
  * Created by Botan on 16/11/2016 : 21:03
  */
-
+@Data
 @Slf4j
 public class InteractionManager extends ArrayDeque<AbstractGameAction> {
     private final GameClient client;
 
     private int interactionCreature;
 
-    @Getter @Setter private House houseInteraction;
+    private House houseInteraction;
 
-    @Getter @Setter private Trunk trunkInteraction;
+    private Trunk trunkInteraction;
+
+    private SellPoint sellPointInteraction;
+
+    private Pair<InteractiveObject,JobAction> currentJobAction;
 
     private Status status = Status.DEFAULT;
 
@@ -71,7 +78,7 @@ public class InteractionManager extends ArrayDeque<AbstractGameAction> {
                 break;
 
             case MAP_ACTION:
-                addAction(new MapGameAction(client, data));
+                addAction(new GameMapAction(client, data));
                 break;
 
             case HOUSE_ACTION:

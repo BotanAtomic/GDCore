@@ -20,7 +20,7 @@ public class SubArea {
     public SubArea(XMLElement element, Area area) {
         this.gameMaps = new CopyOnWriteArrayList<>();
         this.id = element.getAttribute("id").toShort();
-        this.area = area;
+        (this.area = area).getSubAreas().add(this);
     }
 
     public void registerGameMap(GameMap gameMap) {

@@ -7,8 +7,10 @@ package org.graviton.database.jooq.game;
 import javax.annotation.Generated;
 
 import org.graviton.database.jooq.game.tables.Banks;
+import org.graviton.database.jooq.game.tables.Crafts;
 import org.graviton.database.jooq.game.tables.GuildMembers;
 import org.graviton.database.jooq.game.tables.Guilds;
+import org.graviton.database.jooq.game.tables.Hdvs;
 import org.graviton.database.jooq.game.tables.HousesData;
 import org.graviton.database.jooq.game.tables.Items;
 import org.graviton.database.jooq.game.tables.Maps;
@@ -38,6 +40,11 @@ public class Tables {
     public static final Banks BANKS = org.graviton.database.jooq.game.tables.Banks.BANKS;
 
     /**
+     * The table <code>game.crafts</code>.
+     */
+    public static final Crafts CRAFTS = org.graviton.database.jooq.game.tables.Crafts.CRAFTS;
+
+    /**
      * The table <code>game.guilds</code>.
      */
     public static final Guilds GUILDS = org.graviton.database.jooq.game.tables.Guilds.GUILDS;
@@ -46,6 +53,11 @@ public class Tables {
      * The table <code>game.guild_members</code>.
      */
     public static final GuildMembers GUILD_MEMBERS = org.graviton.database.jooq.game.tables.GuildMembers.GUILD_MEMBERS;
+
+    /**
+     * The table <code>game.hdvs</code>.
+     */
+    public static final Hdvs HDVS = org.graviton.database.jooq.game.tables.Hdvs.HDVS;
 
     /**
      * The table <code>game.houses_data</code>.

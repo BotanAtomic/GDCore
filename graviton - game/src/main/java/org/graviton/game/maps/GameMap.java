@@ -13,6 +13,8 @@ import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.FightFactory;
+import org.graviton.game.hdv.SellPoint;
+import org.graviton.game.hdv.SellPoint;
 import org.graviton.game.house.House;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
@@ -76,6 +78,8 @@ public class GameMap implements AbstractMap {
 
     private Zaap zaap;
     private Zaapi zaapi;
+
+    private SellPoint sellPoint;
 
     private byte[] restriction = {0, 0, 0, 0, 0, 0, 0};
 

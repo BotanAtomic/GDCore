@@ -15,9 +15,17 @@ commandRepository.register(JavaAdapter(AbstractCommand, {
     apply: function (player, data) {
         var itemTemplate = player.getEntityFactory().getItemTemplate(parseInt(data[1]));
         if (itemTemplate != null) {
+            var quantity = 1;
+            if (data.length > 2) {
+                quantity = parseInt(data[2]);
+            }
             var item = itemTemplate.createMax(player.entityFactory().getNextItemId());
-            player.getInventory().addItem(item, true);
-            player.send(org.graviton.network.game.protocol.ItemPacketFormatter.addItemMessage(item));
+            item.setQuantity(quantity);
+
+            var result = player.getInventory().addItem(item, true);
+
+            if (result === null)
+                player.send(org.graviton.network.game.protocol.ItemPacketFormatter.addItemMessage(item));
 
         }
     }

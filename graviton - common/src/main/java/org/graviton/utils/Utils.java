@@ -59,10 +59,27 @@ public class Utils {
         return -1;
     }
 
-    public static List<Integer> arraysToList(String data, String regex, boolean sync) {
+    public static List<Integer> arrayToIntList(String data, String regex, boolean sync) {
         List<Integer> result = sync ? new CopyOnWriteArrayList<>() : new ArrayList<>();
-        for(String part : data.split(regex))
-            result.add(Integer.parseInt(part));
+        for (String part : data.split(regex))
+            if (!part.isEmpty())
+                result.add(Integer.parseInt(part));
+        return result;
+    }
+
+    public static List<Short> arrayToShortList(String data, String regex) {
+        List<Short> result = new CopyOnWriteArrayList<>();
+        for (String part : data.split(regex))
+            if (!part.isEmpty())
+                result.add(Short.parseShort(part));
+        return result;
+    }
+
+    public static List<Byte> arrayToByteList(String data, String regex) {
+        List<Byte> result = new CopyOnWriteArrayList<>();
+        for (String part : data.split(regex))
+            if (!part.isEmpty())
+                result.add(Byte.parseByte(part));
         return result;
     }
 
@@ -167,7 +184,7 @@ public class Utils {
     }
 
     public static String parseZaaps(List<Integer> data) {
-        if(data.isEmpty())
+        if (data.isEmpty())
             return "";
 
         String zaap = "";
@@ -180,7 +197,7 @@ public class Utils {
         int size = data.split(regex).length;
         short[] shortArray = new short[size];
 
-        for(int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
             shortArray[i] = Short.parseShort(data.split(regex)[i]);
 
         return shortArray;

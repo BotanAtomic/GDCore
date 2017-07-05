@@ -54,7 +54,6 @@ public class Inventory extends ConcurrentHashMap<Integer, Item> {
         return values().stream().filter(other -> other.isSame(item) && ItemPosition.isSamePosition(other.getPosition(), item.getPosition())).findAny().orElse(null);
     }
 
-
     public Item same(Item item, ItemPosition position) {
         return values().stream().filter(other -> item.isSame(other) && position == other.getPosition()).findAny().orElse(null);
     }
@@ -75,5 +74,20 @@ public class Inventory extends ConcurrentHashMap<Integer, Item> {
     public Item haveItem(int template) {
         return values().stream().filter(item -> item.getTemplate().getId() == template).findFirst().orElse(null);
     }
+
+    public void setItemQuantity(Item item, short quantity) {
+        if(quantity <= 0) {
+            player.removeItem(item);
+            player.send(ItemPacketFormatter.deleteMessage(item.getId()));
+        } else {
+            item.setQuantity(quantity);
+            player.send(ItemPacketFormatter.quantityMessage(item.getId(), quantity));
+        }
+    }
+
+    public Item getItemByTemplate(short template) {
+        return values().stream().filter(item -> item.getTemplate().getId() == template).findAny().orElse(null);
+    }
+
 
 }

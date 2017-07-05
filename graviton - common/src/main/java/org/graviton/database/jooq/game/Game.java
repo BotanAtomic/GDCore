@@ -11,8 +11,10 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.graviton.database.jooq.game.tables.Banks;
+import org.graviton.database.jooq.game.tables.Crafts;
 import org.graviton.database.jooq.game.tables.GuildMembers;
 import org.graviton.database.jooq.game.tables.Guilds;
+import org.graviton.database.jooq.game.tables.Hdvs;
 import org.graviton.database.jooq.game.tables.HousesData;
 import org.graviton.database.jooq.game.tables.Items;
 import org.graviton.database.jooq.game.tables.Maps;
@@ -39,7 +41,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Game extends SchemaImpl {
 
-    private static final long serialVersionUID = -924928362;
+    private static final long serialVersionUID = 652808788;
 
     /**
      * The reference instance of <code>game</code>
@@ -52,6 +54,11 @@ public class Game extends SchemaImpl {
     public final Banks BANKS = org.graviton.database.jooq.game.tables.Banks.BANKS;
 
     /**
+     * The table <code>game.crafts</code>.
+     */
+    public final Crafts CRAFTS = org.graviton.database.jooq.game.tables.Crafts.CRAFTS;
+
+    /**
      * The table <code>game.guilds</code>.
      */
     public final Guilds GUILDS = org.graviton.database.jooq.game.tables.Guilds.GUILDS;
@@ -60,6 +67,11 @@ public class Game extends SchemaImpl {
      * The table <code>game.guild_members</code>.
      */
     public final GuildMembers GUILD_MEMBERS = org.graviton.database.jooq.game.tables.GuildMembers.GUILD_MEMBERS;
+
+    /**
+     * The table <code>game.hdvs</code>.
+     */
+    public final Hdvs HDVS = org.graviton.database.jooq.game.tables.Hdvs.HDVS;
 
     /**
      * The table <code>game.houses_data</code>.
@@ -127,8 +139,10 @@ public class Game extends SchemaImpl {
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Banks.BANKS,
+            Crafts.CRAFTS,
             Guilds.GUILDS,
             GuildMembers.GUILD_MEMBERS,
+            Hdvs.HDVS,
             HousesData.HOUSES_DATA,
             Items.ITEMS,
             Maps.MAPS,

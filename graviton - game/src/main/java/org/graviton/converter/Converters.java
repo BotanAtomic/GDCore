@@ -14,7 +14,7 @@ import static org.graviton.utils.Utils.range;
 /**
  * Created by Botan on 25/12/2016. 15:00
  */
-public class Converters {
+public class  Converters {
 
     public static Function<Collection<SpellView>, Collection<Byte>> SPELL_TO_BYTE = input -> input.stream().map(SpellView::getPosition).collect(Collectors.toList());
 

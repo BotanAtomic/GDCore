@@ -5,11 +5,9 @@ import org.graviton.game.client.player.Player;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.common.ItemPosition;
 import org.graviton.game.items.template.ItemTemplate;
+import org.graviton.game.job.Job;
 import org.graviton.network.game.GameClient;
-import org.graviton.network.game.protocol.GamePacketFormatter;
-import org.graviton.network.game.protocol.ItemPacketFormatter;
-import org.graviton.network.game.protocol.MessageFormatter;
-import org.graviton.network.game.protocol.PlayerPacketFormatter;
+import org.graviton.network.game.protocol.*;
 
 /**
  * Created by Botan on 05/12/2016. 16:31
@@ -24,6 +22,14 @@ public class ItemHandler {
 
     public void handle(String data, char subHeader) {
         switch (subHeader) {
+            case 'd':
+                delete(data.split("\\|"));
+                break;
+
+            case 'D':
+                drop(data.split("\\|"));
+                break;
+
             case 'M':
                 objectMove(data.split("\\|"));
                 break;
@@ -103,6 +109,17 @@ public class ItemHandler {
         client.send(PlayerPacketFormatter.podsMessage(player.getPods()));
         // checkItemsCondition(player);
 
+        if (item.getPosition().equipped() && !player.getJobs().isEmpty()) {
+            Item secureCopy = item;
+
+            Job selectedJob = player.getJobs().values().stream().filter(job -> job.getJobTemplate().getTools().contains(secureCopy.getTemplate().getId())).findAny().orElse(null);
+
+            if (selectedJob != null)
+                player.send(JobPacketFormatter.jobToolMessage(selectedJob.getJobTemplate().getId()));
+        } else if (!item.getPosition().equipped() && !player.getJobs().isEmpty())
+            player.send(JobPacketFormatter.jobToolMessage((short) 0));
+
+
         if (item.getPosition().needUpdate() || lastPosition.needUpdate())
             player.getMap().send(GamePacketFormatter.updateAccessories(player.getId(), PlayerPacketFormatter.gmsMessage(player)));
     }
@@ -152,6 +169,31 @@ public class ItemHandler {
             return true; //TODO : set false
         }
         return true;
+    }
+
+    private void delete(String[] data) {
+        Item item = client.getPlayer().getInventory().get(Integer.parseInt(data[0]));
+        short newQuantity = (short) (item.getQuantity() - Short.parseShort(data[1]));
+
+        if (newQuantity <= 0) {
+            client.getPlayer().removeItem(item);
+            client.send(ItemPacketFormatter.deleteMessage(item.getId()));
+        } else {
+            item.setQuantity(newQuantity);
+            client.send(ItemPacketFormatter.quantityMessage(item.getId(), newQuantity));
+        }
+    }
+
+    private void drop(String[] data) {
+        Item item = client.getPlayer().getInventory().get(Integer.parseInt(data[0]));
+        short newQuantity = (short) (item.getQuantity() - Short.parseShort(data[1]));
+
+        if (newQuantity <= 0) {
+
+        } else {
+
+        }
+
     }
 
 

@@ -89,6 +89,11 @@ public class GamePacketFormatter {
         return "GA;0";
     }
 
+    public static String harvestActionMessage(short gameAction, int playerId, short cellId, short time) {
+        return "GA" + gameAction + ";501;" + playerId+ ";" + cellId + "," + time;
+
+    }
+
     public static String creationAnimationMessage() {
         return "TB";
     }

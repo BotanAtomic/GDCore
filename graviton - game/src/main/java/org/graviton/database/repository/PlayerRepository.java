@@ -205,6 +205,9 @@ public class PlayerRepository extends Repository<Integer, Player> {
                 .set(PLAYERS.SIZE, player.getSize())
                 .set(PLAYERS.TITLE, player.getTitle())
                 .set(PLAYERS.SPELL_POINTS, player.getStatistics().getSpellPoints())
+
+                .set(PLAYERS.JOB, player.compileJobs())
+
                 .set(PLAYERS.STAT_POINTS, player.getStatistics().getStatisticPoints()).where(PLAYERS.ID.equal(player.getId())).execute();
         saveItems(player);
     }

@@ -4,6 +4,7 @@ import lombok.Data;
 import org.graviton.game.action.fight.AbstractFightAction;
 import org.graviton.game.area.Area;
 import org.graviton.game.area.SubArea;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.creature.npc.NpcAnswer;
@@ -14,6 +15,9 @@ import org.graviton.game.experience.Experience;
 import org.graviton.game.house.HouseTemplate;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
+import org.graviton.game.job.Job;
+import org.graviton.game.job.JobTemplate;
+import org.graviton.game.job.craft.CraftData;
 import org.graviton.game.maps.object.InteractiveObjectTemplate;
 import org.graviton.game.mountpark.MountPark;
 import org.graviton.game.spell.SpellTemplate;
@@ -26,7 +30,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by Botan on 13/12/2016. 21:13
@@ -61,6 +67,8 @@ class EntityData {
 
     final Map<Integer, AbstractFightAction> fightAction = new ConcurrentHashMap<>();
 
+    final Map<Short, JobTemplate> jobs = new ConcurrentHashMap<>();
+    final Map<Short, CraftData> crafts = new ConcurrentHashMap<>();
 
     public NpcTemplate getNpcTemplate(int id) {
         return this.npcTemplates.get(id);
@@ -94,10 +102,6 @@ class EntityData {
         return this.spells.get(spell);
     }
 
-    public List<Drop> getDrops() {
-        return this.drops;
-    }
-
     public InteractiveObjectTemplate getInteractiveObject(int id) {
         return this.interactiveObjects.get(id);
     }
@@ -112,6 +116,25 @@ class EntityData {
 
     public List<Zaapi> getZaapis(Zaapi base) {
         return this.zaapis.values().stream().filter(zaapi -> zaapi.getAlignment().ordinal() == base.getAlignment().ordinal() && !zaapi.equals(base)).collect(Collectors.toList());
+    }
+
+    public JobTemplate getJobTemplate(int id) {
+        return jobs.get((short) id);
+    }
+
+    public short getJobIdByAction(Player player, short action) {
+       Job selectedJob = player.getJobs().values().stream().filter(job -> job.getActions().stream().filter(jobAction -> jobAction.getId() == action).count() > 0).findAny().orElse(null);
+       return selectedJob == null ? 0 : selectedJob.getJobTemplate().getId();
+    }
+
+
+    public byte getJobLevel(long experience) {
+        AtomicInteger level = new AtomicInteger(1);
+        IntStream.range(1,101).forEach(i -> {
+            if(getExperience((short)i).getJob() < experience && level.get() == 1)
+                level.set(i);
+        });
+        return level.byteValue();
     }
 
 }

@@ -24,7 +24,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 
-    private static final long serialVersionUID = -1176926625;
+    private static final long serialVersionUID = -813888487;
 
     /**
      * Setter for <code>login.players.id</code>.
@@ -536,6 +536,21 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
         return (String) get(33);
     }
 
+    /**
+     * Setter for <code>login.players.job</code>.
+     */
+    public PlayersRecord setJob(String value) {
+        set(34, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>login.players.job</code>.
+     */
+    public String getJob() {
+        return (String) get(34);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -562,7 +577,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Create a detached, initialised PlayersRecord
      */
-    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Short level, Long experience, Byte title, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Short energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server, Byte alignment, Integer honor, Integer dishonnor, Byte pvpEnabled, Integer guild, String savedlocation, String store) {
+    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Short level, Long experience, Byte title, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Short energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server, Byte alignment, Integer honor, Integer dishonnor, Byte pvpEnabled, Integer guild, String savedlocation, String store, String job) {
         super(Players.PLAYERS);
 
         set(0, id);
@@ -599,5 +614,6 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
         set(31, guild);
         set(32, savedlocation);
         set(33, store);
+        set(34, job);
     }
 }

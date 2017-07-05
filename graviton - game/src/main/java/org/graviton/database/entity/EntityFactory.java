@@ -27,9 +27,12 @@ import org.graviton.game.house.House;
 import org.graviton.game.house.HouseTemplate;
 import org.graviton.game.items.Panoply;
 import org.graviton.game.items.template.ItemTemplate;
+import org.graviton.game.job.JobTemplate;
+import org.graviton.game.job.craft.CraftData;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.object.InteractiveObjectTemplate;
 import org.graviton.game.spell.SpellTemplate;
+import org.graviton.script.ScriptProcessor;
 import org.graviton.utils.Utils;
 import org.graviton.xml.Performer;
 import org.graviton.xml.XMLElement;
@@ -37,10 +40,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -49,7 +48,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static org.graviton.constant.XMLPath.*;
 import static org.graviton.database.jooq.game.tables.HousesData.HOUSES_DATA;
@@ -81,10 +79,24 @@ public class EntityFactory extends EntityData implements Manageable {
 
     @Inject private ActionRepository actionRepository;
 
+    @Inject private ScriptProcessor scriptProcessor;
+
+
     @Inject
     public EntityFactory(Program program, @GameDatabase Database database) {
         program.register(this);
         this.database = database;
+    }
+
+    private void loadJobs() {
+        apply(get(CRAFTS).getElementsByTagName("craft"), element -> this.crafts.put(element.getAttribute("item").toShort(), new CraftData(element)));
+        log.debug("{} crafts loaded", this.crafts.size());
+
+        apply(get(JOBS).getElementsByTagName("job"), element -> this.jobs.put(element.getAttribute("id").toShort(), new JobTemplate(element, this)));
+        log.debug("{} jobs loaded", this.jobs.size());
+
+        scriptProcessor.importElement(this, "entityFactory");
+        scriptProcessor.loadPath("scripts/jobs");
     }
 
     private void loadGameActions() {
@@ -136,6 +148,7 @@ public class EntityFactory extends EntityData implements Manageable {
         log.debug("{} zaaps loaded", gameMapRepository.loadZaaps(get(ZAAPS)));
         log.debug("{} zaapis loaded", gameMapRepository.loadZaapis(get(ZAAPIS)));
         log.debug("{} mount-park loaded", gameMapRepository.loadMountPark());
+        log.debug("{} sell points loaded", gameMapRepository.loadSellPoint(get(SELL_POINTS)));
 
         loadExtraMonsters();
     }
@@ -270,7 +283,7 @@ public class EntityFactory extends EntityData implements Manageable {
         this.loadGameActions();
 
         new FastLoader(this::loadFightActions, this::loadHouses, this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadGameMaps,
-                this::loadCommands, this::loadIntelligence).launch();
+                this::loadCommands, this::loadIntelligence, this::loadJobs).launch();
         startScheduledAction();
     }
 
@@ -315,4 +328,5 @@ public class EntityFactory extends EntityData implements Manageable {
         database.update(HOUSES_DATA).set(HOUSES_DATA.OWNER, house.getOwner()).set(HOUSES_DATA.SALE, house.getPrice()).set(HOUSES_DATA.KEY, house.getKey())
                 .where(HOUSES_DATA.ID.equal(house.getTemplate().getId())).execute();
     }
+
 }

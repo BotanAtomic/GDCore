@@ -22,6 +22,10 @@ public class ExchangePacketFormatter {
         return "ECK" + exchangeId;
     }
 
+    public static String startMessage(byte exchangeId, String extra) {
+        return "ECK" + exchangeId + "|" + extra;
+    }
+
     public static String startMerchantMessage(byte exchangeId, int seller) {
         return "ECK" + exchangeId + "|" + seller;
     }

@@ -8,6 +8,7 @@ import org.graviton.database.jooq.game.tables.Trunks;
 import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.npc.Npc;
+import org.graviton.game.hdv.SellPoint;
 import org.graviton.game.house.House;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
@@ -41,7 +42,7 @@ public class GameMapRepository extends Repository<Integer, GameMap> {
 
     public GameMap getByPosition(String position, boolean incarnam) {
         if (incarnam)
-            return entityFactory.getSubArea((short) 45).getGameMaps().stream().filter(gameMap -> gameMap.getPosition().equals(position)).findAny().map(GameMap::initialize).orElse(null);
+            return entityFactory.getArea().get((short) 45).getGameMaps().stream().filter(gameMap -> gameMap.getPosition().equals(position)).findAny().map(GameMap::initialize).orElse(null);
 
 
         return super.stream().filter(gameMap -> gameMap.getPosition().equals(position)).findAny().map(GameMap::initialize).orElse(null);
@@ -61,7 +62,6 @@ public class GameMapRepository extends Repository<Integer, GameMap> {
 
             if (gameMap == null || houseMap == null)
                 return false;
-
             Record record = entityFactory.getDatabase().getRecord(HousesData.HOUSES_DATA, HousesData.HOUSES_DATA.ID.equal(houseTemplate.getId()));
 
             House house = new House(houseTemplate, record);
@@ -91,6 +91,14 @@ public class GameMapRepository extends Repository<Integer, GameMap> {
     public int loadMountPark() {
         entityFactory.getDatabase().getResult(MOUNTPARK_DATA).forEach(record -> entityFactory.registerMountPark(new MountPark(record, entityFactory)));
         return entityFactory.getMountParks().size();
+    }
+
+    public int loadSellPoint(Document file) {
+        return entityFactory.apply(file.getElementsByTagName("Hdv"), element -> {
+            GameMap gameMap = this.get(element.getAttribute("map").toInt());
+            if (gameMap != null)
+                gameMap.setSellPoint(new SellPoint(element));
+        });
     }
 
     public int loadZaaps(Document file) {

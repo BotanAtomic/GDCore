@@ -6,22 +6,27 @@ package org.graviton.database.jooq.game;
 
 import javax.annotation.Generated;
 
+import org.graviton.database.jooq.game.tables.Crafts;
 import org.graviton.database.jooq.game.tables.GuildMembers;
 import org.graviton.database.jooq.game.tables.Guilds;
+import org.graviton.database.jooq.game.tables.Hdvs;
 import org.graviton.database.jooq.game.tables.HousesData;
 import org.graviton.database.jooq.game.tables.Maps;
 import org.graviton.database.jooq.game.tables.Merchant;
 import org.graviton.database.jooq.game.tables.MountparkData;
 import org.graviton.database.jooq.game.tables.SubareaData;
 import org.graviton.database.jooq.game.tables.Trunks;
+import org.graviton.database.jooq.game.tables.records.CraftsRecord;
 import org.graviton.database.jooq.game.tables.records.GuildMembersRecord;
 import org.graviton.database.jooq.game.tables.records.GuildsRecord;
+import org.graviton.database.jooq.game.tables.records.HdvsRecord;
 import org.graviton.database.jooq.game.tables.records.HousesDataRecord;
 import org.graviton.database.jooq.game.tables.records.MapsRecord;
 import org.graviton.database.jooq.game.tables.records.MerchantRecord;
 import org.graviton.database.jooq.game.tables.records.MountparkDataRecord;
 import org.graviton.database.jooq.game.tables.records.SubareaDataRecord;
 import org.graviton.database.jooq.game.tables.records.TrunksRecord;
+import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
 
@@ -44,13 +49,16 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<HdvsRecord, Integer> IDENTITY_HDVS = Identities0.IDENTITY_HDVS;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<CraftsRecord> KEY_CRAFTS_ID = UniqueKeys0.KEY_CRAFTS_ID;
     public static final UniqueKey<GuildsRecord> KEY_GUILDS_PRIMARY = UniqueKeys0.KEY_GUILDS_PRIMARY;
     public static final UniqueKey<GuildMembersRecord> KEY_GUILD_MEMBERS_ID = UniqueKeys0.KEY_GUILD_MEMBERS_ID;
+    public static final UniqueKey<HdvsRecord> KEY_HDVS_PRIMARY = UniqueKeys0.KEY_HDVS_PRIMARY;
     public static final UniqueKey<HousesDataRecord> KEY_HOUSES_DATA_PRIMARY = UniqueKeys0.KEY_HOUSES_DATA_PRIMARY;
     public static final UniqueKey<MapsRecord> KEY_MAPS_PRIMARY = UniqueKeys0.KEY_MAPS_PRIMARY;
     public static final UniqueKey<MerchantRecord> KEY_MERCHANT_PRIMARY = UniqueKeys0.KEY_MERCHANT_PRIMARY;
@@ -67,9 +75,15 @@ public class Keys {
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
+    private static class Identities0 extends AbstractKeys {
+        public static Identity<HdvsRecord, Integer> IDENTITY_HDVS = createIdentity(Hdvs.HDVS, Hdvs.HDVS.ID);
+    }
+
     private static class UniqueKeys0 extends AbstractKeys {
+        public static final UniqueKey<CraftsRecord> KEY_CRAFTS_ID = createUniqueKey(Crafts.CRAFTS, "KEY_crafts_id", Crafts.CRAFTS.ID);
         public static final UniqueKey<GuildsRecord> KEY_GUILDS_PRIMARY = createUniqueKey(Guilds.GUILDS, "KEY_guilds_PRIMARY", Guilds.GUILDS.ID);
         public static final UniqueKey<GuildMembersRecord> KEY_GUILD_MEMBERS_ID = createUniqueKey(GuildMembers.GUILD_MEMBERS, "KEY_guild_members_id", GuildMembers.GUILD_MEMBERS.ID);
+        public static final UniqueKey<HdvsRecord> KEY_HDVS_PRIMARY = createUniqueKey(Hdvs.HDVS, "KEY_hdvs_PRIMARY", Hdvs.HDVS.ID);
         public static final UniqueKey<HousesDataRecord> KEY_HOUSES_DATA_PRIMARY = createUniqueKey(HousesData.HOUSES_DATA, "KEY_houses_data_PRIMARY", HousesData.HOUSES_DATA.ID);
         public static final UniqueKey<MapsRecord> KEY_MAPS_PRIMARY = createUniqueKey(Maps.MAPS, "KEY_maps_PRIMARY", Maps.MAPS.ID);
         public static final UniqueKey<MerchantRecord> KEY_MERCHANT_PRIMARY = createUniqueKey(Merchant.MERCHANT, "KEY_merchant_PRIMARY", Merchant.MERCHANT.ID);

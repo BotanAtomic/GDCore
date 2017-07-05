@@ -50,7 +50,7 @@ public class BasicHandler {
     }
 
     private void changeMapByPosition(String position) {
-        boolean incarnam = client.getEntityFactory().getSubArea().values().stream().filter(subArea -> subArea.getArea().getId() == 45).filter(subArea -> subArea.getGameMaps().stream().filter(gameMap -> gameMap.getId() == client.getPlayer().getMap().getId()).count() > 0).count() > 0;
+        boolean incarnam = client.getEntityFactory().getArea().get((short) 45).getGameMaps().stream().filter(map -> map.getId() == client.getPlayer().getMap().getId()).count() > 0;
         client.getPlayer().changeMap(client.getEntityFactory().getGameMapRepository().getByPosition(position, incarnam), (short) 0);
     }
 

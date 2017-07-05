@@ -172,6 +172,7 @@ public class AccountHandler {
         short template = Short.parseShort(data[0]);
         int playerId = Integer.parseInt(data[1]);
 
+
         Pair<ItemTemplate, Short> gift = client.getAccount().getGift(template);
 
         Item item = gift.getKey().createMax(entityFactory.getNextItemId());

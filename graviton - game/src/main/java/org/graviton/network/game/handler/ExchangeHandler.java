@@ -7,12 +7,14 @@ import org.graviton.game.creature.merchant.Merchant;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.exchange.Exchange;
 import org.graviton.game.exchange.type.*;
+import org.graviton.game.hdv.SellPoint;
 import org.graviton.game.items.Item;
 import org.graviton.lang.LanguageSentence;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.ExchangePacketFormatter;
 import org.graviton.network.game.protocol.MessageFormatter;
 import org.graviton.network.game.protocol.NpcPacketFormatter;
+import org.graviton.network.game.protocol.SellPointPacketFormatter;
 
 /**
  * Created by Botan on 11/02/2017. 14:25
@@ -46,6 +48,10 @@ public class ExchangeHandler {
 
             case 'Q':
                 activeMerchantMode();
+                break;
+
+            case 'L':
+                ((BreakerExchange) client.getPlayer().getExchange()).setLastIngredients();
                 break;
 
             case 'R':
@@ -91,7 +97,7 @@ public class ExchangeHandler {
                 Merchant merchant = (Merchant) client.getPlayer().getGameMap().getCreature(Integer.parseInt(data[1]));
 
                 if (merchant != null) {
-                    if(merchant.isBusy()) {
+                    if (merchant.isBusy()) {
                         client.send(MessageFormatter.customStaticMessage(client.getAccount().getClient().getLanguage().getSentence(LanguageSentence.MERCHANT_BUSY)));
                         return;
                     }
@@ -104,6 +110,21 @@ public class ExchangeHandler {
                 client.send(ExchangePacketFormatter.startMessage((byte) 6));
                 client.send(ExchangePacketFormatter.personalStoreMessage(client.getPlayer().getStore()));
                 client.getPlayer().setExchange(new MyStoreExchange(client.getPlayer()));
+                break;
+
+            case 11: //sell point (buy)
+                if (client.getPlayer().getAlignment().getDishonor() >= 5) {
+                    client.send(MessageFormatter.notPermittedDishonorMessage());
+                    return;
+                }
+
+                SellPoint sellPoint = client.getPlayer().getGameMap().getSellPoint();
+
+                if (sellPoint != null) {
+                    client.send(SellPointPacketFormatter.startMessage(sellPoint));
+                    client.getInteractionManager().setSellPointInteraction(sellPoint);
+                }
+
                 break;
         }
     }
@@ -154,8 +175,10 @@ public class ExchangeHandler {
                 exchange.editKamas(Long.parseLong(packet.substring(1)), client.getPlayer().getId());
                 break;
             case 'R':// Repeat (for job only)
+                exchange.toggle(-Integer.parseInt(packet.substring(1)));
                 break;
             case 'r': //stop craft
+                ((BreakerExchange) exchange).stopCraft();
                 break;
         }
     }
@@ -179,12 +202,12 @@ public class ExchangeHandler {
             return;
         }
 
-        if(player.getGameMap().merchantCount() > Dofus.MAX_STORE_PER_MAP) {
+        if (player.getGameMap().merchantCount() > Dofus.MAX_STORE_PER_MAP) {
             player.send(MessageFormatter.noMerchantPlaceAvailableMessage(Dofus.MAX_STORE_PER_MAP));
             return;
         }
 
-        if(player.getStore().getTax() > player.getInventory().getKamas()) {
+        if (player.getStore().getTax() > player.getInventory().getKamas()) {
             player.send(MessageFormatter.merchantTaxErrorMessage());
             return;
         } else player.getInventory().addKamas(-player.getStore().getTax());

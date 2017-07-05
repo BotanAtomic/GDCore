@@ -5,6 +5,8 @@ import org.graviton.game.client.player.Player;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.house.House;
 import org.graviton.game.interaction.InteractionManager;
+import org.graviton.game.items.Item;
+import org.graviton.game.items.common.ItemPosition;
 import org.graviton.game.maps.GameMap;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.*;
@@ -103,12 +105,23 @@ public class GameHandler {
         client.send(PlayerPacketFormatter.asMessage(player, client.getEntityFactory().getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
         client.send(GamePacketFormatter.regenTimerMessage((short) 2000));
 
+        if(!player.getJobs().isEmpty()) {
+            player.getJobs().values().forEach(job -> {
+                player.send(JobPacketFormatter.startJobMessage(job));
+                player.send(JobPacketFormatter.statisticsJobMessage(job));
 
-        if (!endFight) player.getMap().enter(player);
-        else {
+                Item item = player.getInventory().getByPosition(ItemPosition.Weapon);
+
+                if(item != null && job.getJobTemplate().getTools().contains(item.getTemplate().getId()))
+                    player.send(JobPacketFormatter.jobToolMessage(job.getJobTemplate().getId()));
+
+            });
+        }
+
+        if (endFight) {
             ((GameMap) player.getMap()).enterAfterFight(player);
             endFight = false;
-        }
+        } else player.getMap().enter(player);
     }
 
     private void sendGameInformation(Player player) {

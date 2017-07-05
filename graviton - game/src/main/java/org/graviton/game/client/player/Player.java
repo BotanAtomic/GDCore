@@ -21,6 +21,8 @@ import org.graviton.game.inventory.Inventory;
 import org.graviton.game.inventory.PlayerStore;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.StoreItem;
+import org.graviton.game.job.Job;
+import org.graviton.game.job.JobTemplate;
 import org.graviton.game.look.AbstractLook;
 import org.graviton.game.look.PlayerLook;
 import org.graviton.game.look.enums.Orientation;
@@ -39,11 +41,10 @@ import org.graviton.network.game.protocol.*;
 import org.graviton.utils.Utils;
 import org.jooq.Record;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
 
@@ -76,6 +77,8 @@ public class Player extends Fighter implements Creature {
 
     private List<Integer> zaaps;
 
+    private Map<Short, Job> jobs;
+
     public Player(Record record, Account account, Map<Integer, Item> items, List<StoreItem> store, Map<Short, SpellView> spells, EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
         this.account = account;
@@ -85,7 +88,7 @@ public class Player extends Fighter implements Creature {
         this.inventory = new Inventory(this, record.get(PLAYERS.KAMAS), items);
         this.look = new PlayerLook(record);
         this.statistics = new PlayerStatistics(this, record, (byte) (getBreed() instanceof Enutrof ? 120 : 100));
-        this.alignment = new Alignment(record.get(PLAYERS.ALIGNMENT), record.get(PLAYERS.HONOR), record.get(PLAYERS.DISHONNOR), record.get(PLAYERS.PVP_ENABLED) == 1, entityFactory); //TODO : pvp
+        this.alignment = new Alignment(record.get(PLAYERS.ALIGNMENT), record.get(PLAYERS.HONOR), record.get(PLAYERS.DISHONNOR), record.get(PLAYERS.PVP_ENABLED) == 1, entityFactory);
         this.location = new Location(entityFactory.getMap(record.get(PLAYERS.MAP)), record.get(PLAYERS.CELL), record.get(PLAYERS.ORIENTATION));
         this.savedLocation = new Location(record.get(PLAYERS.SAVEDLOCATION), entityFactory);
         this.spellList = new SpellList(spells);
@@ -95,6 +98,13 @@ public class Player extends Fighter implements Creature {
 
         this.followers = new ArrayList<>();
         this.zaaps = Utils.parseZaaps(record.get(PLAYERS.WAYPOINTS));
+
+        String job = record.get(PLAYERS.JOB);
+
+        this.jobs = job.isEmpty() ? new HashMap<>() : Stream.of(job.split(";")).collect(Collectors.toMap(data -> Short.parseShort(data.split(",")[0]), data -> {
+            String[] jobData = data.split(",");
+            return new Job(entityFactory.getJobTemplate(Integer.parseInt(jobData[0])), Long.parseLong(jobData[1]), entityFactory);
+        }));
     }
 
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
@@ -122,8 +132,8 @@ public class Player extends Fighter implements Creature {
                 entityFactory.getSpellTemplate(getBreed().getStartSpells()[i]).getLevel((byte) 1), (byte) (i + 1))));
 
         this.followers = new ArrayList<>();
-
         this.zaaps = new ArrayList<>();
+        this.jobs = new HashMap<>();
     }
 
     public InteractionManager interactionManager() {
@@ -176,8 +186,17 @@ public class Player extends Fighter implements Creature {
         return savedLocation.getMap().getId() + ";" + savedLocation.getCell().getId();
     }
 
+    public String compileJobs() {
+        if (jobs.isEmpty())
+            return "";
+
+        StringBuilder builder = new StringBuilder();
+        jobs.forEach((jobId, job) -> builder.append(jobId).append(",").append(job.getExperience()).append(";"));
+        return builder.substring(0, builder.length() - 1);
+    }
+
     public String compileStore() {
-        if(store.isEmpty())
+        if (store.isEmpty())
             return "";
 
         StringBuilder builder = new StringBuilder();
@@ -219,6 +238,10 @@ public class Player extends Fighter implements Creature {
         this.account.getClient().send(data);
     }
 
+    public void sendSplit(String data) {
+        Stream.of(data.split("\n")).forEach(this::send);
+    }
+
     @Override
     public String getFightGM() {
         return PlayerPacketFormatter.fightGmMessage(this);
@@ -241,7 +264,6 @@ public class Player extends Fighter implements Creature {
 
     public void returnToLastLocation() {
         changeMap((GameMap) savedLocation.getMap(), savedLocation.getCell().getId());
-        System.err.println("Return to last location");
     }
 
     public void changeMap(Zaap zaap) {
@@ -260,7 +282,7 @@ public class Player extends Fighter implements Creature {
         if (newGameMap == null)
             return;
 
-        cell = cell == 0 ? newGameMap.getRandomCell() : cell;
+        if (cell == 0) cell = newGameMap.getRandomCell();
 
         if (getMap().getId() == newGameMap.getId()) {
             this.location.setCell(newGameMap.getCells().get(cell));
@@ -303,7 +325,7 @@ public class Player extends Fighter implements Creature {
         return this;
     }
 
-    public void upgrade() {
+    private void upgrade() {
         this.statistics.upLevel();
         learnSpell(getBreed().getSpell(this.getLevel()));
     }
@@ -324,7 +346,7 @@ public class Player extends Fighter implements Creature {
         this.statistics.addExperience(experience);
     }
 
-    public void learnSpell(short spell) {
+    private void learnSpell(short spell) {
         if (spell == 0)
             return;
 
@@ -382,18 +404,23 @@ public class Player extends Fighter implements Creature {
     }
 
     public void switchAlignmentEnabled(char data) {
-        if (data == '+') {
+        if (data == '+')
             this.alignment.setEnabled(true);
-        } else if (data == '*') {
+        else if (data == '*') {
             send(PlayerPacketFormatter.disableAlignmentMessage((short) (this.alignment.getHonor() * 5 / 100)));
             return;
         } else if (data == '-') {
             this.alignment.setEnabled(false);
             this.alignment.addHonor(this.alignment.getHonor() * -5 / 100);
         }
+
         send(PlayerPacketFormatter.asMessage(this, this.entityFactory.getExperience(getLevel()), alignment, statistics));
         getGameMap().refreshCreature(this);
         update();
+    }
+
+    public void learnJob(JobTemplate jobTemplate) {
+
     }
 
 }

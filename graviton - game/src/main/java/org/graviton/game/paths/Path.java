@@ -32,7 +32,7 @@ public class Path extends ArrayList<Short> {
     protected Path(String path, GameMap map, short cell, Player player) {
         this.startCell = cell;
         short lastCell = cell;
-        int size = map.getWidth() * 2 + 1;
+        int size = (map.getWidth() << 1) + 1;
 
         for (int i = 0; i < path.length(); i += 3) {
             String stepPath = path.substring(i, i + 3);
@@ -41,23 +41,29 @@ public class Path extends ArrayList<Short> {
             while (lastCell != stepCell && map.getCells().containsKey(lastCell) && size-- > 0) {
                 lastCell = Cells.getCellIdByOrientation(lastCell, stepPath.charAt(0), map.getWidth());
 
-                if(!map.getCell(lastCell).isWalkable())
+                if (!map.getCell(lastCell).isWalkable())
                     return;
+
+                newPath += stepPath.charAt(0) + Cells.encode(lastCell);
 
                 add(lastCell);
 
                 MonsterGroup monsterGroup = map.searchMonsterGroupByPath(player.getAlignment(), lastCell);
 
-                if(monsterGroup != null) {
+                if (monsterGroup != null) {
                     tasks.add(() -> map.getFightFactory().newMonsterFight(player, monsterGroup));
                     return;
                 }
 
+
             }
 
             lastCell = stepCell;
-            newPath += stepPath.charAt(0) + Cells.encode(lastCell);
         }
+
+        if(map.getCell(lastCell).getInteractiveObject() != null)
+            newPath = newPath.substring(0, newPath.length() - 3);
+
     }
 
     protected Path(String path, AbstractMap map, short cell, Fighter fighter) {
@@ -112,7 +118,7 @@ public class Path extends ArrayList<Short> {
         for (Orientation orientation : Orientation.ADJACENT) {
             Cell cell = map.getCells().get(Cells.getCellIdByOrientation(cellId, orientation, map.getWidth()));
 
-            if(cell == null)
+            if (cell == null)
                 continue;
 
             if (!cell.getCreatures().isEmpty()) {

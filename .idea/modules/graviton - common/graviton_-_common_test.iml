@@ -12,17 +12,18 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="graviton_-_common_main" />
     <orderEntry type="library" name="Gradle: org.apache.mina:mina-core:2.0.15" level="project" />
-    <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:2.6.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:2.6.3" level="project" />
     <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.9" level="project" />
     <orderEntry type="library" name="Gradle: com.google.inject:guice:4.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.guava:guava:22.0-rc1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:guava:22.0" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq:3.9.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq:3.9.3" level="project" />
     <orderEntry type="library" name="Gradle: org.reflections:reflections:0.9.11" level="project" />
     <orderEntry type="library" name="Gradle: org.mozilla:rhino:1.7.7.1" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.9.2" level="project" />
-    <orderEntry type="library" name="Gradle: org.jooq:jooq-codegen:3.9.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-all:2.4.11" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq-codegen:3.9.3" level="project" />
     <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:6.0.6" level="project" />
     <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Gradle: aopalliance:aopalliance:1.0" level="project" />

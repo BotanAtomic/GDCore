@@ -36,5 +36,10 @@ public class XMLPath {
 
     public static final String FIGHT_ACTION = "fight/action.xml";
 
+    public static final String JOBS = "job/template.xml";
+    public static final String CRAFTS = "job/crafts.xml";
+
+    public static final String SELL_POINTS = "hdv/templates.xml";
+
 
 }
