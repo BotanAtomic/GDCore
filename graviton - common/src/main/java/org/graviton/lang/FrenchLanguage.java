@@ -11,6 +11,8 @@ class FrenchLanguage extends Language {
         super.put(LanguageSentence.MERCHANT_BUSY,"Ce marchand est déjà en échange");
         super.put(LanguageSentence.MAX_IN_TRUNK,"Cet espace de stockage est rempli");
         super.put(LanguageSentence.GIFT, "| Cadeau Dofus|Voilà un joli cadeau pour vous ! Un jeune aventurier comme vous saura s'en servir de la meilleure façon ! Bonne continuation avec ceci ! |DOFUS|");
+        super.put(LanguageSentence.BUY_OUR, "Tu ne peux pas acheter ton propre objet");
+
     }
 
 }

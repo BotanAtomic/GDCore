@@ -3,7 +3,7 @@ package org.graviton.game.interaction;
 import javafx.util.Pair;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.graviton.game.hdv.SellPoint;
+import org.graviton.game.sellpoint.SellPoint;
 import org.graviton.game.house.House;
 import org.graviton.game.interaction.actions.*;
 import org.graviton.game.job.action.JobAction;

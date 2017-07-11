@@ -5,5 +5,6 @@ public enum LanguageSentence {
     NEED_DUNGEON_KEY,
     MERCHANT_BUSY,
     MAX_IN_TRUNK,
-    GIFT
+    GIFT,
+    BUY_OUR
 }

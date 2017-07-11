@@ -56,7 +56,8 @@ public class Player extends Fighter implements Creature {
     private final EntityFactory entityFactory;
     private final int id;
 
-    private final Account account;
+    private Account account;
+
     private final String name;
     private final PlayerLook look;
     private final PlayerStatistics statistics;
@@ -308,7 +309,8 @@ public class Player extends Fighter implements Creature {
     }
 
     public void removeItem(Item item) {
-        this.inventory.remove(item.getId());
+        if (this.inventory.containsKey(item.getId()))
+            this.inventory.remove(item.getId());
         removeDatabaseItem(item);
     }
 

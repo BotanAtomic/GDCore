@@ -76,7 +76,7 @@ public class Utils {
     }
 
     public static List<Byte> arrayToByteList(String data, String regex) {
-        List<Byte> result = new CopyOnWriteArrayList<>();
+        List<Byte> result = new ArrayList<>();
         for (String part : data.split(regex))
             if (!part.isEmpty())
                 result.add(Byte.parseByte(part));

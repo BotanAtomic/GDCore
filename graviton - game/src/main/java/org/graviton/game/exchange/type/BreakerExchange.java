@@ -138,13 +138,13 @@ public class BreakerExchange implements Exchange {
                 finish(stopCraft);
                 player.send(JobPacketFormatter.createCraftResultMessage(craftData.getResult()));
             } else {
-                player.send(JobPacketFormatter.craftRepetitionMessage((short)(repetition - (itemCraft))));
+                player.send(JobPacketFormatter.craftRepetitionMessage((short) (repetition - (itemCraft))));
                 scheduler.schedule(() -> repeatCraft(craftData, repetition), 1, TimeUnit.SECONDS);
             }
 
             if (((Craft) jobAction).getChance() - new SecureRandom().nextInt(101) < 0) {
                 player.send(JobPacketFormatter.errorChanceCraftMessage());
-                player.send(MessageFormatter.customStaticMessage("0118"));
+                player.send(MessageFormatter.customMessage("0118"));
                 player.getMap().send(JobPacketFormatter.badIOMessage(player.getId()));
                 return;
             }
@@ -162,7 +162,13 @@ public class BreakerExchange implements Exchange {
 
 
     public void finish(boolean broken) {
-        if(broken) player.send(JobPacketFormatter.craftRepetitionMessage((short)0));
+        if (!broken) player.send(JobPacketFormatter.craftRepetitionMessage((short) 0));
+
+        ingredients.forEach((itemId, quantity) -> {
+            int playerItem = player.getInventory().getItemByTemplate(itemId).getId();
+            addItem(playerItem, (short) 1, player.getId());
+            removeItem(playerItem, (short) 1, player.getId());
+        });
 
         player.send(JobPacketFormatter.craftResultMessage(broken));
 

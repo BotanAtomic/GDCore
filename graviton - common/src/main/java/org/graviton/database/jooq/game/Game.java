@@ -11,15 +11,18 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.graviton.database.jooq.game.tables.Banks;
-import org.graviton.database.jooq.game.tables.Crafts;
 import org.graviton.database.jooq.game.tables.GuildMembers;
 import org.graviton.database.jooq.game.tables.Guilds;
-import org.graviton.database.jooq.game.tables.Hdvs;
 import org.graviton.database.jooq.game.tables.HousesData;
 import org.graviton.database.jooq.game.tables.Items;
 import org.graviton.database.jooq.game.tables.Maps;
 import org.graviton.database.jooq.game.tables.Merchant;
 import org.graviton.database.jooq.game.tables.MountparkData;
+import org.graviton.database.jooq.game.tables.QuestData;
+import org.graviton.database.jooq.game.tables.QuestEtapes;
+import org.graviton.database.jooq.game.tables.QuestObjectifs;
+import org.graviton.database.jooq.game.tables.QuestPerso;
+import org.graviton.database.jooq.game.tables.SellpointItems;
 import org.graviton.database.jooq.game.tables.Spells;
 import org.graviton.database.jooq.game.tables.SubareaData;
 import org.graviton.database.jooq.game.tables.Trunks;
@@ -41,7 +44,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Game extends SchemaImpl {
 
-    private static final long serialVersionUID = 652808788;
+    private static final long serialVersionUID = -1272931677;
 
     /**
      * The reference instance of <code>game</code>
@@ -54,11 +57,6 @@ public class Game extends SchemaImpl {
     public final Banks BANKS = org.graviton.database.jooq.game.tables.Banks.BANKS;
 
     /**
-     * The table <code>game.crafts</code>.
-     */
-    public final Crafts CRAFTS = org.graviton.database.jooq.game.tables.Crafts.CRAFTS;
-
-    /**
      * The table <code>game.guilds</code>.
      */
     public final Guilds GUILDS = org.graviton.database.jooq.game.tables.Guilds.GUILDS;
@@ -67,11 +65,6 @@ public class Game extends SchemaImpl {
      * The table <code>game.guild_members</code>.
      */
     public final GuildMembers GUILD_MEMBERS = org.graviton.database.jooq.game.tables.GuildMembers.GUILD_MEMBERS;
-
-    /**
-     * The table <code>game.hdvs</code>.
-     */
-    public final Hdvs HDVS = org.graviton.database.jooq.game.tables.Hdvs.HDVS;
 
     /**
      * The table <code>game.houses_data</code>.
@@ -97,6 +90,31 @@ public class Game extends SchemaImpl {
      * The table <code>game.mountpark_data</code>.
      */
     public final MountparkData MOUNTPARK_DATA = org.graviton.database.jooq.game.tables.MountparkData.MOUNTPARK_DATA;
+
+    /**
+     * The table <code>game.quest_data</code>.
+     */
+    public final QuestData QUEST_DATA = org.graviton.database.jooq.game.tables.QuestData.QUEST_DATA;
+
+    /**
+     * The table <code>game.quest_etapes</code>.
+     */
+    public final QuestEtapes QUEST_ETAPES = org.graviton.database.jooq.game.tables.QuestEtapes.QUEST_ETAPES;
+
+    /**
+     * The table <code>game.quest_objectifs</code>.
+     */
+    public final QuestObjectifs QUEST_OBJECTIFS = org.graviton.database.jooq.game.tables.QuestObjectifs.QUEST_OBJECTIFS;
+
+    /**
+     * The table <code>game.quest_perso</code>.
+     */
+    public final QuestPerso QUEST_PERSO = org.graviton.database.jooq.game.tables.QuestPerso.QUEST_PERSO;
+
+    /**
+     * The table <code>game.sellpoint_items</code>.
+     */
+    public final SellpointItems SELLPOINT_ITEMS = org.graviton.database.jooq.game.tables.SellpointItems.SELLPOINT_ITEMS;
 
     /**
      * The table <code>game.spells</code>.
@@ -139,15 +157,18 @@ public class Game extends SchemaImpl {
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Banks.BANKS,
-            Crafts.CRAFTS,
             Guilds.GUILDS,
             GuildMembers.GUILD_MEMBERS,
-            Hdvs.HDVS,
             HousesData.HOUSES_DATA,
             Items.ITEMS,
             Maps.MAPS,
             Merchant.MERCHANT,
             MountparkData.MOUNTPARK_DATA,
+            QuestData.QUEST_DATA,
+            QuestEtapes.QUEST_ETAPES,
+            QuestObjectifs.QUEST_OBJECTIFS,
+            QuestPerso.QUEST_PERSO,
+            SellpointItems.SELLPOINT_ITEMS,
             Spells.SPELLS,
             SubareaData.SUBAREA_DATA,
             Trunks.TRUNKS);

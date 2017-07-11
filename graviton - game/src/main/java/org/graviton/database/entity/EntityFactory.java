@@ -31,6 +31,8 @@ import org.graviton.game.job.JobTemplate;
 import org.graviton.game.job.craft.CraftData;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.object.InteractiveObjectTemplate;
+import org.graviton.game.sellpoint.SellPoint;
+import org.graviton.game.sellpoint.SellPointItem;
 import org.graviton.game.spell.SpellTemplate;
 import org.graviton.script.ScriptProcessor;
 import org.graviton.utils.Utils;
@@ -40,6 +42,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -52,6 +55,7 @@ import java.util.stream.IntStream;
 import static org.graviton.constant.XMLPath.*;
 import static org.graviton.database.jooq.game.tables.HousesData.HOUSES_DATA;
 import static org.graviton.database.jooq.game.tables.Items.ITEMS;
+import static org.graviton.database.jooq.game.tables.SellpointItems.SELLPOINT_ITEMS;
 
 
 /**
@@ -80,6 +84,8 @@ public class EntityFactory extends EntityData implements Manageable {
     @Inject private ActionRepository actionRepository;
 
     @Inject private ScriptProcessor scriptProcessor;
+
+    private final AtomicInteger sellPointIdentity = new AtomicInteger(0);
 
 
     @Inject
@@ -149,6 +155,9 @@ public class EntityFactory extends EntityData implements Manageable {
         log.debug("{} zaapis loaded", gameMapRepository.loadZaapis(get(ZAAPIS)));
         log.debug("{} mount-park loaded", gameMapRepository.loadMountPark());
         log.debug("{} sell points loaded", gameMapRepository.loadSellPoint(get(SELL_POINTS)));
+        log.debug("{} sell points item loaded", database.getResult(SELLPOINT_ITEMS).stream()
+                .filter(record -> gameMapRepository.get(record.get(SELLPOINT_ITEMS.MAP)).getSellPoint().add(new SellPointItem(record, playerRepository), true)).count());
+
 
         loadExtraMonsters();
     }
@@ -327,6 +336,19 @@ public class EntityFactory extends EntityData implements Manageable {
     public void updateHouse(House house) {
         database.update(HOUSES_DATA).set(HOUSES_DATA.OWNER, house.getOwner()).set(HOUSES_DATA.SALE, house.getPrice()).set(HOUSES_DATA.KEY, house.getKey())
                 .where(HOUSES_DATA.ID.equal(house.getTemplate().getId())).execute();
+    }
+
+    public int nextSellPointLine() {
+        return this.sellPointIdentity.incrementAndGet();
+    }
+
+    public void saveSellPointItem(SellPointItem sellPointItem, int gameMap) {
+        database.getDslContext().insertInto(SELLPOINT_ITEMS, SELLPOINT_ITEMS.ID, SELLPOINT_ITEMS.MAP, SELLPOINT_ITEMS.OWNER, SELLPOINT_ITEMS.PRICE,SELLPOINT_ITEMS.DATE)
+                .values(sellPointItem.getItem().getId(), gameMap, sellPointItem.getOwner(), sellPointItem.getPrice(), new Date().getTime()).execute();
+    }
+
+    public void removeSellPointItem(int id) {
+        database.getDslContext().delete(SELLPOINT_ITEMS).where(SELLPOINT_ITEMS.ID.equal(id)).execute();
     }
 
 }

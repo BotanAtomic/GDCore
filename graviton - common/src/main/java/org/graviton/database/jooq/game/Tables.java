@@ -7,15 +7,18 @@ package org.graviton.database.jooq.game;
 import javax.annotation.Generated;
 
 import org.graviton.database.jooq.game.tables.Banks;
-import org.graviton.database.jooq.game.tables.Crafts;
 import org.graviton.database.jooq.game.tables.GuildMembers;
 import org.graviton.database.jooq.game.tables.Guilds;
-import org.graviton.database.jooq.game.tables.Hdvs;
 import org.graviton.database.jooq.game.tables.HousesData;
 import org.graviton.database.jooq.game.tables.Items;
 import org.graviton.database.jooq.game.tables.Maps;
 import org.graviton.database.jooq.game.tables.Merchant;
 import org.graviton.database.jooq.game.tables.MountparkData;
+import org.graviton.database.jooq.game.tables.QuestData;
+import org.graviton.database.jooq.game.tables.QuestEtapes;
+import org.graviton.database.jooq.game.tables.QuestObjectifs;
+import org.graviton.database.jooq.game.tables.QuestPerso;
+import org.graviton.database.jooq.game.tables.SellpointItems;
 import org.graviton.database.jooq.game.tables.Spells;
 import org.graviton.database.jooq.game.tables.SubareaData;
 import org.graviton.database.jooq.game.tables.Trunks;
@@ -40,11 +43,6 @@ public class Tables {
     public static final Banks BANKS = org.graviton.database.jooq.game.tables.Banks.BANKS;
 
     /**
-     * The table <code>game.crafts</code>.
-     */
-    public static final Crafts CRAFTS = org.graviton.database.jooq.game.tables.Crafts.CRAFTS;
-
-    /**
      * The table <code>game.guilds</code>.
      */
     public static final Guilds GUILDS = org.graviton.database.jooq.game.tables.Guilds.GUILDS;
@@ -53,11 +51,6 @@ public class Tables {
      * The table <code>game.guild_members</code>.
      */
     public static final GuildMembers GUILD_MEMBERS = org.graviton.database.jooq.game.tables.GuildMembers.GUILD_MEMBERS;
-
-    /**
-     * The table <code>game.hdvs</code>.
-     */
-    public static final Hdvs HDVS = org.graviton.database.jooq.game.tables.Hdvs.HDVS;
 
     /**
      * The table <code>game.houses_data</code>.
@@ -83,6 +76,31 @@ public class Tables {
      * The table <code>game.mountpark_data</code>.
      */
     public static final MountparkData MOUNTPARK_DATA = org.graviton.database.jooq.game.tables.MountparkData.MOUNTPARK_DATA;
+
+    /**
+     * The table <code>game.quest_data</code>.
+     */
+    public static final QuestData QUEST_DATA = org.graviton.database.jooq.game.tables.QuestData.QUEST_DATA;
+
+    /**
+     * The table <code>game.quest_etapes</code>.
+     */
+    public static final QuestEtapes QUEST_ETAPES = org.graviton.database.jooq.game.tables.QuestEtapes.QUEST_ETAPES;
+
+    /**
+     * The table <code>game.quest_objectifs</code>.
+     */
+    public static final QuestObjectifs QUEST_OBJECTIFS = org.graviton.database.jooq.game.tables.QuestObjectifs.QUEST_OBJECTIFS;
+
+    /**
+     * The table <code>game.quest_perso</code>.
+     */
+    public static final QuestPerso QUEST_PERSO = org.graviton.database.jooq.game.tables.QuestPerso.QUEST_PERSO;
+
+    /**
+     * The table <code>game.sellpoint_items</code>.
+     */
+    public static final SellpointItems SELLPOINT_ITEMS = org.graviton.database.jooq.game.tables.SellpointItems.SELLPOINT_ITEMS;
 
     /**
      * The table <code>game.spells</code>.

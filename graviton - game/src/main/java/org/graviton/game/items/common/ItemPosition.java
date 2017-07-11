@@ -46,7 +46,8 @@ public enum ItemPosition {
     ItemBar23((byte) 57),
 
     Bank(Byte.MAX_VALUE),
-    Store(Byte.MIN_VALUE);
+    Store(Byte.MIN_VALUE),
+    SellPoint((byte) (Byte.MAX_VALUE - 1));
 
     private byte value;
     private boolean needUpdate = false;
@@ -80,7 +81,7 @@ public enum ItemPosition {
     }
 
     public boolean notEquipped() {
-        return !equippedWithoutBar() || this == Bank || this == Store;
+        return !equippedWithoutBar() || this == Bank || this == Store || this == SellPoint;
     }
 
     public boolean needUpdate() {

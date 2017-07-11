@@ -1,5 +1,7 @@
 package org.graviton.game.items.common;
 
+import lombok.Getter;
+
 /**
  * Created by Botan on 03/12/2016. 20:27
  */
@@ -87,7 +89,7 @@ public enum ItemType {
     Shield((byte) 82, true),
     Soulstone((byte) 83, true),
     Key((byte) 84),
-    FullSoulstone((byte) 85),
+    FullSoulStone((byte) 85),
     PercepteurForgetPotion((byte) 86),
     PARCHO_RECHERCHE((byte) 87),
     MagicStone((byte) 88),
@@ -119,6 +121,7 @@ public enum ItemType {
     ShushuSoulPiece((byte) 115),
     PetPotion((byte) 116);
 
+    @Getter
     private byte value;
     private boolean equipment = false;
 

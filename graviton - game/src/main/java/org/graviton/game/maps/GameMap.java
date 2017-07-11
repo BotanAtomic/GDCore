@@ -2,7 +2,6 @@ package org.graviton.game.maps;
 
 import javafx.util.Pair;
 import lombok.Data;
-import org.graviton.game.alignment.type.AlignmentType;
 import org.graviton.game.creature.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
@@ -13,8 +12,7 @@ import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.FightFactory;
-import org.graviton.game.hdv.SellPoint;
-import org.graviton.game.hdv.SellPoint;
+import org.graviton.game.sellpoint.SellPoint;
 import org.graviton.game.house.House;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.cell.Trigger;
@@ -24,6 +22,7 @@ import org.graviton.game.mountpark.MountPark;
 import org.graviton.game.trunk.type.Trunk;
 import org.graviton.game.zaap.Zaap;
 import org.graviton.game.zaap.Zaapi;
+import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.GamePacketFormatter;
 import org.graviton.utils.Cells;
 import org.graviton.utils.Utils;
@@ -246,6 +245,12 @@ public class GameMap implements AbstractMap {
         creature.send(GamePacketFormatter.mapLoadedSuccessfullyMessage());
         creature.getLocation().getCell().getCreatures().add(creature.getId());
         creature.getLocation().setMap(this);
+    }
+
+    public void loadOnlyData(Creature creature, GameClient client) {
+        client.send(this.descriptionPacket);
+        client.send(GamePacketFormatter.creatureChangeMapMessage(creature.getId()));
+        client.send(GamePacketFormatter.mapLoadedSuccessfullyMessage());
     }
 
     public void loadAndEnter(Creature creature) {

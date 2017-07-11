@@ -171,4 +171,23 @@ public class MessageFormatter {
         return customMessage("120");
     }
 
+    public static String sellPointItemLimitMessage() {
+        return customMessage("058");
+    }
+
+    public static String personalItemPurchasedMessage(short template, long price) {
+        return customMessage("065;") + price + "~" + template;
+    }
+
+    public static String itemAlreadyPurchased() {
+        return customMessage("064");
+    }
+
+    public static String lotPurchasedMessage() {
+        return customMessage("068");
+    }
+
+    public static String lotNotPurchasedMessage() {
+        return customMessage("172");
+    }
 }

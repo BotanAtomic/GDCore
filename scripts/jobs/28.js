@@ -11,7 +11,7 @@ job.setActionGetter(JavaAdapter(JobActionGetter, {
         var jobActions = new ArrayList();
         
         if (job.getLevel() > 69)
-            jobActions.add(new Harvest(54, job.getLevel(), -13,  45, job));
+            jobActions.add(new Harvest(54, job.getLevel(), -12,  45, job));
         
         if (job.getLevel() > 59)
             jobActions.add(new Harvest(58, job.getLevel(), -10, 40, job));

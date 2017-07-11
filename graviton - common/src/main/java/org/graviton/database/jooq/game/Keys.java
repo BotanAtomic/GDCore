@@ -6,24 +6,30 @@ package org.graviton.database.jooq.game;
 
 import javax.annotation.Generated;
 
-import org.graviton.database.jooq.game.tables.Crafts;
 import org.graviton.database.jooq.game.tables.GuildMembers;
 import org.graviton.database.jooq.game.tables.Guilds;
-import org.graviton.database.jooq.game.tables.Hdvs;
 import org.graviton.database.jooq.game.tables.HousesData;
 import org.graviton.database.jooq.game.tables.Maps;
 import org.graviton.database.jooq.game.tables.Merchant;
 import org.graviton.database.jooq.game.tables.MountparkData;
+import org.graviton.database.jooq.game.tables.QuestData;
+import org.graviton.database.jooq.game.tables.QuestEtapes;
+import org.graviton.database.jooq.game.tables.QuestObjectifs;
+import org.graviton.database.jooq.game.tables.QuestPerso;
+import org.graviton.database.jooq.game.tables.SellpointItems;
 import org.graviton.database.jooq.game.tables.SubareaData;
 import org.graviton.database.jooq.game.tables.Trunks;
-import org.graviton.database.jooq.game.tables.records.CraftsRecord;
 import org.graviton.database.jooq.game.tables.records.GuildMembersRecord;
 import org.graviton.database.jooq.game.tables.records.GuildsRecord;
-import org.graviton.database.jooq.game.tables.records.HdvsRecord;
 import org.graviton.database.jooq.game.tables.records.HousesDataRecord;
 import org.graviton.database.jooq.game.tables.records.MapsRecord;
 import org.graviton.database.jooq.game.tables.records.MerchantRecord;
 import org.graviton.database.jooq.game.tables.records.MountparkDataRecord;
+import org.graviton.database.jooq.game.tables.records.QuestDataRecord;
+import org.graviton.database.jooq.game.tables.records.QuestEtapesRecord;
+import org.graviton.database.jooq.game.tables.records.QuestObjectifsRecord;
+import org.graviton.database.jooq.game.tables.records.QuestPersoRecord;
+import org.graviton.database.jooq.game.tables.records.SellpointItemsRecord;
 import org.graviton.database.jooq.game.tables.records.SubareaDataRecord;
 import org.graviton.database.jooq.game.tables.records.TrunksRecord;
 import org.jooq.Identity;
@@ -49,20 +55,23 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<HdvsRecord, Integer> IDENTITY_HDVS = Identities0.IDENTITY_HDVS;
+    public static final Identity<SellpointItemsRecord, Integer> IDENTITY_SELLPOINT_ITEMS = Identities0.IDENTITY_SELLPOINT_ITEMS;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<CraftsRecord> KEY_CRAFTS_ID = UniqueKeys0.KEY_CRAFTS_ID;
     public static final UniqueKey<GuildsRecord> KEY_GUILDS_PRIMARY = UniqueKeys0.KEY_GUILDS_PRIMARY;
     public static final UniqueKey<GuildMembersRecord> KEY_GUILD_MEMBERS_ID = UniqueKeys0.KEY_GUILD_MEMBERS_ID;
-    public static final UniqueKey<HdvsRecord> KEY_HDVS_PRIMARY = UniqueKeys0.KEY_HDVS_PRIMARY;
     public static final UniqueKey<HousesDataRecord> KEY_HOUSES_DATA_PRIMARY = UniqueKeys0.KEY_HOUSES_DATA_PRIMARY;
     public static final UniqueKey<MapsRecord> KEY_MAPS_PRIMARY = UniqueKeys0.KEY_MAPS_PRIMARY;
     public static final UniqueKey<MerchantRecord> KEY_MERCHANT_PRIMARY = UniqueKeys0.KEY_MERCHANT_PRIMARY;
     public static final UniqueKey<MountparkDataRecord> KEY_MOUNTPARK_DATA_PRIMARY = UniqueKeys0.KEY_MOUNTPARK_DATA_PRIMARY;
+    public static final UniqueKey<QuestDataRecord> KEY_QUEST_DATA_PRIMARY = UniqueKeys0.KEY_QUEST_DATA_PRIMARY;
+    public static final UniqueKey<QuestEtapesRecord> KEY_QUEST_ETAPES_PRIMARY = UniqueKeys0.KEY_QUEST_ETAPES_PRIMARY;
+    public static final UniqueKey<QuestObjectifsRecord> KEY_QUEST_OBJECTIFS_PRIMARY = UniqueKeys0.KEY_QUEST_OBJECTIFS_PRIMARY;
+    public static final UniqueKey<QuestPersoRecord> KEY_QUEST_PERSO_PRIMARY = UniqueKeys0.KEY_QUEST_PERSO_PRIMARY;
+    public static final UniqueKey<SellpointItemsRecord> KEY_SELLPOINT_ITEMS_PRIMARY = UniqueKeys0.KEY_SELLPOINT_ITEMS_PRIMARY;
     public static final UniqueKey<SubareaDataRecord> KEY_SUBAREA_DATA_PRIMARY = UniqueKeys0.KEY_SUBAREA_DATA_PRIMARY;
     public static final UniqueKey<TrunksRecord> KEY_TRUNKS_PRIMARY = UniqueKeys0.KEY_TRUNKS_PRIMARY;
 
@@ -76,18 +85,21 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 extends AbstractKeys {
-        public static Identity<HdvsRecord, Integer> IDENTITY_HDVS = createIdentity(Hdvs.HDVS, Hdvs.HDVS.ID);
+        public static Identity<SellpointItemsRecord, Integer> IDENTITY_SELLPOINT_ITEMS = createIdentity(SellpointItems.SELLPOINT_ITEMS, SellpointItems.SELLPOINT_ITEMS.ID);
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
-        public static final UniqueKey<CraftsRecord> KEY_CRAFTS_ID = createUniqueKey(Crafts.CRAFTS, "KEY_crafts_id", Crafts.CRAFTS.ID);
         public static final UniqueKey<GuildsRecord> KEY_GUILDS_PRIMARY = createUniqueKey(Guilds.GUILDS, "KEY_guilds_PRIMARY", Guilds.GUILDS.ID);
         public static final UniqueKey<GuildMembersRecord> KEY_GUILD_MEMBERS_ID = createUniqueKey(GuildMembers.GUILD_MEMBERS, "KEY_guild_members_id", GuildMembers.GUILD_MEMBERS.ID);
-        public static final UniqueKey<HdvsRecord> KEY_HDVS_PRIMARY = createUniqueKey(Hdvs.HDVS, "KEY_hdvs_PRIMARY", Hdvs.HDVS.ID);
         public static final UniqueKey<HousesDataRecord> KEY_HOUSES_DATA_PRIMARY = createUniqueKey(HousesData.HOUSES_DATA, "KEY_houses_data_PRIMARY", HousesData.HOUSES_DATA.ID);
         public static final UniqueKey<MapsRecord> KEY_MAPS_PRIMARY = createUniqueKey(Maps.MAPS, "KEY_maps_PRIMARY", Maps.MAPS.ID);
         public static final UniqueKey<MerchantRecord> KEY_MERCHANT_PRIMARY = createUniqueKey(Merchant.MERCHANT, "KEY_merchant_PRIMARY", Merchant.MERCHANT.ID);
         public static final UniqueKey<MountparkDataRecord> KEY_MOUNTPARK_DATA_PRIMARY = createUniqueKey(MountparkData.MOUNTPARK_DATA, "KEY_mountpark_data_PRIMARY", MountparkData.MOUNTPARK_DATA.MAP);
+        public static final UniqueKey<QuestDataRecord> KEY_QUEST_DATA_PRIMARY = createUniqueKey(QuestData.QUEST_DATA, "KEY_quest_data_PRIMARY", QuestData.QUEST_DATA.ID);
+        public static final UniqueKey<QuestEtapesRecord> KEY_QUEST_ETAPES_PRIMARY = createUniqueKey(QuestEtapes.QUEST_ETAPES, "KEY_quest_etapes_PRIMARY", QuestEtapes.QUEST_ETAPES.ID);
+        public static final UniqueKey<QuestObjectifsRecord> KEY_QUEST_OBJECTIFS_PRIMARY = createUniqueKey(QuestObjectifs.QUEST_OBJECTIFS, "KEY_quest_objectifs_PRIMARY", QuestObjectifs.QUEST_OBJECTIFS.ID);
+        public static final UniqueKey<QuestPersoRecord> KEY_QUEST_PERSO_PRIMARY = createUniqueKey(QuestPerso.QUEST_PERSO, "KEY_quest_perso_PRIMARY", QuestPerso.QUEST_PERSO.GUID);
+        public static final UniqueKey<SellpointItemsRecord> KEY_SELLPOINT_ITEMS_PRIMARY = createUniqueKey(SellpointItems.SELLPOINT_ITEMS, "KEY_sellpoint_items_PRIMARY", SellpointItems.SELLPOINT_ITEMS.ID);
         public static final UniqueKey<SubareaDataRecord> KEY_SUBAREA_DATA_PRIMARY = createUniqueKey(SubareaData.SUBAREA_DATA, "KEY_subarea_data_PRIMARY", SubareaData.SUBAREA_DATA.ID);
         public static final UniqueKey<TrunksRecord> KEY_TRUNKS_PRIMARY = createUniqueKey(Trunks.TRUNKS, "KEY_trunks_PRIMARY", Trunks.TRUNKS.ID);
     }

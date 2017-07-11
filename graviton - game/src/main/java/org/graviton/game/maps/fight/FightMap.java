@@ -58,14 +58,10 @@ public class FightMap implements AbstractMap {
     }
 
     @Override
-    public void enter(Creature creature) {
-        System.err.println("enter");
-
-    }
+    public void enter(Creature creature) {}
 
     @Override
     public void load(Creature creature) {
-        System.err.println("Load");
     }
 
     @Override

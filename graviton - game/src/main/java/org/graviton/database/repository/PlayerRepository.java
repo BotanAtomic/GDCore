@@ -42,7 +42,7 @@ public class PlayerRepository extends Repository<Integer, Player> {
         this.database = database;
     }
 
-    private static <T> BinaryOperator<T> throwingMerger() {
+    public static <T> BinaryOperator<T> throwingMerger() {
         return (u, v) -> {
             throw new IllegalStateException(String.format("Duplicate key %s", u));
         };
@@ -100,6 +100,8 @@ public class PlayerRepository extends Repository<Integer, Player> {
 
             if (player == null)
                 player = new Player(record, account, loadItems(record.get(PLAYERS.ID)), loadStore(record), loadSpells(record.get(PLAYERS.ID)), entityFactory);
+            else
+                player.setAccount(account);
 
             super.add(player.getId(), player);
             return player;
@@ -108,8 +110,7 @@ public class PlayerRepository extends Repository<Integer, Player> {
 
 
     private Map<Integer, Item> loadItems(int playerId) {
-        return database.getResult(ITEMS, ITEMS.OWNER.equal(playerId), ITEMS.POSITION.notEqual(Byte.MAX_VALUE),
-                ITEMS.POSITION.notEqual(Byte.MIN_VALUE)).stream().map(record -> new Item(record, entityFactory.getItemTemplate(record.get(ITEMS.TEMPLATE)))).collect(Collectors.toMap(Item::getId, p -> p, throwingMerger(), ConcurrentHashMap::new));
+        return database.getResult(ITEMS, ITEMS.OWNER.equal(playerId), ITEMS.POSITION.between((byte)-2, (byte) 58)).stream().map(record -> new Item(record, entityFactory.getItemTemplate(record.get(ITEMS.TEMPLATE)))).collect(Collectors.toMap(Item::getId, p -> p, throwingMerger(), ConcurrentHashMap::new));
     }
 
     private List<StoreItem> loadStore(Record record) {

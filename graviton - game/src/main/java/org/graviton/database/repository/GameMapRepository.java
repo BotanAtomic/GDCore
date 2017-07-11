@@ -4,14 +4,12 @@ import com.google.inject.Inject;
 import org.graviton.database.Repository;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.database.jooq.game.tables.HousesData;
-import org.graviton.database.jooq.game.tables.Trunks;
 import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.npc.Npc;
-import org.graviton.game.hdv.SellPoint;
+import org.graviton.game.sellpoint.SellPoint;
 import org.graviton.game.house.House;
 import org.graviton.game.maps.GameMap;
-import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.mountpark.MountPark;
 import org.graviton.game.trunk.type.Trunk;
 import org.graviton.game.zaap.Zaap;
@@ -23,7 +21,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,7 +94,7 @@ public class GameMapRepository extends Repository<Integer, GameMap> {
         return entityFactory.apply(file.getElementsByTagName("Hdv"), element -> {
             GameMap gameMap = this.get(element.getAttribute("map").toInt());
             if (gameMap != null)
-                gameMap.setSellPoint(new SellPoint(element));
+                gameMap.setSellPoint(new SellPoint(element, entityFactory));
         });
     }
 

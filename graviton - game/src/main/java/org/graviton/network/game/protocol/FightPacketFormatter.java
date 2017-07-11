@@ -385,6 +385,6 @@ public class FightPacketFormatter {
     }
 
     public static String reconnectedPlayerMessage(String name) {
-        return MessageFormatter.customMessage("1183;" + name);
+        return MessageFormatter.customMessage("1184;" + name);
     }
 }

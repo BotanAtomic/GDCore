@@ -112,7 +112,7 @@ public abstract class Fight {
     }
 
     public Collection<Fighter> fighters() {
-        return Stream.concat(firstTeam.stream(), secondTeam.stream()).filter(new ArrayList<>()::add).collect(Collectors.toList());
+        return Stream.concat(firstTeam.stream(), secondTeam.stream()).collect(Collectors.toList());
     }
 
     protected void send(String data, List<Fighter> fighters) {
@@ -374,5 +374,6 @@ public abstract class Fight {
         this.disconnectedPlayers.remove(player.getId());
         player.setConnected(true);
         send(FightPacketFormatter.reconnectedPlayerMessage(player.getName()));
+        player.send(FightPacketFormatter.newFightMessage(state, false, true, false, 0, getType()));
     }
 }

@@ -122,7 +122,12 @@ public class AccountHandler {
 
         player.getEntityFactory().getPlayerRepository().removeMerchant(player.getId());
 
-        player.getMap().load(player);
+        System.err.println(player.getFight() == null);
+
+        if (player.getFight() == null)
+            player.getMap().load(player);
+        else
+            player.getFight().getGameMap().loadOnlyData(player, client);
 
         String currentAddress = ((InetSocketAddress) this.client.getSession().getRemoteAddress()).getAddress().getHostAddress();
 

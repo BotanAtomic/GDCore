@@ -105,33 +105,36 @@ public class GameHandler {
         client.send(PlayerPacketFormatter.asMessage(player, client.getEntityFactory().getExperience(player.getLevel()), player.getAlignment(), player.getStatistics()));
         client.send(GamePacketFormatter.regenTimerMessage((short) 2000));
 
-        if(!player.getJobs().isEmpty()) {
+        if (!player.getJobs().isEmpty()) {
             player.getJobs().values().forEach(job -> {
                 player.send(JobPacketFormatter.startJobMessage(job));
                 player.send(JobPacketFormatter.statisticsJobMessage(job));
 
                 Item item = player.getInventory().getByPosition(ItemPosition.Weapon);
 
-                if(item != null && job.getJobTemplate().getTools().contains(item.getTemplate().getId()))
+                if (item != null && job.getJobTemplate().getTools().contains(item.getTemplate().getId()))
                     player.send(JobPacketFormatter.jobToolMessage(job.getJobTemplate().getId()));
 
             });
         }
 
         if (endFight) {
-            ((GameMap) player.getMap()).enterAfterFight(player);
+            player.getGameMap().enterAfterFight(player);
             endFight = false;
-        } else player.getMap().enter(player);
+        } else if (player.getFight() == null)
+            player.getMap().enter(player);
+
     }
 
     private void sendGameInformation(Player player) {
-        client.send(player.getGameMap().buildData());
-
         if (player.getFight() != null) {
             client.send(GamePacketFormatter.mapLoadedSuccessfullyMessage());
             player.getFight().reconnect(player);
             return;
         }
+
+        client.send(player.getGameMap().buildData());
+
 
         if (player.getGameMap().getHouses() != null) {
             client.sendFormat(HousePacketFormatter.loadMessage(player.getGameMap().getHouses().values(), client.getEntityFactory()), "#");

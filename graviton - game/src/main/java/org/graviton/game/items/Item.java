@@ -67,10 +67,13 @@ public class Item {
                 builder.append(bonus).append(',');
             } else {
                 final short value = this.statistics.get(i);
-                builder.append(Integer.toHexString(i.value())).append("#").append(Integer.toHexString((int) value)).append("#0#0#").append("0d0+").append(value).append(',');
+                builder.append(Integer.toHexString(i.value())).append("#").append(Integer.toHexString(value)).append("#0#0#").append("0d0+").append(value).append(',');
             }
         });
-        return builder.toString().substring(0, builder.length() == 0 ? 0 : builder.length() - 1);
+
+        //TODO : text stats
+
+        return builder.substring(0, builder.length() == 0 ? 0 : builder.length() - 1);
     }
 
     public void changeQuantity(short quantity) {

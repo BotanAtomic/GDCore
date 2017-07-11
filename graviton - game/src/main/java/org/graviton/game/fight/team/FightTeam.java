@@ -71,8 +71,8 @@ public abstract class FightTeam extends ArrayList<Fighter> {
     }
 
     public Cell random() {
-        List<Cell> freeCells = this.cells.stream().filter(Cell::isFree).map(cell -> cell).collect(Collectors.toList());
-        return freeCells.size() == 0 ? null : freeCells.get(new Random().nextInt(freeCells.size()));
+        List<Cell> freeCells = this.cells.stream().filter(Cell::isFree).collect(Collectors.toList());
+        return freeCells.isEmpty() ? null : freeCells.get(new Random().nextInt(freeCells.size()));
     }
 
     public boolean containsCell(short cell) {
