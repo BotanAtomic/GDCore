@@ -203,6 +203,14 @@ public class Utils {
         return shortArray;
     }
 
+    public static boolean containsInByteArray(byte[] data, byte search) {
+        for (byte id : data)
+            if (id == search)
+                return true;
+
+        return false;
+    }
+
     static class NameGenerator {
         private static String[] BEGINNING = {"Kr", "Ca", "Ra", "Mrok", "Cru",
                 "Ray", "Bre", "Zed", "Drak", "Mor", "Jag", "Mer", "Jar", "Mjol",

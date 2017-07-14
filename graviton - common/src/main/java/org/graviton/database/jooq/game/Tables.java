@@ -14,10 +14,7 @@ import org.graviton.database.jooq.game.tables.Items;
 import org.graviton.database.jooq.game.tables.Maps;
 import org.graviton.database.jooq.game.tables.Merchant;
 import org.graviton.database.jooq.game.tables.MountparkData;
-import org.graviton.database.jooq.game.tables.QuestData;
-import org.graviton.database.jooq.game.tables.QuestEtapes;
-import org.graviton.database.jooq.game.tables.QuestObjectifs;
-import org.graviton.database.jooq.game.tables.QuestPerso;
+import org.graviton.database.jooq.game.tables.PlayerQuest;
 import org.graviton.database.jooq.game.tables.SellpointItems;
 import org.graviton.database.jooq.game.tables.Spells;
 import org.graviton.database.jooq.game.tables.SubareaData;
@@ -78,24 +75,9 @@ public class Tables {
     public static final MountparkData MOUNTPARK_DATA = org.graviton.database.jooq.game.tables.MountparkData.MOUNTPARK_DATA;
 
     /**
-     * The table <code>game.quest_data</code>.
+     * The table <code>game.player_quest</code>.
      */
-    public static final QuestData QUEST_DATA = org.graviton.database.jooq.game.tables.QuestData.QUEST_DATA;
-
-    /**
-     * The table <code>game.quest_etapes</code>.
-     */
-    public static final QuestEtapes QUEST_ETAPES = org.graviton.database.jooq.game.tables.QuestEtapes.QUEST_ETAPES;
-
-    /**
-     * The table <code>game.quest_objectifs</code>.
-     */
-    public static final QuestObjectifs QUEST_OBJECTIFS = org.graviton.database.jooq.game.tables.QuestObjectifs.QUEST_OBJECTIFS;
-
-    /**
-     * The table <code>game.quest_perso</code>.
-     */
-    public static final QuestPerso QUEST_PERSO = org.graviton.database.jooq.game.tables.QuestPerso.QUEST_PERSO;
+    public static final PlayerQuest PLAYER_QUEST = org.graviton.database.jooq.game.tables.PlayerQuest.PLAYER_QUEST;
 
     /**
      * The table <code>game.sellpoint_items</code>.

@@ -24,7 +24,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
 
-    private static final long serialVersionUID = -813888487;
+    private static final long serialVersionUID = -307949883;
 
     /**
      * Setter for <code>login.players.id</code>.
@@ -329,7 +329,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Setter for <code>login.players.vitality</code>.
      */
-    public PlayersRecord setVitality(Short value) {
+    public PlayersRecord setVitality(Integer value) {
         set(20, value);
         return this;
     }
@@ -337,14 +337,14 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.vitality</code>.
      */
-    public Short getVitality() {
-        return (Short) get(20);
+    public Integer getVitality() {
+        return (Integer) get(20);
     }
 
     /**
      * Setter for <code>login.players.wisdom</code>.
      */
-    public PlayersRecord setWisdom(Short value) {
+    public PlayersRecord setWisdom(Integer value) {
         set(21, value);
         return this;
     }
@@ -352,14 +352,14 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.wisdom</code>.
      */
-    public Short getWisdom() {
-        return (Short) get(21);
+    public Integer getWisdom() {
+        return (Integer) get(21);
     }
 
     /**
      * Setter for <code>login.players.strength</code>.
      */
-    public PlayersRecord setStrength(Short value) {
+    public PlayersRecord setStrength(Integer value) {
         set(22, value);
         return this;
     }
@@ -367,14 +367,14 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.strength</code>.
      */
-    public Short getStrength() {
-        return (Short) get(22);
+    public Integer getStrength() {
+        return (Integer) get(22);
     }
 
     /**
      * Setter for <code>login.players.intelligence</code>.
      */
-    public PlayersRecord setIntelligence(Short value) {
+    public PlayersRecord setIntelligence(Integer value) {
         set(23, value);
         return this;
     }
@@ -382,14 +382,14 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.intelligence</code>.
      */
-    public Short getIntelligence() {
-        return (Short) get(23);
+    public Integer getIntelligence() {
+        return (Integer) get(23);
     }
 
     /**
      * Setter for <code>login.players.chance</code>.
      */
-    public PlayersRecord setChance(Short value) {
+    public PlayersRecord setChance(Integer value) {
         set(24, value);
         return this;
     }
@@ -397,14 +397,14 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.chance</code>.
      */
-    public Short getChance() {
-        return (Short) get(24);
+    public Integer getChance() {
+        return (Integer) get(24);
     }
 
     /**
      * Setter for <code>login.players.agility</code>.
      */
-    public PlayersRecord setAgility(Short value) {
+    public PlayersRecord setAgility(Integer value) {
         set(25, value);
         return this;
     }
@@ -412,8 +412,8 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Getter for <code>login.players.agility</code>.
      */
-    public Short getAgility() {
-        return (Short) get(25);
+    public Integer getAgility() {
+        return (Integer) get(25);
     }
 
     /**
@@ -577,7 +577,7 @@ public class PlayersRecord extends UpdatableRecordImpl<PlayersRecord> {
     /**
      * Create a detached, initialised PlayersRecord
      */
-    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Short level, Long experience, Byte title, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Short energy, Byte life, Short vitality, Short wisdom, Short strength, Short intelligence, Short chance, Short agility, Byte server, Byte alignment, Integer honor, Integer dishonnor, Byte pvpEnabled, Integer guild, String savedlocation, String store, String job) {
+    public PlayersRecord(Integer id, Integer owner, String name, Byte breed, Byte sex, Short skin, Short size, String colors, Short level, Long experience, Byte title, Long kamas, Integer map, Short cell, Byte orientation, String waypoints, Short statPoints, Short spellPoints, Short energy, Byte life, Integer vitality, Integer wisdom, Integer strength, Integer intelligence, Integer chance, Integer agility, Byte server, Byte alignment, Integer honor, Integer dishonnor, Byte pvpEnabled, Integer guild, String savedlocation, String store, String job) {
         super(Players.PLAYERS);
 
         set(0, id);

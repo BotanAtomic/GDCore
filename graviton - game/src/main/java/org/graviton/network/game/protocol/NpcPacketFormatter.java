@@ -1,8 +1,10 @@
 package org.graviton.network.game.protocol;
 
+import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.creature.npc.NpcTemplate;
 import org.graviton.game.items.template.ItemTemplate;
+import org.graviton.game.quest.Quest;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ import static org.graviton.utils.Utils.toHex;
  */
 public class NpcPacketFormatter {
 
-    public static String gmMessage(Npc npc) {
+    public static String gmMessage(Npc npc, Player player) {
         NpcTemplate template = npc.getTemplate();
 
         StringBuilder builder = new StringBuilder();
@@ -32,7 +34,13 @@ public class NpcPacketFormatter {
         builder.append(toHex(template.getColors()[2])).append(';');
         builder.append(template.getAccessories());
         builder.append(';');
-        builder.append(template.getExtraClip()).append(';');
+
+        if (template.getExtraClip() > 0 && player != null && player.getQuestByNpc(template.getId()) != null)
+            builder.append(';');
+        else
+            builder.append(template.getExtraClip()).append(';');
+
+
         builder.append(template.getCustomArtWork());
         return builder.toString();
     }
@@ -56,7 +64,7 @@ public class NpcPacketFormatter {
     public static String itemListMessage(List<ItemTemplate> itemTemplates) {
         StringBuilder builder = new StringBuilder("EL");
         itemTemplates.forEach(itemTemplate -> builder.append(itemTemplate.parse()).append('|'));
-        return builder.substring(0,builder.length() -1);
+        return builder.substring(0, builder.length() - 1);
     }
 
 }

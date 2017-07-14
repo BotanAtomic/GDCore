@@ -20,7 +20,7 @@ public abstract class Statistics extends HashMap<CharacteristicType, Characteris
 
     protected void initialize() {
         for (CharacteristicType type : CharacteristicType.values())
-            put(type, new BaseCharacteristic((short) 0));
+            put(type, new BaseCharacteristic(0));
     }
 
 }

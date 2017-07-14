@@ -12,6 +12,7 @@ import org.graviton.game.creature.merchant.Merchant;
 import org.graviton.game.items.Item;
 import org.graviton.game.items.StoreItem;
 import org.graviton.game.maps.GameMap;
+import org.graviton.game.quest.Quest;
 import org.graviton.game.spell.SpellView;
 import org.graviton.game.statistics.common.CharacteristicType;
 import org.graviton.network.exchange.ExchangeConnector;
@@ -24,6 +25,7 @@ import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.graviton.database.jooq.game.Tables.PLAYER_QUEST;
 import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 import static org.graviton.database.jooq.game.tables.Spells.SPELLS;
 import static org.graviton.database.jooq.login.tables.Players.PLAYERS;
@@ -99,7 +101,7 @@ public class PlayerRepository extends Repository<Integer, Player> {
             Player player = gameMap.getFightFactory().searchDisconnectedPlayer(record.get(PLAYERS.ID));
 
             if (player == null)
-                player = new Player(record, account, loadItems(record.get(PLAYERS.ID)), loadStore(record), loadSpells(record.get(PLAYERS.ID)), entityFactory);
+                player = new Player(record, account, loadItems(record.get(PLAYERS.ID)), loadStore(record), loadSpells(record.get(PLAYERS.ID)), loadQuest(record.get(PLAYERS.ID)), entityFactory);
             else
                 player.setAccount(account);
 
@@ -145,6 +147,11 @@ public class PlayerRepository extends Repository<Integer, Player> {
     private void removeSpellView(Player player) {
         database.getDslContext().delete(SPELLS).where(SPELLS.OWNER.equal(player.getId())).execute();
     }
+
+    private List<Quest> loadQuest(int player) {
+        return database.getResult(PLAYER_QUEST, PLAYER_QUEST.PLAYER.equal(player)).map(record -> new Quest(record, entityFactory));
+    }
+
 
     public List<Merchant> loadMerchant(int gameMap) {
         return database.getResult(MERCHANT, MERCHANT.MAP.equal(gameMap)).map(record -> {

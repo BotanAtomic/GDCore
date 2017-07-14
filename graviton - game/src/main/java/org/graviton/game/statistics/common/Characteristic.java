@@ -5,9 +5,9 @@ package org.graviton.game.statistics.common;
  * Created by Botan on 12/11/2016 : 15:06
  */
 public abstract class Characteristic {
-    protected short base, equipment, gift, context;
+    protected int base, equipment, gift, context;
 
-    public Characteristic(short base) {
+    public Characteristic(int base) {
         this.base = base;
     }
 
@@ -15,7 +15,7 @@ public abstract class Characteristic {
         this.base = 0;
     }
 
-    public void addBase(short value) {
+    public void addBase(int value) {
         this.base += value;
     }
 
@@ -23,36 +23,36 @@ public abstract class Characteristic {
         this.base *= value;
     }
 
-    public void addEquipment(short value) {
+    public void addEquipment(int value) {
         this.equipment += value;
     }
 
-    public void addGift(short value) {
+    public void addGift(int value) {
         this.gift += value;
     }
 
-    public void addContext(short value) {
+    public void addContext(int value) {
         this.context += value;
     }
 
-    public short base() {
+    public int base() {
         return base;
     }
 
-    public short gift() {
+    public int gift() {
         return gift;
     }
 
-    public short equipment() {
+    public int equipment() {
         return equipment;
     }
 
-    public short context() {
+    public int context() {
         return context;
     }
 
-    public short safeTotal() {
-        return (short) (base + equipment + gift);
+    public int safeTotal() {
+        return (int) (base + equipment + gift);
     }
 
     public abstract int total();

@@ -42,4 +42,8 @@ public class XMLPath {
     public static final String SELL_POINTS = "hdv/templates.xml";
 
 
+    public final static String QUESTS = "quest/templates.xml";
+    public final static String QUEST_GOALS = "quest/goals.xml";
+    public final static String QUEST_STEPS = "quest/steps.xml";
+
 }

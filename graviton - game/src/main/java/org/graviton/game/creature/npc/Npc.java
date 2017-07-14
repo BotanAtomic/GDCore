@@ -1,6 +1,7 @@
 package org.graviton.game.creature.npc;
 
 import lombok.Data;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.look.AbstractLook;
@@ -37,8 +38,8 @@ public class Npc implements Creature {
     }
 
     @Override
-    public String getGm() {
-        return NpcPacketFormatter.gmMessage(this);
+    public String getGm(Player player) {
+        return NpcPacketFormatter.gmMessage(this, player);
     }
 
     @Override
@@ -74,5 +75,9 @@ public class Npc implements Creature {
     @Override
     public AbstractLook look() {
         return template.getLook();
+    }
+
+    public int getTemplateId() {
+        return this.template.getId();
     }
 }

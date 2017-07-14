@@ -1,0 +1,482 @@
+<Quests>
+    <Quest id="232" name="L 'île des naufragés" steps="945;946;947;948" goal="423" npc="925" action="" arguments="" temporary="0" condition="" />
+    <Quest id="231" name="Le nouveau monde" steps="941;942;943;944" goal="422" npc="925" action="" arguments="" temporary="0" condition="" />
+    <Quest id="458" name="Chasse au dopeul Crâ." steps="3147;3148" goal="979" npc="439" action="" arguments="" temporary="1" condition="" />
+    <Quest id="459" name="Chasse au dopeul Ecaflip." steps="3160;3161" goal="982" npc="438" action="" arguments="" temporary="1" condition="" />
+    <Quest id="462" name="Chasse au dopeul Eniripsa." steps="3166;3167" goal="985" npc="435" action="" arguments="" temporary="1" condition="" />
+    <Quest id="464" name="Chasse au dopeul Enutrof." steps="3170;3171" goal="987" npc="440" action="" arguments="" temporary="1" condition="" />
+    <Quest id="469" name="Chasse au dopeul Féca." steps="3180;3181" goal="992" npc="433" action="" arguments="" temporary="1" condition="" />
+    <Quest id="460" name="Chasse au dopeul Iop." steps="3162;3163" goal="983" npc="434" action="" arguments="" temporary="1" condition="" />
+    <Quest id="461" name="Chasse au dopeul Osamodas." steps="3164;3165" goal="984" npc="436" action="" arguments="" temporary="1" condition="" />
+    <Quest id="466" name="Chasse au dopeul Pandawa." steps="3174;3175" goal="989" npc="672" action="" arguments="" temporary="1" condition="" />
+    <Quest id="463" name="Chasse au dopeul Sacrieur." steps="3168;3169" goal="986" npc="443" action="" arguments="" temporary="1" condition="" />
+    <Quest id="465" name="Chasse au dopeul Sadida." steps="3172;3173" goal="988" npc="442" action="" arguments="" temporary="1" condition="" />
+    <Quest id="467" name="Chasse au dopeul Sram." steps="3176;3177" goal="990" npc="441" action="" arguments="" temporary="1" condition="" />
+    <Quest id="468" name="Chasse au dopeul Xélor." steps="3178;3179" goal="991" npc="437" action="" arguments="" temporary="1" condition="" />
+    <Quest id="470" name="Un bon gros par Douze." steps="3191;3190;3199;3188;3194;3196;3192;3193;3198;3189;3197;3195" goal="995" npc="0" action="" arguments="" temporary="1" condition="" />
+    <Quest id="30" name="Retrouver Frakacia Leukocytine" steps="212;213" goal="119" npc="606" action="" arguments="" temporary="0" condition="1:2" />
+    <Quest id="29" name="Retrouver Padgref Demoël" steps="215;216" goal="121" npc="606" action="" arguments="" temporary="0" condition="1:80" />
+    <Quest id="32" name="Retrouver Qil Bil" steps="310;214" goal="115" npc="606" action="" arguments="" temporary="0" condition="1:32" />
+    <Quest id="118" name="Retrouver Zatoïshwan" steps="428;429" goal="204" npc="606" action="" arguments="" temporary="0" condition="1:91" />
+    <Quest id="34" name="Retrouver Fouduglen L\'écureuil" steps="207;205" goal="111" npc="606" action="" arguments="" temporary="0" condition="1:1" />
+    <Quest id="33" name="Retrouver Brumen Tinctorias" steps="209;210" goal="113" npc="606" action="" arguments="" temporary="0" condition="1:30" />
+    <Quest id="117" name="Retrouver Marzwel le Gobelin" steps="425;426" goal="203" npc="606" action="" arguments="" temporary="0" condition="1:56" />
+    <Quest id="116" name="Retrouver Musha l\'Oni" steps="423;424" goal="202" npc="606" action="" arguments="" temporary="0" condition="1:61" />
+    <Quest id="35" name="Retrouver Ogivol Scalarcin" steps="313;312" goal="109" npc="606" action="" arguments="" temporary="0" condition="1:41" />
+    <Quest id="115" name="Retrouver Rok Gnorok" steps="421;422" goal="201" npc="606" action="" arguments="" temporary="0" condition="1:29" />
+    <Quest id="119" name="Aermyne 'Braco' Scalptaras" steps="431;432" goal="206" npc="606" action="" arguments="" temporary="0" condition="1:32" />
+    <Quest id="188" name="Battre le blé." steps="778" goal="358" npc="876" action="" arguments="" temporary="0" condition="" />
+    <Quest id="200" name="La complainte de Lykhen" steps="811" goal="373" npc="891" action="" arguments="" temporary="0" condition="" />
+    <Quest id="183" name="Bienvenue !" steps="756" goal="348" npc="868" action="" arguments="" temporary="0" condition="" />
+    <Quest id="185" name="Eau du bain." steps="758" goal="350" npc="870" action="" arguments="" temporary="0" condition="" />
+    <Quest id="172" name="Premières armes." steps="701;713" goal="329" npc="843" action="" arguments="" temporary="0" condition="" />
+    <Quest id="181" name="Papotage." steps="745;744" goal="343;342" npc="856" action="" arguments="" temporary="0" condition="" />
+    <Quest id="182" name="Zaap de là !" steps="746" goal="344" npc="857" action="5" arguments="8529,1,1" temporary="0" condition="" />
+    <Quest id="193" name="La clef du donjon." steps="793;794" goal="365" npc="884" action="" arguments="" temporary="0" condition="" />
+    <Quest id="198" name="Spéléologie." steps="808;809" goal="371" npc="886" action="" arguments="" temporary="0" condition="" />
+    <Quest id="190" name="Un décès temporaire." steps="783;784" goal="362" npc="878" action="982" arguments="-1" temporary="0" condition="" />
+    <Quest id="194" name="Restauration." steps="795;796" goal="366;367" npc="872" action="" arguments="" temporary="0" condition="" />
+    <Quest id="525" name="Le divin enfant." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="446" name="Le forgeron aux deux mains gauches." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="631" name="Epis d\'Emi." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="298" name="Course-poursuite." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="634" name="Grom?o et Ginette." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="635" name="Une blague vaseuse ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="272" name="Assassinat effectu" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="636" name="Blessure de chasse." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="637" name="Chasse dangereuse." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="638" name="Rentrer brocouille." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="639" name="Un chasseur qui a du coffre." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="640" name="Un volcan s\'?teint." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="641" name="L\'abominable YeCh\'Ti." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="642" name="Bonmonstres de neige." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="643" name="Manque de re-peau." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="644" name="Le convoi, le sage aussi." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="222" name="Suite Woyale" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="68" name="De la poudre aux yeux de Br?kmar" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="76" name="La fureur du Holba" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="63" name="Premi?re visite ? Br?kmar" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="290" name="Tr?knar." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="278" name="A la mani?re des Br?kmariens." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="265" name="Quand y\'en a marre de Br?kmar." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="26" name="Manuscrit de Terra Cogita" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="60" name="Cartes sp?ciales d\'Amayiro" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="78" name="Corvée de patate" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="81" name="Amayiro ? l\'ombre du Champo" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="161" name="Pinta Gone veut se remplir de bi?re Bwork" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="302" name="Bandanarthrie." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="299" name="A la poursuite d\'Octolliard rouge." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="262" name="Alimentaire mon cher." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="519" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="89" name="Danathor a-t-il tort ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="261" name="Dans la gueule du chat." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="85" name="Des combats pas tr?s l?gaux..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="65" name="Du repos mais pas trop..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="88" name="La lettre anonyme" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="486" name="Le secret de Percimol" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="400" name="Activités volcaniques." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="387" name="Agent double et demi." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="392" name="Alchimie malfaisante." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="175" name="Allez, au turbin." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="206" name="Allez, au turbin." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="207" name="Allez, au turbin." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="120" name="Apprentissage : Chevalier de l\'Espoir" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="291" name="Attaque ? retardement." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="404" name="Bois de chauffage." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="448" name="Bonta a besoin de vous." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="447" name="Br?kmar a besoin de vous." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="401" name="Chasse ? l\'espion." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="285" name="La panoplie du milicien." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="375" name="Cliquetis fou." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="313" name="Contre-espion." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="209" name="Crypte Honnie" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="268" name="Dans la peau de Sphincter Cell." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="393" name="Des capes typiques." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="306" name="Enqu?te ? Moon." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="74" name="Le fant?me de Tsog" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="82" name="Le d?c?s de Rimaraf" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="94" name="Les rats d\'Hyoactif" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="333" name="Le subterfuge de la corne." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="50" name="Fl?ches Cra-rakneene" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="9" name="Grain de folie ? Astrub" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="314" name="Histoires de salaces." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="296" name="Histoires de tortues." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="411" name="Humiliation sans pr?c?dent." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="39" name="Initiation ? la nature... des Sadidas." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="174" name="Instincts primaires." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="294" name="Investigations ? Moon." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="251" name="Joyau... ze f?te." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="495" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="496" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="497" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="498" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="56" name="La tenanci?re Dame Cloude" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="499" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="500" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="501" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="502" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="504" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="505" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="506" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="507" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="508" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="509" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="510" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="511" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="512" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="513" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="514" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="515" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="516" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="517" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="518" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="79" name="Lyeno, Abraknyde malgr? lui" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="91" name="Le?on de cuisine" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="520" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="521" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="522" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="289" name="La Grafioze." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="381" name="La mise ? mort." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="380" name="La noirceur des armes blanches." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="254" name="La punition de l\'incomp?tent." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="379" name="La revanche de Mak." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="284" name="La tactique des gens d\'armes." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="267" name="Le carnage des plaines." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="384" name="Le con tondant." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="252" name="Le cristal de Kain Dharyn." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="403" name="Le d?fi du ma?tre guerrier." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="378" name="Le dentiste d?ment." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="398" name="Le dur travail d\'?plucheur de patates." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="494" name="Le Grand Manitou." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="295" name="Mani?re douce." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="273" name="Le magnanime." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="256" name="Le moment de v?rit" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="280" name="Le port salue." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="376" name="Le professionnel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="391" name="Le tabi mangeur de blops." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="394" name="Le testament du papa." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="279" name="Le tr?sor de La Descemer." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="317" name="L?gitime d?fense." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="281" name="L\'?quipe ment." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="445" name="Les 7 bandits." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="310" name="Les documents avant tout." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="258" name="Les Ecas ne flippent pas." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="382" name="Les gardes d\'honneur... ? punir." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="274" name="Les kamas r?solvent tout." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="406" name="L\'espionnage nouveau." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="439" name="L\'?ternelle moisson." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="255" name="Livraison rapide." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="388" name="Livreur de mauvaise nouvelle." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="307" name="Mani?re forte." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="176" name="Manufacture." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="202" name="Manufacture." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="203" name="Manufacture." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="204" name="Manufacture." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="62" name="Pas de fain?ants dans les rangs !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="192" name="March? ?quitable." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="180" name="Milice populaire." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="102" name="Pandawa et fier de l\'?tre" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="259" name="Plaine de chats." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="283" name="Pour vivre heureux." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="70" name="Quatre caisses ? pied, ?a use..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="308" name="Retour aux origines." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="189" name="Salut les copains." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="162" name="Un avenir de krotte de Trooll" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="412" name="Un choix difficile." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="377" name="Un coup de fouet." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="249" name="La r?compense du comp?tent." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="405" name="L\'?quipement du traine-savate standard." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="410" name="Un dentier pour l\'ami Mak." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="271" name="Un ma?tre ?s pion." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="399" name="Cruel, mais ? quel point ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="383" name="Un oubli regrettable." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="402" name="Un petit oubli." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="304" name="Un sombre pouvoir." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="440" name="Une collecte discutable." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="389" name="Une collection digne de Xil?bo." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="303" name="Une Corne Edfrit sans sel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="390" name="La chasse, tout un art..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="282" name="Une partie de cache-cache." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="305" name="Une rumeur all?chante." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="492" name="Vaincre le monstre." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="247" name="X comme Xephir?s." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="386" name="Mais si, ce sont des vitamines..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="270" name="Mon nom est poison." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="312" name="On m\'appelle l\'Escargot" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="248" name="Op?ration commando." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="277" name="Parano?a aig?e." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="408" name="Pauvre larve." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="409" name="Pauvre larve... dor?e." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="250" name="Rencontre du premier type." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="385" name="Sombres ?changes." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="275" name="Supermilicien." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="396" name="Taxe gratuite." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="246" name="Triple X." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="433" name="Apprentissage : Disciple de M?nalt" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="434" name="Apprentissage : Disciple de Jiva" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="436" name="Apprentissage : Disciple de Djaul" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="438" name="Apprentissage : Disciple de Brumaire" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="123" name="Apprentissage : Chevalier du D?sespoir" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="437" name="Apprentissage : Disciple d\'H?cate" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="503" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="530" name="On se l?ve tous pour Annette." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="531" name="Michons fleuris." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="532" name="Heureusement il a faim, Duss." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="533" name="Mines anti-personnel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="534" name="Mmmh, Shab Al." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="535" name="Chaudi?re au charbon." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="536" name="Michel Shel enquille un Bouftonmouth." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="537" name="Esp?ce menac?e." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="538" name="Pied joyeux." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="539" name="La mort vous va si bien." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="540" name="Passe ta larme ? gauche." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="541" name="Une mine patibulaire." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="542" name="Pauvre Kiki." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="543" name="La marche de l\'imp?ratrice." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="544" name="On recherche CHAMPS." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="545" name="On recherche Monsieur Pingouin." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="546" name="On recherche FOR?T PINS." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="547" name="On recherche Fant?mayte." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="548" name="On recherche Vengeuse Masqu?e." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="549" name="On recherche le YeCh\'Ti." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="170" name="Ange de Gobriel" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="186" name="Ca va couper, ch?rie." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="184" name="Piou ?" steps="757;785" goal="349" npc="869" action="" arguments="" temporary="0" condition="" />
+    <Quest id="173" name="Soyez Aouaire !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="225" name="Qui veut la peau du Wabbit?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="211" name="Tra?tre ou pas tra?tre, telle est la question..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="140" name="Mais o? est pass? le Minotoror ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="315" name="Affrontement !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="144" name="Chargez !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="309" name="Une faille dans sa carapace." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="395" name="Amadouer ou corrompre ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="397" name="Par la force ou par la finesse ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="407" name="Un assassin... chez Bonta ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="526" name="Laisse pas trainer tes fils." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="527" name="Laisse pas trainer tes fils." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="528" name="Le Grand oeuvre." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="257" name="Vin diou." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="293" name="Une rumeur int?ressante." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="72" name="La foire du Trool suspect" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="100" name="Pandala, son air pur..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="488" name="Sanctification." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="554" name="G?ne et tique." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="555" name="Un gros cube, un p\'ti cube." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="556" name="En semant se ment." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="276" name="Le forgeron." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="557" name="Pomdeupin vaut mieux que trois tu l\'auras." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="558" name="Massacre au hakapik." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="559" name="Mettre son grain de sel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="560" name="Mauvaise graine." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="561" name="Champ Pomy." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="562" name="Gant graine." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="566" name="Cent vingt trois fleurs, point comme les autres." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="567" name="Botanique-nique-nique." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="568" name="A fleur de peau." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="569" name="Mes lys fleurs." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="570" name="Rose ? lys, Rose ? lys, oh !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="571" name="Fleuries mais rougissent." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="572" name="Heureux qui, comme les lys." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="576" name="Sign? Ernest Laye." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="577" name="P?che en eaux gel?es." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="578" name="La p?che ? Mel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="579" name="Il est frais mon pichon." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="580" name="Vacances sur glace." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="581" name="H?tel de glace." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="582" name="La fonte des glaces." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="583" name="L\'ombre et la glace." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="584" name="Adoption ?ph?m?re." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="589" name="Bricole Girl." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="590" name="Promenons-nous dans les bois." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="591" name="Les chasseurs." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="592" name="Il pr?f?re la mort en mer." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="599" name="Souvenir, souvenir." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="593" name="Chauffage ? moindre frais." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="594" name="A la recherche de Danlavie." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="600" name="Bricoleur de g?nie." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="601" name="Bijoux de famille." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="595" name="LES RESCAP?S DE FRIGOST 7" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="602" name="Obscurantisme." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="6" name="(next) A la recherche du Coup-devin" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="612" name="La terre banquise." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="613" name="La maire de glace." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="614" name="Full contact." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="615" name="Les monologues du vaccin." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="616" name="Faire le tas de pins." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="617" name="Scierie Bambelle." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="618" name="Semer ses graines." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="619" name="Antiroyaliste." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="620" name="Les joyeux de la couronne." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="621" name="Fais dodo, t\'auras du g?teau." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="622" name="Lavomatique." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="4" name="La complainte du chacha" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="5" name="De la difficult? ? ?tre Bijoutier" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="7" name="Le dur labeur de Sram" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="10" name="Probl?me de livraison" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="11" name="Pleur Nycheuz" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="13" name="Un ours dans la bouftonerie" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="14" name="La derni?re mode" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="15" name="Une taupe de trop dans mon Astrub" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="18" name="Wogew l\'hewmite" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="20" name="Ep?e : mode d\'emploi" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="21" name="Forg?e sur un pari. A l\'Ecaflip simplement" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="24" name="Vol...Age ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="25" name="Savoir de Cr" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="31" name="Retrouver Nervoes Brakdoun" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="36" name="Bi?re en danger" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="37" name="Futuramakna" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="38" name="Les Enutrofs sont nos amis, il faut..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="40" name="Le Donjon de la reflexion" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="43" name="Chasse ? l\'?cureuil" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="44" name="Ne pas vendre la m?che avant de l\'avoir tu" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="45" name="A la recherche des Enus disparus" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="47" name="Sandwich d\'Arakn" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="48" name="Tofu sous microscope" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="53" name="Pauvre Kwikwi" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="55" name="Entra?nement avec Tarche" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="57" name="Du pain pour les braves" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="58" name="Ned le dentiste" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="59" name="Entra?nement avec Torche" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="61" name="On a vol? le collier de la fille du maire" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="64" name="Un sanglier un peu trop agressif..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="66" name="Recouvrement de dette ? la Tabasse" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="67" name="Pot l\'agent double" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="69" name="Une br?che ? Bonta" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="71" name="L\'?lite squelettique" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="73" name="Le Tabi d\'Amayiro" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="75" name="Des anneaux sur le bout des doigts" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="77" name="Des capes Bontariennes" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="80" name="Au service de Danathor" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="83" name="Poison de scorbute pour la prison" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="84" name="Dike Tarak, la menace" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="86" name="Mission de reconnaissance au cimeti?re" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="87" name="Extension du b?timent de la milice" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="90" name="Dix badges pour la bonne cause" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="92" name="Ras le bol de Lenglad" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="93" name="Dapyus n\'est pas dou" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="95" name="Pandala : une ?le pas comme les autres" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="96" name="Plong?e sous-marine" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="98" name="Pandala: ses Villages..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="99" name="Sources ?tranges" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="101" name="Henual et l\'Horloge divine" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="103" name="Pandawa et fier de l\'?tre (Episode 2)" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="104" name="Disciple Pandawushuka" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="105" name="Pratiquant Pandawushuka" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="106" name="Legende Lenalde" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="107" name="Voir le Dark Vlad et ne pas mourir" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="108" name="Myst?res ? Pandala" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="109" name="Apprentissage : Ecuyer " steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="110" name="Apprentissage : Espion" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="111" name="Apprentissage : Apprenti" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="112" name="Apprentissage : Surineur" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="113" name="Apprentissage : Espion Sombre" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="114" name="Apprentissage : Apprenti Sombre" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="121" name="Apprentissage : Adepte des Ecrits" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="122" name="Apprentissage : Chasseur de Ren?gats" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="124" name="Apprentissage : Adepte des Douleurs" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="125" name="Apprentissage : Chasseur d\'?mes" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="126" name="L\'arche de Nowa" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="127" name="Le livre d\'Acidrik Fenlapanse" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="128" name="Le pr?tre et la t?te de Menalt" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="129" name="A la recherche de l\'?leveur" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="130" name="Les prisonniers d\'Astrub" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="131" name="Visite guid?e au ch?teau d\'Allister" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="132" name="Gros oeuvres au ch?teau d\'Allister" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="133" name="Kartier Tremai se met ? table" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="134" name="Les Dents de la M?re Verumacha" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="135" name="La potion de l?che-bottes" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="136" name="Comment mettre un requin en bi?re" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="137" name="La belle ermite" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="138" name="Pauvre pomme (de terre)" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="139" name="De la viande de Dragodinde pour la tabl?e d\'Allister" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="141" name="Culture et ?levage" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="142" name="La plume est plus forte... parfois" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="145" name="Pi?tine titine" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="146" name="Visite non guid" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="147" name="Des fleurs ?pineuses" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="148" name="Epicerie fine" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="149" name="Course polaire" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="150" name="Charger la mule" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="151" name="Tire laine" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="152" name="Le tour du monde" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="153" name="Le ma?tre des clefs" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="154" name="Les sbires du ma?tre" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="155" name="Un juge hyst?rique" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="156" name="Des donjons, encore des donjons" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="157" name="La voie du guerrier" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="158" name="Ca est frugal, une fois" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="163" name="Les Gobelins de la Manufacture " steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="164" name="Bienvenue au Krazybwork saloon" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="165" name="Bworkidais le paxifik" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="166" name="Manque de moule" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="167" name="Titi Gobelait le magobelin " steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="168" name="Manque de peaux" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="169" name="Une baguette pour Chef Bworkestre" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="177" name="Gobmichet vibre pour Gobrose" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="178" name="Service command" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="179" name="Par Monts et par vaux." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="191" name="Oser d?fier un Osa." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="195" name="Service command" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="196" name="Service command" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="197" name="Service command" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="199" name="Les beaux arts." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="208" name="Le Guide du Roublard" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="215" name="Emissaire du roi" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="216" name="Info pour un vrai tra?tre" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="217" name="Usuwpation d\'identit" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="218" name="Tomber sur un bec" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="219" name="A roublard, roublard et demi" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="220" name="Trouble-f?te" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="221" name="Le Pwince Monseigneuw" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="205" name="Allez, au turbin." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="224" name="Un mawiage pwincier" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="226" name="Quete test" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="229" name="Le d?guisement du Koalak" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="230" name="Le Gardien du Pont de la Mort" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="233" name="Le Chevalier Noir et Rose" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="234" name="La Potion Bulbique" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="235" name="Polka Merer a besoin de vous" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="236" name="Paulette Pain-b?che la boulang?re" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="237" name="Le fils cach" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="238" name="La femme perdue" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="239" name="Sca?roplane ? tr?s grande vitesse" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="240" name="Un autre moyen de transport" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="241" name="Les Chasses de Crocodaille Dandi" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="242" name="La vengeance du Kito" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="243" name="La vengeance de Peggy la Porkass" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="245" name="La faux Maudite" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="253" name="Cambriolage." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="260" name="A l\'endroit, ? l\'envers." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="263" name="Bouc ? mis?re." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="266" name="La capture." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="286" name="Ambition ambig?e." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="435" name="Apprentissage : Disciple de Silvosse" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="414" name="A la rescousse d\'un incapable." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="449" name="Chasseur de t?tes." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="489" name="Bien d?buter" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="493" name="Des racines et des ouailles." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="523" name="Joyeux Nowel." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="490" name="Ne pas traduire" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="471" name="D?votion." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="442" name="Bonta a vraiment besoin de vous !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="22" name="La Qu?te Du Pabo" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="413" name="Au combat !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="27" name="(next)Maladie chronique" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="264" name="Flagrant d?lire." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="311" name="Les ordres sont-ils les ordres ?" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="52" name="Aiguilles de rats..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="441" name="Br?kmar a vraiment besoin de vous !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="3" name="La discorde v?g?tale" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="19" name="(next) La Maison Fantome" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="12" name="(next) Livraison de Pizaille" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="51" name="D?ratisation !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="49" name="Plus de Nageant-infecte-cieux !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="8" name="Du sang froid !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="16" name="Et une baguette de Dzibi, une !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="42" name="Fecaffe ? mon troupeau" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="97" name="Pandala : Sa D?esse..." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="143" name="Allez hue !" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="28" name="Le monocle de Wally" steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="629" name="Mel au drame." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+    <Quest id="628" name="Mel odieuse." steps="" goal="" npc="0" action="" arguments="" temporary="0" condition="" />
+</Quests>

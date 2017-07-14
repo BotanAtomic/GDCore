@@ -2,12 +2,14 @@ package org.graviton.game.creature.npc;
 
 import lombok.Data;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.filter.ConditionList;
+import org.graviton.game.quest.stape.QuestStepValidationType;
 import org.graviton.xml.Attribute;
 import org.graviton.xml.XMLElement;
+import org.graviton.game.action.npc.Quest;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -18,33 +20,50 @@ import java.util.stream.Collectors;
 public class NpcQuestion {
     private final short id;
     private final String parameter;
-    private final String answersData;
-    private final Map<Short, List<NpcAnswer>> answers = new HashMap<>();
-    private final String conditions;
-    private List<NpcAnswer> alternative;
+    private final List<NpcAnswer> answers = new ArrayList<>();
+    private final ConditionList conditionList;
+    private short alternative;
 
     public NpcQuestion(XMLElement element, List<NpcAnswer> answers) {
         this.id = element.getAttribute("id").toShort();
         this.parameter = element.getElementByTagName("parameters").toString();
 
-        answersData = element.getElementByTagName("answers").toString();
+        String answersData = element.getElementByTagName("answers").toString();
 
         if (!answersData.isEmpty())
-            for (String answer : answersData.split(";")) {
-                short answerId = Short.parseShort(answer);
-                this.answers.put(answerId, answers.stream().filter(current -> current.getId() == answerId).collect(Collectors.toList()));
-            }
+            for (String answer : answersData.split(";"))
+                this.answers.add(answers.stream().filter(current -> current.getId() == Short.parseShort(answer)).findAny().orElse(null));
 
-        Attribute alternativeData = element.getElementByTagName("alternative");
+        this.alternative = element.getElementByTagName("alternative").toShort();
 
-        if (!alternativeData.toString().isEmpty())
-            this.alternative = answers.stream().filter(current -> current.getId() == alternativeData.toShort()).collect(Collectors.toList());
-
-        this.conditions = element.getElementByTagName("conditions").toString();
+        this.conditionList = new ConditionList(element.getElementByTagName("conditions").toString());
     }
 
     public String toString(Player player) {
-        return id + convertParameter(player) + (answersData.isEmpty() ? "" : "|" + answersData);
+        if (!conditionList.getConditions().isEmpty() && conditionList.check(player))
+            return player.getEntityFactory().getNpcQuestion(alternative).toString(player);
+        else {
+            List<NpcAnswer> answers = getAnswers(player);
+            StringBuilder builder = new StringBuilder(String.valueOf(id)).append(convertParameter(player));
+            if (!answers.isEmpty()) {
+                builder.append("|");
+                answers.forEach(answer -> {
+                    builder.append(answer.getId()).append(";");
+                    player.activeQuests().stream().filter(quest -> quest.currentStep().getValidation() == answer.getId()).forEach(quest -> quest.update(QuestStepValidationType.ITEM, answer.getId(), player));
+                });
+                return builder.substring(0, builder.length() - 1);
+            }
+            return builder.toString();
+        }
+    }
+
+    private List<NpcAnswer> getAnswers(Player player) {
+        return this.answers.stream().filter(npcAnswer -> {
+            if (npcAnswer.getNpcAction() != null && npcAnswer.getNpcAction() instanceof Quest)
+                if (player.getQuest(Short.parseShort(npcAnswer.getData())) != null)
+                    return false;
+            return true;
+        }).collect(Collectors.toList());
     }
 
     private String convertParameter(Player player) {

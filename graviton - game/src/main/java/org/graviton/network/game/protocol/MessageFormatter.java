@@ -91,8 +91,24 @@ public class MessageFormatter {
         return "Im1167;" + minutes;
     }
 
-    public static String kamasCostMessage(int cost) {
+    public static String kamasCostMessage(long cost) {
         return "Im046;" + cost;
+    }
+
+    public static String kamasWinMessage(long cost) {
+        return "Im045;" + cost;
+    }
+
+    public static String experienceWinMessage(long experience) {
+        return "Im08;" + experience;
+    }
+
+    public static String looseItemMessage(short quantity, short template) {
+        return customMessage("022;" + quantity + "~" + template );
+    }
+
+    public static String itemWinMessage(short template, short quantity) {
+        return "Im021;" + quantity + "~" + template;
     }
 
     public static String cannotLaunchSpellMessage() {

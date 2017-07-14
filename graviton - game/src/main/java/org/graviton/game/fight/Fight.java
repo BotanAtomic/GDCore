@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import lombok.Data;
 import org.graviton.constant.Dofus;
 import org.graviton.game.client.player.Player;
+import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.effect.type.push.PushBackEffect;
 import org.graviton.game.effect.type.transport.TranspositionEffect;
 import org.graviton.game.fight.common.FightState;
@@ -17,6 +18,7 @@ import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.maps.fight.FightMap;
 import org.graviton.game.paths.Path;
+import org.graviton.game.quest.stape.QuestStepValidationType;
 import org.graviton.game.trap.AbstractTrap;
 import org.graviton.game.trap.Glyph;
 import org.graviton.game.trap.Trap;
@@ -180,8 +182,14 @@ public abstract class Fight {
             target.getLife().remove(damage);
             send(FightPacketFormatter.lifeEventMessage(fighter.getId(), target.getId(), (damage * -1)));
 
-            if (target.getLife().getCurrent() <= 0)
+            if (target.getLife().getCurrent() <= 0) {
                 kill(target);
+                if (fighter.getCreature() instanceof Player && target.getCreature() instanceof Monster && !target.isInvocation() && !canQuit()) {
+                    Player player = (Player) fighter.getCreature();
+                    Monster monster = (Monster) target.getCreature();
+                    player.activeQuests().forEach(quest -> quest.update(QuestStepValidationType.MONSTER, (short) 2, player, String.valueOf(monster.getTemplate().getId())));
+                }
+            }
         }
     }
 
@@ -277,7 +285,7 @@ public abstract class Fight {
             fighter.setFight(this);
             team.placeFighter(fighter);
             send(FightPacketFormatter.showFighter(fighter), fighter);
-            fighter.send(this.fightMap.buildData());
+            fighter.send(this.fightMap.buildData(null));
             generateFlag();
         } else
             fighter.send(FightPacketFormatter.cannotJoinMessage(fighter.getId(), 'f'));

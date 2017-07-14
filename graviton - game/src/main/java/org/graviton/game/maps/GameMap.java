@@ -2,6 +2,7 @@ package org.graviton.game.maps;
 
 import javafx.util.Pair;
 import lombok.Data;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
@@ -10,6 +11,7 @@ import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.monster.MonsterTemplate;
 import org.graviton.game.creature.monster.extra.ExtraMonster;
+import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.FightFactory;
 import org.graviton.game.sellpoint.SellPoint;
@@ -165,6 +167,13 @@ public class GameMap implements AbstractMap {
         return this.creatures.values().stream().filter(creature -> creature instanceof MonsterGroup).map(creature -> (MonsterGroup) creature).collect(Collectors.toList());
     }
 
+
+    public String npcData() { //TODO : remove
+        StringBuilder data = new StringBuilder();
+        this.creatures.values().stream().filter(creature -> creature instanceof Npc).map(creature -> (Npc) creature).forEach(npc -> data.append("template = ").append(npc.getTemplateId()).append(" / cell = ").append(npc.getCell()).append("\n"));
+        return data.toString();
+    }
+
     public MonsterGroup searchMonsterGroupByPath(Alignment alignment, short currentCell) {
         return monsters().stream().filter(monsterGroup -> monsterGroup.aggressionDistance(alignment.getId()) > 0).
                 filter(monsterGroup -> Cells.distanceBetween(this.width, monsterGroup.getLocation().getCell().getId(), currentCell) < monsterGroup.aggressionDistance(alignment.getId())).findFirst().orElse(null);
@@ -202,9 +211,9 @@ public class GameMap implements AbstractMap {
     }
 
     @Override
-    public String buildData() {
+    public String buildData(Player player) {
         StringBuilder packet = new StringBuilder();
-        creatures.values().forEach(creature -> packet.append(GamePacketFormatter.showCreatureMessage(creature.getGm())).append('\n'));
+        creatures.values().forEach(creature -> packet.append(GamePacketFormatter.showCreatureMessage(creature.getGm(player))).append('\n'));
         return packet.toString();
     }
 
@@ -218,7 +227,7 @@ public class GameMap implements AbstractMap {
         creature.getLocation().getCell().getCreatures().add(creature.getId());
 
         if (send)
-            send(GamePacketFormatter.showCreatureMessage(creature.getGm()));
+            send(GamePacketFormatter.showCreatureMessage(creature.getGm(creature instanceof Player ? (Player) creature : null)));
     }
 
     public int getNextId() {
@@ -235,7 +244,7 @@ public class GameMap implements AbstractMap {
         if(this.creatures.containsKey(creature.getId()))
             out(this.creatures.get(creature.getId()));
 
-        send(GamePacketFormatter.showCreatureMessage(creature.getGm()));
+        send(GamePacketFormatter.showCreatureMessage(creature.getGm(creature instanceof Player ? (Player) creature : null)));
         this.creatures.put(creature.getId(), creature);
     }
 
@@ -278,9 +287,22 @@ public class GameMap implements AbstractMap {
         return this.creatures.get(id);
     }
 
+    public Npc getNpcByTemplate(short template) {
+        return creatures.values().stream().filter(creature -> creature instanceof Npc).map(npc -> (Npc) npc).filter(npc -> npc.getTemplate().getId() == template).findAny().orElse(null);
+    }
+
+    public int getNpcTemplateById(int id) {
+        return creatures.values().stream().filter(creature -> creature instanceof Npc && creature.getId() == id).map(npc -> ((Npc) npc).getTemplateId()).findAny().orElse(0);
+    }
+
     public void refreshCreature(Creature creature) {
         send(GamePacketFormatter.hideCreatureMessage(creature.getId()));
-        send(GamePacketFormatter.showCreatureMessage(creature.getGm()));
+        send(GamePacketFormatter.showCreatureMessage(creature.getGm(null)));
+    }
+
+    public void refreshCreature(Player player,Creature creature) {
+        player.send(GamePacketFormatter.hideCreatureMessage(creature.getId()));
+        player.send(GamePacketFormatter.showCreatureMessage(creature.getGm(player)));
     }
 
     public void refreshMonsters() {

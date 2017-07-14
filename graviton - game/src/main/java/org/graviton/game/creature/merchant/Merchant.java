@@ -51,7 +51,7 @@ public class Merchant implements Creature {
     }
 
     @Override
-    public String getGm() {
+    public String getGm(Player player) {
         return PlayerPacketFormatter.merchantGmMessage(this);
     }
 

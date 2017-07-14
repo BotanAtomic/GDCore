@@ -22,7 +22,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guilds implements Serializable {
 
-    private static final long serialVersionUID = -214429105;
+    private static final long serialVersionUID = 1996659221;
 
     private final Integer id;
     private final String  name;
@@ -32,9 +32,9 @@ public class Guilds implements Serializable {
     private final Integer capital;
     private final Integer limit;
     private final String  spells;
-    private final Short   pods;
-    private final Short   prospection;
-    private final Short   wisdom;
+    private final Integer pods;
+    private final Integer prospection;
+    private final Integer wisdom;
 
     public Guilds(Guilds value) {
         this.id = value.id;
@@ -59,9 +59,9 @@ public class Guilds implements Serializable {
         Integer capital,
         Integer limit,
         String  spells,
-        Short   pods,
-        Short   prospection,
-        Short   wisdom
+        Integer pods,
+        Integer prospection,
+        Integer wisdom
     ) {
         this.id = id;
         this.name = name;
@@ -108,15 +108,15 @@ public class Guilds implements Serializable {
         return this.spells;
     }
 
-    public Short getPods() {
+    public Integer getPods() {
         return this.pods;
     }
 
-    public Short getProspection() {
+    public Integer getProspection() {
         return this.prospection;
     }
 
-    public Short getWisdom() {
+    public Integer getWisdom() {
         return this.wisdom;
     }
 

@@ -18,10 +18,7 @@ import org.graviton.database.jooq.game.tables.Items;
 import org.graviton.database.jooq.game.tables.Maps;
 import org.graviton.database.jooq.game.tables.Merchant;
 import org.graviton.database.jooq.game.tables.MountparkData;
-import org.graviton.database.jooq.game.tables.QuestData;
-import org.graviton.database.jooq.game.tables.QuestEtapes;
-import org.graviton.database.jooq.game.tables.QuestObjectifs;
-import org.graviton.database.jooq.game.tables.QuestPerso;
+import org.graviton.database.jooq.game.tables.PlayerQuest;
 import org.graviton.database.jooq.game.tables.SellpointItems;
 import org.graviton.database.jooq.game.tables.Spells;
 import org.graviton.database.jooq.game.tables.SubareaData;
@@ -44,7 +41,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Game extends SchemaImpl {
 
-    private static final long serialVersionUID = -1272931677;
+    private static final long serialVersionUID = -195549354;
 
     /**
      * The reference instance of <code>game</code>
@@ -92,24 +89,9 @@ public class Game extends SchemaImpl {
     public final MountparkData MOUNTPARK_DATA = org.graviton.database.jooq.game.tables.MountparkData.MOUNTPARK_DATA;
 
     /**
-     * The table <code>game.quest_data</code>.
+     * The table <code>game.player_quest</code>.
      */
-    public final QuestData QUEST_DATA = org.graviton.database.jooq.game.tables.QuestData.QUEST_DATA;
-
-    /**
-     * The table <code>game.quest_etapes</code>.
-     */
-    public final QuestEtapes QUEST_ETAPES = org.graviton.database.jooq.game.tables.QuestEtapes.QUEST_ETAPES;
-
-    /**
-     * The table <code>game.quest_objectifs</code>.
-     */
-    public final QuestObjectifs QUEST_OBJECTIFS = org.graviton.database.jooq.game.tables.QuestObjectifs.QUEST_OBJECTIFS;
-
-    /**
-     * The table <code>game.quest_perso</code>.
-     */
-    public final QuestPerso QUEST_PERSO = org.graviton.database.jooq.game.tables.QuestPerso.QUEST_PERSO;
+    public final PlayerQuest PLAYER_QUEST = org.graviton.database.jooq.game.tables.PlayerQuest.PLAYER_QUEST;
 
     /**
      * The table <code>game.sellpoint_items</code>.
@@ -164,10 +146,7 @@ public class Game extends SchemaImpl {
             Maps.MAPS,
             Merchant.MERCHANT,
             MountparkData.MOUNTPARK_DATA,
-            QuestData.QUEST_DATA,
-            QuestEtapes.QUEST_ETAPES,
-            QuestObjectifs.QUEST_OBJECTIFS,
-            QuestPerso.QUEST_PERSO,
+            PlayerQuest.PLAYER_QUEST,
             SellpointItems.SELLPOINT_ITEMS,
             Spells.SPELLS,
             SubareaData.SUBAREA_DATA,

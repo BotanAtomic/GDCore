@@ -133,7 +133,7 @@ public class GameHandler {
             return;
         }
 
-        client.send(player.getGameMap().buildData());
+        client.send(player.getGameMap().buildData(player));
 
 
         if (player.getGameMap().getHouses() != null) {

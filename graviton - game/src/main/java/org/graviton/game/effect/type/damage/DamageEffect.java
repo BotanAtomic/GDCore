@@ -66,7 +66,7 @@ public class DamageEffect implements Effect {
         damage.addAndGet(-applyReturnDamage(fighter, target, targetStatistics));
         damage.addAndGet(getDamageReduction(damageType, targetStatistics, baseDamage));
 
-        Pair<Integer, Short> reduction = getReduction(targetStatistics, damageType);
+        Pair<Integer, Integer> reduction = getReduction(targetStatistics, damageType);
         int armor = (target.getStatistics().get(CharacteristicType.Armor).total() + reduction.getKey());
 
         if (armor != 0) {
@@ -115,7 +115,7 @@ public class DamageEffect implements Effect {
         return ((int) (((double) (1 - resistancePercent) / (double) 100) * (damage - resistance)));
     }
 
-    private static Pair<Integer, Short> getReduction(Statistics targetStatistics, DamageType damageType) {
+    private static Pair<Integer, Integer> getReduction(Statistics targetStatistics, DamageType damageType) {
         if (damageType == DamageType.NEUTRAL || damageType == DamageType.EARTH)
             return new Pair<>(targetStatistics.get(CharacteristicType.ReducePhysic).total(), targetStatistics.get(CharacteristicType.ReducePhysic).equipment());
         else

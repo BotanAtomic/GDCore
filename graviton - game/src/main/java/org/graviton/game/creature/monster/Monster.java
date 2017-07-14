@@ -1,6 +1,7 @@
 package org.graviton.game.creature.monster;
 
 import lombok.Data;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.Creature;
 import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.alignment.Alignment;
@@ -58,7 +59,7 @@ public class Monster extends Fighter implements Creature {
     }
 
     @Override
-    public String getGm() {
+    public String getGm(Player player) {
         return MonsterPacketFormatter.fighterGmMessage(this);
     }
 

@@ -43,7 +43,7 @@ public class Double extends Fighter implements Creature {
     }
 
     @Override
-    public String getGm() {
+    public String getGm(Player player) {
         return null;
     }
 

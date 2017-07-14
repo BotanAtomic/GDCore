@@ -1,5 +1,6 @@
 package org.graviton.game.maps;
 
+import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.Creature;
 import org.graviton.game.maps.cell.Cell;
 
@@ -24,7 +25,7 @@ public interface AbstractMap {
 
     Creature getCreature(int id);
 
-    String buildData();
+    String buildData(Player player);
 
     Map<Short, Cell> getCells();
 

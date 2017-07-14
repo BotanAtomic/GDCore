@@ -33,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guilds extends TableImpl<GuildsRecord> {
 
-    private static final long serialVersionUID = -126005353;
+    private static final long serialVersionUID = -1802314621;
 
     /**
      * The reference instance of <code>game.guilds</code>
@@ -91,17 +91,17 @@ public class Guilds extends TableImpl<GuildsRecord> {
     /**
      * The column <code>game.guilds.pods</code>.
      */
-    public final TableField<GuildsRecord, Short> PODS = createField("pods", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<GuildsRecord, Integer> PODS = createField("pods", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>game.guilds.prospection</code>.
      */
-    public final TableField<GuildsRecord, Short> PROSPECTION = createField("prospection", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<GuildsRecord, Integer> PROSPECTION = createField("prospection", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>game.guilds.wisdom</code>.
      */
-    public final TableField<GuildsRecord, Short> WISDOM = createField("wisdom", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<GuildsRecord, Integer> WISDOM = createField("wisdom", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * Create a <code>game.guilds</code> table reference

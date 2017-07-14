@@ -3390,14 +3390,14 @@
 
 
     <NpcAnswer id="3248">
-        <type>40</type>
-        <arguments>183</arguments>
+        <type>984</type>
+        <arguments>0,10337,183</arguments>
     </NpcAnswer>
 
 
     <NpcAnswer id="3259">
-        <type>41</type>
-        <arguments></arguments>
+        <type>1</type>
+        <arguments>DV</arguments>
     </NpcAnswer>
 
 

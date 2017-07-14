@@ -5,6 +5,7 @@ import org.graviton.database.entity.EntityFactory;
 import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.creature.npc.NpcAnswer;
+import org.graviton.game.quest.stape.QuestStepValidationType;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.NpcPacketFormatter;
 
@@ -58,6 +59,8 @@ public class DialogHandler {
 
         client.send(NpcPacketFormatter.createDialog(id));
         client.send(NpcPacketFormatter.questionMessage(entityFactory.getNpcQuestion(npc.getTemplate().getInitialQuestion(getPlayer().getMap().getId())).toString(player)));
+        player.activeQuests().forEach(quest -> quest.update(QuestStepValidationType.SPEAK, (short) 0, player, String.valueOf(npc.getTemplate().getId())));
+        player.activeQuests().stream().filter(quest -> quest.currentStep().getNpc() == npc.getTemplateId()).forEach(quest -> quest.update(QuestStepValidationType.ITEM, (short) 0, player));
     }
 
     public void createQuestion(String data) {
@@ -67,14 +70,22 @@ public class DialogHandler {
         }
 
         client.send(NpcPacketFormatter.questionMessage(entityFactory.getNpcQuestion(Short.parseShort(data)).toString(player)));
+
     }
 
     private void answerDialog(String data) {
-        List<NpcAnswer> answers = entityFactory.getNpcAnswer(Short.parseShort(data.split("\\|")[1]));
+        short answerId = Short.parseShort(data.split("\\|")[1]);
+        List<NpcAnswer> answers = entityFactory.getNpcAnswer(answerId);
+
+        int npcTemplate = client.getPlayer().getGameMap().getNpcTemplateById(client.getInteractionManager().getInteractionCreature());
+
+        client.getPlayer().activeQuests().forEach(quest -> quest.update(QuestStepValidationType.SPEAK,
+                answerId, client.getPlayer(), String.valueOf(npcTemplate)));
 
         answers.forEach(answer -> {
-            if(answer.getNpcAction() == null) {
+            if (answer.getNpcAction() == null) {
                 System.err.println("NULL :D" + answer.TEST);
+                return;
             }
 
             answer.getNpcAction().apply(client, answer.getData());

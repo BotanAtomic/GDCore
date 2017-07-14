@@ -1,6 +1,7 @@
 package org.graviton.game.maps.fight;
 
 import lombok.Data;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.Creature;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.maps.AbstractMap;
@@ -70,7 +71,7 @@ public class FightMap implements AbstractMap {
     }
 
     @Override
-    public String buildData() {
+    public String buildData(Player player) {
         return FightPacketFormatter.showFighters(fight.fighters());
     }
 

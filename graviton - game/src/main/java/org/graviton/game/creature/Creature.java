@@ -1,6 +1,7 @@
 package org.graviton.game.creature;
 
 import org.graviton.database.entity.EntityFactory;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.look.AbstractLook;
 import org.graviton.game.position.Location;
 import org.graviton.game.statistics.common.Statistics;
@@ -11,7 +12,7 @@ import org.graviton.game.statistics.common.Statistics;
 public interface Creature {
     int getId();
 
-    String getGm();
+    String getGm(Player player);
 
     void send(String data);
 

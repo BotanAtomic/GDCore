@@ -3,17 +3,21 @@ package org.graviton.game.filter.enums;
 
 import org.graviton.game.client.player.Player;
 import org.graviton.game.filter.Filter;
-import org.graviton.game.filter.type.StatisticsFilter;
+import org.graviton.game.filter.type.*;
 import org.graviton.game.statistics.common.CharacteristicType;
 
 /**
  * Created by Botan on 27/12/2016. 14:40
  */
 public enum ConditionType {
-    HAVE_ITEM("PO"),
+    HAVE_ITEM("PO", new ItemFilter()),
     NAME("PN"),
     JOB_LEVEl("PJ"),
-    ACTIVE_QUEST("Qa"),
+    ACTIVE_QUEST("Qa", (player, filterType, data) -> player.getQuest(Short.parseShort(data)) != null && !player.getQuest(Short.parseShort(data)).isFinish()),
+    FINISH_QUEST("QT", new QuestFinishFilter()),
+    HAVE_QUEST("QE", new QuestFilter()),
+    STEP_QUEST("QS", new QuestStepFilter()),
+
     JOB("Pj"),
 
     TOTAL_INTELLIGENCE("CI", new StatisticsFilter(CharacteristicType.Intelligence, true)),

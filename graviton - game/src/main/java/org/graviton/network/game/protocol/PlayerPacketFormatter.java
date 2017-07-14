@@ -229,7 +229,7 @@ public class PlayerPacketFormatter {
         return "AR6bk";
     }
 
-    public static String podsMessage(short[] pods) {
+    public static String podsMessage(int[] pods) {
         return "Ow" + pods[0] + "|" + pods[1];
     }
 

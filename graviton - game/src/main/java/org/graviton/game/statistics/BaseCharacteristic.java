@@ -7,7 +7,7 @@ import org.graviton.game.statistics.common.Characteristic;
  */
 public class BaseCharacteristic extends Characteristic {
 
-    public BaseCharacteristic(short base) {
+    public BaseCharacteristic(int base) {
         super(base);
     }
 

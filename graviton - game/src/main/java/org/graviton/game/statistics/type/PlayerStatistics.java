@@ -36,7 +36,7 @@ public class PlayerStatistics extends Statistics {
     private final Player player;
 
     //current -> max
-    private short[] pods;
+    private int[] pods;
 
     private Life life;
 
@@ -61,7 +61,7 @@ public class PlayerStatistics extends Statistics {
 
         super.initialize();
 
-        short vitality = record.get(PLAYERS.VITALITY);
+        int vitality = record.get(PLAYERS.VITALITY);
 
 
         put(CharacteristicType.Vitality, new BaseCharacteristic(vitality));
@@ -96,7 +96,7 @@ public class PlayerStatistics extends Statistics {
         this.level = 1;
         this.experience = 0;
         this.life = new Life(this, 55, 55, false);
-        this.pods = new short[]{0, 1000};
+        this.pods = new int[]{0, 1000};
 
         super.initialize();
 
@@ -169,12 +169,12 @@ public class PlayerStatistics extends Statistics {
         return (short) (get(CharacteristicType.Prospection).total() + get(CharacteristicType.Chance).total() / 10);
     }
 
-    public short[] refreshPods() {
-        return this.pods = new short[]{(short) this.player.getInventory().values().stream().mapToInt(item -> item.getQuantity() * item.getTemplate().getPods()).sum(), getMaxPods()};
+    public int[] refreshPods() {
+        return this.pods = new int[]{this.player.getInventory().values().stream().mapToInt(item -> item.getQuantity() * item.getTemplate().getPods()).sum(), getMaxPods()};
     }
 
-    private short getMaxPods() {
-        return (short) (1000 + (get(CharacteristicType.Strength).total() * 5) + get(CharacteristicType.Pods).total());
+    private int getMaxPods() {
+        return (1000 + (get(CharacteristicType.Strength).total() * 5) + get(CharacteristicType.Pods).total());
     }
 
     public void upLevel() {
@@ -187,7 +187,7 @@ public class PlayerStatistics extends Statistics {
         this.life.regenMax();
 
         if (level % 100 == 0)
-            get(CharacteristicType.ActionPoints).addBase((short) 1);
+            get(CharacteristicType.ActionPoints).addBase(1);
     }
 
     public void addExperience(long experience) {

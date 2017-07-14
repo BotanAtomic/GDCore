@@ -26,6 +26,7 @@ public class MessageHandler {
     private final HouseHandler houseHandler;
     private final CodeHandler codeHandler;
     private final WaypointHandler waypointHandler;
+    private final QuestHandler questHandler;
 
     public MessageHandler(GameClient gameClient) {
         this.client = gameClient;
@@ -43,6 +44,7 @@ public class MessageHandler {
         this.houseHandler = new HouseHandler(gameClient);
         this.codeHandler = new CodeHandler(gameClient);
         this.waypointHandler = new WaypointHandler(gameClient);
+        this.questHandler = new QuestHandler(gameClient);
     }
 
     public void handle(String data) {
@@ -82,6 +84,10 @@ public class MessageHandler {
 
             case 'I': //Party
                 this.partyHandler.handle(data.substring(2), data.charAt(1));
+                break;
+
+            case 'Q': //Quest
+                this.questHandler.handle(data.substring(2), data.charAt(1));
                 break;
 
             case 'S': //Spell

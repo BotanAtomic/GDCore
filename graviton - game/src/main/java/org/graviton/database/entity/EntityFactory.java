@@ -31,7 +31,9 @@ import org.graviton.game.job.JobTemplate;
 import org.graviton.game.job.craft.CraftData;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.object.InteractiveObjectTemplate;
-import org.graviton.game.sellpoint.SellPoint;
+import org.graviton.game.quest.QuestGoal;
+import org.graviton.game.quest.QuestTemplate;
+import org.graviton.game.quest.stape.QuestStep;
 import org.graviton.game.sellpoint.SellPointItem;
 import org.graviton.game.spell.SpellTemplate;
 import org.graviton.script.ScriptProcessor;
@@ -54,6 +56,7 @@ import java.util.stream.IntStream;
 
 import static org.graviton.constant.XMLPath.*;
 import static org.graviton.database.jooq.game.tables.HousesData.HOUSES_DATA;
+
 import static org.graviton.database.jooq.game.tables.Items.ITEMS;
 import static org.graviton.database.jooq.game.tables.SellpointItems.SELLPOINT_ITEMS;
 
@@ -86,12 +89,24 @@ public class EntityFactory extends EntityData implements Manageable {
     @Inject private ScriptProcessor scriptProcessor;
 
     private final AtomicInteger sellPointIdentity = new AtomicInteger(0);
+    private final AtomicInteger itemIdentity = new AtomicInteger(0);
 
 
     @Inject
     public EntityFactory(Program program, @GameDatabase Database database) {
         program.register(this);
         this.database = database;
+    }
+
+    private void loadQuests() {
+        apply(get(QUEST_GOALS).getElementsByTagName("QuestGoal"), element -> this.questGoals.put(element.getAttribute("id").toShort(), new QuestGoal(element)));
+        log.debug("{} quest goals loaded", this.questGoals.size());
+
+        apply(get(QUEST_STEPS).getElementsByTagName("QuestStep"), element -> this.questSteps.put(element.getAttribute("id").toShort(), new QuestStep(element, this)));
+        log.debug("{} quest steps loaded", this.questSteps.size());
+
+        apply(get(QUESTS).getElementsByTagName("Quest"), element -> this.quests.put(element.getAttribute("id").toShort(), new QuestTemplate(element, this)));
+        log.debug("{} quest loaded", this.quests.size());
     }
 
     private void loadJobs() {
@@ -209,7 +224,7 @@ public class EntityFactory extends EntityData implements Manageable {
                 this.npcTemplates.put(element.getAttribute("id").toInt(), new NpcTemplate(element))));
     }
 
-    private void loadNpcData() {
+    public void loadNpcData() {
         log.debug("{} npc answers loaded", apply(get(NPC_ANSWER).getElementsByTagName("NpcAnswer"), element ->
                 this.npcAnswers.add(new NpcAnswer(element, this))));
 
@@ -292,8 +307,10 @@ public class EntityFactory extends EntityData implements Manageable {
         this.loadGameActions();
 
         new FastLoader(this::loadFightActions, this::loadHouses, this::loadNpcTemplates, this::loadItemTemplates, this::loadMonsterTemplates, this::loadExperiences, this::loadGameMaps,
-                this::loadCommands, this::loadIntelligence, this::loadJobs).launch();
+                this::loadCommands, this::loadIntelligence, this::loadJobs, this::loadQuests).launch();
         startScheduledAction();
+
+        this.itemIdentity.set(database.getNextId(ITEMS, ITEMS.ID));
     }
 
     @Override
@@ -325,7 +342,7 @@ public class EntityFactory extends EntityData implements Manageable {
 
 
     public int getNextItemId() {
-        return database.getNextId(ITEMS, ITEMS.ID);
+        return itemIdentity.incrementAndGet();
     }
 
 

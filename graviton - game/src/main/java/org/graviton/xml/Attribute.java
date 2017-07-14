@@ -40,4 +40,7 @@ public class Attribute {
         return data;
     }
 
+    public String[] split(String regex) {
+        return data.split(regex);
+    }
 }

@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Players extends TableImpl<PlayersRecord> {
 
-    private static final long serialVersionUID = -1041244967;
+    private static final long serialVersionUID = 1256953641;
 
     /**
      * The reference instance of <code>login.players</code>
@@ -152,32 +152,32 @@ public class Players extends TableImpl<PlayersRecord> {
     /**
      * The column <code>login.players.vitality</code>.
      */
-    public final TableField<PlayersRecord, Short> VITALITY = createField("vitality", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<PlayersRecord, Integer> VITALITY = createField("vitality", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>login.players.wisdom</code>.
      */
-    public final TableField<PlayersRecord, Short> WISDOM = createField("wisdom", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<PlayersRecord, Integer> WISDOM = createField("wisdom", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>login.players.strength</code>.
      */
-    public final TableField<PlayersRecord, Short> STRENGTH = createField("strength", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<PlayersRecord, Integer> STRENGTH = createField("strength", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>login.players.intelligence</code>.
      */
-    public final TableField<PlayersRecord, Short> INTELLIGENCE = createField("intelligence", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<PlayersRecord, Integer> INTELLIGENCE = createField("intelligence", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>login.players.chance</code>.
      */
-    public final TableField<PlayersRecord, Short> CHANCE = createField("chance", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<PlayersRecord, Integer> CHANCE = createField("chance", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>login.players.agility</code>.
      */
-    public final TableField<PlayersRecord, Short> AGILITY = createField("agility", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+    public final TableField<PlayersRecord, Integer> AGILITY = createField("agility", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>login.players.server</code>.

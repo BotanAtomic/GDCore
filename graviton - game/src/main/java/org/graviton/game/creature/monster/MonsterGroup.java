@@ -1,6 +1,7 @@
 package org.graviton.game.creature.monster;
 
 import lombok.Data;
+import org.graviton.game.client.player.Player;
 import org.graviton.game.creature.Creature;
 import org.graviton.collection.CollectionQuery;
 import org.graviton.constant.Dofus;
@@ -56,7 +57,7 @@ public class MonsterGroup implements Creature {
     }
 
     @Override
-    public String getGm() {
+    public String getGm(Player player) {
         return MonsterPacketFormatter.gmMessage(this);
     }
 

@@ -10,6 +10,7 @@ import org.graviton.game.breeds.models.Enutrof;
 import org.graviton.game.breeds.models.Sacrieur;
 import org.graviton.game.client.account.Account;
 import org.graviton.game.creature.monster.extra.Double;
+import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.exchange.Exchange;
 import org.graviton.game.fight.Fighter;
 import org.graviton.game.group.Group;
@@ -30,6 +31,8 @@ import org.graviton.game.maps.AbstractMap;
 import org.graviton.game.maps.GameMap;
 import org.graviton.game.maps.cell.Cell;
 import org.graviton.game.position.Location;
+import org.graviton.game.quest.Quest;
+import org.graviton.game.quest.QuestTemplate;
 import org.graviton.game.spell.Spell;
 import org.graviton.game.spell.SpellList;
 import org.graviton.game.spell.SpellView;
@@ -80,7 +83,9 @@ public class Player extends Fighter implements Creature {
 
     private Map<Short, Job> jobs;
 
-    public Player(Record record, Account account, Map<Integer, Item> items, List<StoreItem> store, Map<Short, SpellView> spells, EntityFactory entityFactory) {
+    private List<Quest> quests;
+
+    public Player(Record record, Account account, Map<Integer, Item> items, List<StoreItem> store, Map<Short, SpellView> spells, List<Quest> quests, EntityFactory entityFactory) {
         this.entityFactory = entityFactory;
         this.account = account;
         this.id = record.get(PLAYERS.ID);
@@ -106,6 +111,9 @@ public class Player extends Fighter implements Creature {
             String[] jobData = data.split(",");
             return new Job(entityFactory.getJobTemplate(Integer.parseInt(jobData[0])), Long.parseLong(jobData[1]), entityFactory);
         }));
+
+        quests.forEach(quest -> quest.setPlayer(this));
+        this.quests = quests;
     }
 
     public Player(int id, String data, Account account, EntityFactory entityFactory) {
@@ -135,6 +143,7 @@ public class Player extends Fighter implements Creature {
         this.followers = new ArrayList<>();
         this.zaaps = new ArrayList<>();
         this.jobs = new HashMap<>();
+        this.quests = new ArrayList<>();
     }
 
     public InteractionManager interactionManager() {
@@ -213,7 +222,7 @@ public class Player extends Fighter implements Creature {
         return this.statistics.getLevel();
     }
 
-    public short[] getPods() {
+    public int[] getPods() {
         return this.statistics.getPods();
     }
 
@@ -230,7 +239,7 @@ public class Player extends Fighter implements Creature {
     }
 
     @Override
-    public String getGm() {
+    public String getGm(Player player) {
         return PlayerPacketFormatter.gmMessage(this);
     }
 
@@ -367,7 +376,7 @@ public class Player extends Fighter implements Creature {
             bonus = 2;
 
         if (cost == 1 && bonus == 1)
-            cost = getBreed().boostCost(characteristicId, this.statistics.get(characteristic).base());
+            cost = getBreed().boostCost(characteristicId, (short) this.statistics.get(characteristic).base());
 
         statistics.setStatisticPoints((short) (statistics.getStatisticPoints() - cost));
         statistics.get(characteristic).addBase(bonus);
@@ -423,6 +432,34 @@ public class Player extends Fighter implements Creature {
 
     public void learnJob(JobTemplate jobTemplate) {
 
+    }
+
+    public Quest getQuest(short id) {
+        return quests.stream().filter(quest -> quest.getQuest().getId() == id).findAny().orElse(null);
+    }
+
+    public Quest getQuestByNpc(int id) {
+        return quests.stream().filter(quest -> quest.getQuest().getNpc() == id).findAny().orElse(null);
+    }
+
+    public void obtainQuest(QuestTemplate questTemplate) {
+        if (!questTemplate.respectCondition(this))
+            return;
+
+        Quest quest = new Quest(this, questTemplate);
+        this.quests.add(quest);
+        send(QuestPacketFormatter.newQuestStaticMessage(questTemplate.getId()));
+
+        if (!questTemplate.getActions().isEmpty())
+            questTemplate.getActions().forEach(actionData -> entityFactory.getActionRepository().create(actionData.getKey()).apply(account.getClient(), actionData.getValue()));
+
+        Npc npc = getGameMap().getNpcByTemplate(questTemplate.getNpc());
+        if (npc != null)
+            getGameMap().refreshCreature(this, npc);
+    }
+
+    public List<Quest> activeQuests() {
+        return quests.stream().filter(quest -> !quest.isFinish()).collect(Collectors.toList());
     }
 
 }

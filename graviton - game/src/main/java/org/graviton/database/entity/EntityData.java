@@ -20,6 +20,9 @@ import org.graviton.game.job.JobTemplate;
 import org.graviton.game.job.craft.CraftData;
 import org.graviton.game.maps.object.InteractiveObjectTemplate;
 import org.graviton.game.mountpark.MountPark;
+import org.graviton.game.quest.QuestGoal;
+import org.graviton.game.quest.QuestTemplate;
+import org.graviton.game.quest.stape.QuestStep;
 import org.graviton.game.spell.SpellTemplate;
 import org.graviton.game.trunk.type.Trunk;
 import org.graviton.game.zaap.Zaapi;
@@ -69,6 +72,10 @@ class EntityData {
 
     final Map<Short, JobTemplate> jobs = new ConcurrentHashMap<>();
     final Map<Short, CraftData> crafts = new ConcurrentHashMap<>();
+
+    final Map<Short, QuestStep> questSteps = new ConcurrentHashMap<>();
+    final Map<Short, QuestGoal> questGoals = new ConcurrentHashMap<>();
+    final Map<Short, QuestTemplate> quests = new ConcurrentHashMap<>();
 
     public NpcTemplate getNpcTemplate(int id) {
         return this.npcTemplates.get(id);
