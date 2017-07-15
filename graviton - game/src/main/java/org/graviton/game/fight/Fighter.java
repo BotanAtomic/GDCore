@@ -242,7 +242,7 @@ public abstract class Fighter {
         send(FightPacketFormatter.fighterLeft());
         getLife().refreshRegenTime();
 
-        if (!activeFight)
+        if (!activeFight && fight.isAllowFlag())
             fight.generateFlag();
 
         destroy();

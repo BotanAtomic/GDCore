@@ -7,6 +7,7 @@ import org.graviton.database.jooq.game.tables.HousesData;
 import org.graviton.game.creature.monster.Monster;
 import org.graviton.game.creature.monster.MonsterGroup;
 import org.graviton.game.creature.npc.Npc;
+import org.graviton.game.maps.door.InteractiveDoor;
 import org.graviton.game.sellpoint.SellPoint;
 import org.graviton.game.house.House;
 import org.graviton.game.maps.GameMap;
@@ -112,6 +113,14 @@ public class GameMapRepository extends Repository<Integer, GameMap> {
             GameMap gameMap = this.get(zaapi.getGameMap());
             gameMap.setZaapi(zaapi);
             entityFactory.getZaapis().put(zaapi.getGameMap(), zaapi);
+        });
+
+    }
+
+    public int loadDoors(Document file) {
+        return entityFactory.apply(file.getElementsByTagName("door"), element -> {
+            GameMap gameMap = this.get(element.getAttribute("map").toInt());
+            gameMap.setDoor(new InteractiveDoor(element, gameMap));
         });
 
     }

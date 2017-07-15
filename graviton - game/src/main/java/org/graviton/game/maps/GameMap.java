@@ -14,6 +14,7 @@ import org.graviton.game.creature.monster.extra.ExtraMonster;
 import org.graviton.game.creature.npc.Npc;
 import org.graviton.game.fight.Fight;
 import org.graviton.game.fight.FightFactory;
+import org.graviton.game.maps.door.InteractiveDoor;
 import org.graviton.game.sellpoint.SellPoint;
 import org.graviton.game.house.House;
 import org.graviton.game.maps.cell.Cell;
@@ -26,6 +27,7 @@ import org.graviton.game.zaap.Zaap;
 import org.graviton.game.zaap.Zaapi;
 import org.graviton.network.game.GameClient;
 import org.graviton.network.game.protocol.GamePacketFormatter;
+import org.graviton.network.game.protocol.InteractiveDoorPacketFormatter;
 import org.graviton.utils.Cells;
 import org.graviton.utils.Utils;
 import org.graviton.xml.Attribute;
@@ -81,6 +83,8 @@ public class GameMap implements AbstractMap {
     private Zaapi zaapi;
 
     private SellPoint sellPoint;
+
+    private InteractiveDoor door;
 
     private byte[] restriction = {0, 0, 0, 0, 0, 0, 0};
 
@@ -254,6 +258,9 @@ public class GameMap implements AbstractMap {
         creature.send(GamePacketFormatter.mapLoadedSuccessfullyMessage());
         creature.getLocation().getCell().getCreatures().add(creature.getId());
         creature.getLocation().setMap(this);
+
+        if(door != null && door.isOpen())
+            creature.send(InteractiveDoorPacketFormatter.doorActionMessage(door.getId(), true, true));
     }
 
     public void loadOnlyData(Creature creature, GameClient client) {

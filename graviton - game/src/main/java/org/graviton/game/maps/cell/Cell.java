@@ -5,7 +5,6 @@ import org.graviton.game.maps.object.InteractiveObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Created by Botan on 12/11/2016 : 18:17
@@ -22,12 +21,14 @@ public class Cell {
 
     private Collection<Integer> creatures = new ArrayList<>();
 
+    private boolean walkable;
+
     public Cell(short id) {
         this.id = id;
     }
 
     public boolean isWalkable() {
-        return movementType != MovementType.Unwalkable && movementType != MovementType.Door;
+        return walkable || movementType != MovementType.Unwalkable && movementType != MovementType.Door;
     }
 
     public boolean isFree() {
@@ -35,8 +36,7 @@ public class Cell {
     }
 
     public int getFirstCreature() {
-        Optional<Integer> value = this.creatures.stream().findFirst();
-        return value.isPresent() ? value.get() : 0;
+        return this.creatures.stream().findFirst().orElse(0);
     }
 
     public boolean allowLineOfSide() {

@@ -596,7 +596,7 @@
         <answers>3228;3227</answers>
         <alternative>3654</alternative>
         <parameters></parameters>
-        <conditions>QE!182</conditions>
+        <conditions>QE=182</conditions>
     </NpcQuestion>
 
 
@@ -684,7 +684,7 @@
         <answers>3349;3348</answers>
         <alternative>3818</alternative>
         <parameters></parameters>
-        <conditions>QT!193</conditions>
+        <conditions>QT=193</conditions>
     </NpcQuestion>
 
 
@@ -908,7 +908,7 @@
         <answers>3323;3324</answers>
         <alternative>3788</alternative>
         <parameters></parameters>
-        <conditions>QE!190</conditions>
+        <conditions>QE=190</conditions>
     </NpcQuestion>
 
 
@@ -2746,7 +2746,7 @@
         <answers>3618</answers>
         <alternative>4158</alternative>
         <parameters></parameters>
-        <conditions>QE!231</conditions>
+        <conditions>QE=231</conditions>
     </NpcQuestion>
 
 
@@ -6025,7 +6025,7 @@
         <answers>3624</answers>
         <alternative>4134</alternative>
         <parameters></parameters>
-        <conditions>QT!232</conditions>
+        <conditions>QT=232</conditions>
     </NpcQuestion>
 
 

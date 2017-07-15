@@ -32,7 +32,7 @@ import static org.graviton.game.alignment.type.AlignmentType.NEUTRE;
 public class AggressionFight extends Fight {
 
     public AggressionFight(ScheduledExecutorService executorService, int id, Player first, Player second, GameMap gameMap) {
-        super(executorService, id, new PlayerTeam(first, FightSide.RED), new PlayerTeam(second, FightSide.BLUE), gameMap);
+        super(executorService, id, new PlayerTeam(first, FightSide.RED), new PlayerTeam(second, FightSide.BLUE), gameMap, true);
     }
 
     @Override

@@ -114,10 +114,10 @@ public class Quest {
             if (currentStep.update(this, type, data)) {
                 validateSteps.put(currentStep.getId(), currentStep);
 
-                applyReward(player);
 
                 if (validateSteps.size() == quest.getSteps().size()) {
                     player.send(QuestPacketFormatter.finishQuestStaticMessage(quest.getId()));
+                    applyReward(player);
                     this.finish = true;
                 } else
                     player.send(QuestPacketFormatter.updateQuestStaticMessage(quest.getId()));

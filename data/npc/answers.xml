@@ -5304,10 +5304,14 @@
 
 
     <NpcAnswer id="3349">
-        <type>983</type>
-        <arguments></arguments>
+        <type>40</type>
+        <arguments>193</arguments>
     </NpcAnswer>
 
+    <NpcAnswer id="3349">
+        <type>544</type>
+        <arguments>984,10</arguments>
+    </NpcAnswer>
 
     <NpcAnswer id="3350">
         <type>60</type>

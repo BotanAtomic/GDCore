@@ -168,6 +168,7 @@ public class EntityFactory extends EntityData implements Manageable {
         log.debug("{} trunks loaded", gameMapRepository.loadTrunks());
         log.debug("{} zaaps loaded", gameMapRepository.loadZaaps(get(ZAAPS)));
         log.debug("{} zaapis loaded", gameMapRepository.loadZaapis(get(ZAAPIS)));
+        log.debug("{} doors loaded", gameMapRepository.loadDoors(get(INTERACTIVE_DOOR)));
         log.debug("{} mount-park loaded", gameMapRepository.loadMountPark());
         log.debug("{} sell points loaded", gameMapRepository.loadSellPoint(get(SELL_POINTS)));
         log.debug("{} sell points item loaded", database.getResult(SELLPOINT_ITEMS).stream()

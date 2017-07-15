@@ -37,8 +37,8 @@ public class FightFactory {
         add(new DuelFight(scheduledExecutorService, identityGenerator.incrementAndGet(), first, second, gameMap));
     }
 
-    public void newMonsterFight(Player first, MonsterGroup second) {
-        add(new MonsterFight(scheduledExecutorService, identityGenerator.incrementAndGet(), first, second, gameMap));
+    public void newMonsterFight(Player first, MonsterGroup second, boolean allowFlag) {
+        add(new MonsterFight(scheduledExecutorService, identityGenerator.incrementAndGet(), first, second, gameMap, allowFlag));
     }
 
     public void newAggressionFight(Player aggressor, Player attacked) {

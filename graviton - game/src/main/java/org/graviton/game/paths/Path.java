@@ -51,7 +51,7 @@ public class Path extends ArrayList<Short> {
                 MonsterGroup monsterGroup = map.searchMonsterGroupByPath(player.getAlignment(), lastCell);
 
                 if (monsterGroup != null) {
-                    tasks.add(() -> map.getFightFactory().newMonsterFight(player, monsterGroup));
+                    tasks.add(() -> map.getFightFactory().newMonsterFight(player, monsterGroup, true));
                     return;
                 }
 

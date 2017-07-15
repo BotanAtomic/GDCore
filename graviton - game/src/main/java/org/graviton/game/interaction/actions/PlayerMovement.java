@@ -65,25 +65,30 @@ public class PlayerMovement extends Path implements AbstractGameAction {
 
         player.getLocation().setOrientation(getOrientation());
 
-        if(tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             Optional<MonsterGroup> groupOptional = gameMap.monsters().stream()
                     .filter(creature -> Cells.distanceBetween(gameMap.getWidth(), creature.getLocation().getCell().getId(), newCell.getId()) < 2).findFirst();
 
             if (groupOptional.isPresent()) {
 
                 byte alignment = groupOptional.get().alignment();
-                if(alignment != 0 && player.getAlignment().getId() == alignment)
+                if (alignment != 0 && player.getAlignment().getId() == alignment)
                     return;
 
-                gameMap.getFightFactory().newMonsterFight(player, groupOptional.get());
+                gameMap.getFightFactory().newMonsterFight(player, groupOptional.get(), true);
                 return;
             }
 
+            player.getCell().getCreatures().remove(player.getId());
+            newCell.getCreatures().add(player.getId());
             player.getLocation().setCell(newCell);
+
             Trigger trigger = gameMap.getTriggers().get(newCell.getId());
 
             if (trigger != null)
                 player.changeMap(trigger.getNextMap(), trigger.getNextCell());
+            else if (gameMap.getDoor() != null) gameMap.getDoor().check();
+
         } else
             tasks.forEach(Runnable::run);
     }

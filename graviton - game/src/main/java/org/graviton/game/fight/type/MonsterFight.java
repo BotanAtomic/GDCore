@@ -29,8 +29,9 @@ import static org.graviton.collection.CollectionQuery.from;
  */
 public class MonsterFight extends Fight {
 
-    public MonsterFight(ScheduledExecutorService executorService, int id, Fighter player, MonsterGroup monsterGroup, GameMap gameMap) {
-        super(executorService, id, new PlayerTeam(player, FightSide.BLUE), new MonsterTeam(monsterGroup, FightSide.RED), gameMap);
+
+    public MonsterFight(ScheduledExecutorService executorService, int id, Fighter player, MonsterGroup monsterGroup, GameMap gameMap, boolean allowFlag) {
+        super(executorService, id, new PlayerTeam(player, FightSide.BLUE), new MonsterTeam(monsterGroup, FightSide.RED), gameMap, allowFlag);
 
         if (monsterGroup.getRespawnTime() != 0)
             schedule(() -> gameMap.register(monsterGroup.copy(), true), monsterGroup.getRespawnTime());

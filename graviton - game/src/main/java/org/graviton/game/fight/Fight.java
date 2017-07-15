@@ -58,9 +58,11 @@ public abstract class Fight {
 
     private List<Player> spectator = new ArrayList<>();
 
+    private final boolean allowFlag;
+
     private final Map<Integer, Pair<Player, Byte>> disconnectedPlayers = new ConcurrentHashMap<>();
 
-    protected Fight(ScheduledExecutorService executorService, int id, FightTeam firstTeam, FightTeam secondTeam, GameMap gameMap) {
+    protected Fight(ScheduledExecutorService executorService, int id, FightTeam firstTeam, FightTeam secondTeam, GameMap gameMap, boolean allowFlag) {
         this.executorService = executorService;
         this.id = id;
         this.gameMap = gameMap;
@@ -71,7 +73,8 @@ public abstract class Fight {
 
         initialize();
 
-        generateFlag();
+        if (this.allowFlag = allowFlag)
+            generateFlag();
 
         if (scheduledTime() > 0)
             schedule(this::start, scheduledTime() * 1000);

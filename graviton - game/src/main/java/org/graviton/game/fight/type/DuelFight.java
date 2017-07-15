@@ -19,7 +19,7 @@ import java.util.concurrent.ScheduledExecutorService;
 public class DuelFight extends Fight {
 
     public DuelFight(ScheduledExecutorService executorService, int id, Player first, Player second, GameMap gameMap) {
-        super(executorService, id, new PlayerTeam(first, FightSide.RED), new PlayerTeam(second, FightSide.BLUE), gameMap);
+        super(executorService, id, new PlayerTeam(first, FightSide.RED), new PlayerTeam(second, FightSide.BLUE), gameMap, true);
     }
 
     @Override
